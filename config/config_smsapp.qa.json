@@ -1,0 +1,9 @@
+{
+    "name": "sms-familyconnect-qa",
+    "metric_store": "chms_uganda_qa",
+    "control": {
+        "username": "test_user",
+        "api_key": "test_key",
+        "url": "http://rr.praekeltfoundation.org/"
+    }
+}
