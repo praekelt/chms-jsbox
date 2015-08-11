@@ -51,7 +51,7 @@ describe("familyconnect app", function() {
 
         describe("Full flow testing", function() {
 
-            it("should work", function() {
+            it("to state_auth_code", function() {
                 return tester
                     .setup.user.addr('082111')
                     .inputs(
@@ -64,12 +64,83 @@ describe("familyconnect app", function() {
                     .run();
             });
 
-            it("should work", function() {
+            it("to state_msg_receiver", function() {
                 return tester
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
+                    )
+                    .check.interaction({
+                        state: 'state_msg_receiver',
+                        reply: [
+                            "Welcome to FamilyConnect. Please select who will receive the messages:",
+                            "1. Head of Household",
+                            "2. Mother to be",
+                            "3. Trusted friend/family member"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+
+            it("to state_msisdn", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                    )
+                    .check.interaction({
+                        state: 'state_msisdn',
+                        reply: "Please enter the cellphone number which the messages will be sent to. For example, 0713627893"
+                    })
+                    .run();
+            });
+
+            it("to state_household_head_name", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0713627893'  // state_msisdn
+                    )
+                    .check.interaction({
+                        state: 'state_household_head_name'
+                    })
+                    .run();
+            });
+
+            it("to state_household_head_surname", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0713627893'  // state_msisdn
+                        , 'Isaac'  // state_household_head_name
+                    )
+                    .check.interaction({
+                        state: 'state_household_head_surname'
+                    })
+                    .run();
+            });
+
+
+
+            it("to state_end_thank_you", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0713627893'  // state_msisdn
+                        , 'Isaac'  // state_household_head_name
+                        , 'Mbire'  // state_household_head_surname
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',

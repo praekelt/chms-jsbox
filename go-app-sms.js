@@ -25,9 +25,30 @@ go.utils = {
 
     validate_personnel_code: function(im, content) {
         return Q()
-            .then(function() {
-                return true;
+            .then(function(q_response) {
+                return content === '12345';
             });
+    },
+
+    check_valid_number: function(input) {
+        // an attempt to solve the insanity of JavaScript numbers
+        var numbers_only = new RegExp('^\\d+$');
+        return input !== '' && numbers_only.test(input) && !Number.isNaN(Number(input));
+    },
+
+    is_valid_msisdn: function(input) {
+        // check that it is a number, starts with 0, and has at least 10 digits
+        return go.utils.check_valid_number(input) && input[0] === '0' && input.length >= 10;
+    },
+
+    check_valid_alpha: function(input) {
+        var alpha_only = new RegExp('^[A-Za-z]+$');
+        return input !== '' && alpha_only.test(input);
+    },
+
+    is_valid_name: function(input) {
+        // check that all chars are alphabetical
+        return go.utils.check_valid_alpha(input);
     },
 
     track_redials: function(contact, im, decision) {
