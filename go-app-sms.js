@@ -9,7 +9,9 @@ go;
 var Q = require('q');
 var moment = require('moment');
 var vumigo = require('vumigo_v02');
+var Choice = vumigo.states.Choice;
 var JsonApi = vumigo.http.api.JsonApi;
+
 
 // Shared utils lib
 go.utils = {
@@ -25,9 +27,67 @@ go.utils = {
 
     validate_personnel_code: function(im, content) {
         return Q()
-            .then(function() {
-                return true;
+            .then(function(q_response) {
+                return content === '12345';
             });
+    },
+
+    check_valid_number: function(input) {
+        // an attempt to solve the insanity of JavaScript numbers
+        var numbers_only = new RegExp('^\\d+$');
+        return input !== '' && numbers_only.test(input) && !Number.isNaN(Number(input));
+    },
+
+    is_valid_msisdn: function(input) {
+        // check that it is a number, starts with 0, and has at least 10 digits
+        return go.utils.check_valid_number(input) && input[0] === '0' && input.length >= 10;
+    },
+
+    check_valid_alpha: function(input) {
+        var alpha_only = new RegExp('^[A-Za-z]+$');
+        return input !== '' && alpha_only.test(input);
+    },
+
+    is_valid_name: function(input) {
+        // check that all chars are alphabetical
+        return go.utils.check_valid_alpha(input);
+    },
+
+    is_valid_day_of_month: function(input) {
+        // check that it is a number and between 1 and 31
+        return go.utils.check_valid_number(input)
+            && parseInt(input, 10) >= 1
+            && parseInt(input, 10) <= 31;
+    },
+
+    is_valid_year: function(input) {
+        // check that it is a number and has four digits
+        return input.length === 4 && go.utils.check_valid_number(input);
+    },
+
+    get_today: function(config) {
+        var today;
+        if (config.testing_today) {
+            today = new moment(config.testing_today);
+        } else {
+            today = new moment();
+        }
+        return today;
+    },
+
+    make_month_choices: function($, start, limit, increment) {
+        var choices = [
+            new Choice('072015', $('July 15')),
+            new Choice('062015', $('June 15')),
+            new Choice('052015', $('May 15')),
+            new Choice('042015', $('Apr 15')),
+            new Choice('032015', $('Mar 15')),
+            new Choice('022015', $('Feb 15')),
+            new Choice('012015', $('Jan 15')),
+            new Choice('122014', $('Dec 14')),
+            new Choice('112014', $('Nov 14')),
+        ];
+        return choices;
     },
 
     track_redials: function(contact, im, decision) {
@@ -143,7 +203,8 @@ go.utils = {
     },
 
     opt_out: function(im, contact) {
-        contact.extra.optout_last_attempt = go.utils.get_today(im.config);
+        contact.extra.optout_last_attempt = go.utils.get_today(im.config)
+            .format('YYYY-MM-DD hh:mm:ss.SSS');
 
         return Q.all([
             im.contacts.save(contact),
@@ -157,7 +218,8 @@ go.utils = {
     },
 
     opt_in: function(im, contact) {
-        contact.extra.optin_last_attempt = go.utils.get_today(im.config);
+        contact.extra.optin_last_attempt = go.utils.get_today(im.config)
+            .format('YYYY-MM-DD hh:mm:ss.SSS');
         return Q.all([
             im.contacts.save(contact),
             im.api_request('optout.cancel_optout', {
@@ -165,16 +227,6 @@ go.utils = {
                 address_value: contact.msisdn
             }),
         ]);
-    },
-
-    get_today: function(config) {
-        var today;
-        if (config.testing_today) {
-            today = new moment(config.testing_today);
-        } else {
-            today = new moment();
-        }
-        return today.format('YYYY-MM-DD hh:mm:ss.SSS');
     },
 
     "commas": "commas"

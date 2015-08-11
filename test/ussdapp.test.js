@@ -47,11 +47,66 @@ describe("familyconnect app", function() {
         });
 
 
+        describe("Timeout testing", function() {
+            it("should ask about continuing", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , {session_event: 'close'}
+                        , {session_event: 'new'}
+                    )
+                    .check.interaction({
+                        state: 'state_timed_out',
+                        reply: [
+                            "You have an incomplete registration. Would you like to continue with this registration?",
+                            "1. Yes",
+                            "2. Start new registration"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+
+            it("should continue", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , {session_event: 'close'}
+                        , {session_event: 'new'}
+                        , '1'  // state_timed_out - continue
+                    )
+                    .check.interaction({
+                        state: 'state_msg_receiver'
+                    })
+                    .run();
+            });
+
+            it("should restart", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , {session_event: 'close'}
+                        , {session_event: 'new'}
+                        , '2'  // state_timed_out - restart
+                    )
+                    .check.interaction({
+                        state: 'state_auth_code'
+                    })
+                    .run();
+            });
+        });
+
+
         // TEST REGISTRATION
 
-        describe("Full flow testing", function() {
+        describe("Flow testing", function() {
 
-            it("should work", function() {
+            it("to state_auth_code", function() {
                 return tester
                     .setup.user.addr('082111')
                     .inputs(
@@ -64,7 +119,7 @@ describe("familyconnect app", function() {
                     .run();
             });
 
-            it("should work", function() {
+            it("to state_msg_receiver", function() {
                 return tester
                     .setup.user.addr('082111')
                     .inputs(
@@ -72,8 +127,155 @@ describe("familyconnect app", function() {
                         , '12345'  // state_auth_code - personnel code
                     )
                     .check.interaction({
+                        state: 'state_msg_receiver',
+                        reply: [
+                            "Welcome to FamilyConnect. Please select who will receive the messages:",
+                            "1. Head of Household",
+                            "2. Mother to be",
+                            "3. Trusted friend/family member"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+
+            it("to state_msisdn", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                    )
+                    .check.interaction({
+                        state: 'state_msisdn',
+                        reply: "Please enter the cellphone number which the messages will be sent to. For example, 0713627893"
+                    })
+                    .run();
+            });
+
+            it("to state_household_head_name", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0713627893'  // state_msisdn
+                    )
+                    .check.interaction({
+                        state: 'state_household_head_name'
+                    })
+                    .run();
+            });
+
+            it("to state_household_head_surname", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0713627893'  // state_msisdn
+                        , 'Isaac'  // state_household_head_name
+                    )
+                    .check.interaction({
+                        state: 'state_household_head_surname'
+                    })
+                    .run();
+            });
+
+            it("to state_household_head_surname", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0713627893'  // state_msisdn
+                        , 'Isaac'  // state_household_head_name
+                        , 'Mbire'  // state_household_head_surname
+                    )
+                    .check.interaction({
+                        state: 'state_last_period_month',
+                        reply: [
+                            "Please select the month when the woman had her last period:",
+                            "1. July 15",
+                            "2. June 15",
+                            "3. May 15",
+                            "4. Apr 15",
+                            "5. Mar 15",
+                            "6. Feb 15",
+                            "7. Jan 15",
+                            "8. Dec 14",
+                            "9. Nov 14"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+
+            it("to state_last_period_day", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0713627893'  // state_msisdn
+                        , 'Isaac'  // state_household_head_name
+                        , 'Mbire'  // state_household_head_surname
+                        , '1'  // state_last_period_month - 21ly 2015
+                        , '21'  // state_last_period_day - 21st
+                    )
+                    .check.interaction({
+                        state: 'state_id_type'
+                    })
+                    .run();
+            });
+
+            it("complete flow - uganda ID, english", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0713627893'  // state_msisdn
+                        , 'Isaac'  // state_household_head_name
+                        , 'Mbire'  // state_household_head_surname
+                        , '1'  // state_last_period_month - July 2015
+                        , '21'  // state_last_period_day - 21st
+                        , '1'  // state_id_type - Ugandan ID
+                        , '444'  // state_nin
+                        , '1'  // state_msg_language - english
+                    )
+                    .check.interaction({
                         state: 'state_end_thank_you',
                         reply: "Thank you. The pregnant woman will now receive messages."
+                    })
+                    .run();
+            });
+
+            it("complete flow - other ID, lusoga", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0713627893'  // state_msisdn
+                        , 'Isaac'  // state_household_head_name
+                        , 'Mbire'  // state_household_head_surname
+                        , '1'  // state_last_period_month - July 2015
+                        , '21'  // state_last_period_day - 21st
+                        , '2'  // state_id_type - other ID
+                        , '13'  // state_mother_birth_day - 13th
+                        , '5'  // state_mother_birth_month - may
+                        , '1982'  // state_mother_birth_year - 1982
+                        , '3'  // state_msg_language - lusoga
+                    )
+                    .check.interaction({
+                        state: 'state_end_thank_translate',
+                        reply: "Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available."
                     })
                     .run();
             });
