@@ -11,7 +11,9 @@ go.utils = {
 
     timed_out: function(im) {
         var no_redirects = [
-            'state_start'
+            'state_start',
+            'state_end_thank_you',
+            'state_end_thank_translate'
         ];
         return im.msg.session_event === 'new'
             && im.user.state.name

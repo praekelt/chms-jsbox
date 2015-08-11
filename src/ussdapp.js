@@ -243,7 +243,7 @@ go.app = function() {
             var question = $("Please enter her National Identity Number (NIN).");
             return new FreeText(name, {
                 question: question,
-                next: 'state_end_thank_you'
+                next: 'state_msg_language'
             });
         });
 

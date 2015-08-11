@@ -18,7 +18,9 @@ go.utils = {
 
     timed_out: function(im) {
         var no_redirects = [
-            'state_start'
+            'state_start',
+            'state_end_thank_you',
+            'state_end_thank_translate'
         ];
         return im.msg.session_event === 'new'
             && im.user.state.name
@@ -477,7 +479,7 @@ go.app = function() {
             var question = $("Please enter her National Identity Number (NIN).");
             return new FreeText(name, {
                 question: question,
-                next: 'state_end_thank_you'
+                next: 'state_msg_language'
             });
         });
 
