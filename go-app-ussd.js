@@ -9,7 +9,9 @@ go;
 var Q = require('q');
 var moment = require('moment');
 var vumigo = require('vumigo_v02');
+var Choice = vumigo.states.Choice;
 var JsonApi = vumigo.http.api.JsonApi;
+
 
 // Shared utils lib
 go.utils = {
@@ -49,6 +51,43 @@ go.utils = {
     is_valid_name: function(input) {
         // check that all chars are alphabetical
         return go.utils.check_valid_alpha(input);
+    },
+
+    is_valid_day_of_month: function(input) {
+        // check that it is a number and between 1 and 31
+        return go.utils.check_valid_number(input)
+            && parseInt(input, 10) >= 1
+            && parseInt(input, 10) <= 31;
+    },
+
+    is_valid_year: function(input) {
+        // check that it is a number and has four digits
+        return input.length === 4 && go.utils.check_valid_number(input);
+    },
+
+    get_today: function(config) {
+        var today;
+        if (config.testing_today) {
+            today = new moment(config.testing_today);
+        } else {
+            today = new moment();
+        }
+        return today;
+    },
+
+    make_month_choices: function($, start, limit, increment) {
+        var choices = [
+            new Choice('072015', $('July 15')),
+            new Choice('062015', $('June 15')),
+            new Choice('052015', $('May 15')),
+            new Choice('042015', $('Apr 15')),
+            new Choice('032015', $('Mar 15')),
+            new Choice('022015', $('Feb 15')),
+            new Choice('012015', $('Jan 15')),
+            new Choice('122014', $('Dec 14')),
+            new Choice('112014', $('Nov 14')),
+        ];
+        return choices;
     },
 
     track_redials: function(contact, im, decision) {
@@ -164,7 +203,8 @@ go.utils = {
     },
 
     opt_out: function(im, contact) {
-        contact.extra.optout_last_attempt = go.utils.get_today(im.config);
+        contact.extra.optout_last_attempt = go.utils.get_today(im.config)
+            .format('YYYY-MM-DD hh:mm:ss.SSS');
 
         return Q.all([
             im.contacts.save(contact),
@@ -178,7 +218,8 @@ go.utils = {
     },
 
     opt_in: function(im, contact) {
-        contact.extra.optin_last_attempt = go.utils.get_today(im.config);
+        contact.extra.optin_last_attempt = go.utils.get_today(im.config)
+            .format('YYYY-MM-DD hh:mm:ss.SSS');
         return Q.all([
             im.contacts.save(contact),
             im.api_request('optout.cancel_optout', {
@@ -186,16 +227,6 @@ go.utils = {
                 address_value: contact.msisdn
             }),
         ]);
-    },
-
-    get_today: function(config) {
-        var today;
-        if (config.testing_today) {
-            today = new moment(config.testing_today);
-        } else {
-            today = new moment();
-        }
-        return today.format('YYYY-MM-DD hh:mm:ss.SSS');
     },
 
     "commas": "commas"
@@ -207,6 +238,7 @@ go.app = function() {
     var App = vumigo.App;
     var Choice = vumigo.states.Choice;
     var ChoiceState = vumigo.states.ChoiceState;
+    var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
     var EndState = vumigo.states.EndState;
     var FreeText = vumigo.states.FreeText;
 
@@ -386,35 +418,162 @@ go.app = function() {
                         return error;
                     }
                 },
-                next: 'state_end_thank_you'
+                next: 'state_last_period_month'
             });
         });
 
         // ChoiceState state_last_period_month
+        self.add('state_last_period_month', function(name) {
+            var today = go.utils.get_today(self.im.config);
+            var start_month = today.month();
+            var question = $("Please select the month when the woman had her last period:");
+            var error = $("That is an invalid month. Please select the month when the woman had her last period:");
+            return new ChoiceState(name, {
+                question: question,
+                choices: go.utils.make_month_choices($, start_month, 9, -1),
+                error: error,
+                next: 'state_last_period_day'
+            });
+        });
 
+        // FreeText state_last_period_day
+        self.add('state_last_period_day', function(name) {
+            var question = $("What day did her last period start on? (For example, 12)");
+            var error = $("That number is not valid. Please enter the day her last period started on. For example, 12");
+            return new FreeText(name, {
+                question: question,
+                check: function(content) {
+                    if (go.utils.is_valid_day_of_month(content)) {
+                        return null;  // vumi expects null or undefined if check passes
+                    } else {
+                        return error;
+                    }
+                },
+                next: 'state_id_type'
+            });
+        });
 
-        // ChoiceState state_last_period_day
+        // ChoiceState state_id_type
+        self.add('state_id_type', function(name) {
+            var question = $("What kind of identification does the pregnant woman have?");
+            var error = $("That is an invalid selection. Please select what identification the woman has:");
+            return new ChoiceState(name, {
+                question: question,
+                error: error,
+                choices: [
+                    new Choice('ugandan_id', $('Ugandan ID')),
+                    new Choice('other', $('None/other'))
+                ],
+                next: function(choice) {
+                    return choice.value === 'ugandan_id'
+                        ? 'state_nin'
+                        : 'state_mother_birth_day';
+                }
+            });
+        });
 
-
-        // ChoiceState state_nin
-
+        // FreeText state_nin
+        self.add('state_nin', function(name) {
+            var question = $("Please enter her National Identity Number (NIN).");
+            return new FreeText(name, {
+                question: question,
+                next: 'state_end_thank_you'
+            });
+        });
 
         // FreeText state_mother_birth_day
-
+        self.add('state_mother_birth_day', function(name) {
+            var question = $("Please enter the day the she was born. For example, 12.");
+            var error = $("That number is invalid. Please enter the day the she was born. For example, 12");
+            return new FreeText(name, {
+                question: question,
+                check: function(content) {
+                    if (go.utils.is_valid_day_of_month(content)) {
+                        return null;  // vumi expects null or undefined if check passes
+                    } else {
+                        return error;
+                    }
+                },
+                next: 'state_mother_birth_month'
+            });
+        });
 
         // PaginatedChoiceState state_mother_birth_month
-
+        self.add('state_mother_birth_month', function(name) {
+            return new PaginatedChoiceState(name, {
+                question: $("Please select the month of year the Mother was born:"),
+                error: $("That is an invalid month. Please select the month of year the Mother was born."),
+                characters_per_page: 160,
+                options_per_page: null,
+                more: $('More'),
+                back: $('Back'),
+                choices: [
+                    new Choice('01', $('Jan')),
+                    new Choice('02', $('Feb')),
+                    new Choice('03', $('Mar')),
+                    new Choice('04', $('Apr')),
+                    new Choice('05', $('May')),
+                    new Choice('06', $('June')),
+                    new Choice('07', $('July')),
+                    new Choice('08', $('Aug')),
+                    new Choice('09', $('Sep')),
+                    new Choice('10', $('Oct')),
+                    new Choice('11', $('Nov')),
+                    new Choice('12', $('Dec'))
+                ],
+                next: 'state_mother_birth_year'
+            });
+        });
 
         // FreeText state_mother_birth_year
-
+        self.add('state_mother_birth_year', function(name) {
+            var question = $("Please enter the year the mother was born. For example, 1986.");
+            var error = $("That number is invalid. Please enter the year the mother was born.");
+            return new FreeText(name, {
+                question: question,
+                check: function(content) {
+                    if (go.utils.is_valid_year(content)) {
+                        return null;  // vumi expects null or undefined if check passes
+                    } else {
+                        return error;
+                    }
+                },
+                next: 'state_msg_language'
+            });
+        });
 
         // ChoiceState state_msg_language
-
+        self.add('state_msg_language', function(name) {
+            var question = $("Which language would they want to receive messages in?");
+            var error = $("That is an invalid language. Please select the language they want to receive messages in.");
+            return new ChoiceState(name, {
+                question: question,
+                error: error,
+                choices: [
+                    new Choice('english', $('English')),
+                    new Choice('runyankore', $('Runyankore')),
+                    new Choice('lusoga', $('Lusoga'))
+                ],
+                next: function(choice) {
+                    return choice.value === 'english'
+                        ? 'state_end_thank_you'
+                        : 'state_end_thank_translate';
+                }
+            });
+        });
 
         // EndState state_end_thank_you
         self.add('state_end_thank_you', function(name) {
             return new EndState(name, {
                 text: $("Thank you. The pregnant woman will now receive messages."),
+                next: 'state_start'
+            });
+        });
+
+        // EndState state_end_thank_translate
+        self.add('state_end_thank_translate', function(name) {
+            return new EndState(name, {
+                text: $("Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available."),
                 next: 'state_start'
             });
         });
