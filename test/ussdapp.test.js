@@ -1,7 +1,8 @@
 var vumigo = require('vumigo_v02');
 var fixtures = require('./fixtures');
 var AppTester = vumigo.AppTester;
-
+var _ = require('lodash');
+var assert = require('assert');
 
 describe("familyconnect app", function() {
     describe("for ussd use - auth on", function() {
@@ -252,6 +253,17 @@ describe("familyconnect app", function() {
                         state: 'state_end_thank_you',
                         reply: "Thank you. The pregnant woman will now receive messages."
                     })
+                    .check(function(api) {
+                        var smses = _.where(api.outbound.store, {
+                            endpoint: 'sms'
+                        });
+                        var sms = smses[0];
+                        assert.equal(smses.length,1);
+                        assert.equal(sms.content,
+                            "Thank you for registering on FamilyConnect."
+                        );
+                        assert.equal(sms.to_addr,'082111');
+                    })
                     .run();
             });
 
@@ -276,6 +288,17 @@ describe("familyconnect app", function() {
                     .check.interaction({
                         state: 'state_end_thank_translate',
                         reply: "Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available."
+                    })
+                    .check(function(api) {
+                        var smses = _.where(api.outbound.store, {
+                            endpoint: 'sms'
+                        });
+                        var sms = smses[0];
+                        assert.equal(smses.length,1);
+                        assert.equal(sms.content,
+                            "Thank you for registering on FamilyConnect."
+                        );
+                        assert.equal(sms.to_addr,'082111');
                     })
                     .run();
             });
@@ -423,6 +446,17 @@ describe("familyconnect app", function() {
                         state: 'state_end_thank_you',
                         reply: "Thank you. The pregnant woman will now receive messages."
                     })
+                    .check(function(api) {
+                        var smses = _.where(api.outbound.store, {
+                            endpoint: 'sms'
+                        });
+                        var sms = smses[0];
+                        assert.equal(smses.length,1);
+                        assert.equal(sms.content,
+                            "Thank you for registering on FamilyConnect."
+                        );
+                        assert.equal(sms.to_addr,'082111');
+                    })
                     .run();
             });
 
@@ -446,6 +480,17 @@ describe("familyconnect app", function() {
                     .check.interaction({
                         state: 'state_end_thank_translate',
                         reply: "Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available."
+                    })
+                    .check(function(api) {
+                        var smses = _.where(api.outbound.store, {
+                            endpoint: 'sms'
+                        });
+                        var sms = smses[0];
+                        assert.equal(smses.length,1);
+                        assert.equal(sms.content,
+                            "Thank you for registering on FamilyConnect."
+                        );
+                        assert.equal(sms.to_addr,'082111');
                     })
                     .run();
             });

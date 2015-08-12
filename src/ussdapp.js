@@ -322,11 +322,22 @@ go.app = function() {
                 ],
                 next: function(choice) {
                     return choice.value === 'english'
-                        ? 'state_end_thank_you'
-                        : 'state_end_thank_translate';
+                        ? 'state_end_thank_you_enter'
+                        : 'state_end_thank_translate_enter';
                 }
             });
         });
+
+        self.states.add('state_end_thank_you_enter', function(name) {
+            return self.im.outbound.send_to_user({
+                    endpoint: 'sms',
+                    content: $("Thank you for registering on FamilyConnect.")
+                })
+                .then(function() {
+                    return self.states.create('state_end_thank_you');
+                });
+        });
+
 
         // EndState state_end_thank_you
         self.add('state_end_thank_you', function(name) {
@@ -334,6 +345,16 @@ go.app = function() {
                 text: $("Thank you. The pregnant woman will now receive messages."),
                 next: 'state_start'
             });
+        });
+
+        self.states.add('state_end_thank_translate_enter', function(name) {
+            return self.im.outbound.send_to_user({
+                    endpoint: 'sms',
+                    content: $("Thank you for registering on FamilyConnect.")
+                })
+                .then(function() {
+                    return self.states.create('state_end_thank_translate');
+                });
         });
 
         // EndState state_end_thank_translate
