@@ -317,7 +317,7 @@ go.app = function() {
                 error: error,
                 choices: [
                     new Choice('english', $('English')),
-                    new Choice('runyankore', $('Runyankore')),
+                    new Choice('rukiga', $('Rukiga')),
                     new Choice('lusoga', $('Lusoga'))
                 ],
                 next: function(choice) {
