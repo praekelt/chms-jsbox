@@ -260,7 +260,7 @@ describe("familyconnect app", function() {
                         var sms = smses[0];
                         assert.equal(smses.length,1);
                         assert.equal(sms.content,
-                            "Thank you for registering on FamilyConnect."
+                            "Thank you. The pregnant woman will receive messages in English."
                         );
                         assert.equal(sms.to_addr,'082111');
                     })
@@ -296,7 +296,7 @@ describe("familyconnect app", function() {
                         var sms = smses[0];
                         assert.equal(smses.length,1);
                         assert.equal(sms.content,
-                            "Thank you for registering on FamilyConnect."
+                            "Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available."
                         );
                         assert.equal(sms.to_addr,'082111');
                     })
@@ -453,7 +453,7 @@ describe("familyconnect app", function() {
                         var sms = smses[0];
                         assert.equal(smses.length,1);
                         assert.equal(sms.content,
-                            "Thank you for registering on FamilyConnect."
+                            "Thank you. The pregnant woman will receive messages in English."
                         );
                         assert.equal(sms.to_addr,'082111');
                     })
@@ -488,7 +488,7 @@ describe("familyconnect app", function() {
                         var sms = smses[0];
                         assert.equal(smses.length,1);
                         assert.equal(sms.content,
-                            "Thank you for registering on FamilyConnect."
+                            "Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available."
                         );
                         assert.equal(sms.to_addr,'082111');
                     })

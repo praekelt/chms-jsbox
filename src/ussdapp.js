@@ -156,8 +156,8 @@ go.app = function() {
 
         // FreeText state_household_head_name
         self.add('state_household_head_name', function(name) {
-            var question = $("Please enter the name of the Head of the Household of the pregnant woman. For example, Isaac.");
-            var error = $("That name is invalid. Please enter the name of the Head of the Household.");
+            var question = $("Please enter the first name of the Head of the Household of the Pregnant woman. For example, Isaac.");
+            var error = $("That name is invalid. Please enter the first name of the Head of the Household of the Pregnant woman.");
             return new FreeText(name, {
                 question: question,
                 check: function(content) {
@@ -331,7 +331,7 @@ go.app = function() {
         self.states.add('state_end_thank_you_enter', function(name) {
             return self.im.outbound.send_to_user({
                     endpoint: 'sms',
-                    content: $("Thank you for registering on FamilyConnect.")
+                    content: $("Thank you. The pregnant woman will receive messages in English.")
                 })
                 .then(function() {
                     return self.states.create('state_end_thank_you');
@@ -350,7 +350,7 @@ go.app = function() {
         self.states.add('state_end_thank_translate_enter', function(name) {
             return self.im.outbound.send_to_user({
                     endpoint: 'sms',
-                    content: $("Thank you for registering on FamilyConnect.")
+                    content: $("Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available.")
                 })
                 .then(function() {
                     return self.states.create('state_end_thank_translate');
