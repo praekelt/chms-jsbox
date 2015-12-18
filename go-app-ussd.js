@@ -323,10 +323,15 @@ go.app = function() {
         };
 
         var smss = {
-            "state_end_thank_you_enter":
-                "Thank you. The pregnant woman will receive messages in English.",
-            "state_end_thank_translate_enter":
-                "Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available."
+            "mother":
+                "Welcome to FamilyConnect {{mother_name}}. Your FamilyConnect ID is {{familyconnect_id}}. Write it down and give it to the Nurse at your next clinic visit.",
+            "gatekeeper":
+                "Welcome to FamilyConnect. {{mother_name}}'s FamilyConnect ID is {{familyconnect_id}}.  Write it down and give it to the Nurse at your next clinic visit."
+        };
+
+        get_sms_text = function(msg_receiver) {
+            return msg_receiver === 'mother_to_be'
+                ? smss.mother : smss.gatekeeper;
         };
 
         var errors = {
@@ -334,7 +339,7 @@ go.app = function() {
                 "That code is not recognised. Please enter your 5 digit personnel code.",
         };
 
-        var get_error_text = function(name) {
+        get_error_text = function(name) {
             return errors[name] || "Sorry not a valid input. " + questions[name];
         };
 
@@ -644,7 +649,10 @@ go.app = function() {
         self.add('state_end_thank_you_enter', function(name) {
             return self.im.outbound.send_to_user({
                     endpoint: 'sms',
-                    content: $(smss[name])
+                    content: $(get_sms_text()).context({
+                        mother_name: self.im.user.answers.state_mother_name,
+                        familyconnect_id: '7777'
+                    })
                 })
                 .then(function() {
                     return self.states.create('state_end_thank_you');

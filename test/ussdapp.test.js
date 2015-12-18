@@ -513,7 +513,7 @@ describe("familyconnect app", function() {
                         var sms = smses[0];
                         assert.equal(smses.length,1);
                         assert.equal(sms.content,
-                            "Thank you. The pregnant woman will receive messages in English."
+                            "Welcome to FamilyConnect. Sharon's FamilyConnect ID is 7777.  Write it down and give it to the Nurse at your next clinic visit."
                         );
                         assert.equal(sms.to_addr,'082111');
                     })
@@ -531,7 +531,7 @@ describe("familyconnect app", function() {
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - July 2015
                         , '21'  // state_last_period_day - 21st
-                        , 'Sharon'  // state_mother_name
+                        , 'Mary'  // state_mother_name
                         , 'Nalule'  // state_mother_surname
                         , '2'  // state_id_type - other ID
                         , '13'  // state_mother_birth_day - 13th
@@ -551,7 +551,7 @@ describe("familyconnect app", function() {
                         var sms = smses[0];
                         assert.equal(smses.length,1);
                         assert.equal(sms.content,
-                            "Thank you. The pregnant woman will receive messages in English."
+                            "Welcome to FamilyConnect. Mary's FamilyConnect ID is 7777.  Write it down and give it to the Nurse at your next clinic visit."
                         );
                         assert.equal(sms.to_addr,'082111');
                     })
