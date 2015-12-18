@@ -154,11 +154,20 @@ go.app = function() {
     // START STATE
 
         self.add('state_start', function(name) {
-            if (self.im.config.pre_auth === 'on') {
-                return self.states.create('state_auth_code');
-            } else {
-                return self.states.create('state_msg_receiver');
-            }
+            return go.utils
+                .check_msisdn_hcp(self.im.user.addr)
+                .then(function(hcp_recognised) {
+                    if (hcp_recognised) {
+                        return self.states.create('state_msg_receiver');
+                    } else {
+                        return self.states.create('state_auth_code');
+                    }
+                });
+            // if (self.im.config.pre_auth === 'on') {
+            //     return self.states.create('state_auth_code');
+            // } else {
+            //     return self.states.create('state_msg_receiver');
+            // }
         });
 
 

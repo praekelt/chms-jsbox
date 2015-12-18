@@ -27,6 +27,13 @@ go.utils = {
             && no_redirects.indexOf(im.user.state.name) === -1;
     },
 
+    check_msisdn_hcp: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222';
+            });
+    },
+
     validate_personnel_code: function(im, content) {
         return Q()
             .then(function(q_response) {

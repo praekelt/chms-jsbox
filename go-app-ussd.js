@@ -27,6 +27,13 @@ go.utils = {
             && no_redirects.indexOf(im.user.state.name) === -1;
     },
 
+    check_msisdn_hcp: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222';
+            });
+    },
+
     validate_personnel_code: function(im, content) {
         return Q()
             .then(function(q_response) {
@@ -390,11 +397,20 @@ go.app = function() {
     // START STATE
 
         self.add('state_start', function(name) {
-            if (self.im.config.pre_auth === 'on') {
-                return self.states.create('state_auth_code');
-            } else {
-                return self.states.create('state_msg_receiver');
-            }
+            return go.utils
+                .check_msisdn_hcp(self.im.user.addr)
+                .then(function(hcp_recognised) {
+                    if (hcp_recognised) {
+                        return self.states.create('state_msg_receiver');
+                    } else {
+                        return self.states.create('state_auth_code');
+                    }
+                });
+            // if (self.im.config.pre_auth === 'on') {
+            //     return self.states.create('state_auth_code');
+            // } else {
+            //     return self.states.create('state_msg_receiver');
+            // }
         });
 
 
