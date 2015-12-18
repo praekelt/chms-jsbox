@@ -82,8 +82,6 @@ go.app = function() {
                 "Would they like to receive additional messages about HIV?",
             "state_end_thank_you":
                 "Thank you. The pregnant woman will now receive messages.",
-            "state_end_thank_translate":
-                "Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available.",
         };
 
         var smss = {
