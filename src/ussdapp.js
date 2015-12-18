@@ -74,40 +74,28 @@ go.app = function() {
                 "Please enter the year the mother was born. For example, 1986.",
             "state_msg_language":
                 "Which language would they want to receive messages in?",
+            "state_end_thank_you":
+                "Thank you. The pregnant woman will now receive messages.",
+            "state_end_thank_translate":
+                "Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available.",
+        };
+
+        var smss = {
+            "state_end_thank_you_enter":
+                "Thank you. The pregnant woman will receive messages in English.",
+            "state_end_thank_translate_enter":
+                "Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available."
+        };
+
+        var errors = {
+            "state_auth_code":
+                "That code is not recognised. Please enter your 5 digit personnel code.",
         };
 
         var get_error_text = function(name) {
             return errors[name] || "Sorry not a valid input. " + questions[name];
         };
 
-        var errors = {
-            // "state_timed_out":
-            //     "You have an incomplete registration. Would you like to continue with this registration?",
-            "state_auth_code":
-                "That code is not recognised. Please enter your 5 digit personnel code.",
-            // "state_msisdn":
-            //     "That number is invalid. Please enter the cellphone number which the messages will be sent to.",
-            // "state_household_head_name":
-            //     "That name is invalid. Please enter the first name of the Head of the Household of the Pregnant woman.",
-            // "state_household_head_surname":
-            //     "That surname is not invalid. Please enter the surname of the Head of the Household.",
-            // "state_last_period_month":
-            //     "That is an invalid month. Please select the month when the woman had her last period:",
-            // "state_last_period_day":
-            //     "That number is not valid. Please enter the day her last period started on. For example, 12",
-            // "state_id_type":
-            //     "That is an invalid selection. Please select what identification the woman has:",
-            // "state_nin":
-            //     "Please enter her National Identity Number (NIN).",
-            // "state_mother_birth_day":
-            //     "That number is invalid. Please enter the day the she was born. For example, 12",
-            // "state_mother_birth_month":
-            //     "That is an invalid month. Please select the month of year the Mother was born.",
-            // "state_mother_birth_year":
-            //     "That number is invalid. Please enter the year the mother was born.",
-            // "state_msg_language":
-            //     "That is an invalid language. Please select the language they want to receive messages in.",
-        };
 
 
     // TIMEOUT HANDLING
@@ -200,15 +188,13 @@ go.app = function() {
 
         // FreeText state_msisdn
         self.add('state_msisdn', function(name) {
-            var question = $(questions[name]);
-            var error = $(errors[name]);
             return new FreeText(name, {
-                question: question,
+                question: $(questions[name]),
                 check: function(content) {
                     if (go.utils.is_valid_msisdn(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return error;
+                        return $(get_error_text(name));
                     }
                 },
                 next: 'state_household_head_name'
@@ -217,15 +203,13 @@ go.app = function() {
 
         // FreeText state_household_head_name
         self.add('state_household_head_name', function(name) {
-            var question = $(questions[name]);
-            var error = $(errors[name]);
             return new FreeText(name, {
-                question: question,
+                question: $(questions[name]),
                 check: function(content) {
                     if (go.utils.is_valid_name(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return error;
+                        return $(get_error_text(name));
                     }
                 },
                 next: 'state_household_head_surname'
@@ -234,15 +218,13 @@ go.app = function() {
 
         // FreeText state_household_head_surname
         self.add('state_household_head_surname', function(name) {
-            var question = $(questions[name]);
-            var error = $(errors[name]);
             return new FreeText(name, {
-                question: question,
+                question: $(questions[name]),
                 check: function(content) {
                     if (go.utils.is_valid_name(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return error;
+                        return $(get_error_text(name));
                     }
                 },
                 next: 'state_last_period_month'
@@ -253,27 +235,23 @@ go.app = function() {
         self.add('state_last_period_month', function(name) {
             var today = go.utils.get_today(self.im.config);
             var start_month = today.month();
-            var question = $(questions[name]);
-            var error = $(errors[name]);
             return new ChoiceState(name, {
-                question: question,
+                question: $(questions[name]),
                 choices: go.utils.make_month_choices($, start_month, 9, -1),
-                error: error,
+                error: $(get_error_text(name)),
                 next: 'state_last_period_day'
             });
         });
 
         // FreeText state_last_period_day
         self.add('state_last_period_day', function(name) {
-            var question = $(questions[name]);
-            var error = $(errors[name]);
             return new FreeText(name, {
-                question: question,
+                question: $(questions[name]),
                 check: function(content) {
                     if (go.utils.is_valid_day_of_month(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return error;
+                        return $(get_error_text(name));
                     }
                 },
                 next: 'state_id_type'
@@ -282,11 +260,9 @@ go.app = function() {
 
         // ChoiceState state_id_type
         self.add('state_id_type', function(name) {
-            var question = $(questions[name]);
-            var error = $(errors[name]);
             return new ChoiceState(name, {
-                question: question,
-                error: error,
+                question: $(questions[name]),
+                error: $(get_error_text(name)),
                 choices: [
                     new Choice('ugandan_id', $('Ugandan ID')),
                     new Choice('other', $('None/other'))
@@ -301,24 +277,21 @@ go.app = function() {
 
         // FreeText state_nin
         self.add('state_nin', function(name) {
-            var question = $(questions[name]);
             return new FreeText(name, {
-                question: question,
+                question: $(questions[name]),
                 next: 'state_msg_language'
             });
         });
 
         // FreeText state_mother_birth_day
         self.add('state_mother_birth_day', function(name) {
-            var question = $(questions[name]);
-            var error = $(errors[name]);
             return new FreeText(name, {
-                question: question,
+                question: $(questions[name]),
                 check: function(content) {
                     if (go.utils.is_valid_day_of_month(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return error;
+                        return $(get_error_text(name));
                     }
                 },
                 next: 'state_mother_birth_month'
@@ -329,7 +302,7 @@ go.app = function() {
         self.add('state_mother_birth_month', function(name) {
             return new PaginatedChoiceState(name, {
                 question: $(questions[name]),
-                error: $(errors[name]),
+                error: $(get_error_text(name)),
                 characters_per_page: 160,
                 options_per_page: null,
                 more: $('More'),
@@ -354,15 +327,13 @@ go.app = function() {
 
         // FreeText state_mother_birth_year
         self.add('state_mother_birth_year', function(name) {
-            var question = $(questions[name]);
-            var error = $(errors[name]);
             return new FreeText(name, {
-                question: question,
+                question: $(questions[name]),
                 check: function(content) {
                     if (go.utils.is_valid_year(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return error;
+                        return $(get_error_text(name));
                     }
                 },
                 next: 'state_msg_language'
@@ -371,11 +342,9 @@ go.app = function() {
 
         // ChoiceState state_msg_language
         self.add('state_msg_language', function(name) {
-            var question = $(questions[name]);
-            var error = $(errors[name]);
             return new ChoiceState(name, {
-                question: question,
-                error: error,
+                question: $(questions[name]),
+                error: $(get_error_text(name)),
                 choices: [
                     new Choice('english', $('English')),
                     new Choice('rukiga', $('Rukiga')),
@@ -392,7 +361,7 @@ go.app = function() {
         self.states.add('state_end_thank_you_enter', function(name) {
             return self.im.outbound.send_to_user({
                     endpoint: 'sms',
-                    content: $("Thank you. The pregnant woman will receive messages in English.")
+                    content: $(smss[name])
                 })
                 .then(function() {
                     return self.states.create('state_end_thank_you');
@@ -403,7 +372,7 @@ go.app = function() {
         // EndState state_end_thank_you
         self.add('state_end_thank_you', function(name) {
             return new EndState(name, {
-                text: $("Thank you. The pregnant woman will now receive messages."),
+                text: $(questions[name]),
                 next: 'state_start'
             });
         });
@@ -411,7 +380,7 @@ go.app = function() {
         self.states.add('state_end_thank_translate_enter', function(name) {
             return self.im.outbound.send_to_user({
                     endpoint: 'sms',
-                    content: $("Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available.")
+                    content: $(smss[name])
                 })
                 .then(function() {
                     return self.states.create('state_end_thank_translate');
@@ -421,7 +390,7 @@ go.app = function() {
         // EndState state_end_thank_translate
         self.add('state_end_thank_translate', function(name) {
             return new EndState(name, {
-                text: $("Thank you. The pregnant woman will receive messages in English until Runyankore and Lusoga messages are available."),
+                text: $(questions[name]),
                 next: 'state_start'
             });
         });
