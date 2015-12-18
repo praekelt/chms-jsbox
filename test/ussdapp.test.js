@@ -14,7 +14,7 @@ describe("familyconnect app", function() {
             tester = new AppTester(app);
 
             tester
-                .setup.char_limit(160)
+                .setup.char_limit(180)
                 .setup.config.app({
                     pre_auth: 'on',
                     name: 'familyconnect',
@@ -115,7 +115,7 @@ describe("familyconnect app", function() {
                     )
                     .check.interaction({
                         state: 'state_auth_code',
-                        reply: "Welcome to FamilyConnect. Please enter your 5 digit personnel code."
+                        reply: "Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345"
                     })
                     .run();
             });
@@ -130,7 +130,7 @@ describe("familyconnect app", function() {
                     .check.interaction({
                         state: 'state_msg_receiver',
                         reply: [
-                            "Welcome to FamilyConnect. Please select who will receive the messages:",
+                            "Please select who will receive the messages on their phone:",
                             "1. Head of Household",
                             "2. Mother to be",
                             "3. Trusted friend/family member"
@@ -302,10 +302,47 @@ describe("familyconnect app", function() {
                     })
                     .run();
             });
-
         });
 
+        describe("Validation testing", function() {
+
+            it("validate state_auth_code", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , 'aaaaa'  // state_auth_code - invalid personnel code
+                    )
+                    .check.interaction({
+                        state: 'state_auth_code',
+                        reply: "That code is not recognised. Please enter your 5 digit personnel code."
+                    })
+                    .run();
+            });
+
+            it("validate state_msg_receiver", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '5'  // state_msg_receiver - invalid choice
+                    )
+                    .check.interaction({
+                        state: 'state_msg_receiver',
+                        reply: [
+                            "Sorry not a valid input. Please select who will receive the messages on their phone:",
+                            "1. Head of Household",
+                            "2. Mother to be",
+                            "3. Trusted friend/family member"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+
+        });
     });
+
     describe("for ussd use - auth off", function() {
         var app;
         var tester;
@@ -417,7 +454,7 @@ describe("familyconnect app", function() {
                     .check.interaction({
                         state: 'state_msg_receiver',
                         reply: [
-                            "Welcome to FamilyConnect. Please select who will receive the messages:",
+                            "Please select who will receive the messages on their phone:",
                             "1. Head of Household",
                             "2. Mother to be",
                             "3. Trusted friend/family member"

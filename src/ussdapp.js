@@ -43,6 +43,73 @@ go.app = function() {
         };
 
 
+    // TEXT CONTENT
+
+        var questions = {
+            "state_timed_out":
+                "You have an incomplete registration. Would you like to continue with this registration?",
+            "state_auth_code":
+                "Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345",
+            "state_msg_receiver":
+                "Please select who will receive the messages on their phone:",
+            "state_msisdn":
+                "Please enter the cellphone number which the messages will be sent to. For example, 0713627893",
+            "state_household_head_name":
+                "Please enter the first name of the Head of the Household of the Pregnant woman. For example, Isaac.",
+            "state_household_head_surname":
+                "Please enter the surname of the Head of the Household of the pregnant woman. For example, Mbire.",
+            "state_last_period_month":
+                "Please select the month when the woman had her last period:",
+            "state_last_period_day":
+                "What day did her last period start on? (For example, 12)",
+            "state_id_type":
+                "What kind of identification does the pregnant woman have?",
+            "state_nin":
+                "Please enter her National Identity Number (NIN).",
+            "state_mother_birth_day":
+                "Please enter the day the she was born. For example, 12.",
+            "state_mother_birth_month":
+                "Please select the month of year the Mother was born:",
+            "state_mother_birth_year":
+                "Please enter the year the mother was born. For example, 1986.",
+            "state_msg_language":
+                "Which language would they want to receive messages in?",
+        };
+
+        var get_error_text = function(name) {
+            return errors[name] || "Sorry not a valid input. " + questions[name];
+        };
+
+        var errors = {
+            // "state_timed_out":
+            //     "You have an incomplete registration. Would you like to continue with this registration?",
+            "state_auth_code":
+                "That code is not recognised. Please enter your 5 digit personnel code.",
+            // "state_msisdn":
+            //     "That number is invalid. Please enter the cellphone number which the messages will be sent to.",
+            // "state_household_head_name":
+            //     "That name is invalid. Please enter the first name of the Head of the Household of the Pregnant woman.",
+            // "state_household_head_surname":
+            //     "That surname is not invalid. Please enter the surname of the Head of the Household.",
+            // "state_last_period_month":
+            //     "That is an invalid month. Please select the month when the woman had her last period:",
+            // "state_last_period_day":
+            //     "That number is not valid. Please enter the day her last period started on. For example, 12",
+            // "state_id_type":
+            //     "That is an invalid selection. Please select what identification the woman has:",
+            // "state_nin":
+            //     "Please enter her National Identity Number (NIN).",
+            // "state_mother_birth_day":
+            //     "That number is invalid. Please enter the day the she was born. For example, 12",
+            // "state_mother_birth_month":
+            //     "That is an invalid month. Please select the month of year the Mother was born.",
+            // "state_mother_birth_year":
+            //     "That number is invalid. Please enter the year the mother was born.",
+            // "state_msg_language":
+            //     "That is an invalid language. Please select the language they want to receive messages in.",
+        };
+
+
     // TIMEOUT HANDLING
 
         // override normal state adding
@@ -60,14 +127,12 @@ go.app = function() {
 
         // timeout 01
         self.states.add('state_timed_out', function(name, creator_opts) {
-
             return new ChoiceState(name, {
-                question: $("You have an incomplete registration. Would you like to continue with this registration?"),
+                question: $(questions[name]),
                 choices: [
                     new Choice('continue', $("Yes")),
                     new Choice('restart', $("Start new registration"))
                 ],
-
                 next: function(choice) {
                     return go.utils
                         .track_redials(self.contact, self.im, choice.value)
@@ -102,10 +167,8 @@ go.app = function() {
 
         // FreeText state_auth_code
         self.add('state_auth_code', function(name) {
-            var question = $("Welcome to FamilyConnect. Please enter your 5 digit personnel code.");
-            var error = $("That code is not recognised. Please enter your 5 digit personnel code.");
             return new FreeText(name, {
-                question: question,
+                question: $(questions[name]),
                 check: function(content) {
                     return go.utils
                         .validate_personnel_code(self.im, content)
@@ -113,7 +176,7 @@ go.app = function() {
                             if (valid_clinic_code) {
                                 return null;  // vumi expects null or undefined if check passes
                             } else {
-                                return error;
+                                return $(get_error_text(name));
                             }
                         });
                 },
@@ -123,24 +186,22 @@ go.app = function() {
 
         // ChoiceState state_msg_receiver
         self.add('state_msg_receiver', function(name) {
-            var question = $("Welcome to FamilyConnect. Please select who will receive the messages:");
-            var error = $("That is an invalid selection. Please select who will receive the messages:");
             return new ChoiceState(name, {
-                question: question,
+                question: $(questions[name]),
                 choices: [
                     new Choice('head_of_household', $("Head of Household")),
                     new Choice('mother_to_be', $("Mother to be")),
                     new Choice('friend_or_family', $("Trusted friend/family member"))
                 ],
-                error: error,
+                error: $(get_error_text(name)),
                 next: 'state_msisdn'
             });
         });
 
         // FreeText state_msisdn
         self.add('state_msisdn', function(name) {
-            var question = $("Please enter the cellphone number which the messages will be sent to. For example, 0713627893");
-            var error = $("That number is invalid. Please enter the cellphone number which the messages will be sent to.");
+            var question = $(questions[name]);
+            var error = $(errors[name]);
             return new FreeText(name, {
                 question: question,
                 check: function(content) {
@@ -156,8 +217,8 @@ go.app = function() {
 
         // FreeText state_household_head_name
         self.add('state_household_head_name', function(name) {
-            var question = $("Please enter the first name of the Head of the Household of the Pregnant woman. For example, Isaac.");
-            var error = $("That name is invalid. Please enter the first name of the Head of the Household of the Pregnant woman.");
+            var question = $(questions[name]);
+            var error = $(errors[name]);
             return new FreeText(name, {
                 question: question,
                 check: function(content) {
@@ -173,8 +234,8 @@ go.app = function() {
 
         // FreeText state_household_head_surname
         self.add('state_household_head_surname', function(name) {
-            var question = $("Please enter the surname of the Head of the Household of the pregnant woman. For example, Mbire.");
-            var error = $("That surname is not invalid. Please enter the surname of the Head of the Household.");
+            var question = $(questions[name]);
+            var error = $(errors[name]);
             return new FreeText(name, {
                 question: question,
                 check: function(content) {
@@ -192,8 +253,8 @@ go.app = function() {
         self.add('state_last_period_month', function(name) {
             var today = go.utils.get_today(self.im.config);
             var start_month = today.month();
-            var question = $("Please select the month when the woman had her last period:");
-            var error = $("That is an invalid month. Please select the month when the woman had her last period:");
+            var question = $(questions[name]);
+            var error = $(errors[name]);
             return new ChoiceState(name, {
                 question: question,
                 choices: go.utils.make_month_choices($, start_month, 9, -1),
@@ -204,8 +265,8 @@ go.app = function() {
 
         // FreeText state_last_period_day
         self.add('state_last_period_day', function(name) {
-            var question = $("What day did her last period start on? (For example, 12)");
-            var error = $("That number is not valid. Please enter the day her last period started on. For example, 12");
+            var question = $(questions[name]);
+            var error = $(errors[name]);
             return new FreeText(name, {
                 question: question,
                 check: function(content) {
@@ -221,8 +282,8 @@ go.app = function() {
 
         // ChoiceState state_id_type
         self.add('state_id_type', function(name) {
-            var question = $("What kind of identification does the pregnant woman have?");
-            var error = $("That is an invalid selection. Please select what identification the woman has:");
+            var question = $(questions[name]);
+            var error = $(errors[name]);
             return new ChoiceState(name, {
                 question: question,
                 error: error,
@@ -240,7 +301,7 @@ go.app = function() {
 
         // FreeText state_nin
         self.add('state_nin', function(name) {
-            var question = $("Please enter her National Identity Number (NIN).");
+            var question = $(questions[name]);
             return new FreeText(name, {
                 question: question,
                 next: 'state_msg_language'
@@ -249,8 +310,8 @@ go.app = function() {
 
         // FreeText state_mother_birth_day
         self.add('state_mother_birth_day', function(name) {
-            var question = $("Please enter the day the she was born. For example, 12.");
-            var error = $("That number is invalid. Please enter the day the she was born. For example, 12");
+            var question = $(questions[name]);
+            var error = $(errors[name]);
             return new FreeText(name, {
                 question: question,
                 check: function(content) {
@@ -267,8 +328,8 @@ go.app = function() {
         // PaginatedChoiceState state_mother_birth_month
         self.add('state_mother_birth_month', function(name) {
             return new PaginatedChoiceState(name, {
-                question: $("Please select the month of year the Mother was born:"),
-                error: $("That is an invalid month. Please select the month of year the Mother was born."),
+                question: $(questions[name]),
+                error: $(errors[name]),
                 characters_per_page: 160,
                 options_per_page: null,
                 more: $('More'),
@@ -293,8 +354,8 @@ go.app = function() {
 
         // FreeText state_mother_birth_year
         self.add('state_mother_birth_year', function(name) {
-            var question = $("Please enter the year the mother was born. For example, 1986.");
-            var error = $("That number is invalid. Please enter the year the mother was born.");
+            var question = $(questions[name]);
+            var error = $(errors[name]);
             return new FreeText(name, {
                 question: question,
                 check: function(content) {
@@ -310,8 +371,8 @@ go.app = function() {
 
         // ChoiceState state_msg_language
         self.add('state_msg_language', function(name) {
-            var question = $("Which language would they want to receive messages in?");
-            var error = $("That is an invalid language. Please select the language they want to receive messages in.");
+            var question = $(questions[name]);
+            var error = $(errors[name]);
             return new ChoiceState(name, {
                 question: question,
                 error: error,
