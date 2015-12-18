@@ -49,7 +49,7 @@ describe("familyconnect health worker app", function() {
                     api.contacts.add({
                         msisdn: '+082222',
                         extra: {},
-                        key: "contact_key_082111",
+                        key: "contact_key_082222",
                         user_account: "contact_user_account"
                     });
                 })

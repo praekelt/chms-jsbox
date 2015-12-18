@@ -34,6 +34,20 @@ go.utils = {
             });
     },
 
+    check_contact_recognised: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222';
+            });
+    },
+
+    check_is_registered: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222';
+            });
+    },
+
     check_valid_number: function(input) {
         // an attempt to solve the insanity of JavaScript numbers
         var numbers_only = new RegExp('^\\d+$');

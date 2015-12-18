@@ -48,6 +48,14 @@ go.app = function() {
         var questions = {
             "state_timed_out":
                 "You have an incomplete registration. Would you like to continue with this registration?",
+            "state_language":
+                "Welcome to FamilyConnect. Please choose your language:",
+            "state_permission":
+                "Welcome to FamilyConnect. Do you have permission?",
+            "state_manage_msisdn":
+                "Please enter the number you would like to manage.",
+
+
             "state_auth_code":
                 "Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345",
             "state_msg_receiver":
@@ -149,18 +157,104 @@ go.app = function() {
         });
 
 
-    // START STATE
+    // START STATES
 
         self.add('state_start', function(name) {
             return go.utils
-                .check_msisdn_hcp(self.im.user.addr)
-                .then(function(hcp_recognised) {
-                    if (hcp_recognised) {
-                        return self.states.create('state_msg_receiver');
+                .check_contact_recognised(self.im.user.addr)
+                .then(function(recognised) {
+                    if (recognised) {
+                        return self.states.create('state_permission');
                     } else {
-                        return self.states.create('state_auth_code');
+                        return self.states.create('state_language');
                     }
                 });
+        });
+
+        // ChoiceState st-D
+        self.add('state_language', function(name) {
+            return new ChoiceState(name, {
+                question: $(questions[name]),
+                choices: [
+                    new Choice('english', $('English')),
+                    new Choice('runyakore', $('Runyakore')),
+                    new Choice('lusoga', $('Lusoga'))
+                ],
+                error: $(get_error_text(name)),
+                next: 'state_permission'
+            });
+        });
+
+        // ChoiceState st-C
+        self.add('state_permission', function(name) {
+            return new ChoiceState(name, {
+                question: $(questions[name]),
+                choices: [
+                    new Choice('has_permission', $('Yes')),
+                    new Choice('no_permission', $('No')),
+                    new Choice('other_number', $("Change the number I'd like to manage"))
+                ],
+                error: $(get_error_text(name)),
+                next: function(choice) {
+                    if (choice.value === 'has_permission') {
+                        return {
+                            name: 'state_check_registered_user',
+                            creator_opts: {msisdn: self.im.user.addr}
+                        };
+                    }
+                    else if (choice.value === 'no_permission') {return 'state_permission_required';}
+                    else if (choice.value === 'other_number') {return 'state_manage_msisdn';}
+                }
+            });
+        });
+
+        // FreeText st-B
+        self.add('state_manage_msisdn', function(name) {
+            return new FreeText(name, {
+                question: $(questions[name]),
+                check: function(content) {
+                    if (go.utils.is_valid_msisdn(content)) {
+                        return null;  // vumi expects null or undefined if check passes
+                    } else {
+                        return $(get_error_text(name));
+                    }
+                },
+                next: function(content) {
+                    return {
+                        name: 'state_check_registered_user',
+                        creator_opts: {msisdn: content}
+                    };
+                }
+            });
+        });
+
+        self.add('state_check_registered_user', function(name, opts) {
+            return go.utils
+                .check_user_is_registered(opts.msisdn)
+                .then(function(is_registered) {
+                    if (is_registered) {
+                        return self.states.create('state_change_menu');
+                    } else {
+                        return self.states.create('state_msg_receiver');
+                    }
+                });
+        });
+
+        // ChoiceState st-A1
+        self.add('state_change_menu', function(name) {
+            return new ChoiceState(name, {
+                question: $(questions[name]),
+                error: $(get_error_text(name)),
+                choices: [
+                    new Choice('state_check_baby_subscription', $('Start baby SMSs')),
+                    new Choice('state_change_language', $('Update language')),
+                    new Choice('state_change_number', $("Change the number which gets SMSs`")),
+                    new Choice('state_optout_reason', $("Stop SMSs")),
+                ],
+                next: function(choice) {
+                    return choice.value;
+                }
+            });
         });
 
 
