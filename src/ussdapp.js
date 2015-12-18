@@ -62,6 +62,10 @@ go.app = function() {
                 "Please select the month when the woman had her last period:",
             "state_last_period_day":
                 "What day did her last period start on? (For example, 12)",
+            "state_mother_name":
+                "Mother name",
+            "state_mother_surname":
+                "Mother surname",
             "state_id_type":
                 "What kind of identification does the pregnant woman have?",
             "state_nin":
@@ -74,6 +78,8 @@ go.app = function() {
                 "Please enter the year the mother was born. For example, 1986.",
             "state_msg_language":
                 "Which language would they want to receive messages in?",
+            "state_hiv_messages":
+                "Would they like to receive additional messages about HIV?",
             "state_end_thank_you":
                 "Thank you. The pregnant woman will now receive messages.",
             "state_end_thank_translate":
@@ -153,7 +159,7 @@ go.app = function() {
 
     // REGISTRATION STATES
 
-        // FreeText state_auth_code
+        // FreeText st-B
         self.add('state_auth_code', function(name) {
             return new FreeText(name, {
                 question: $(questions[name]),
@@ -172,21 +178,22 @@ go.app = function() {
             });
         });
 
-        // ChoiceState state_msg_receiver
+        // ChoiceState st-01
         self.add('state_msg_receiver', function(name) {
             return new ChoiceState(name, {
                 question: $(questions[name]),
                 choices: [
-                    new Choice('head_of_household', $("Head of Household")),
+                    new Choice('head_of_household', $("Head of the Household")),
                     new Choice('mother_to_be', $("Mother to be")),
-                    new Choice('friend_or_family', $("Trusted friend/family member"))
+                    new Choice('family_member', $("Family member")),
+                    new Choice('trusted_friend', $("Trusted friend"))
                 ],
                 error: $(get_error_text(name)),
                 next: 'state_msisdn'
             });
         });
 
-        // FreeText state_msisdn
+        // FreeText st-02
         self.add('state_msisdn', function(name) {
             return new FreeText(name, {
                 question: $(questions[name]),
@@ -201,7 +208,7 @@ go.app = function() {
             });
         });
 
-        // FreeText state_household_head_name
+        // FreeText st-03
         self.add('state_household_head_name', function(name) {
             return new FreeText(name, {
                 question: $(questions[name]),
@@ -216,7 +223,7 @@ go.app = function() {
             });
         });
 
-        // FreeText state_household_head_surname
+        // FreeText st-04
         self.add('state_household_head_surname', function(name) {
             return new FreeText(name, {
                 question: $(questions[name]),
@@ -231,7 +238,7 @@ go.app = function() {
             });
         });
 
-        // ChoiceState state_last_period_month
+        // ChoiceState st-05
         self.add('state_last_period_month', function(name) {
             var today = go.utils.get_today(self.im.config);
             var start_month = today.month();
@@ -243,7 +250,7 @@ go.app = function() {
             });
         });
 
-        // FreeText state_last_period_day
+        // FreeText st-06
         self.add('state_last_period_day', function(name) {
             return new FreeText(name, {
                 question: $(questions[name]),
@@ -254,18 +261,48 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
+                next: 'state_mother_name'
+            });
+        });
+
+        // FreeText st-07
+        self.add('state_mother_name', function(name) {
+            return new FreeText(name, {
+                question: $(questions[name]),
+                check: function(content) {
+                    if (go.utils.is_valid_name(content)) {
+                        return null;  // vumi expects null or undefined if check passes
+                    } else {
+                        return $(get_error_text(name));
+                    }
+                },
+                next: 'state_mother_surname'
+            });
+        });
+
+        // FreeText st-08
+        self.add('state_mother_surname', function(name) {
+            return new FreeText(name, {
+                question: $(questions[name]),
+                check: function(content) {
+                    if (go.utils.is_valid_name(content)) {
+                        return null;  // vumi expects null or undefined if check passes
+                    } else {
+                        return $(get_error_text(name));
+                    }
+                },
                 next: 'state_id_type'
             });
         });
 
-        // ChoiceState state_id_type
+        // ChoiceState st-09
         self.add('state_id_type', function(name) {
             return new ChoiceState(name, {
                 question: $(questions[name]),
                 error: $(get_error_text(name)),
                 choices: [
-                    new Choice('ugandan_id', $('Ugandan ID')),
-                    new Choice('other', $('None/other'))
+                    new Choice('ugandan_id', $("Ugandan National Identity Number")),
+                    new Choice('other', $("Other"))
                 ],
                 next: function(choice) {
                     return choice.value === 'ugandan_id'
@@ -275,7 +312,7 @@ go.app = function() {
             });
         });
 
-        // FreeText state_nin
+        // FreeText st-10
         self.add('state_nin', function(name) {
             return new FreeText(name, {
                 question: $(questions[name]),
@@ -283,7 +320,7 @@ go.app = function() {
             });
         });
 
-        // FreeText state_mother_birth_day
+        // FreeText st-17
         self.add('state_mother_birth_day', function(name) {
             return new FreeText(name, {
                 question: $(questions[name]),
@@ -298,7 +335,7 @@ go.app = function() {
             });
         });
 
-        // PaginatedChoiceState state_mother_birth_month
+        // PaginatedChoiceState st-18 / st-19
         self.add('state_mother_birth_month', function(name) {
             return new PaginatedChoiceState(name, {
                 question: $(questions[name]),
@@ -308,24 +345,24 @@ go.app = function() {
                 more: $('More'),
                 back: $('Back'),
                 choices: [
-                    new Choice('01', $('Jan')),
-                    new Choice('02', $('Feb')),
-                    new Choice('03', $('Mar')),
-                    new Choice('04', $('Apr')),
+                    new Choice('01', $('January')),
+                    new Choice('02', $('February')),
+                    new Choice('03', $('March')),
+                    new Choice('04', $('April')),
                     new Choice('05', $('May')),
                     new Choice('06', $('June')),
                     new Choice('07', $('July')),
-                    new Choice('08', $('Aug')),
-                    new Choice('09', $('Sep')),
-                    new Choice('10', $('Oct')),
-                    new Choice('11', $('Nov')),
-                    new Choice('12', $('Dec'))
+                    new Choice('08', $('August')),
+                    new Choice('09', $('September')),
+                    new Choice('10', $('October')),
+                    new Choice('11', $('November')),
+                    new Choice('12', $('December'))
                 ],
                 next: 'state_mother_birth_year'
             });
         });
 
-        // FreeText state_mother_birth_year
+        // FreeText st-20
         self.add('state_mother_birth_year', function(name) {
             return new FreeText(name, {
                 question: $(questions[name]),
@@ -340,25 +377,35 @@ go.app = function() {
             });
         });
 
-        // ChoiceState state_msg_language
+        // ChoiceState st-11
         self.add('state_msg_language', function(name) {
             return new ChoiceState(name, {
                 question: $(questions[name]),
                 error: $(get_error_text(name)),
                 choices: [
                     new Choice('english', $('English')),
-                    new Choice('rukiga', $('Rukiga')),
+                    new Choice('runyakore', $('Runyakore')),
                     new Choice('lusoga', $('Lusoga'))
                 ],
-                next: function(choice) {
-                    return choice.value === 'english'
-                        ? 'state_end_thank_you_enter'
-                        : 'state_end_thank_translate_enter';
-                }
+                next: 'state_hiv_messages'
             });
         });
 
-        self.states.add('state_end_thank_you_enter', function(name) {
+        // ChoiceState st-12
+        self.add('state_hiv_messages', function(name) {
+            return new ChoiceState(name, {
+                question: $(questions[name]),
+                error: $(get_error_text(name)),
+                choices: [
+                    new Choice('yes_hiv_msgs', $('Yes')),
+                    new Choice('no_hiv_msgs', $('No'))
+                ],
+                next: 'state_end_thank_you_enter'
+            });
+        });
+
+        // Interstitial
+        self.add('state_end_thank_you_enter', function(name) {
             return self.im.outbound.send_to_user({
                     endpoint: 'sms',
                     content: $(smss[name])
@@ -368,27 +415,8 @@ go.app = function() {
                 });
         });
 
-
-        // EndState state_end_thank_you
+        // EndState st-13
         self.add('state_end_thank_you', function(name) {
-            return new EndState(name, {
-                text: $(questions[name]),
-                next: 'state_start'
-            });
-        });
-
-        self.states.add('state_end_thank_translate_enter', function(name) {
-            return self.im.outbound.send_to_user({
-                    endpoint: 'sms',
-                    content: $(smss[name])
-                })
-                .then(function() {
-                    return self.states.create('state_end_thank_translate');
-                });
-        });
-
-        // EndState state_end_thank_translate
-        self.add('state_end_thank_translate', function(name) {
             return new EndState(name, {
                 text: $(questions[name]),
                 next: 'state_start'
