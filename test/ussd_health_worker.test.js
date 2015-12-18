@@ -4,7 +4,7 @@ var AppTester = vumigo.AppTester;
 var _ = require('lodash');
 var assert = require('assert');
 
-describe("familyconnect app", function() {
+describe("familyconnect health worker app", function() {
     describe("for ussd use - auth on", function() {
         var app;
         var tester;

@@ -8,13 +8,13 @@ module.exports = function (grunt) {
         paths: {
             src: {
                 app: {
-                    ussdapp: 'src/ussdapp.js',
+                    ussd_health_worker: 'src/ussd_health_worker.js',
                     smsapp: 'src/smsapp.js'
                 },
-                ussdapp: [
+                ussd_health_worker: [
                     'src/index.js',
                     'src/utils.js',
-                    '<%= paths.src.app.ussdapp %>',
+                    '<%= paths.src.app.ussd_health_worker %>',
                     'src/init.js'
                 ],
                 smsapp: [
@@ -28,15 +28,15 @@ module.exports = function (grunt) {
                 ]
             },
             dest: {
-                ussdapp: 'go-app-ussd.js',
+                ussd_health_worker: 'go-app-ussd_health_worker.js',
                 smsapp: 'go-app-sms.js'
             },
             test: {
-                ussdapp: [
+                ussd_health_worker: [
                     'test/setup.js',
                     'src/utils.js',
-                    '<%= paths.src.app.ussdapp %>',
-                    'test/ussdapp.test.js'
+                    '<%= paths.src.app.ussd_health_worker %>',
+                    'test/ussd_health_worker.test.js'
                 ],
                 smsapp: [
                     'test/setup.js',
@@ -77,9 +77,9 @@ module.exports = function (grunt) {
                 ].join('\n')
             },
 
-            ussdapp: {
-                src: ['<%= paths.src.ussdapp %>'],
-                dest: '<%= paths.dest.ussdapp %>'
+            ussd_health_worker: {
+                src: ['<%= paths.src.ussd_health_worker %>'],
+                dest: '<%= paths.dest.ussd_health_worker %>'
             },
 
             smsapp: {
@@ -93,8 +93,8 @@ module.exports = function (grunt) {
             options: {
                 reporter: 'spec'
             },
-            test_ussdapp: {
-                src: ['<%= paths.test.ussdapp %>']
+            test_ussd_health_worker: {
+                src: ['<%= paths.test.ussd_health_worker %>']
             },
             test_smsapp: {
                 src: ['<%= paths.test.smsapp %>']

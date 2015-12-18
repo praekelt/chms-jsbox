@@ -406,11 +406,6 @@ go.app = function() {
                         return self.states.create('state_auth_code');
                     }
                 });
-            // if (self.im.config.pre_auth === 'on') {
-            //     return self.states.create('state_auth_code');
-            // } else {
-            //     return self.states.create('state_msg_receiver');
-            // }
         });
 
 
