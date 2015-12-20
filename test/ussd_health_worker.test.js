@@ -544,13 +544,13 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("complete flow - other ID, lusoga, no hiv msgs", function() {
+            it("complete flow - mother, other ID, lusoga, no hiv msgs", function() {
                 return tester
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
+                        , '2'  // state_msg_receiver - mother to be
                         , '0713627893'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -576,7 +576,7 @@ describe("familyconnect health worker app", function() {
                         var sms = smses[0];
                         assert.equal(smses.length,1);
                         assert.equal(sms.content,
-                            "Welcome to FamilyConnect. Mary's FamilyConnect ID is 7777.  Write it down and give it to the Nurse at your next clinic visit."
+                            "Welcome to FamilyConnect Mary. Your FamilyConnect ID is 7777. Write it down and give it to the Nurse at your next clinic visit."
                         );
                         assert.equal(sms.to_addr,'082111');
                     })

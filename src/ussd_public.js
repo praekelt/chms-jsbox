@@ -4,7 +4,6 @@ go.app = function() {
     var App = vumigo.App;
     var Choice = vumigo.states.Choice;
     var ChoiceState = vumigo.states.ChoiceState;
-    var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
     var EndState = vumigo.states.EndState;
     var FreeText = vumigo.states.FreeText;
 
@@ -52,40 +51,19 @@ go.app = function() {
                 "Welcome to FamilyConnect. Please choose your language:",
             "state_permission":
                 "Welcome to FamilyConnect. Do you have permission?",
+            "state_permission_required":
+                "Sorry, you need permission.",
             "state_manage_msisdn":
                 "Please enter the number you would like to manage.",
+            "state_change_menu":
+                "Select:",
 
-
-            "state_auth_code":
-                "Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345",
             "state_msg_receiver":
                 "Please select who will receive the messages on their phone:",
-            "state_msisdn":
-                "Please enter the cellphone number which the messages will be sent to. For example, 0713627893",
-            "state_household_head_name":
-                "Please enter the first name of the Head of the Household of the Pregnant woman. For example, Isaac.",
-            "state_household_head_surname":
-                "Please enter the surname of the Head of the Household of the pregnant woman. For example, Mbire.",
             "state_last_period_month":
                 "Please select the month when the woman had her last period:",
             "state_last_period_day":
                 "What day did her last period start on? (For example, 12)",
-            "state_mother_name":
-                "Mother name",
-            "state_mother_surname":
-                "Mother surname",
-            "state_id_type":
-                "What kind of identification does the pregnant woman have?",
-            "state_nin":
-                "Please enter her National Identity Number (NIN).",
-            "state_mother_birth_day":
-                "Please enter the day the she was born. For example, 12.",
-            "state_mother_birth_month":
-                "Please select the month of year the Mother was born:",
-            "state_mother_birth_year":
-                "Please enter the year the mother was born. For example, 1986.",
-            "state_msg_language":
-                "Which language would they want to receive messages in?",
             "state_hiv_messages":
                 "Would they like to receive additional messages about HIV?",
             "state_end_thank_you":
@@ -208,6 +186,14 @@ go.app = function() {
             });
         });
 
+        // EndState permission required
+        self.add('state_permission_required', function(name) {
+            return new EndState(name, {
+                text: $(questions[name]),
+                next: 'state_start'
+            });
+        });
+
         // FreeText st-B
         self.add('state_manage_msisdn', function(name) {
             return new FreeText(name, {
@@ -230,7 +216,7 @@ go.app = function() {
 
         self.add('state_check_registered_user', function(name, opts) {
             return go.utils
-                .check_user_is_registered(opts.msisdn)
+                .check_is_registered(opts.msisdn)
                 .then(function(is_registered) {
                     if (is_registered) {
                         return self.states.create('state_change_menu');
@@ -248,7 +234,7 @@ go.app = function() {
                 choices: [
                     new Choice('state_check_baby_subscription', $('Start baby SMSs')),
                     new Choice('state_change_language', $('Update language')),
-                    new Choice('state_change_number', $("Change the number which gets SMSs`")),
+                    new Choice('state_change_number', $("Change the number which gets SMSs")),
                     new Choice('state_optout_reason', $("Stop SMSs")),
                 ],
                 next: function(choice) {
@@ -259,25 +245,6 @@ go.app = function() {
 
 
     // REGISTRATION STATES
-
-        // FreeText st-B
-        self.add('state_auth_code', function(name) {
-            return new FreeText(name, {
-                question: $(questions[name]),
-                check: function(content) {
-                    return go.utils
-                        .validate_personnel_code(self.im, content)
-                        .then(function(valid_clinic_code) {
-                            if (valid_clinic_code) {
-                                return null;  // vumi expects null or undefined if check passes
-                            } else {
-                                return $(get_error_text(name));
-                            }
-                        });
-                },
-                next: 'state_msg_receiver'
-            });
-        });
 
         // ChoiceState st-01
         self.add('state_msg_receiver', function(name) {
@@ -290,51 +257,6 @@ go.app = function() {
                     new Choice('trusted_friend', $("Trusted friend"))
                 ],
                 error: $(get_error_text(name)),
-                next: 'state_msisdn'
-            });
-        });
-
-        // FreeText st-02
-        self.add('state_msisdn', function(name) {
-            return new FreeText(name, {
-                question: $(questions[name]),
-                check: function(content) {
-                    if (go.utils.is_valid_msisdn(content)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
-                        return $(get_error_text(name));
-                    }
-                },
-                next: 'state_household_head_name'
-            });
-        });
-
-        // FreeText st-03
-        self.add('state_household_head_name', function(name) {
-            return new FreeText(name, {
-                question: $(questions[name]),
-                check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
-                        return $(get_error_text(name));
-                    }
-                },
-                next: 'state_household_head_surname'
-            });
-        });
-
-        // FreeText st-04
-        self.add('state_household_head_surname', function(name) {
-            return new FreeText(name, {
-                question: $(questions[name]),
-                check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
-                        return $(get_error_text(name));
-                    }
-                },
                 next: 'state_last_period_month'
             });
         });
@@ -362,132 +284,6 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_mother_name'
-            });
-        });
-
-        // FreeText st-07
-        self.add('state_mother_name', function(name) {
-            return new FreeText(name, {
-                question: $(questions[name]),
-                check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
-                        return $(get_error_text(name));
-                    }
-                },
-                next: 'state_mother_surname'
-            });
-        });
-
-        // FreeText st-08
-        self.add('state_mother_surname', function(name) {
-            return new FreeText(name, {
-                question: $(questions[name]),
-                check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
-                        return $(get_error_text(name));
-                    }
-                },
-                next: 'state_id_type'
-            });
-        });
-
-        // ChoiceState st-09
-        self.add('state_id_type', function(name) {
-            return new ChoiceState(name, {
-                question: $(questions[name]),
-                error: $(get_error_text(name)),
-                choices: [
-                    new Choice('ugandan_id', $("Ugandan National Identity Number")),
-                    new Choice('other', $("Other"))
-                ],
-                next: function(choice) {
-                    return choice.value === 'ugandan_id'
-                        ? 'state_nin'
-                        : 'state_mother_birth_day';
-                }
-            });
-        });
-
-        // FreeText st-10
-        self.add('state_nin', function(name) {
-            return new FreeText(name, {
-                question: $(questions[name]),
-                next: 'state_msg_language'
-            });
-        });
-
-        // FreeText st-17
-        self.add('state_mother_birth_day', function(name) {
-            return new FreeText(name, {
-                question: $(questions[name]),
-                check: function(content) {
-                    if (go.utils.is_valid_day_of_month(content)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
-                        return $(get_error_text(name));
-                    }
-                },
-                next: 'state_mother_birth_month'
-            });
-        });
-
-        // PaginatedChoiceState st-18 / st-19
-        self.add('state_mother_birth_month', function(name) {
-            return new PaginatedChoiceState(name, {
-                question: $(questions[name]),
-                error: $(get_error_text(name)),
-                characters_per_page: 160,
-                options_per_page: null,
-                more: $('More'),
-                back: $('Back'),
-                choices: [
-                    new Choice('01', $('January')),
-                    new Choice('02', $('February')),
-                    new Choice('03', $('March')),
-                    new Choice('04', $('April')),
-                    new Choice('05', $('May')),
-                    new Choice('06', $('June')),
-                    new Choice('07', $('July')),
-                    new Choice('08', $('August')),
-                    new Choice('09', $('September')),
-                    new Choice('10', $('October')),
-                    new Choice('11', $('November')),
-                    new Choice('12', $('December'))
-                ],
-                next: 'state_mother_birth_year'
-            });
-        });
-
-        // FreeText st-20
-        self.add('state_mother_birth_year', function(name) {
-            return new FreeText(name, {
-                question: $(questions[name]),
-                check: function(content) {
-                    if (go.utils.is_valid_year(content)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
-                        return $(get_error_text(name));
-                    }
-                },
-                next: 'state_msg_language'
-            });
-        });
-
-        // ChoiceState st-11
-        self.add('state_msg_language', function(name) {
-            return new ChoiceState(name, {
-                question: $(questions[name]),
-                error: $(get_error_text(name)),
-                choices: [
-                    new Choice('english', $('English')),
-                    new Choice('runyakore', $('Runyakore')),
-                    new Choice('lusoga', $('Lusoga'))
-                ],
                 next: 'state_hiv_messages'
             });
         });
@@ -509,7 +305,7 @@ go.app = function() {
         self.add('state_end_thank_you_enter', function(name) {
             return self.im.outbound.send_to_user({
                     endpoint: 'sms',
-                    content: $(get_sms_text()).context({
+                    content: $(get_sms_text(self.im.user.answers.state_msg_receiver)).context({
                         mother_name: self.im.user.answers.state_mother_name,
                         familyconnect_id: '7777'
                     })

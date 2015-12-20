@@ -415,7 +415,7 @@ go.app = function() {
         self.add('state_end_thank_you_enter', function(name) {
             return self.im.outbound.send_to_user({
                     endpoint: 'sms',
-                    content: $(get_sms_text()).context({
+                    content: $(get_sms_text(self.im.user.answers.state_msg_receiver)).context({
                         mother_name: self.im.user.answers.state_mother_name,
                         familyconnect_id: '7777'
                     })
