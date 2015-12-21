@@ -94,6 +94,9 @@ go.app = function() {
                 "Would they like to receive additional messages about HIV?",
             "state_end_thank_you":
                 "Thank you. The pregnant woman will now receive messages.",
+
+            "state_end_general":
+                "Thank you for using the FamilyConnect service."
         };
 
         var smss = {
@@ -303,6 +306,14 @@ go.app = function() {
 
         // EndState st-02
         self.add('state_end_baby', function(name) {
+            return new EndState(name, {
+                text: $(questions[name]),
+                next: 'state_start'
+            });
+        });
+
+        // EndState st-18
+        self.add('state_end_general', function(name) {
             return new EndState(name, {
                 text: $(questions[name]),
                 next: 'state_start'

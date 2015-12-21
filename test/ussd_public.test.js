@@ -373,6 +373,35 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
+            it("to state_end_general", function() {
+                return tester
+                    .setup.user.addr('082333')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "1"  // state_change_menu - baby
+                        , "2"  // state_already_baby - exit
+                    )
+                    .check.interaction({
+                        state: 'state_end_general',
+                        reply: "Thank you for using the FamilyConnect service."
+                    })
+                    .run();
+            });
+            it("back to state_change_menu", function() {
+                return tester
+                    .setup.user.addr('082333')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "1"  // state_change_menu - baby
+                        , "1"  // state_already_baby - back to main menu
+                    )
+                    .check.interaction({
+                        state: 'state_change_menu'
+                    })
+                    .run();
+            });
 
             it("to state_change_language", function() {
                 return tester
