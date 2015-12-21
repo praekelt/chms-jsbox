@@ -14,7 +14,7 @@ describe("familyconnect health worker app", function() {
             tester = new AppTester(app);
 
             tester
-                .setup.char_limit(180)
+                .setup.char_limit(182)
                 .setup.config.app({
                     name: 'familyconnect',
                     channel: '*120*8864*0000#',

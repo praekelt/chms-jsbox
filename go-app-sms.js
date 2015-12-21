@@ -30,7 +30,7 @@ go.utils = {
     check_msisdn_hcp: function(msisdn) {
         return Q()
             .then(function(q_response) {
-                return msisdn === '082222';
+                return msisdn === '082222' || msisdn === '082333';
             });
     },
 
@@ -44,14 +44,21 @@ go.utils = {
     check_contact_recognised: function(msisdn) {
         return Q()
             .then(function(q_response) {
-                return msisdn === '082222';
+                return msisdn === '082222' || msisdn === '082333';
             });
     },
 
     check_is_registered: function(msisdn) {
         return Q()
             .then(function(q_response) {
-                return msisdn === '082222';
+                return msisdn === '082222' || msisdn === '082333';
+            });
+    },
+
+    check_baby_subscription: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082333';
             });
     },
 

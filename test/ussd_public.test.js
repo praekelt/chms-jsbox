@@ -14,7 +14,7 @@ describe("familyconnect health worker app", function() {
             tester = new AppTester(app);
 
             tester
-                .setup.char_limit(180)
+                .setup.char_limit(182)
                 .setup.config.app({
                     name: 'familyconnect',
                     channel: '*120*8864*0000#',
@@ -50,6 +50,15 @@ describe("familyconnect health worker app", function() {
                         msisdn: '+082222',
                         extra: {},
                         key: "contact_key_082222",
+                        user_account: "contact_user_account"
+                    });
+                })
+                .setup(function(api) {
+                    // registered user 082333 - existing baby subscription
+                    api.contacts.add({
+                        msisdn: '+082333',
+                        extra: {},
+                        key: "contact_key_082333",
                         user_account: "contact_user_account"
                     });
                 })
@@ -326,6 +335,216 @@ describe("familyconnect health worker app", function() {
                             "Welcome to FamilyConnect. 's FamilyConnect ID is 7777.  Write it down and give it to the Nurse at your next clinic visit."
                         );
                         assert.equal(sms.to_addr,'082222');
+                    })
+                    .run();
+            });
+        });
+
+        describe.only("Change testing", function() {
+            it("to state_end_baby", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "1"  // state_change_menu - baby
+                    )
+                    .check.interaction({
+                        state: 'state_end_baby',
+                        reply: "You will receive baby messages."
+                    })
+                    .run();
+            });
+            it("to state_already_baby", function() {
+                return tester
+                    .setup.user.addr('082333')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "1"  // state_change_menu - baby
+                    )
+                    .check.interaction({
+                        state: 'state_already_baby',
+                        reply: [
+                            "You are already registered for baby messages.",
+                            "1. Back to main menu",
+                            "2. Exit"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+
+            it("to state_change_language", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "2"  // state_change_menu - change language
+                    )
+                    .check.interaction({
+                        state: 'state_change_language',
+                        reply: [
+                            "New language?",
+                            "1. English",
+                            "2. Runyakore",
+                            "3. Lusoga"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+            it("to state_end_language", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "2"  // state_change_menu - change language
+                        , "3"  // state_change_language - Lusoga
+                    )
+                    .check.interaction({
+                        state: 'state_end_language',
+                        reply: "New language set."
+                    })
+                    .run();
+            });
+
+            it("to state_change_number", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "3"  // state_change_menu - change number
+                    )
+                    .check.interaction({
+                        state: 'state_change_number',
+                        reply: "New number?"
+                    })
+                    .run();
+            });
+            it("to state_change_recipient", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "3"  // state_change_menu - change number
+                        , "0820020002"  // state_change_number
+                    )
+                    .check.interaction({
+                        state: 'state_change_recipient',
+                        reply: [
+                            "New recipient?",
+                            "1. Head of the Household",
+                            "2. Mother to be",
+                            "3. Family member",
+                            "4. Trusted friend"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+            it("to state_end_recipient", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "3"  // state_change_menu - change number
+                        , "0820020002"  // state_change_number
+                        , "1"  // state_change_recipient - head of household
+                    )
+                    .check.interaction({
+                        state: 'state_end_recipient',
+                        reply: "New recipient/number set."
+                    })
+                    .run();
+            });
+
+            it("to state_optout_reason", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "4"  // state_change_menu - optout
+                    )
+                    .check.interaction({
+                        state: 'state_optout_reason',
+                        reply: [
+                            "Select optout reason:",
+                            "1. Mother miscarried",
+                            "2. Baby stillborn",
+                            "3. Baby passed away",
+                            "4. Messages not useful",
+                            "5. Other"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+            it("to state_loss_subscription", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "4"  // state_change_menu - optout
+                        , "1"  // state_optout_reason - other
+                    )
+                    .check.interaction({
+                        state: 'state_loss_subscription',
+                        reply: [
+                            "Do you want loss messages?",
+                            "1. Yes",
+                            "2. No"
+                        ].join('\n')
+                    })
+                    .run();
+            });
+            it("to state_end_loss_subscription", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "4"  // state_change_menu - optout
+                        , "1"  // state_optout_reason - other
+                        , "1"  // state_loss_subscription - yes
+                    )
+                    .check.interaction({
+                        state: 'state_end_loss_subscription',
+                        reply: "Loss messages will be sent."
+                    })
+                    .run();
+            });
+            it("to state_end_optout (loss)", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "4"  // state_change_menu - optout
+                        , "1"  // state_optout_reason - other
+                        , "2"  // state_loss_subscription - no
+                    )
+                    .check.interaction({
+                        state: 'state_end_optout',
+                        reply: "Opted out."
+                    })
+                    .run();
+            });
+            it("to state_end_optout (non-loss)", function() {
+                return tester
+                    .setup.user.addr('082222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_permission - change number to manage
+                        , "4"  // state_change_menu - optout
+                        , "5"  // state_optout_reason - other
+                    )
+                    .check.interaction({
+                        state: 'state_end_optout',
+                        reply: "Opted out."
                     })
                     .run();
             });
