@@ -363,18 +363,6 @@ go.app = function() {
                 "Thank you for using the FamilyConnect service."
         };
 
-        var smss = {
-            "mother":
-                "Welcome to FamilyConnect {{mother_name}}. Your FamilyConnect ID is {{familyconnect_id}}. Write it down and give it to the Nurse at your next clinic visit.",
-            "gatekeeper":
-                "Welcome to FamilyConnect. {{mother_name}}'s FamilyConnect ID is {{familyconnect_id}}.  Write it down and give it to the Nurse at your next clinic visit."
-        };
-
-        get_sms_text = function(msg_receiver) {
-            return msg_receiver === 'mother_to_be'
-                ? smss.mother : smss.gatekeeper;
-        };
-
         var errors = {
             "state_auth_code":
                 "That code is not recognised. Please enter your 5 digit personnel code.",
@@ -752,22 +740,8 @@ go.app = function() {
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
                 ],
-                next: 'state_end_thank_you_enter'
+                next: 'state_end_thank_you'
             });
-        });
-
-        // Interstitial
-        self.add('state_end_thank_you_enter', function(name) {
-            return self.im.outbound.send_to_user({
-                    endpoint: 'sms',
-                    content: $(get_sms_text(self.im.user.answers.state_msg_receiver)).context({
-                        mother_name: self.im.user.answers.state_mother_name,
-                        familyconnect_id: '7777'
-                    })
-                })
-                .then(function() {
-                    return self.states.create('state_end_thank_you');
-                });
         });
 
         // EndState st-13

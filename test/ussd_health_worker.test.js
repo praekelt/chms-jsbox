@@ -531,17 +531,6 @@ describe("familyconnect health worker app", function() {
                         state: 'state_end_thank_you',
                         reply: "Thank you. The pregnant woman will now receive messages."
                     })
-                    .check(function(api) {
-                        var smses = _.where(api.outbound.store, {
-                            endpoint: 'sms'
-                        });
-                        var sms = smses[0];
-                        assert.equal(smses.length,1);
-                        assert.equal(sms.content,
-                            "Welcome to FamilyConnect. Sharon's FamilyConnect ID is 7777.  Write it down and give it to the Nurse at your next clinic visit."
-                        );
-                        assert.equal(sms.to_addr,'082111');
-                    })
                     .run();
             });
             it("complete flow - mother, other ID, lusoga, no hiv msgs", function() {
@@ -568,17 +557,6 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_end_thank_you',
                         reply: "Thank you. The pregnant woman will now receive messages."
-                    })
-                    .check(function(api) {
-                        var smses = _.where(api.outbound.store, {
-                            endpoint: 'sms'
-                        });
-                        var sms = smses[0];
-                        assert.equal(smses.length,1);
-                        assert.equal(sms.content,
-                            "Welcome to FamilyConnect Mary. Your FamilyConnect ID is 7777. Write it down and give it to the Nurse at your next clinic visit."
-                        );
-                        assert.equal(sms.to_addr,'082111');
                     })
                     .run();
             });
