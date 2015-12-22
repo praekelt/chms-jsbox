@@ -27,10 +27,38 @@ go.utils = {
             && no_redirects.indexOf(im.user.state.name) === -1;
     },
 
+    check_msisdn_hcp: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222' || msisdn === '082333';
+            });
+    },
+
     validate_personnel_code: function(im, content) {
         return Q()
             .then(function(q_response) {
                 return content === '12345';
+            });
+    },
+
+    check_contact_recognised: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222' || msisdn === '082333';
+            });
+    },
+
+    check_is_registered: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222' || msisdn === '082333';
+            });
+    },
+
+    check_baby_subscription: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082333';
             });
     },
 

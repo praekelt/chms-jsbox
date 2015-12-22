@@ -8,13 +8,20 @@ module.exports = function (grunt) {
         paths: {
             src: {
                 app: {
-                    ussdapp: 'src/ussdapp.js',
+                    ussd_health_worker: 'src/ussd_health_worker.js',
+                    ussd_public: 'src/ussd_public.js',
                     smsapp: 'src/smsapp.js'
                 },
-                ussdapp: [
+                ussd_health_worker: [
                     'src/index.js',
                     'src/utils.js',
-                    '<%= paths.src.app.ussdapp %>',
+                    '<%= paths.src.app.ussd_health_worker %>',
+                    'src/init.js'
+                ],
+                ussd_public: [
+                    'src/index.js',
+                    'src/utils.js',
+                    '<%= paths.src.app.ussd_public %>',
                     'src/init.js'
                 ],
                 smsapp: [
@@ -28,15 +35,22 @@ module.exports = function (grunt) {
                 ]
             },
             dest: {
-                ussdapp: 'go-app-ussd.js',
+                ussd_health_worker: 'go-app-ussd_health_worker.js',
+                ussd_public: 'go-app-ussd_public.js',
                 smsapp: 'go-app-sms.js'
             },
             test: {
-                ussdapp: [
+                ussd_health_worker: [
                     'test/setup.js',
                     'src/utils.js',
-                    '<%= paths.src.app.ussdapp %>',
-                    'test/ussdapp.test.js'
+                    '<%= paths.src.app.ussd_health_worker %>',
+                    'test/ussd_health_worker.test.js'
+                ],
+                ussd_public: [
+                    'test/setup.js',
+                    'src/utils.js',
+                    '<%= paths.src.app.ussd_public %>',
+                    'test/ussd_public.test.js'
                 ],
                 smsapp: [
                     'test/setup.js',
@@ -76,12 +90,14 @@ module.exports = function (grunt) {
                     '\n' // Newline between banner and content.
                 ].join('\n')
             },
-
-            ussdapp: {
-                src: ['<%= paths.src.ussdapp %>'],
-                dest: '<%= paths.dest.ussdapp %>'
+            ussd_health_worker: {
+                src: ['<%= paths.src.ussd_health_worker %>'],
+                dest: '<%= paths.dest.ussd_health_worker %>'
             },
-
+            ussd_public: {
+                src: ['<%= paths.src.ussd_public %>'],
+                dest: '<%= paths.dest.ussd_public %>'
+            },
             smsapp: {
                 src: ['<%= paths.src.smsapp %>'],
                 dest: '<%= paths.dest.smsapp %>'
@@ -93,8 +109,11 @@ module.exports = function (grunt) {
             options: {
                 reporter: 'spec'
             },
-            test_ussdapp: {
-                src: ['<%= paths.test.ussdapp %>']
+            test_ussd_health_worker: {
+                src: ['<%= paths.test.ussd_health_worker %>']
+            },
+            test_ussd_public: {
+                src: ['<%= paths.test.ussd_public %>']
             },
             test_smsapp: {
                 src: ['<%= paths.test.smsapp %>']
