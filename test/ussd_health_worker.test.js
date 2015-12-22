@@ -1,8 +1,6 @@
 var vumigo = require('vumigo_v02');
 var fixtures = require('./fixtures');
 var AppTester = vumigo.AppTester;
-var _ = require('lodash');
-var assert = require('assert');
 
 describe("familyconnect health worker app", function() {
     describe("for ussd use - auth on", function() {
