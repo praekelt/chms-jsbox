@@ -168,7 +168,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_msisdn',
-                        reply: "Please enter the cellphone number which the messages will be sent to. For example, 0713627893"
+                        reply: "Please enter the mobile number which the messages will be sent to. For example, 0803304899"
                     })
                     .run();
             });
@@ -179,11 +179,11 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                     )
                     .check.interaction({
                         state: 'state_household_head_name',
-                        reply: "Please enter the first name of the Head of the Household of the Pregnant woman. For example, Isaac."
+                        reply: "Please enter the first name of the Head of the Household. For example: Isaac."
                     })
                     .run();
             });
@@ -194,12 +194,12 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                     )
                     .check.interaction({
                         state: 'state_household_head_surname',
-                        reply: "Please enter the surname of the Head of the Household of the pregnant woman. For example, Mbire."
+                        reply: "Please enter the surname of the Head of the Household. For example: Mbire."
                     })
                     .run();
             });
@@ -210,14 +210,14 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                     )
                     .check.interaction({
                         state: 'state_last_period_month',
                         reply: [
-                            "Please select the month when the woman had her last period:",
+                            "When did the woman have her last period:",
                             "1. July 15",
                             "2. June 15",
                             "3. May 15",
@@ -238,14 +238,14 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
                     )
                     .check.interaction({
                         state: 'state_last_period_day',
-                        reply: "What day did her last period start on? (For example, 12)"
+                        reply: "What day of the month did the woman start her last period? For example, 12."
                     })
                     .run();
             });
@@ -256,7 +256,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -264,7 +264,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_mother_name',
-                        reply: "Mother name"
+                        reply: "Please enter the name of the woman. For example: Sharon"
                     })
                     .run();
             });
@@ -275,7 +275,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -284,7 +284,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_mother_surname',
-                        reply: "Mother surname"
+                        reply: "Please enter the surname of the woman. For example: Nalule"
                     })
                     .run();
             });
@@ -295,7 +295,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -306,7 +306,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_id_type',
                         reply: [
-                            "What kind of identification does the pregnant woman have?",
+                            "What kind of identification does the woman have?",
                             "1. Ugandan National Identity Number",
                             "2. Other"
                         ].join('\n')
@@ -321,7 +321,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -332,7 +332,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_nin',
-                        reply: "Please enter her National Identity Number (NIN)."
+                        reply: "Please enter the woman's National Identity Number:"
                     })
                     .run();
             });
@@ -343,7 +343,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -372,7 +372,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -394,7 +394,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -429,7 +429,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -453,7 +453,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -484,7 +484,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -513,7 +513,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -538,7 +538,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '2'  // state_msg_receiver - mother to be
-                        , '0713627893'  // state_msisdn
+                        , '0803304899'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - July 2015
