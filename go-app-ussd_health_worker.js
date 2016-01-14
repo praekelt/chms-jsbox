@@ -317,35 +317,35 @@ go.app = function() {
             "state_msg_receiver":
                 "Please select who will receive the messages on their phone:",
             "state_msisdn":
-                "Please enter the cellphone number which the messages will be sent to. For example, 0713627893",
+                "Please enter the mobile number which the messages will be sent to. For example, 0803304899",
             "state_household_head_name":
-                "Please enter the first name of the Head of the Household of the Pregnant woman. For example, Isaac.",
+                "Please enter the first name of the Head of the Household. For example: Isaac.",
             "state_household_head_surname":
-                "Please enter the surname of the Head of the Household of the pregnant woman. For example, Mbire.",
+                "Please enter the surname of the Head of the Household. For example: Mbire.",
             "state_last_period_month":
-                "Please select the month when the woman had her last period:",
+                "When did the woman have her last period:",
             "state_last_period_day":
-                "What day did her last period start on? (For example, 12)",
+                "What day of the month did the woman start her last period? For example, 12.",
             "state_mother_name":
-                "Mother name",
+                "Please enter the name of the woman. For example: Sharon",
             "state_mother_surname":
-                "Mother surname",
+                "Please enter the surname of the woman. For example: Nalule",
             "state_id_type":
-                "What kind of identification does the pregnant woman have?",
+                "What kind of identification does the woman have?",
             "state_nin":
-                "Please enter her National Identity Number (NIN).",
+                "Please enter the woman's National Identity Number:",
             "state_mother_birth_day":
-                "Please enter the day the she was born. For example, 12.",
+                "Please enter the day the woman was born. For example, 12.",
             "state_mother_birth_month":
-                "Please select the month of year the Mother was born:",
+                "Please select the month of birth:",
             "state_mother_birth_year":
                 "Please enter the year the mother was born. For example, 1986.",
             "state_msg_language":
-                "Which language would they want to receive messages in?",
+                "What language would they want to receive these messages in?",
             "state_hiv_messages":
                 "Would they like to receive additional messages about HIV?",
             "state_end_thank_you":
-                "Thank you. The pregnant woman will now receive messages.",
+                "Thank you. The woman's FamilyConnect ID is [XXX XXX XXXX]. They will now start receiving messages",
         };
 
         var errors = {
@@ -380,7 +380,7 @@ go.app = function() {
                 question: $(questions[name]),
                 choices: [
                     new Choice('continue', $("Yes")),
-                    new Choice('restart', $("Start new registration"))
+                    new Choice('restart', $("No, start new registration"))
                 ],
                 next: function(choice) {
                     return go.utils
