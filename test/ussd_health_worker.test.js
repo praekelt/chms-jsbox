@@ -356,7 +356,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_msg_language',
                         reply: [
-                            "Which language would they want to receive messages in?",
+                            "What language would they want to receive these messages in?",
                             "1. English",
                             "2. Runyakore",
                             "3. Lusoga",
@@ -383,7 +383,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_mother_birth_day',
-                        reply: "Please enter the day the she was born. For example, 12."
+                        reply: "Please enter the day the woman was born. For example, 12."
                     })
                     .run();
             });
@@ -407,7 +407,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_mother_birth_month',
                         reply: [
-                            "Please select the month of year the Mother was born:",
+                            "Please select the month of birth:",
                             "1. January",
                             "2. February",
                             "3. March",
@@ -417,7 +417,9 @@ describe("familyconnect health worker app", function() {
                             "7. July",
                             "8. August",
                             "9. September",
-                            "10. More"
+                            "10. October",
+                            "11. November",
+                            "12. December"
                         ].join('\n')
                     })
                     .run();
@@ -468,7 +470,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_msg_language',
                         reply: [
-                            "Which language would they want to receive messages in?",
+                            "What language would they want to receive these messages in?",
                             "1. English",
                             "2. Runyakore",
                             "3. Lusoga",
@@ -527,7 +529,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. The pregnant woman will now receive messages."
+                        reply: "Thank you. The woman's FamilyConnect ID is [XXX XXX XXXX]. They will now start receiving messages"
                     })
                     .run();
             });
@@ -554,7 +556,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. The pregnant woman will now receive messages."
+                        reply: "Thank you. The woman's FamilyConnect ID is [XXX XXX XXXX]. They will now start receiving messages"
                     })
                     .run();
             });

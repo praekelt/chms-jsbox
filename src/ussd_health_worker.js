@@ -71,17 +71,17 @@ go.app = function() {
             "state_nin":
                 "Please enter the woman's National Identity Number:",
             "state_mother_birth_day":
-                "Please enter the day the she was born. For example, 12.",
+                "Please enter the day the woman was born. For example, 12.",
             "state_mother_birth_month":
-                "Please select the month of year the Mother was born:",
+                "Please select the month of birth:",
             "state_mother_birth_year":
                 "Please enter the year the mother was born. For example, 1986.",
             "state_msg_language":
-                "Which language would they want to receive messages in?",
+                "What language would they want to receive these messages in?",
             "state_hiv_messages":
                 "Would they like to receive additional messages about HIV?",
             "state_end_thank_you":
-                "Thank you. The pregnant woman will now receive messages.",
+                "Thank you. The woman's FamilyConnect ID is [XXX XXX XXXX]. They will now start receiving messages",
         };
 
         var errors = {
