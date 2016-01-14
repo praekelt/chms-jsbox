@@ -380,7 +380,7 @@ go.app = function() {
                 question: $(questions[name]),
                 choices: [
                     new Choice('continue', $("Yes")),
-                    new Choice('restart', $("Start new registration"))
+                    new Choice('restart', $("No, start new registration"))
                 ],
                 next: function(choice) {
                     return go.utils
