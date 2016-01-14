@@ -312,15 +312,15 @@ go.app = function() {
             "state_timed_out":
                 "You have an incomplete registration. Would you like to continue with this registration?",
             "state_language":
-                "Welcome to FamilyConnect. Please choose your language:",
+                "Welcome to FamilyConnect. Please choose your language",
             "state_permission":
-                "Welcome to FamilyConnect. Do you have permission?",
+                "Welcome to FamilyConnect. Do you have permission to manage the number [MSISDN]?",
             "state_permission_required":
                 "Sorry, you need permission.",
             "state_manage_msisdn":
-                "Please enter the number you would like to manage.",
+                "Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number.",
             "state_change_menu":
-                "Select:",
+                "Choose:",
 
             "state_already_baby":
                 "You are already registered for baby messages.",
@@ -328,39 +328,39 @@ go.app = function() {
                 "You will receive baby messages.",
 
             "state_change_language":
-                "New language?",
+                "What language would this person like to receive these messages in?",
             "state_end_language":
-                "New language set.",
+                "Thank you. Your language preference has been updated and you will start to receive SMSs in this language.",
 
             "state_change_number":
-                "New number?",
+                "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899",
             "state_change_recipient":
-                "New recipient?",
+                "Who will receive these messages?",
             "state_end_recipient":
-                "New recipient/number set.",
+                "Thank you. The number which receives messages has been updated.",
 
             "state_optout_reason":
-                "Select optout reason:",
+                "Please tell us why you no longer want to receive messages so we can help you further.",
             "state_loss_subscription":
-                "Do you want loss messages?",
+                "We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?",
             "state_end_loss_subscription":
-                "Loss messages will be sent.",
+                "Thank you. You will now receive messages to support you during this difficult time.",
             "state_end_optout":
-                "Opted out.",
+                "Thank you. You will no longer receive messages",
 
             "state_msg_receiver":
-                "Please select who will receive the messages on their phone:",
+                "Who will receive these messages?",
             "state_last_period_month":
-                "Please select the month when the woman had her last period:",
+                "When did the woman have her last period",
             "state_last_period_day":
-                "What day did her last period start on? (For example, 12)",
+                "What day of the month did the woman start her last period? For example, 12.",
             "state_hiv_messages":
                 "Would they like to receive additional messages about HIV?",
             "state_end_thank_you":
-                "Thank you. The pregnant woman will now receive messages.",
+                "Thank you. Your FamilyConnect ID is [XXX-XXX-XXXX]. You will receive an SMS with it shortly.",
 
             "state_end_general":
-                "Thank you for using the FamilyConnect service."
+                "Thank you for using the FamilyConnect service"
         };
 
         var errors = {
@@ -395,7 +395,7 @@ go.app = function() {
                 question: $(questions[name]),
                 choices: [
                     new Choice('continue', $("Yes")),
-                    new Choice('restart', $("Start new registration"))
+                    new Choice('restart', $("No, start from the beginning"))
                 ],
                 next: function(choice) {
                     return go.utils

@@ -80,7 +80,7 @@ describe("familyconnect health worker app", function() {
                         reply: [
                             "You have an incomplete registration. Would you like to continue with this registration?",
                             "1. Yes",
-                            "2. Start new registration"
+                            "2. No, start from the beginning"
                         ].join('\n')
                     })
                     .run();
@@ -129,7 +129,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_language',
                         reply: [
-                            "Welcome to FamilyConnect. Please choose your language:",
+                            "Welcome to FamilyConnect. Please choose your language",
                             "1. English",
                             "2. Runyakore",
                             "3. Lusoga"
@@ -147,7 +147,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_permission',
                         reply: [
-                            "Welcome to FamilyConnect. Do you have permission?",
+                            "Welcome to FamilyConnect. Do you have permission to manage the number [MSISDN]?",
                             "1. Yes",
                             "2. No",
                             "3. Change the number I'd like to manage"
@@ -164,7 +164,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_permission',
                         reply: [
-                            "Welcome to FamilyConnect. Do you have permission?",
+                            "Welcome to FamilyConnect. Do you have permission to manage the number [MSISDN]?",
                             "1. Yes",
                             "2. No",
                             "3. Change the number I'd like to manage"
@@ -181,7 +181,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_manage_msisdn',
-                        reply: "Please enter the number you would like to manage."
+                        reply: "Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number."
                     })
                     .run();
             });
@@ -196,7 +196,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_msg_receiver',
                         reply: [
-                            "Please select who will receive the messages on their phone:",
+                            "Who will receive these messages?",
                             "1. Head of the Household",
                             "2. Mother to be",
                             "3. Family member",
@@ -215,7 +215,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_change_menu',
                         reply: [
-                            "Select:",
+                            "Choose:",
                             "1. Start baby SMSs",
                             "2. Update language",
                             "3. Change the number which gets SMSs",
@@ -255,7 +255,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_last_period_month',
                         reply: [
-                            "Please select the month when the woman had her last period:",
+                            "When did the woman have her last period",
                             "1. July 15",
                             "2. June 15",
                             "3. May 15",
@@ -281,7 +281,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_last_period_day',
-                        reply: "What day did her last period start on? (For example, 12)"
+                        reply: "What day of the month did the woman start her last period? For example, 12."
                     })
                     .run();
             });
@@ -321,7 +321,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. The pregnant woman will now receive messages."
+                        reply: "Thank you. Your FamilyConnect ID is [XXX-XXX-XXXX]. You will receive an SMS with it shortly."
                     })
                     .run();
             });
@@ -371,7 +371,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_general',
-                        reply: "Thank you for using the FamilyConnect service."
+                        reply: "Thank you for using the FamilyConnect service"
                     })
                     .run();
             });
@@ -401,7 +401,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_change_language',
                         reply: [
-                            "New language?",
+                            "What language would this person like to receive these messages in?",
                             "1. English",
                             "2. Runyakore",
                             "3. Lusoga"
@@ -420,7 +420,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_language',
-                        reply: "New language set."
+                        reply: "Thank you. Your language preference has been updated and you will start to receive SMSs in this language."
                     })
                     .run();
             });
@@ -435,7 +435,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_change_number',
-                        reply: "New number?"
+                        reply: "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899"
                     })
                     .run();
             });
@@ -451,7 +451,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_change_recipient',
                         reply: [
-                            "New recipient?",
+                            "Who will receive these messages?",
                             "1. Head of the Household",
                             "2. Mother to be",
                             "3. Family member",
@@ -472,7 +472,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_recipient',
-                        reply: "New recipient/number set."
+                        reply: "Thank you. The number which receives messages has been updated."
                     })
                     .run();
             });
@@ -488,7 +488,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_optout_reason',
                         reply: [
-                            "Select optout reason:",
+                            "Please tell us why you no longer want to receive messages so we can help you further.",
                             "1. Mother miscarried",
                             "2. Baby stillborn",
                             "3. Baby passed away",
@@ -510,7 +510,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_loss_subscription',
                         reply: [
-                            "Do you want loss messages?",
+                            "We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?",
                             "1. Yes",
                             "2. No"
                         ].join('\n')
@@ -529,7 +529,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_loss_subscription',
-                        reply: "Loss messages will be sent."
+                        reply: "Thank you. You will now receive messages to support you during this difficult time."
                     })
                     .run();
             });
@@ -545,7 +545,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_optout',
-                        reply: "Opted out."
+                        reply: "Thank you. You will no longer receive messages"
                     })
                     .run();
             });
@@ -560,7 +560,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_optout',
-                        reply: "Opted out."
+                        reply: "Thank you. You will no longer receive messages"
                     })
                     .run();
             });
