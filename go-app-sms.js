@@ -49,10 +49,16 @@ go.utils = {
         return raw;
     },
 
-    validate_personnel_code: function(im, content) {
-        return Q()
-            .then(function(q_response) {
-                return content === '12345';
+    find_healthworker_with_personnel_code: function(im, personnel_code) {
+        var params = {
+            "details__personnel_code": personnel_code
+        };
+        return go.utils
+            .service_api_call('identities', 'get', params, null, 'identities/search/', im)
+            .then(function(json_get_response) {
+                var healthworkers_found = json_get_response.data.results;
+                // Return the first healthworker if found
+                return healthworkers_found[0];
             });
     },
 
