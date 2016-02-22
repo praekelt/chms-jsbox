@@ -256,8 +256,8 @@ describe("familyconnect health worker app", function() {
                         state: 'state_last_period_month',
                         reply: [
                             "When did the woman have her last period",
-                            "1. July 15",
-                            "2. June 15",
+                            "1. Jul 15",
+                            "2. Jun 15",
                             "3. May 15",
                             "4. Apr 15",
                             "5. Mar 15",

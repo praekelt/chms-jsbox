@@ -15,9 +15,16 @@ describe("familyconnect health worker app", function() {
                 .setup.char_limit(182)
                 .setup.config.app({
                     name: 'familyconnect',
+                    country_code: '256',  // uganda
                     channel: '*120*8864*0000#',
                     testing_today: '2015-04-03 06:07:08.999',
                     metric_store: 'chms_uganda_test',  // _env at the end
+                    services: {
+                        identities: {
+                            api_token: 'test_token_identities',
+                            url: "http://localhost:8001/api/v1/"
+                        }
+                    },
                     control: {
                         username: "test_user",
                         api_key: "test_key",
@@ -33,24 +40,6 @@ describe("familyconnect health worker app", function() {
                 .setup(function(api) {
                     api.metrics.stores = {'chms_uganda_test': {}};
                 })
-                .setup(function(api) {
-                    // new user 082111
-                    api.contacts.add({
-                        msisdn: '+082111',
-                        extra: {},
-                        key: "contact_key_082111",
-                        user_account: "contact_user_account"
-                    });
-                })
-                .setup(function(api) {
-                    // hcp recognised user 082222
-                    api.contacts.add({
-                        msisdn: '+082222',
-                        extra: {},
-                        key: "contact_key_082222",
-                        user_account: "contact_user_account"
-                    });
-                })
                 ;
         });
 
@@ -59,7 +48,7 @@ describe("familyconnect health worker app", function() {
         describe("Timeout testing", function() {
             it("should ask about continuing", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('082222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -78,7 +67,7 @@ describe("familyconnect health worker app", function() {
             });
             it("should continue", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('082222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -93,7 +82,7 @@ describe("familyconnect health worker app", function() {
             });
             it("should restart", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('082222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -113,7 +102,7 @@ describe("familyconnect health worker app", function() {
         describe("HCP recognised user", function() {
             it("should not be asked for personnel code", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                     )
@@ -129,7 +118,7 @@ describe("familyconnect health worker app", function() {
         describe("Flow testing", function() {
             it("to state_auth_code", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('082222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                     )
@@ -144,7 +133,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                     )
                     .check.interaction({
                         state: 'state_msg_receiver',
@@ -218,8 +206,8 @@ describe("familyconnect health worker app", function() {
                         state: 'state_last_period_month',
                         reply: [
                             "When did the woman have her last period:",
-                            "1. July 15",
-                            "2. June 15",
+                            "1. Jul 15",
+                            "2. Jun 15",
                             "3. May 15",
                             "4. Apr 15",
                             "5. Mar 15",
@@ -567,7 +555,7 @@ describe("familyconnect health worker app", function() {
         describe("Validation testing", function() {
             it("validate state_auth_code", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('082222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , 'aaaaa'  // state_auth_code - invalid personnel code
@@ -580,7 +568,7 @@ describe("familyconnect health worker app", function() {
             });
             it("validate state_msg_receiver", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('082222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
