@@ -443,10 +443,9 @@ go.app = function() {
         // ChoiceState st-05
         self.add('state_last_period_month', function(name) {
             var today = go.utils.get_today(self.im.config);
-            var start_month = today.month();
             return new ChoiceState(name, {
                 question: $(questions[name]),
-                choices: go.utils.make_month_choices($, start_month, 9, -1),
+                choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
                 error: $(get_error_text(name)),
                 next: 'state_last_period_day'
             });

@@ -62,7 +62,7 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
+                        , '12345'               // state_auth_code - personnel code
                         , {session_event: 'close'}
                         , {session_event: 'new'}
                     )
@@ -81,10 +81,10 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
+                        , '12345'               // state_auth_code - personnel code
                         , {session_event: 'close'}
                         , {session_event: 'new'}
-                        , '1'  // state_timed_out - continue
+                        , '1'                   // state_timed_out - continue
                     )
                     .check.interaction({
                         state: 'state_msg_receiver'
@@ -96,10 +96,10 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
+                        , '12345'               // state_auth_code - personnel code
                         , {session_event: 'close'}
                         , {session_event: 'new'}
-                        , '2'  // state_timed_out - restart
+                        , '2'                   // state_timed_out - restart
                     )
                     .check.interaction({
                         state: 'state_auth_code'
@@ -144,7 +144,7 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
+                        , '12345'               // state_auth_code - personnel code
                     )
                     .check.interaction({
                         state: 'state_msg_receiver',
@@ -163,8 +163,8 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
+                        , '12345'               // state_auth_code - personnel code
+                        , '1'                   // state_msg_receiver - head of household
                     )
                     .check.interaction({
                         state: 'state_msisdn',
@@ -177,9 +177,9 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
-                        , '0803304899'  // state_msisdn
+                        , '12345'               // state_auth_code - personnel code
+                        , '1'                   // state_msg_receiver - head of household
+                        , '0803304899'          // state_msisdn
                     )
                     .check.interaction({
                         state: 'state_household_head_name',
@@ -192,10 +192,10 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
-                        , '0803304899'  // state_msisdn
-                        , 'Isaac'  // state_household_head_name
+                        , '12345'               // state_auth_code - personnel code
+                        , '1'                   // state_msg_receiver - head of household
+                        , '0803304899'          // state_msisdn
+                        , 'Isaac'               // state_household_head_name
                     )
                     .check.interaction({
                         state: 'state_household_head_surname',
@@ -208,25 +208,25 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('082111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
-                        , '0803304899'  // state_msisdn
-                        , 'Isaac'  // state_household_head_name
-                        , 'Mbire'  // state_household_head_surname
+                        , '12345'               // state_auth_code - personnel code
+                        , '1'                   // state_msg_receiver - head of household
+                        , '0803304899'          // state_msisdn
+                        , 'Isaac'               // state_household_head_name
+                        , 'Mbire'               // state_household_head_surname
                     )
                     .check.interaction({
                         state: 'state_last_period_month',
                         reply: [
                             "When did the woman have her last period:",
-                            "1. July 15",
-                            "2. June 15",
-                            "3. May 15",
-                            "4. Apr 15",
-                            "5. Mar 15",
-                            "6. Feb 15",
-                            "7. Jan 15",
-                            "8. Dec 14",
-                            "9. Nov 14"
+                            "1. Apr 15",
+                            "2. Mar 15",
+                            "3. Feb 15",
+                            "4. Jan 15",
+                            "5. Dec 14",
+                            "6. Nov 14",
+                            "7. Oct 14",
+                            "8. Sep 14",
+                            "9. Aug 14"
                         ].join('\n')
                     })
                     .run();
