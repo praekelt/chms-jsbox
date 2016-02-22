@@ -27,28 +27,6 @@ go.utils = {
             });
     },
 
-    normalize_msisdn: function(raw, country_code) {
-        // don't touch shortcodes
-        if (raw.length <= 5) {
-            return raw;
-        }
-        // remove chars that are not numbers or +
-        raw = raw.replace(/[^0-9+]/g);
-        if (raw.substr(0,2) === '00') {
-            return '+' + raw.substr(2);
-        }
-        if (raw.substr(0,1) === '0') {
-            return '+' + country_code + raw.substr(1);
-        }
-        if (raw.substr(0,1) === '+') {
-            return raw;
-        }
-        if (raw.substr(0, country_code.length) === country_code) {
-            return '+' + raw;
-        }
-        return raw;
-    },
-
     validate_personnel_code: function(im, content) {
         return Q()
             .then(function(q_response) {
@@ -156,34 +134,32 @@ go.utils = {
             .toUpperCase();         // capitalise
     },
 
-    // SERVICE API CALL
-
-    service_api_call: function (service, method, params, payload, endpoint, im) {
+    control_api_call: function (method, params, payload, endpoint, im) {
         var http = new JsonApi(im, {
             headers: {
-                'Authorization': ['Token ' + im.config.services[service].api_token]
+                'Authorization': ['Token ' + im.config.control.api_key]
             }
         });
         switch (method) {
             case "post":
-                return http.post(im.config.services[service].url + endpoint, {
+                return http.post(im.config.control.url + endpoint, {
                     data: payload
                 });
             case "get":
-                return http.get(im.config.services[service].url + endpoint, {
+                return http.get(im.config.control.url + endpoint, {
                     params: params
                 });
             case "patch":
-                return http.patch(im.config.services[service].url + endpoint, {
+                return http.patch(im.config.control.url + endpoint, {
                     data: payload
                 });
             case "put":
-                return http.put(im.config.services[service].url + endpoint, {
+                return http.put(im.config.control.url + endpoint, {
                     params: params,
                   data: payload
                 });
             case "delete":
-                return http.delete(im.config.services[service].url + endpoint);
+                return http.delete(im.config.control.url + endpoint);
             }
     },
 
@@ -192,7 +168,7 @@ go.utils = {
             to_addr: contact.msisdn
         };
         return go.utils
-        .service_api_call("identities", "get", params, null, 'subscription/', im)
+        .control_api_call("get", params, null, 'subscription/', im)
         .then(function(json_result) {
             // make all subscriptions inactive
             var subscriptions = json_result.data;
@@ -205,7 +181,7 @@ go.utils = {
                     updated_subscription.active = false;
                     // store the patch calls to be made
                     patch_calls.push(function() {
-                        return go.utils.service_api_call("identities", "patch", {}, updated_subscription, endpoint, im);
+                        return go.utils.control_api_call("patch", {}, updated_subscription, endpoint, im);
                     });
                     clean = false;
                 }
@@ -274,88 +250,6 @@ go.utils = {
                 address_value: contact.msisdn
             }),
         ]);
-    },
-
-    // IDENTITY HANDLING
-
-    get_identity_by_address: function(address, im) {
-        // Searches the Identity Store for all identities with the provided address.
-        // Returns the first identity object found
-        // Address should be an object {address_type: address}, eg.
-        // {'msisdn': '0821234444'}, {'email': 'me@example.com'}
-        var address_type = Object.keys(address)[0];
-        var address_val = address[address_type];
-        var params = {};
-        var search_string = 'details__addresses__' + address_type;
-        params[search_string] = address_val;
-
-        return go.utils
-            .service_api_call('identities', 'get', params, null, 'identities/search/', im)
-            .then(function(json_get_response) {
-                var identities_found = json_get_response.data.results;
-                // Return the first identity in the list of identities
-                return (identities_found.length > 0)
-                    ? identities_found[0]
-                    : null;
-            });
-    },
-
-    // Create a new identity
-    create_identity: function(im, address, communicate_through_id, operator_id) {
-        var payload = {};
-
-        // compile base payload
-        if (address) {
-            var address_type = Object.keys(address);
-            var addresses = {};
-            addresses[address_type] = {};
-            addresses[address_type][address[address_type]] = {};
-            payload.details = {
-                "default_addr_type": "msisdn",
-                "addresses": addresses
-            };
-        }
-
-        if (communicate_through_id) {
-            payload.communicate_through = communicate_through_id;
-        }
-
-        // add operator_id if available
-        if (operator_id) {
-            payload.operator = operator_id;
-        }
-
-        return go.utils
-            .service_api_call("identities", "post", null, payload, 'identities/', im)
-            .then(function(json_post_response) {
-                var contact_created = json_post_response.data;
-                // Return the contact
-                return contact_created;
-            });
-    },
-
-    // Gets a contact if it exists, otherwise creates a new one
-    get_or_create_identity: function(address, im, operator_id) {
-        if (address.msisdn) {
-            address.msisdn = go.utils
-                .normalize_msisdn(address.msisdn, im.config.country_code);
-        }
-        return go.utils
-            // Get contact id using msisdn
-            .get_identity_by_address(address, im)
-            .then(function(contact) {
-                if (contact !== null) {
-                    // If contact exists, return the id
-                    return contact;
-                } else {
-                    // If contact doesn't exist, create it
-                    return go.utils
-                        .create_identity(im, address, null, operator_id)
-                        .then(function(contact) {
-                            return contact;
-                        });
-                }
-            });
     },
 
     "commas": "commas"

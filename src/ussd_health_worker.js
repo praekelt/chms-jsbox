@@ -140,12 +140,10 @@ go.app = function() {
     // START STATE
 
         self.add('state_start', function(name) {
-            // Reset user answers when restarting the app
-            self.im.user.answers = {};
             return go.utils
-                .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
-                .then(function(msisdn_recognised) {
-                    if (msisdn_recognised) {
+                .check_msisdn_hcp(self.im.user.addr)
+                .then(function(hcp_recognised) {
+                    if (hcp_recognised) {
                         return self.states.create('state_msg_receiver');
                     } else {
                         return self.states.create('state_auth_code');
