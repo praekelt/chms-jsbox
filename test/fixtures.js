@@ -6,7 +6,7 @@ module.exports = function() {
 return [
 
     // authentication
-        // get contact 082111 by msisdn (to validate msisdn check & personnel_code check st-B))
+        // get contact 082111 by msisdn (to validate msisdn check)
         {
             'request': {
                 'method': 'GET',
@@ -134,7 +134,7 @@ return [
             }
         },
 
-        // post
+        // register contact 082222
         {
             'repeatable': true,  // enables time-out testing
             'request': {

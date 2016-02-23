@@ -349,7 +349,7 @@ go.utils = {
             .get_identity_by_address(address, im)
             .then(function(contact) {
                 if (contact !== null) {
-                    // If contact exists, return the id
+                    // If contact exists, return the contact
                     return contact;
                 } else {
                     // If contact doesn't exist, create it
