@@ -6,7 +6,7 @@ module.exports = function() {
 return [
 
     // authentication
-        // get contact 082111 by msisdn (to validate msisdn check)
+        // get identity 082111 by msisdn (to validate msisdn check)
         {
             'request': {
                 'method': 'GET',
@@ -26,8 +26,8 @@ return [
                     "next": null,
                     "previous": null,
                     "results": [{
-                        "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000000001/",
-                        "id": "cb245673-aa41-4302-ac47-00000000001",
+                        "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082111/",
+                        "id": "cb245673-aa41-4302-ac47-00000082111",
                         "version": 1,
                         "details": {
                             "default_addr_type": "msisdn",
@@ -45,7 +45,7 @@ return [
             }
         },
 
-        // get contact 082111 by msisdn (passing personnel_code check st-B))
+        // get identity 082111 by personnel code 12345 (passing personnel_code check st-B))
         {
             'request': {
                 'method': 'GET',
@@ -65,8 +65,8 @@ return [
                     "next": null,
                     "previous": null,
                     "results": [{
-                        "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000000001/",
-                        "id": "cb245673-aa41-4302-ac47-00000000001",
+                        "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082111/",
+                        "id": "cb245673-aa41-4302-ac47-00000082111",
                         "version": 1,
                         "details": {
                             "default_addr_type": "msisdn",
@@ -83,7 +83,7 @@ return [
             }
         },
 
-        // get contact 082111 by msisdn (failing personnel_code check st-B))
+        // get identity 082111 by personnel code aaaaa (failing personnel_code check st-B))
         {
             'request': {
                 'method': 'GET',
@@ -107,9 +107,7 @@ return [
             }
         },
 
-
-    // time-out testing
-        // get unregistered contact 082222 by msisdn
+        // get unregistered identity 082222 by msisdn
         {
             'repeatable': true,  // enables time-out testing
             'request': {
@@ -134,7 +132,7 @@ return [
             }
         },
 
-        // register contact 082222
+        // create identity 082222
         {
             'repeatable': true,  // enables time-out testing
             'request': {
@@ -158,8 +156,8 @@ return [
             'response': {
                 "code": 201,
                 "data": {
-                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000000002/",
-                    "id": "cb245673-aa41-4302-ac47-00000000002",
+                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082222/",
+                    "id": "cb245673-aa41-4302-ac47-00000082222",
                     "version": 1,
                     "details": {
                         "default_addr_type": "msisdn",
