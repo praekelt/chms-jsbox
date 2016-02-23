@@ -1,5 +1,177 @@
+// Contact roles
+// 082111: registered health worker
+// 082222: unregistered person
+
 module.exports = function() {
 return [
+
+    // authentication
+        // get identity 082111 by msisdn (to validate msisdn check)
+        {
+            'request': {
+                'method': 'GET',
+                'params': {
+                    'details__addresses__msisdn': '+25682111'
+                },
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/search/',
+            },
+            'response': {
+                "code": 200,
+                "data": {
+                    "count": 1,
+                    "next": null,
+                    "previous": null,
+                    "results": [{
+                        "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082111/",
+                        "id": "cb245673-aa41-4302-ac47-00000082111",
+                        "version": 1,
+                        "details": {
+                            "default_addr_type": "msisdn",
+                            "personnel_code": "12345",
+                            "addresses": {
+                                "msisdn": {
+                                    "+25682111": {}
+                                }
+                            }
+                        },
+                        "created_at": "2015-07-10T06:13:29.693272Z",
+                        "updated_at": "2015-07-10T06:13:29.693298Z"
+                    }]
+                }
+            }
+        },
+
+        // get identity 082111 by personnel code 12345 (passing personnel_code check st-B))
+        {
+            'request': {
+                'method': 'GET',
+                'params': {
+                    'details__personnel_code': '12345'
+                },
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/search/',
+            },
+            'response': {
+                "code": 200,
+                "data": {
+                    "count": 1,
+                    "next": null,
+                    "previous": null,
+                    "results": [{
+                        "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082111/",
+                        "id": "cb245673-aa41-4302-ac47-00000082111",
+                        "version": 1,
+                        "details": {
+                            "default_addr_type": "msisdn",
+                            "addresses": {
+                                "msisdn": {
+                                    "+25682111": {}
+                                }
+                            }
+                        },
+                        "created_at": "2015-07-10T06:13:29.693272Z",
+                        "updated_at": "2015-07-10T06:13:29.693298Z"
+                    }]
+                }
+            }
+        },
+
+        // get identity 082111 by personnel code aaaaa (failing personnel_code check st-B))
+        {
+            'request': {
+                'method': 'GET',
+                'params': {
+                    'details__personnel_code': 'aaaaa'
+                },
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/search/',
+            },
+            'response': {
+                "code": 200,
+                "data": {
+                    "count": 1,
+                    "next": null,
+                    "previous": null,
+                    "results": []
+                }
+            }
+        },
+
+        // get unregistered identity 082222 by msisdn
+        {
+            'repeatable': true,  // enables time-out testing
+            'request': {
+                'method': 'GET',
+                'params': {
+                    'details__addresses__msisdn': '+25682222'
+                },
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/search/',
+            },
+            'response': {
+                "code": 200,
+                "data": {
+                    "count": 1,
+                    "next": null,
+                    "previous": null,
+                    "results": []
+                }
+            }
+        },
+
+        // create identity 082222
+        {
+            'repeatable': true,  // enables time-out testing
+            'request': {
+                'method': 'POST',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/',
+                'data':  {
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+25682222": {}
+                            }
+                        }
+                    }
+                }
+            },
+            'response': {
+                "code": 201,
+                "data": {
+                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082222/",
+                    "id": "cb245673-aa41-4302-ac47-00000082222",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+25682222": {}
+                            }
+                        }
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            }
+        },
 
     // Optout 064001
         // #get #subscription #064001
@@ -7,12 +179,12 @@ return [
             'request': {
                 'method': 'GET',
                 'params': {
-                    'to_addr': '+064001'
+                    'details__addresses__msisdn': '+064001'
                 },
                 'headers': {
                     'Authorization': ['Token test_key']
                 },
-                'url': 'http://127.0.0.1:8000/subscription/subscription/',
+                'url': 'http://localhost:8001/api/v1/subscription/',
             },
             'response': {
                 "code": 200,
@@ -25,7 +197,7 @@ return [
                 },
                 "data": [
                     {
-                        "url": "http://127.0.0.1:8000/subscription/subscription/1/",
+                        "url": "http://localhost:8001/api/v1/subscription/1/",
                         "active": false,
                         "completed": false,
                         "contact_key": "contact_key_064001",
@@ -40,7 +212,7 @@ return [
                         "updated_at": "2014-08-05T11:22:34.838996",
                     },
                     {
-                        "url": "http://127.0.0.1:8000/subscription/subscription/2/",
+                        "url": "http://localhost:8001/api/v1/subscription/2/",
                         "active": true,
                         "completed": false,
                         "contact_key": "contact_key_064001",
@@ -64,9 +236,9 @@ return [
                 'headers': {
                     'Authorization': ['Token test_key']
                 },
-                'url': 'http://127.0.0.1:8000/subscription/subscription/2/',
+                'url': 'http://localhost:8001/api/v1/subscription/2/',
                 "data": {
-                    "url": "http://127.0.0.1:8000/subscription/subscription/2/",
+                    "url": "http://localhost:8001/api/v1/subscription/2/",
                     "active": false,
                     "completed": false,
                     "contact_key": "contact_key_064001",

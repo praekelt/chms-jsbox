@@ -140,10 +140,13 @@ go.app = function() {
     // START STATE
 
         self.add('state_start', function(name) {
+            // Reset user answers when restarting the app
+            self.im.user.answers = {};
             return go.utils
-                .check_msisdn_hcp(self.im.user.addr)
-                .then(function(hcp_recognised) {
-                    if (hcp_recognised) {
+                .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
+                .then(function(user) {
+                    self.im.user.set_answer('user_id', user.id);
+                    if (user.details.personnel_code) {
                         return self.states.create('state_msg_receiver');
                     } else {
                         return self.states.create('state_auth_code');
@@ -160,9 +163,10 @@ go.app = function() {
                 question: $(questions[name]),
                 check: function(content) {
                     return go.utils
-                        .validate_personnel_code(self.im, content)
-                        .then(function(valid_clinic_code) {
-                            if (valid_clinic_code) {
+                        .find_healthworker_with_personnel_code(self.im, content)
+                        .then(function(healthworker) {
+                            if (healthworker) {
+                                self.im.user.set_answer('operator_id', healthworker.id);
                                 return null;  // vumi expects null or undefined if check passes
                             } else {
                                 return $(get_error_text(name));
