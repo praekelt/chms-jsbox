@@ -184,6 +184,38 @@ go.utils = {
             }
     },
 
+    get_active_subscriptions_by_identity_id: function(identity_id, im) {
+        // returns all active subscriptions - for unlikely case where there
+        // is more than one active subscription
+        var params = {
+            contact: identity_id,
+            active: "True"
+        };
+
+        return go.utils
+            .service_api_call("subscriptions", "get", params, null, "subscriptions/", im)
+            .then(function(json_get_response) {
+                return json_get_response.data.results;
+            });
+    },
+
+    get_active_subscription_by_identity_id: function(identity_id, im) {
+        // returns first active subscription found
+        return go.utils
+            .get_active_subscriptions_by_identity_id(identity_id, im)
+            .then(function(subscriptions) {
+                return subscriptions[0];
+            });
+    },
+
+    has_active_subscriptions: function(identity_id, im) {
+        return go.utils
+            .get_active_subscriptions_by_identity_id(identity_id, im)
+            .then(function(subscriptions) {
+                return subscriptions.length > 0;
+            });
+    },
+
     subscription_unsubscribe_all: function(contact, im) {
         var params = {
             'details__addresses__msisdn': contact.msisdn
