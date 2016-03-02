@@ -454,7 +454,7 @@ go.app = function() {
             "state_msisdn":
                 "Please enter the mobile number which the messages will be sent to. For example, 0803304899",
             "state_msisdn_already_registered":
-                "[MSISDN] is already registered for messages.",
+                "{{msisdn}} is already registered for messages.",
             "state_household_head_name":
                 "Please enter the first name of the Head of the Household. For example: Isaac.",
             "state_household_head_surname":
@@ -641,7 +641,7 @@ go.app = function() {
         // ChoiceState st-2B
         self.add('state_msisdn_already_registered', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: $(questions[name]).context({msisdn: self.im.user.answers.state_msisdn}),
                 error: $(get_error_text(name)),
                 choices: [
                     new Choice('continue', $("Continue registration")),

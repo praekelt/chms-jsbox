@@ -176,7 +176,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_msisdn_already_registered',
                         reply: [
-                            "[MSISDN] is already registered for messages.",
+                            "08200000444 is already registered for messages.",
                             "1. Continue registration",
                             "2. Register a different number"
                         ].join('\n')
