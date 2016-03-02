@@ -171,12 +171,12 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000444'  // state_msisdn
+                        , '0820000444'  // state_msisdn
                     )
                     .check.interaction({
                         state: 'state_msisdn_already_registered',
                         reply: [
-                            "08200000444 is already registered for messages.",
+                            "0820000444 is already registered for messages.",
                             "1. Continue registration",
                             "2. Register a different number"
                         ].join('\n')
@@ -190,7 +190,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000555'  // state_msisdn
+                        , '0820000555'  // state_msisdn
                     )
                     .check.interaction({
                         state: 'state_household_head_name',
@@ -205,7 +205,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                     )
                     .check.interaction({
                         state: 'state_household_head_name',
@@ -220,7 +220,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                     )
                     .check.interaction({
@@ -236,7 +236,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                     )
@@ -264,7 +264,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -282,7 +282,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -301,7 +301,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -321,7 +321,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -347,7 +347,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -369,7 +369,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -398,7 +398,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -420,7 +420,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -457,7 +457,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -481,7 +481,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -512,7 +512,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -541,7 +541,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '1'  // state_msg_receiver - head of household
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - july 2015
@@ -566,7 +566,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
                         , '2'  // state_msg_receiver - mother to be
-                        , '08200000333'  // state_msisdn
+                        , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
                         , '1'  // state_last_period_month - July 2015

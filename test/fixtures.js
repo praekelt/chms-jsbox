@@ -1,9 +1,9 @@
 // Contact roles
 // 082111: registered health worker
 // 082222: unregistered person
-// 08200000333: unregistered person (with valid msidn)
-// 08200000444: registered person (with active subscriptions)
-// 08200000555: registered person (without active subscriptions)
+// 0820000333: unregistered person (with valid msisdn)
+// 0820000444: registered person (with active subscriptions)
+// 0820000555: registered person (without active subscriptions)
 
 module.exports = function() {
 return [
@@ -176,12 +176,12 @@ return [
             }
         },
 
-        // get unregistered identity 08200000333 by msisdn
+        // get unregistered identity 0820000333 by msisdn
         {
             'request': {
                 'method': 'GET',
                 'params': {
-                    'details__addresses__msisdn': '+2568200000333'
+                    'details__addresses__msisdn': '+256820000333'
                 },
                 'headers': {
                     'Authorization': ['Token test_key'],
@@ -214,7 +214,7 @@ return [
                         "default_addr_type": "msisdn",
                         "addresses": {
                             "msisdn": {
-                                "+2568200000333": {}
+                                "+256820000333": {}
                             }
                         }
                     }
@@ -230,7 +230,7 @@ return [
                         "default_addr_type": "msisdn",
                         "addresses": {
                             "msisdn": {
-                                "+2568200000333": {}
+                                "+256820000333": {}
                             }
                         }
                     },
@@ -240,12 +240,12 @@ return [
             }
         },
 
-        // get identity 08200000444 by msisdn
+        // get identity 0820000444 by msisdn
         {
             'request': {
                 'method': 'GET',
                 'params': {
-                    'details__addresses__msisdn': '+2568200000444'
+                    'details__addresses__msisdn': '+256820000444'
                 },
                 'headers': {
                     'Authorization': ['Token test_key'],
@@ -267,7 +267,7 @@ return [
                             "default_addr_type": "msisdn",
                             "addresses": {
                                 "msisdn": {
-                                    "+2568200000444": {}
+                                    "+256820000444": {}
                                 }
                             }
                         },
@@ -278,7 +278,7 @@ return [
             }
         },
 
-        // get identity 08200000444 subscriptions
+        // get identity 0820000444 subscriptions
         {
             'request': {
                 'method': 'GET',
@@ -306,7 +306,7 @@ return [
                             "default_addr_type": "msisdn",
                             "addresses": {
                                 "msisdn": {
-                                    "+2568200000444": {}
+                                    "+256820000444": {}
                                 }
                             }
                         },
@@ -317,12 +317,12 @@ return [
             }
         },
 
-        // get identity 08200000555 by msisdn
+        // get identity 0820000555 by msisdn
         {
             'request': {
                 'method': 'GET',
                 'params': {
-                    'details__addresses__msisdn': '+2568200000555'
+                    'details__addresses__msisdn': '+256820000555'
                 },
                 'headers': {
                     'Authorization': ['Token test_key'],
@@ -344,7 +344,7 @@ return [
                             "default_addr_type": "msisdn",
                             "addresses": {
                                 "msisdn": {
-                                    "+2568200000555": {}
+                                    "+256820000555": {}
                                 }
                             }
                         },
@@ -355,7 +355,7 @@ return [
             }
         },
 
-        // get identity 08200000555 subscriptions (which doesn't exist)
+        // get identity 0820000555 subscriptions (which doesn't exist)
         {
             'request': {
                 'method': 'GET',
