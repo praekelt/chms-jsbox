@@ -198,7 +198,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_household_head_name", function() {
+            it("to state_household_head_name (unregistered msisdn)", function() {
                 return tester
                     .setup.user.addr('082111')
                     .inputs(
