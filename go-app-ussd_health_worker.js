@@ -191,6 +191,38 @@ go.utils = {
             }
     },
 
+    get_active_subscriptions_by_identity_id: function(identity_id, im) {
+        // returns all active subscriptions - for unlikely case where there
+        // is more than one active subscription
+        var params = {
+            contact: identity_id,
+            active: "True"
+        };
+
+        return go.utils
+            .service_api_call("subscriptions", "get", params, null, "subscriptions/", im)
+            .then(function(json_get_response) {
+                return json_get_response.data.results;
+            });
+    },
+
+    get_active_subscription_by_identity_id: function(identity_id, im) {
+        // returns first active subscription found
+        return go.utils
+            .get_active_subscriptions_by_identity_id(identity_id, im)
+            .then(function(subscriptions) {
+                return subscriptions[0];
+            });
+    },
+
+    has_active_subscriptions: function(identity_id, im) {
+        return go.utils
+            .get_active_subscriptions_by_identity_id(identity_id, im)
+            .then(function(subscriptions) {
+                return subscriptions.length > 0;
+            });
+    },
+
     subscription_unsubscribe_all: function(contact, im) {
         var params = {
             'details__addresses__msisdn': contact.msisdn
@@ -421,6 +453,8 @@ go.app = function() {
                 "Please select who will receive the messages on their phone:",
             "state_msisdn":
                 "Please enter the mobile number which the messages will be sent to. For example, 0803304899",
+            "state_msisdn_already_registered":
+                "{{msisdn}} is already registered for messages.",
             "state_household_head_name":
                 "Please enter the first name of the Head of the Household. For example: Isaac.",
             "state_household_head_surname":
@@ -570,7 +604,54 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_household_head_name'
+                next: 'state_msisdn_check'
+            });
+        });
+
+        // interstitial
+        self.add('state_msisdn_check', function(name) {
+            return go.utils
+                // check if identity with msisdn alreay exists in db
+                .get_identity_by_address({'msisdn': go.utils.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, self.im)
+                .then(function(identity) {
+                    if (identity) {
+                        // check if identity has active? subscriptions
+                        return go.utils
+                            .has_active_subscriptions(identity.id, self.im)
+                            .then(function(hasSubscriptions) {
+                                if (hasSubscriptions) {
+                                    return self.states.create('state_msisdn_already_registered'); // should result in a rewrite of existing subscription
+                                                                                                  // info if user choses to continue registration at
+                                                                                                  // next state/screen
+                                } else {
+                                    return self.states.create('state_household_head_name');
+                                }
+                            });
+                    }
+                    else {
+                        return go.utils
+                            .create_identity(self.im, {'msisdn': go.utils.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, null, self.im.user.operator_id)
+                            .then(function(identity) {
+                                return self.states.create('state_household_head_name');
+                            });
+                    }
+                });
+        });
+
+        // ChoiceState st-2B
+        self.add('state_msisdn_already_registered', function(name) {
+            return new ChoiceState(name, {
+                question: $(questions[name]).context({msisdn: self.im.user.answers.state_msisdn}),
+                error: $(get_error_text(name)),
+                choices: [
+                    new Choice('continue', $("Continue registration")),
+                    new Choice('register', $("Register a different number"))
+                ],
+                next: function(choice) {
+                    return choice.value === 'continue'
+                        ? 'state_household_head_name'
+                        : 'state_msisdn';
+                }
             });
         });
 
