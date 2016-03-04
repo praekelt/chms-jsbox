@@ -559,7 +559,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. The woman's FamilyConnect ID is [XXX XXX XXXX]. They will now start receiving messages"
+                        reply: "Thank you. The woman's FamilyConnect ID is 1234567890. They will now start receiving messages"
                     })
                     .run();
             });
@@ -586,7 +586,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. The woman's FamilyConnect ID is [XXX XXX XXXX]. They will now start receiving messages"
+                        reply: "Thank you. The woman's FamilyConnect ID is 1234567890. They will now start receiving messages"
                     })
                     .run();
             });
