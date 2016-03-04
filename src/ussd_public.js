@@ -445,7 +445,7 @@ go.app = function() {
             var today = go.utils.get_today(self.im.config);
             return new ChoiceState(name, {
                 question: $(questions[name]),
-                choices: go.utils_project.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
+                choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
                 error: $(get_error_text(name)),
                 next: 'state_last_period_day'
             });

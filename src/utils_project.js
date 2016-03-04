@@ -1,8 +1,5 @@
 /*jshint -W083 */
 var Q = require('q');
-// var moment = require('moment');
-var vumigo = require('vumigo_v02');
-var Choice = vumigo.states.Choice;
 
 
 // Project utils libraty
@@ -59,19 +56,6 @@ go.utils_project = {
             .then(function(q_response) {
                 return msisdn === '082333';
             });
-    },
-
-    make_month_choices: function($, startDate, limit, increment, valueFormat, labelFormat) {
-        var choices = [];
-
-        var monthIterator = startDate;
-        for (var i=0; i<limit; i++) {
-            choices.push(new Choice(monthIterator.format(valueFormat),
-                                    $(monthIterator.format(labelFormat))));
-            monthIterator.add(increment, 'months');
-        }
-
-        return choices;
     },
 
     track_redials: function(contact, im, decision) {
