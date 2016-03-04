@@ -291,7 +291,7 @@ go.utils = {
 
 /*jshint -W083 */
 var Q = require('q');
-var moment = require('moment');
+// var moment = require('moment');
 var vumigo = require('vumigo_v02');
 var Choice = vumigo.states.Choice;
 
@@ -352,15 +352,15 @@ go.utils_project = {
             });
     },
 
-    get_today: function(config) {
-        var today;
-        if (config.testing_today) {
-            today = new moment(config.testing_today);
-        } else {
-            today = new moment();
-        }
-        return today;
-    },
+    // get_today: function(config) {
+    //     var today;
+    //     if (config.testing_today) {
+    //         today = new moment(config.testing_today);
+    //     } else {
+    //         today = new moment();
+    //     }
+    //     return today;
+    // },
 
     make_month_choices: function($, startDate, limit, increment, valueFormat, labelFormat) {
         var choices = [];
@@ -491,7 +491,7 @@ go.utils_project = {
     },
 
     opt_out: function(im, contact) {
-        contact.extra.optout_last_attempt = go.utils_project.get_today(im.config)
+        contact.extra.optout_last_attempt = go.utils.get_today(im.config)
             .format('YYYY-MM-DD hh:mm:ss.SSS');
 
         return Q.all([
@@ -506,7 +506,7 @@ go.utils_project = {
     },
 
     opt_in: function(im, contact) {
-        contact.extra.optin_last_attempt = go.utils_project.get_today(im.config)
+        contact.extra.optin_last_attempt = go.utils.get_today(im.config)
             .format('YYYY-MM-DD hh:mm:ss.SSS');
         return Q.all([
             im.contacts.save(contact),
@@ -1046,7 +1046,7 @@ go.app = function() {
 
         // ChoiceState st-05
         self.add('state_last_period_month', function(name) {
-            var today = go.utils_project.get_today(self.im.config);
+            var today = go.utils.get_today(self.im.config);
             return new ChoiceState(name, {
                 question: $(questions[name]),
                 choices: go.utils_project.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),

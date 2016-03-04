@@ -17,7 +17,7 @@ describe("familyconnect health worker app", function() {
                     name: 'familyconnect',
                     country_code: '256',  // uganda
                     channel: '*120*8864*0000#',
-                    testing_today: '2015-04-03 06:07:08.999',
+                    testing_today: '2015-04-03',
                     metric_store: 'chms_uganda_test',  // _env at the end
                     services: {
                         identities: {

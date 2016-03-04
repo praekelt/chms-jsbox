@@ -16,7 +16,7 @@ describe("familyconnect health worker app", function() {
                 .setup.config.app({
                     name: 'familyconnect',
                     channel: '*120*8864*0000#',
-                    testing_today: '2015-04-03 06:07:08.999',
+                    testing_today: '2015-04-03',
                     metric_store: 'chms_uganda_test',  // _env at the end
                     control: {
                         username: "test_user",

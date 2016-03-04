@@ -1,6 +1,6 @@
 /*jshint -W083 */
 var Q = require('q');
-var moment = require('moment');
+// var moment = require('moment');
 var vumigo = require('vumigo_v02');
 var Choice = vumigo.states.Choice;
 
@@ -59,16 +59,6 @@ go.utils_project = {
             .then(function(q_response) {
                 return msisdn === '082333';
             });
-    },
-
-    get_today: function(config) {
-        var today;
-        if (config.testing_today) {
-            today = new moment(config.testing_today);
-        } else {
-            today = new moment();
-        }
-        return today;
     },
 
     make_month_choices: function($, startDate, limit, increment, valueFormat, labelFormat) {
@@ -200,7 +190,7 @@ go.utils_project = {
     },
 
     opt_out: function(im, contact) {
-        contact.extra.optout_last_attempt = go.utils_project.get_today(im.config)
+        contact.extra.optout_last_attempt = go.utils.get_today(im.config)
             .format('YYYY-MM-DD hh:mm:ss.SSS');
 
         return Q.all([
@@ -215,7 +205,7 @@ go.utils_project = {
     },
 
     opt_in: function(im, contact) {
-        contact.extra.optin_last_attempt = go.utils_project.get_today(im.config)
+        contact.extra.optin_last_attempt = go.utils.get_today(im.config)
             .format('YYYY-MM-DD hh:mm:ss.SSS');
         return Q.all([
             im.contacts.save(contact),
