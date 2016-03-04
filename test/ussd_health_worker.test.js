@@ -52,7 +52,7 @@ describe("familyconnect health worker app", function() {
         describe("Timeout testing", function() {
             it("should ask about continuing", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0820000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -71,7 +71,7 @@ describe("familyconnect health worker app", function() {
             });
             it("should continue", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0820000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -86,7 +86,7 @@ describe("familyconnect health worker app", function() {
             });
             it("should restart", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0820000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -106,7 +106,7 @@ describe("familyconnect health worker app", function() {
         describe("HCP recognised user", function() {
             it("should not be asked for personnel code", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                     )
@@ -122,7 +122,7 @@ describe("familyconnect health worker app", function() {
         describe("Flow testing", function() {
             it("to state_auth_code", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0820000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                     )
@@ -134,7 +134,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_msg_receiver", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                     )
@@ -152,7 +152,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_msisdn", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -166,7 +166,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_msisdn_already_registered", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -185,7 +185,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_household_head_name (registered msisdn with no subscriptions)", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -200,7 +200,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_household_head_name (unregistered msisdn)", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -215,7 +215,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_household_head_surname", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -231,7 +231,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_last_period_month", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -259,7 +259,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_last_period_day", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -277,7 +277,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_mother_name", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -296,7 +296,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_mother_surname", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -316,7 +316,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_id_type", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -342,7 +342,7 @@ describe("familyconnect health worker app", function() {
 
             it("to state_nin", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -364,7 +364,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_msg_language (NIN)", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -393,7 +393,7 @@ describe("familyconnect health worker app", function() {
 
             it("to state_mother_birth_day", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -415,7 +415,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_mother_birth_month", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -452,7 +452,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_mother_birth_year", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -476,7 +476,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_msg_language (Other)", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -507,7 +507,7 @@ describe("familyconnect health worker app", function() {
 
             it("to state_hiv_messages", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -536,7 +536,7 @@ describe("familyconnect health worker app", function() {
 
             it("complete flow - uganda ID, english, hiv messages", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -561,7 +561,7 @@ describe("familyconnect health worker app", function() {
             });
             it("complete flow - mother, other ID, lusoga, no hiv msgs", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -593,7 +593,7 @@ describe("familyconnect health worker app", function() {
         describe("Validation testing", function() {
             it("validate state_auth_code", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0820000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , 'aaaaa'  // state_auth_code - invalid personnel code
@@ -606,7 +606,7 @@ describe("familyconnect health worker app", function() {
             });
             it("validate state_msg_receiver", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0820000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
@@ -626,7 +626,7 @@ describe("familyconnect health worker app", function() {
             });
             it("validate state_household_head_name", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
