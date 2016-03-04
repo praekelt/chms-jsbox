@@ -206,8 +206,8 @@ go.utils = {
     },
 
     get_identity: function(identity_id, im) {
-        // Gets the identity from the Identity Store
-        // Returns the identity object
+      // Gets the identity from the Identity Store
+      // Returns the identity object
 
         var endpoint = 'identities/' + identity_id + '/';
         return go.utils
@@ -218,7 +218,8 @@ go.utils = {
     },
 
     create_identity: function(im, address, communicate_through_id, operator_id) {
-        // Create a new identity
+      // Create a new identity
+      // Returns the identity object
 
         var payload = {};
         // compile base payload

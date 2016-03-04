@@ -140,7 +140,7 @@ go.app = function() {
         self.add('state_start', function(name) {
             // Reset user answers when restarting the app
             self.im.user.answers = {};
-            return go.utils_project
+            return go.utils
                 .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
                 .then(function(user) {
                     self.im.user.set_answer('user_id', user.id);
@@ -232,7 +232,7 @@ go.app = function() {
                             });
                     }
                     else {
-                        return go.utils_project
+                        return go.utils
                             .create_identity(
                                 self.im,
                                 {'msisdn': go.utils.normalize_msisdn(

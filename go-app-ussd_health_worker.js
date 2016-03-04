@@ -213,8 +213,8 @@ go.utils = {
     },
 
     get_identity: function(identity_id, im) {
-        // Gets the identity from the Identity Store
-        // Returns the identity object
+      // Gets the identity from the Identity Store
+      // Returns the identity object
 
         var endpoint = 'identities/' + identity_id + '/';
         return go.utils
@@ -225,7 +225,8 @@ go.utils = {
     },
 
     create_identity: function(im, address, communicate_through_id, operator_id) {
-        // Create a new identity
+      // Create a new identity
+      // Returns the identity object
 
         var payload = {};
         // compile base payload
@@ -339,9 +340,6 @@ go.utils_project = {
                 return msisdn === '082333';
             });
     },
-
-
-// METRICS HELPERS
 
 
 // SUBSCRIPTION HELPERS
@@ -483,64 +481,6 @@ go.utils_project = {
                 var healthworkers_found = json_get_response.data.results;
                 // Return the first healthworker if found
                 return healthworkers_found[0];
-            });
-    },
-
-    // Create a new identity
-    create_identity: function(im, address, communicate_through_id, operator_id) {
-        var payload = {};
-
-        // compile base payload
-        if (address) {
-            var address_type = Object.keys(address);
-            var addresses = {};
-            addresses[address_type] = {};
-            addresses[address_type][address[address_type]] = {};
-            payload.details = {
-                "default_addr_type": "msisdn",
-                "addresses": addresses
-            };
-        }
-
-        if (communicate_through_id) {
-            payload.communicate_through = communicate_through_id;
-        }
-
-        // add operator_id if available
-        if (operator_id) {
-            payload.operator = operator_id;
-        }
-
-        return go.utils
-            .service_api_call("identities", "post", null, payload, 'identities/', im)
-            .then(function(json_post_response) {
-                var contact_created = json_post_response.data;
-                // Return the contact
-                return contact_created;
-            });
-    },
-
-    // Gets a contact if it exists, otherwise creates a new one
-    get_or_create_identity: function(address, im, operator_id) {
-        if (address.msisdn) {
-            address.msisdn = go.utils
-                .normalize_msisdn(address.msisdn, im.config.country_code);
-        }
-        return go.utils
-            // Get contact id using msisdn
-            .get_identity_by_address(address, im)
-            .then(function(contact) {
-                if (contact !== null) {
-                    // If contact exists, return the contact
-                    return contact;
-                } else {
-                    // If contact doesn't exist, create it
-                    return go.utils_project
-                        .create_identity(im, address, null, operator_id)
-                        .then(function(contact) {
-                            return contact;
-                        });
-                }
             });
     },
 
@@ -689,7 +629,7 @@ go.app = function() {
         self.add('state_start', function(name) {
             // Reset user answers when restarting the app
             self.im.user.answers = {};
-            return go.utils_project
+            return go.utils
                 .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
                 .then(function(user) {
                     self.im.user.set_answer('user_id', user.id);
@@ -781,7 +721,7 @@ go.app = function() {
                             });
                     }
                     else {
-                        return go.utils_project
+                        return go.utils
                             .create_identity(
                                 self.im,
                                 {'msisdn': go.utils.normalize_msisdn(
