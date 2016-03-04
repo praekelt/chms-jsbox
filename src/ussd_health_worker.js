@@ -273,7 +273,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -288,7 +288,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -329,7 +329,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -344,7 +344,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));

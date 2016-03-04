@@ -141,9 +141,15 @@ go.utils = {
         return input !== '' && alpha_only.test(input);
     },
 
-    is_valid_name: function(input) {
-        // check that all chars are alphabetical
-        return go.utils.check_valid_alpha(input);
+    is_valid_name: function(input, min, max) {
+        // check that the string does not include the characters listed in the
+        // regex, and min <= input string length <= max
+        var name_check = new RegExp(
+            '(^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,123456789]{min,max}$)'
+            .replace('min', min.toString())
+            .replace('max', max.toString())
+        );
+        return input !== '' && name_check.test(input);
     },
 
 
@@ -344,17 +350,6 @@ go.utils_project = {
             .then(function(q_response) {
                 return msisdn === '082333';
             });
-    },
-
-    check_valid_alpha: function(input) {
-        // regular expression below of characters we see as invalid alphabetics; character limit of 150
-        var alpha_only = new RegExp('(^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,123456789]{1,150}$)');
-        return input !== '' && alpha_only.test(input);
-    },
-
-    is_valid_name: function(input) {
-        // check that all chars are alphabetical
-        return go.utils_project.check_valid_alpha(input);
     },
 
     get_today: function(config) {
@@ -882,7 +877,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -897,7 +892,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -938,7 +933,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -953,7 +948,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));

@@ -61,17 +61,6 @@ go.utils_project = {
             });
     },
 
-    check_valid_alpha: function(input) {
-        // regular expression below of characters we see as invalid alphabetics; character limit of 150
-        var alpha_only = new RegExp('(^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,123456789]{1,150}$)');
-        return input !== '' && alpha_only.test(input);
-    },
-
-    is_valid_name: function(input) {
-        // check that all chars are alphabetical
-        return go.utils_project.check_valid_alpha(input);
-    },
-
     get_today: function(config) {
         var today;
         if (config.testing_today) {
