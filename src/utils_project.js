@@ -58,19 +58,8 @@ go.utils_project = {
             });
     },
 
-    track_redials: function(contact, im, decision) {
-        var status = contact.extra.status || 'unregistered';
-        return Q.all([
-            im.metrics.fire.inc(['total', 'redials', 'choice_made', 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', 'choice_made', 'sum'].join('.'), 1),
-            im.metrics.fire.inc(['total', 'redials', status, 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', status, 'sum'].join('.'), 1),
-            im.metrics.fire.inc(['total', 'redials', decision, 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', decision, 'sum'].join('.'), 1),
-            im.metrics.fire.inc(['total', 'redials', status, decision, 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', status, decision, 'sum'].join('.'), 1),
-        ]);
-    },
+
+// METRICS
 
     get_clean_first_word: function(user_message) {
         return user_message

@@ -134,19 +134,15 @@ go.app = function() {
                     new Choice('restart', $("No, start from the beginning"))
                 ],
                 next: function(choice) {
-                    return go.utils_project
-                        .track_redials(self.contact, self.im, choice.value)
-                        .then(function() {
-                            if (choice.value === 'continue') {
-                                return {
-                                    name: creator_opts.name,
-                                    creator_opts: creator_opts
-                                };
-                                // return creator_opts.name;
-                            } else if (choice.value === 'restart') {
-                                return 'state_start';
-                            }
-                        });
+                    if (choice.value === 'continue') {
+                        return {
+                            name: creator_opts.name,
+                            creator_opts: creator_opts
+                        };
+                        // return creator_opts.name;
+                    } else if (choice.value === 'restart') {
+                        return 'state_start';
+                    }
                 }
             });
         });

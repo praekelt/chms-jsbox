@@ -349,19 +349,8 @@ go.utils_project = {
             });
     },
 
-    track_redials: function(contact, im, decision) {
-        var status = contact.extra.status || 'unregistered';
-        return Q.all([
-            im.metrics.fire.inc(['total', 'redials', 'choice_made', 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', 'choice_made', 'sum'].join('.'), 1),
-            im.metrics.fire.inc(['total', 'redials', status, 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', status, 'sum'].join('.'), 1),
-            im.metrics.fire.inc(['total', 'redials', decision, 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', decision, 'sum'].join('.'), 1),
-            im.metrics.fire.inc(['total', 'redials', status, decision, 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', status, decision, 'sum'].join('.'), 1),
-        ]);
-    },
+
+// METRICS
 
     get_clean_first_word: function(user_message) {
         return user_message
@@ -712,19 +701,15 @@ go.app = function() {
                     new Choice('restart', $("No, start from the beginning"))
                 ],
                 next: function(choice) {
-                    return go.utils_project
-                        .track_redials(self.contact, self.im, choice.value)
-                        .then(function() {
-                            if (choice.value === 'continue') {
-                                return {
-                                    name: creator_opts.name,
-                                    creator_opts: creator_opts
-                                };
-                                // return creator_opts.name;
-                            } else if (choice.value === 'restart') {
-                                return 'state_start';
-                            }
-                        });
+                    if (choice.value === 'continue') {
+                        return {
+                            name: creator_opts.name,
+                            creator_opts: creator_opts
+                        };
+                        // return creator_opts.name;
+                    } else if (choice.value === 'restart') {
+                        return 'state_start';
+                    }
                 }
             });
         });
