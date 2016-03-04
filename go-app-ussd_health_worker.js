@@ -573,7 +573,7 @@ go.app = function() {
             "state_hiv_messages":
                 "Would they like to receive additional messages about HIV?",
             "state_end_thank_you":
-                "Thank you. The woman's FamilyConnect ID is [XXX XXX XXXX]. They will now start receiving messages",
+                "Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages",
         };
 
         var errors = {
@@ -707,6 +707,7 @@ go.app = function() {
                 )
                 .then(function(identity) {
                     if (identity) {
+                        self.im.user.set_answer('contact_id', identity.id);
                         // check if identity has active subscriptions
                         return go.utils
                             .has_active_subscriptions(identity.id, self.im)
@@ -731,6 +732,7 @@ go.app = function() {
                                 }, null, self.im.user.operator_id
                             )
                             .then(function(identity) {
+                                self.im.user.set_answer('contact_id', identity.id);
                                 return self.states.create('state_household_head_name');
                             });
                     }
@@ -932,8 +934,17 @@ go.app = function() {
                     new Choice('runyakore', $('Runyakore')),
                     new Choice('lusoga', $('Lusoga'))
                 ],
-                next: 'state_hiv_messages'
+                next: 'state_get_health_id'
             });
+        });
+
+        self.add('state_get_health_id', function(name) {
+            return go.utils
+                .get_identity(self.im.user.answers.contact_id, self.im)
+                .then(function(identity) {
+                    self.im.user.set_answer('health_id', identity.details.health_id);
+                    return self.states.create('state_hiv_messages');
+                });
         });
 
         // ChoiceState st-12
@@ -952,7 +963,7 @@ go.app = function() {
         // EndState st-13
         self.add('state_end_thank_you', function(name) {
             return new EndState(name, {
-                text: $(questions[name]),
+                text: $(questions[name]).context({health_id: self.im.user.answers.health_id}),
                 next: 'state_start'
             });
         });
