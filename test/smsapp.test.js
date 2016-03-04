@@ -20,7 +20,7 @@ describe("FamilyConnect app", function() {
                 .setup.char_limit(160)
                 .setup.config.app({
                     name: 'smsapp',
-                    testing_today: '2015-04-03 06:07:08.999',
+                    testing_today: '2015-04-03',
                     metric_store: 'chms_uganda_test',  // _env at the end
                     services: {
                         identities: {
@@ -84,7 +84,7 @@ describe("FamilyConnect app", function() {
                         var contact = _.find(api.contacts.store, {
                                 msisdn: '+064001'
                             });
-                        assert.equal(contact.extra.optout_last_attempt, '2015-04-03 06:07:08.999');
+                        assert.equal(contact.extra.optout_last_attempt, '2015-04-03 12:00:00.000');
                         assert.equal(contact.extra.optin_last_attempt, undefined);
                     })
                     // check metrics
@@ -124,7 +124,7 @@ describe("FamilyConnect app", function() {
                         var contact = _.find(api.contacts.store, {
                                 msisdn: '+064001'
                             });
-                        assert.equal(contact.extra.optout_last_attempt, '2015-04-03 06:07:08.999');
+                        assert.equal(contact.extra.optout_last_attempt, '2015-04-03 12:00:00.000');
                         assert.equal(contact.extra.optin_last_attempt, undefined);
                     })
                     // check metrics
@@ -165,7 +165,7 @@ describe("FamilyConnect app", function() {
                                 msisdn: '+064003'
                             });
                         assert.equal(contact.extra.optout_last_attempt, '2015-01-01 01:01:01.111');
-                        assert.equal(contact.extra.optin_last_attempt, '2015-04-03 06:07:08.999');
+                        assert.equal(contact.extra.optin_last_attempt, '2015-04-03 12:00:00.000');
                     })
                     // check metrics
                     .check(function(api) {

@@ -1,6 +1,6 @@
 // Contact roles
-// 082111: registered health worker
-// 082222: unregistered person
+// 0820000111: registered health worker
+// 0820000222: unregistered person
 // 0820000333: unregistered person (with valid msisdn)
 // 0820000444: registered person (with active subscriptions)
 // 0820000555: registered person (without active subscriptions)
@@ -9,12 +9,12 @@ module.exports = function() {
 return [
 
     // authentication
-        // get identity 082111 by msisdn (to validate msisdn check)
+        // get identity 0820000111 by msisdn (to validate msisdn check)
         {
             'request': {
                 'method': 'GET',
                 'params': {
-                    'details__addresses__msisdn': '+25682111'
+                    'details__addresses__msisdn': '+256820000111'
                 },
                 'headers': {
                     'Authorization': ['Token test_key'],
@@ -37,7 +37,7 @@ return [
                             "personnel_code": "12345",
                             "addresses": {
                                 "msisdn": {
-                                    "+25682111": {}
+                                    "+256820000111": {}
                                 }
                             }
                         },
@@ -48,7 +48,7 @@ return [
             }
         },
 
-        // get identity 082111 by personnel code 12345 (passing personnel_code check st-B))
+        // get identity 0820000111 by personnel code 12345 (passing personnel_code check st-B))
         {
             'request': {
                 'method': 'GET',
@@ -75,7 +75,7 @@ return [
                             "default_addr_type": "msisdn",
                             "addresses": {
                                 "msisdn": {
-                                    "+25682111": {}
+                                    "+256820000111": {}
                                 }
                             }
                         },
@@ -86,7 +86,7 @@ return [
             }
         },
 
-        // get identity 082111 by personnel code aaaaa (failing personnel_code check st-B))
+        // get identity 0820000111 by personnel code aaaaa (failing personnel_code check st-B))
         {
             'request': {
                 'method': 'GET',
@@ -110,13 +110,13 @@ return [
             }
         },
 
-        // get unregistered identity 082222 by msisdn
+        // get unregistered identity 0820000222 by msisdn
         {
             'repeatable': true,  // enables time-out testing
             'request': {
                 'method': 'GET',
                 'params': {
-                    'details__addresses__msisdn': '+25682222'
+                    'details__addresses__msisdn': '+256820000222'
                 },
                 'headers': {
                     'Authorization': ['Token test_key'],
@@ -135,7 +135,7 @@ return [
             }
         },
 
-        // create identity 082222
+        // create identity 0820000222
         {
             'repeatable': true,  // enables time-out testing
             'request': {
@@ -150,7 +150,7 @@ return [
                         "default_addr_type": "msisdn",
                         "addresses": {
                             "msisdn": {
-                                "+25682222": {}
+                                "+256820000222": {}
                             }
                         }
                     }
@@ -166,7 +166,7 @@ return [
                         "default_addr_type": "msisdn",
                         "addresses": {
                             "msisdn": {
-                                "+25682222": {}
+                                "+256820000222": {}
                             }
                         }
                     },

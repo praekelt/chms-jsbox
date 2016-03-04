@@ -16,7 +16,7 @@ describe("familyconnect health worker app", function() {
                 .setup.config.app({
                     name: 'familyconnect',
                     channel: '*120*8864*0000#',
-                    testing_today: '2015-04-03 06:07:08.999',
+                    testing_today: '2015-04-03',
                     metric_store: 'chms_uganda_test',  // _env at the end
                     control: {
                         username: "test_user",
@@ -26,6 +26,10 @@ describe("familyconnect health worker app", function() {
                     endpoints: {
                         "sms": {"delivery_class": "sms"}
                     },
+                    no_timeout_redirects: [
+                        'state_start',
+                        'state_end_thank_you',
+                    ],
                 })
                 .setup(function(api) {
                     fixtures().forEach(api.http.fixtures.add);

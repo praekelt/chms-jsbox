@@ -6,162 +6,25 @@ var go = {};
 go;
 
 /*jshint -W083 */
-var Q = require('q');
-var moment = require('moment');
 var vumigo = require('vumigo_v02');
-var Choice = vumigo.states.Choice;
+var moment = require('moment');
+var Q = require('q');
 var JsonApi = vumigo.http.api.JsonApi;
+var Choice = vumigo.states.Choice;
 
-
-// Shared utils lib
+// GENERIC UTILS
 go.utils = {
 
+// TIMEOUT HELPERS
+
     timed_out: function(im) {
-        var no_redirects = [
-            'state_start',
-            'state_end_thank_you',
-            'state_end_thank_translate'
-        ];
         return im.msg.session_event === 'new'
             && im.user.state.name
-            && no_redirects.indexOf(im.user.state.name) === -1;
+            && im.config.no_timeout_redirects.indexOf(im.user.state.name) === -1;
     },
 
-    normalize_msisdn: function(raw, country_code) {
-        // don't touch shortcodes
-        if (raw.length <= 5) {
-            return raw;
-        }
-        // remove chars that are not numbers or +
-        raw = raw.replace(/[^0-9+]/g);
-        if (raw.substr(0,2) === '00') {
-            return '+' + raw.substr(2);
-        }
-        if (raw.substr(0,1) === '0') {
-            return '+' + country_code + raw.substr(1);
-        }
-        if (raw.substr(0,1) === '+') {
-            return raw;
-        }
-        if (raw.substr(0, country_code.length) === country_code) {
-            return '+' + raw;
-        }
-        return raw;
-    },
 
-    find_healthworker_with_personnel_code: function(im, personnel_code) {
-        var params = {
-            "details__personnel_code": personnel_code
-        };
-        return go.utils
-            .service_api_call('identities', 'get', params, null, 'identities/search/', im)
-            .then(function(json_get_response) {
-                var healthworkers_found = json_get_response.data.results;
-                // Return the first healthworker if found
-                return healthworkers_found[0];
-            });
-    },
-
-    check_contact_recognised: function(msisdn) {
-        return Q()
-            .then(function(q_response) {
-                return msisdn === '082222' || msisdn === '082333';
-            });
-    },
-
-    check_is_registered: function(msisdn) {
-        return Q()
-            .then(function(q_response) {
-                return msisdn === '082222' || msisdn === '082333';
-            });
-    },
-
-    check_baby_subscription: function(msisdn) {
-        return Q()
-            .then(function(q_response) {
-                return msisdn === '082333';
-            });
-    },
-
-    check_valid_number: function(input) {
-        // an attempt to solve the insanity of JavaScript numbers
-        var numbers_only = new RegExp('^\\d+$');
-        return input !== '' && numbers_only.test(input) && !Number.isNaN(Number(input));
-    },
-
-    is_valid_msisdn: function(input) {
-        // check that it is a number, starts with 0, and has at least 10 digits
-        return go.utils.check_valid_number(input) && input[0] === '0' && input.length >= 10;
-    },
-
-    check_valid_alpha: function(input) {
-        // regular expression below of characters we see as invalid alphabetics; character limit of 150
-        var alpha_only = new RegExp('(^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,123456789]{1,150}$)');
-        return input !== '' && alpha_only.test(input);
-    },
-
-    is_valid_name: function(input) {
-        // check that all chars are alphabetical
-        return go.utils.check_valid_alpha(input);
-    },
-
-    is_valid_day_of_month: function(input) {
-        // check that it is a number and between 1 and 31
-        return go.utils.check_valid_number(input)
-            && parseInt(input, 10) >= 1
-            && parseInt(input, 10) <= 31;
-    },
-
-    is_valid_year: function(input) {
-        // check that it is a number and has four digits
-        return input.length === 4 && go.utils.check_valid_number(input);
-    },
-
-    get_today: function(config) {
-        var today;
-        if (config.testing_today) {
-            today = new moment(config.testing_today);
-        } else {
-            today = new moment();
-        }
-        return today;
-    },
-
-    make_month_choices: function($, startDate, limit, increment, valueFormat, labelFormat) {
-        var choices = [];
-
-        var monthIterator = startDate;
-        for (var i=0; i<limit; i++) {
-            choices.push(new Choice(monthIterator.format(valueFormat),
-                                    $(monthIterator.format(labelFormat))));
-            monthIterator.add(increment, 'months');
-        }
-
-        return choices;
-    },
-
-    track_redials: function(contact, im, decision) {
-        var status = contact.extra.status || 'unregistered';
-        return Q.all([
-            im.metrics.fire.inc(['total', 'redials', 'choice_made', 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', 'choice_made', 'sum'].join('.'), 1),
-            im.metrics.fire.inc(['total', 'redials', status, 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', status, 'sum'].join('.'), 1),
-            im.metrics.fire.inc(['total', 'redials', decision, 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', decision, 'sum'].join('.'), 1),
-            im.metrics.fire.inc(['total', 'redials', status, decision, 'last'].join('.')),
-            im.metrics.fire.sum(['total', 'redials', status, decision, 'sum'].join('.'), 1),
-        ]);
-    },
-
-    get_clean_first_word: function(user_message) {
-        return user_message
-            .split(" ")[0]          // split off first word
-            .replace(/\W/g, '')     // remove non letters
-            .toUpperCase();         // capitalise
-    },
-
-    // SERVICE API CALL
+// SERVICE API CALL HELPERS
 
     service_api_call: function (service, method, params, payload, endpoint, im) {
         var http = new JsonApi(im, {
@@ -192,14 +55,265 @@ go.utils = {
             }
     },
 
+
+// MSISDN HELPERS
+
+    // Check that it's a number and starts with 0 and approximate length
+    // TODO: refactor to take length, explicitly deal with '+'
+    is_valid_msisdn: function(content) {
+        return go.utils.check_valid_number(content)
+            && content[0] === '0'
+            && content.length >= 10
+            && content.length <= 13;
+    },
+
+    normalize_msisdn: function(raw, country_code) {
+        // don't touch shortcodes
+        if (raw.length <= 5) {
+            return raw;
+        }
+        // remove chars that are not numbers or +
+        raw = raw.replace(/[^0-9+]/g);
+        if (raw.substr(0,2) === '00') {
+            return '+' + raw.substr(2);
+        }
+        if (raw.substr(0,1) === '0') {
+            return '+' + country_code + raw.substr(1);
+        }
+        if (raw.substr(0,1) === '+') {
+            return raw;
+        }
+        if (raw.substr(0, country_code.length) === country_code) {
+            return '+' + raw;
+        }
+        return raw;
+    },
+
+
+// NUMBER HELPERS
+
+    // An attempt to solve the insanity of JavaScript numbers
+    check_valid_number: function(content) {
+        var numbers_only = new RegExp('^\\d+$');
+        return content !== ''
+            && numbers_only.test(content)
+            && !Number.isNaN(Number(content));
+    },
+
+    double_digit_number: function(input) {
+        input_numeric = parseInt(input, 10);
+        if (parseInt(input, 10) < 10) {
+            return "0" + input_numeric.toString();
+        } else {
+            return input_numeric.toString();
+        }
+    },
+
+
+// DATE HELPERS
+
+    get_today: function(config) {
+        if (config.testing_today) {
+            return new moment(config.testing_today, 'YYYY-MM-DD');
+        } else {
+            return new moment();
+        }
+    },
+
+    get_january: function(config) {
+        // returns current year january 1st moment date
+        return go.utils.get_today(config).startOf('year');
+    },
+
+    is_valid_date: function(date, format) {
+        // implements strict validation with 'true' below
+        return moment(date, format, true).isValid();
+    },
+
+    is_valid_year: function(input) {
+        // check that it is a number and has four digits
+        return input.length === 4 && go.utils.check_valid_number(input);
+    },
+
+    is_valid_day_of_month: function(input) {
+        // check that it is a number and between 1 and 31
+        return go.utils.check_valid_number(input)
+            && parseInt(input, 10) >= 1
+            && parseInt(input, 10) <= 31;
+    },
+
+
+// TEXT HELPERS
+
+    check_valid_alpha: function(input) {
+        // check that all chars are in standard alphabet
+        var alpha_only = new RegExp('^[A-Za-z]+$');
+        return input !== '' && alpha_only.test(input);
+    },
+
+    is_valid_name: function(input, min, max) {
+        // check that the string does not include the characters listed in the
+        // regex, and min <= input string length <= max
+        var name_check = new RegExp(
+            '(^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,123456789]{min,max}$)'
+            .replace('min', min.toString())
+            .replace('max', max.toString())
+        );
+        return input !== '' && name_check.test(input);
+    },
+
+    get_clean_first_word: function(user_message) {
+        return user_message
+            .split(" ")[0]          // split off first word
+            .replace(/\W/g, '')     // remove non letters
+            .toUpperCase();         // capitalise
+    },
+
+
+// CHOICE HELPERS
+
+    make_month_choices: function($, startDate, limit, increment, valueFormat, labelFormat) {
+        var choices = [];
+
+        var monthIterator = startDate;
+        for (var i=0; i<limit; i++) {
+            choices.push(new Choice(monthIterator.format(valueFormat),
+                                    $(monthIterator.format(labelFormat))));
+            monthIterator.add(increment, 'months');
+        }
+
+        return choices;
+    },
+
+
+// REGISTRATION HELPERS
+
+    create_registration: function(im, reg_info) {
+        return go.utils
+            .service_api_call("registrations", "post", null, reg_info, "registrations/", im)
+            .then(function(result) {
+                return result.id;
+            });
+    },
+
+
+// IDENTITY HELPERS
+
+    get_identity_by_address: function(address, im) {
+        // Searches the Identity Store for all identities with the provided address.
+        // Returns the first identity object found
+        // Address should be an object {address_type: address}, eg.
+        // {'msisdn': '0821234444'}, {'email': 'me@example.com'}
+
+        var address_type = Object.keys(address)[0];
+        var address_val = address[address_type];
+        var params = {};
+        var search_string = 'details__addresses__' + address_type;
+        params[search_string] = address_val;
+
+        return go.utils
+            .service_api_call('identities', 'get', params, null, 'identities/search/', im)
+            .then(function(json_get_response) {
+                var identities_found = json_get_response.data.results;
+                // Return the first identity in the list of identities
+                return (identities_found.length > 0)
+                ? identities_found[0]
+                : null;
+            });
+    },
+
+    get_identity: function(identity_id, im) {
+      // Gets the identity from the Identity Store
+      // Returns the identity object
+
+        var endpoint = 'identities/' + identity_id + '/';
+        return go.utils
+        .service_api_call('identities', 'get', {}, null, endpoint, im)
+        .then(function(json_get_response) {
+            return json_get_response.data;
+        });
+    },
+
+    create_identity: function(im, address, communicate_through_id, operator_id) {
+      // Create a new identity
+      // Returns the identity object
+
+        var payload = {};
+        // compile base payload
+        if (address) {
+            var address_type = Object.keys(address);
+            var addresses = {};
+            addresses[address_type] = {};
+            addresses[address_type][address[address_type]] = {};
+            payload.details = {
+                "default_addr_type": "msisdn",
+                "addresses": addresses
+            };
+        }
+
+        if (communicate_through_id) {
+            payload.communicate_through = communicate_through_id;
+        }
+
+        // add operator_id if available
+        if (operator_id) {
+            payload.operator = operator_id;
+        }
+        return go.utils
+            .service_api_call("identities", "post", null, payload, 'identities/', im)
+            .then(function(json_post_response) {
+                return json_post_response.data;
+            });
+    },
+
+    get_or_create_identity: function(address, im, operator_id) {
+      // Gets a identity if it exists, otherwise creates a new one
+
+        if (address.msisdn) {
+            address.msisdn = go.utils
+                .normalize_msisdn(address.msisdn, im.config.country_code);
+        }
+        return go.utils
+            // Get identity id using address
+            .get_identity_by_address(address, im)
+            .then(function(identity) {
+                if (identity !== null) {
+                    // If identity exists, return the id
+                    return identity;
+                } else {
+                    // If identity doesn't exist, create it
+                    return go.utils
+                    .create_identity(im, address, null, operator_id)
+                    .then(function(identity) {
+                        return identity;
+                    });
+                }
+        });
+    },
+
+    update_identity: function(im, identity) {
+      // Update an identity by passing in the full updated identity object
+      // Returns the id (which should be the same as the identity's id)
+
+        var endpoint = 'identities/' + identity.id + '/';
+        return go.utils
+            .service_api_call('identities', 'patch', {}, identity, endpoint, im)
+            .then(function(response) {
+                return response.data.id;
+            });
+    },
+
+
+// SUBSCRIPTION HELPERS
+
     get_active_subscriptions_by_identity_id: function(identity_id, im) {
-        // returns all active subscriptions - for unlikely case where there
-        // is more than one active subscription
+      // Returns all active subscriptions - for unlikely case where there
+      // is more than one active subscription
+
         var params = {
             contact: identity_id,
             active: "True"
         };
-
         return go.utils
             .service_api_call("subscriptions", "get", params, null, "subscriptions/", im)
             .then(function(json_get_response) {
@@ -208,7 +322,8 @@ go.utils = {
     },
 
     get_active_subscription_by_identity_id: function(identity_id, im) {
-        // returns first active subscription found
+      // Returns first active subscription found
+
         return go.utils
             .get_active_subscriptions_by_identity_id(identity_id, im)
             .then(function(subscriptions) {
@@ -217,6 +332,9 @@ go.utils = {
     },
 
     has_active_subscriptions: function(identity_id, im) {
+      // Returns whether an identity has an active subscription
+      // Returns true / false
+
         return go.utils
             .get_active_subscriptions_by_identity_id(identity_id, im)
             .then(function(subscriptions) {
@@ -242,7 +360,8 @@ go.utils = {
                     updated_subscription.active = false;
                     // store the patch calls to be made
                     patch_calls.push(function() {
-                        return go.utils.service_api_call("identities", "patch", {}, updated_subscription, endpoint, im);
+                        return go.utils.service_api_call("identities", "patch",
+                            {}, updated_subscription, endpoint, im);
                     });
                     clean = false;
                 }
@@ -286,6 +405,9 @@ go.utils = {
         });
     },
 
+
+// OPTOUT & OPTIN HELPERS
+
     opt_out: function(im, contact) {
         contact.extra.optout_last_attempt = go.utils.get_today(im.config)
             .format('YYYY-MM-DD hh:mm:ss.SSS');
@@ -313,85 +435,53 @@ go.utils = {
         ]);
     },
 
-    // IDENTITY HANDLING
+"commas": "commas"
+};
 
-    get_identity_by_address: function(address, im) {
-        // Searches the Identity Store for all identities with the provided address.
-        // Returns the first identity object found
-        // Address should be an object {address_type: address}, eg.
-        // {'msisdn': '0821234444'}, {'email': 'me@example.com'}
-        var address_type = Object.keys(address)[0];
-        var address_val = address[address_type];
-        var params = {};
-        var search_string = 'details__addresses__' + address_type;
-        params[search_string] = address_val;
+/*jshint -W083 */
+var Q = require('q');
 
+
+// Project utils libraty
+go.utils_project = {
+
+
+// TEMPORARY HELPERS
+
+    check_contact_recognised: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222' || msisdn === '082333';
+            });
+    },
+
+    check_is_registered: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222' || msisdn === '082333';
+            });
+    },
+
+    check_baby_subscription: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082333';
+            });
+    },
+
+
+// IDENTITY HELPERS
+
+    find_healthworker_with_personnel_code: function(im, personnel_code) {
+        var params = {
+            "details__personnel_code": personnel_code
+        };
         return go.utils
             .service_api_call('identities', 'get', params, null, 'identities/search/', im)
             .then(function(json_get_response) {
-                var identities_found = json_get_response.data.results;
-                // Return the first identity in the list of identities
-                return (identities_found.length > 0)
-                    ? identities_found[0]
-                    : null;
-            });
-    },
-
-    // Create a new identity
-    create_identity: function(im, address, communicate_through_id, operator_id) {
-        var payload = {};
-
-        // compile base payload
-        if (address) {
-            var address_type = Object.keys(address);
-            var addresses = {};
-            addresses[address_type] = {};
-            addresses[address_type][address[address_type]] = {};
-            payload.details = {
-                "default_addr_type": "msisdn",
-                "addresses": addresses
-            };
-        }
-
-        if (communicate_through_id) {
-            payload.communicate_through = communicate_through_id;
-        }
-
-        // add operator_id if available
-        if (operator_id) {
-            payload.operator = operator_id;
-        }
-
-        return go.utils
-            .service_api_call("identities", "post", null, payload, 'identities/', im)
-            .then(function(json_post_response) {
-                var contact_created = json_post_response.data;
-                // Return the contact
-                return contact_created;
-            });
-    },
-
-    // Gets a contact if it exists, otherwise creates a new one
-    get_or_create_identity: function(address, im, operator_id) {
-        if (address.msisdn) {
-            address.msisdn = go.utils
-                .normalize_msisdn(address.msisdn, im.config.country_code);
-        }
-        return go.utils
-            // Get contact id using msisdn
-            .get_identity_by_address(address, im)
-            .then(function(contact) {
-                if (contact !== null) {
-                    // If contact exists, return the contact
-                    return contact;
-                } else {
-                    // If contact doesn't exist, create it
-                    return go.utils
-                        .create_identity(im, address, null, operator_id)
-                        .then(function(contact) {
-                            return contact;
-                        });
-                }
+                var healthworkers_found = json_get_response.data.results;
+                // Return the first healthworker if found
+                return healthworkers_found[0];
             });
     },
 
@@ -521,19 +611,15 @@ go.app = function() {
                     new Choice('restart', $("No, start new registration"))
                 ],
                 next: function(choice) {
-                    return go.utils
-                        .track_redials(self.contact, self.im, choice.value)
-                        .then(function() {
-                            if (choice.value === 'continue') {
-                                return {
-                                    name: creator_opts.name,
-                                    creator_opts: creator_opts
-                                };
-                                // return creator_opts.name;
-                            } else if (choice.value === 'restart') {
-                                return 'state_start';
-                            }
-                        });
+                    if (choice.value === 'continue') {
+                        return {
+                            name: creator_opts.name,
+                            creator_opts: creator_opts
+                        };
+                        // return creator_opts.name;
+                    } else if (choice.value === 'restart') {
+                        return 'state_start';
+                    }
                 }
             });
         });
@@ -564,7 +650,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    return go.utils
+                    return go.utils_project
                         .find_healthworker_with_personnel_code(self.im, content)
                         .then(function(healthworker) {
                             if (healthworker) {
@@ -613,17 +699,23 @@ go.app = function() {
         self.add('state_msisdn_check', function(name) {
             return go.utils
                 // check if identity with msisdn alreay exists in db
-                .get_identity_by_address({'msisdn': go.utils.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, self.im)
+                .get_identity_by_address(
+                    {'msisdn': go.utils.normalize_msisdn(
+                        self.im.user.answers.state_msisdn,
+                        self.im.config.country_code)
+                    }, self.im
+                )
                 .then(function(identity) {
                     if (identity) {
-                        // check if identity has active? subscriptions
+                        // check if identity has active subscriptions
                         return go.utils
                             .has_active_subscriptions(identity.id, self.im)
                             .then(function(hasSubscriptions) {
                                 if (hasSubscriptions) {
-                                    return self.states.create('state_msisdn_already_registered'); // should result in a rewrite of existing subscription
-                                                                                                  // info if user choses to continue registration at
-                                                                                                  // next state/screen
+                                    // should result in a rewrite of existing subscription
+                                    // info if user chooses to continue registration at
+                                    // next state/screen
+                                    return self.states.create('state_msisdn_already_registered');
                                 } else {
                                     return self.states.create('state_household_head_name');
                                 }
@@ -631,7 +723,13 @@ go.app = function() {
                     }
                     else {
                         return go.utils
-                            .create_identity(self.im, {'msisdn': go.utils.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, null, self.im.user.operator_id)
+                            .create_identity(
+                                self.im,
+                                {'msisdn': go.utils.normalize_msisdn(
+                                    self.im.user.answers.state_msisdn,
+                                    self.im.config.country_code)
+                                }, null, self.im.user.operator_id
+                            )
                             .then(function(identity) {
                                 return self.states.create('state_household_head_name');
                             });
@@ -661,7 +759,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -676,7 +774,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -717,7 +815,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -732,7 +830,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
+                    if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));

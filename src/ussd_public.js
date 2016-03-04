@@ -134,19 +134,15 @@ go.app = function() {
                     new Choice('restart', $("No, start from the beginning"))
                 ],
                 next: function(choice) {
-                    return go.utils
-                        .track_redials(self.contact, self.im, choice.value)
-                        .then(function() {
-                            if (choice.value === 'continue') {
-                                return {
-                                    name: creator_opts.name,
-                                    creator_opts: creator_opts
-                                };
-                                // return creator_opts.name;
-                            } else if (choice.value === 'restart') {
-                                return 'state_start';
-                            }
-                        });
+                    if (choice.value === 'continue') {
+                        return {
+                            name: creator_opts.name,
+                            creator_opts: creator_opts
+                        };
+                        // return creator_opts.name;
+                    } else if (choice.value === 'restart') {
+                        return 'state_start';
+                    }
                 }
             });
         });
@@ -155,7 +151,7 @@ go.app = function() {
     // START STATES
 
         self.add('state_start', function(name) {
-            return go.utils
+            return go.utils_project
                 .check_contact_recognised(self.im.user.addr)
                 .then(function(recognised) {
                     if (recognised) {
@@ -232,7 +228,7 @@ go.app = function() {
         });
 
         self.add('state_check_registered_user', function(name, opts) {
-            return go.utils
+            return go.utils_project
                 .check_is_registered(opts.msisdn)
                 .then(function(is_registered) {
                     if (is_registered) {
@@ -266,7 +262,7 @@ go.app = function() {
     // Change to baby
         // Interstitial
         self.add('state_check_baby_subscription', function(name) {
-            return go.utils
+            return go.utils_project
                 .check_baby_subscription(self.im.user.addr)
                 .then(function(is_subscribed) {
                     if (is_subscribed) {
