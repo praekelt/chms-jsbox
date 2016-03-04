@@ -363,11 +363,6 @@ go.utils_project = {
         return go.utils_project.check_valid_alpha(input);
     },
 
-    is_valid_year: function(input) {
-        // check that it is a number and has four digits
-        return input.length === 4 && go.utils_project.check_valid_number(input);
-    },
-
     get_today: function(config) {
         var today;
         if (config.testing_today) {

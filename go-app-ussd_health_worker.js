@@ -363,11 +363,6 @@ go.utils_project = {
         return go.utils_project.check_valid_alpha(input);
     },
 
-    is_valid_year: function(input) {
-        // check that it is a number and has four digits
-        return input.length === 4 && go.utils_project.check_valid_number(input);
-    },
-
     get_today: function(config) {
         var today;
         if (config.testing_today) {
@@ -1046,7 +1041,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_year(content)) {
+                    if (go.utils.is_valid_year(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
