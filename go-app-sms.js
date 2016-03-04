@@ -95,7 +95,8 @@ go.utils = {
     },
 
     check_valid_alpha: function(input) {
-        var alpha_only = new RegExp('^[A-Za-z]+$');
+        // regular expression below of characters we see as invalid alphabetics; character limit of 150
+        var alpha_only = new RegExp('(^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,123456789]{1,150}$)');
         return input !== '' && alpha_only.test(input);
     },
 
