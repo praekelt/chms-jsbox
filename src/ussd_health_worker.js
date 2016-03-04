@@ -207,7 +207,7 @@ go.app = function() {
 
         // interstitial
         self.add('state_msisdn_check', function(name) {
-            return go.utils_project
+            return go.utils
                 // check if identity with msisdn alreay exists in db
                 .get_identity_by_address(
                     {'msisdn': go.utils.normalize_msisdn(

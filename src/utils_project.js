@@ -19,23 +19,7 @@ go.utils_project = {
     },
 
 
-// IDENTITY HELPERS
-
-    find_healthworker_with_personnel_code: function(im, personnel_code) {
-        var params = {
-            "details__personnel_code": personnel_code
-        };
-        return go.utils
-            .service_api_call('identities', 'get', params, null, 'identities/search/', im)
-            .then(function(json_get_response) {
-                var healthworkers_found = json_get_response.data.results;
-                // Return the first healthworker if found
-                return healthworkers_found[0];
-            });
-    },
-
-
-// TEMPORARY
+// TEMPORARY HELPERS
 
     check_contact_recognised: function(msisdn) {
         return Q()
@@ -59,14 +43,10 @@ go.utils_project = {
     },
 
 
-// METRICS
+// METRICS HELPERS
 
-    get_clean_first_word: function(user_message) {
-        return user_message
-            .split(" ")[0]          // split off first word
-            .replace(/\W/g, '')     // remove non letters
-            .toUpperCase();         // capitalise
-    },
+
+// SUBSCRIPTION HELPERS
 
     get_active_subscriptions_by_identity_id: function(identity_id, im) {
         // returns all active subscriptions - for unlikely case where there
@@ -162,6 +142,9 @@ go.utils_project = {
         });
     },
 
+
+// OPTOUT & OPTIN HELPERS
+
     opt_out: function(im, contact) {
         contact.extra.optout_last_attempt = go.utils.get_today(im.config)
             .format('YYYY-MM-DD hh:mm:ss.SSS');
@@ -189,27 +172,19 @@ go.utils_project = {
         ]);
     },
 
-    // IDENTITY HANDLING
 
-    get_identity_by_address: function(address, im) {
-        // Searches the Identity Store for all identities with the provided address.
-        // Returns the first identity object found
-        // Address should be an object {address_type: address}, eg.
-        // {'msisdn': '0821234444'}, {'email': 'me@example.com'}
-        var address_type = Object.keys(address)[0];
-        var address_val = address[address_type];
-        var params = {};
-        var search_string = 'details__addresses__' + address_type;
-        params[search_string] = address_val;
+// IDENTITY HELPERS
 
+    find_healthworker_with_personnel_code: function(im, personnel_code) {
+        var params = {
+            "details__personnel_code": personnel_code
+        };
         return go.utils
             .service_api_call('identities', 'get', params, null, 'identities/search/', im)
             .then(function(json_get_response) {
-                var identities_found = json_get_response.data.results;
-                // Return the first identity in the list of identities
-                return (identities_found.length > 0)
-                    ? identities_found[0]
-                    : null;
+                var healthworkers_found = json_get_response.data.results;
+                // Return the first healthworker if found
+                return healthworkers_found[0];
             });
     },
 
@@ -253,7 +228,7 @@ go.utils_project = {
             address.msisdn = go.utils
                 .normalize_msisdn(address.msisdn, im.config.country_code);
         }
-        return go.utils_project
+        return go.utils
             // Get contact id using msisdn
             .get_identity_by_address(address, im)
             .then(function(contact) {
