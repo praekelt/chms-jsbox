@@ -624,7 +624,22 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-
+            it("validate state_household_head_name", function() {
+                return tester
+                    .setup.user.addr('082111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '1'  // state_msg_receiver - head of household
+                        , '0820000333'  // state_msisdn
+                        , 'Isaac1'  // state_household_head_name
+                    )
+                    .check.interaction({
+                        state: 'state_household_head_name',
+                        reply: "Sorry not a valid input. Please enter the first name of the Head of the Household. For example: Isaac."
+                    })
+                    .run();
+            });
         });
     });
 
