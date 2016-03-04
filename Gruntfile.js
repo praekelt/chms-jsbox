@@ -15,18 +15,21 @@ module.exports = function (grunt) {
                 ussd_health_worker: [
                     'src/index.js',
                     'src/utils.js',
+                    'src/utils_project.js',
                     '<%= paths.src.app.ussd_health_worker %>',
                     'src/init.js'
                 ],
                 ussd_public: [
                     'src/index.js',
                     'src/utils.js',
+                    'src/utils_project.js',
                     '<%= paths.src.app.ussd_public %>',
                     'src/init.js'
                 ],
                 smsapp: [
                     'src/index.js',
                     'src/utils.js',
+                    'src/utils_project.js',
                     '<%= paths.src.app.smsapp %>',
                     'src/init.js'
                 ],
@@ -43,18 +46,21 @@ module.exports = function (grunt) {
                 ussd_health_worker: [
                     'test/setup.js',
                     'src/utils.js',
+                    'src/utils_project.js',
                     '<%= paths.src.app.ussd_health_worker %>',
                     'test/ussd_health_worker.test.js'
                 ],
                 ussd_public: [
                     'test/setup.js',
                     'src/utils.js',
+                    'src/utils_project.js',
                     '<%= paths.src.app.ussd_public %>',
                     'test/ussd_public.test.js'
                 ],
                 smsapp: [
                     'test/setup.js',
                     'src/utils.js',
+                    'src/utils_project.js',
                     '<%= paths.src.app.smsapp %>',
                     'test/smsapp.test.js'
                 ]

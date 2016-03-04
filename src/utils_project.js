@@ -6,8 +6,8 @@ var Choice = vumigo.states.Choice;
 var JsonApi = vumigo.http.api.JsonApi;
 
 
-// Shared utils lib
-go.utils = {
+// Project utils libraty
+go.utils_project = {
 
     timed_out: function(im) {
         var no_redirects = [
@@ -46,7 +46,7 @@ go.utils = {
         var params = {
             "details__personnel_code": personnel_code
         };
-        return go.utils
+        return go.utils_project
             .service_api_call('identities', 'get', params, null, 'identities/search/', im)
             .then(function(json_get_response) {
                 var healthworkers_found = json_get_response.data.results;
@@ -84,7 +84,7 @@ go.utils = {
 
     is_valid_msisdn: function(input) {
         // check that it is a number, starts with 0, and has at least 10 digits
-        return go.utils.check_valid_number(input) && input[0] === '0' && input.length >= 10;
+        return go.utils_project.check_valid_number(input) && input[0] === '0' && input.length >= 10;
     },
 
     check_valid_alpha: function(input) {
@@ -95,19 +95,19 @@ go.utils = {
 
     is_valid_name: function(input) {
         // check that all chars are alphabetical
-        return go.utils.check_valid_alpha(input);
+        return go.utils_project.check_valid_alpha(input);
     },
 
     is_valid_day_of_month: function(input) {
         // check that it is a number and between 1 and 31
-        return go.utils.check_valid_number(input)
+        return go.utils_project.check_valid_number(input)
             && parseInt(input, 10) >= 1
             && parseInt(input, 10) <= 31;
     },
 
     is_valid_year: function(input) {
         // check that it is a number and has four digits
-        return input.length === 4 && go.utils.check_valid_number(input);
+        return input.length === 4 && go.utils_project.check_valid_number(input);
     },
 
     get_today: function(config) {
@@ -193,7 +193,7 @@ go.utils = {
             active: "True"
         };
 
-        return go.utils
+        return go.utils_project
             .service_api_call("subscriptions", "get", params, null, "subscriptions/", im)
             .then(function(json_get_response) {
                 return json_get_response.data.results;
@@ -202,7 +202,7 @@ go.utils = {
 
     get_active_subscription_by_identity_id: function(identity_id, im) {
         // returns first active subscription found
-        return go.utils
+        return go.utils_project
             .get_active_subscriptions_by_identity_id(identity_id, im)
             .then(function(subscriptions) {
                 return subscriptions[0];
@@ -210,7 +210,7 @@ go.utils = {
     },
 
     has_active_subscriptions: function(identity_id, im) {
-        return go.utils
+        return go.utils_project
             .get_active_subscriptions_by_identity_id(identity_id, im)
             .then(function(subscriptions) {
                 return subscriptions.length > 0;
@@ -221,7 +221,7 @@ go.utils = {
         var params = {
             'details__addresses__msisdn': contact.msisdn
         };
-        return go.utils
+        return go.utils_project
         .service_api_call("identities", "get", params, null, 'subscription/', im)
         .then(function(json_result) {
             // make all subscriptions inactive
@@ -235,7 +235,7 @@ go.utils = {
                     updated_subscription.active = false;
                     // store the patch calls to be made
                     patch_calls.push(function() {
-                        return go.utils.service_api_call("identities", "patch", {}, updated_subscription, endpoint, im);
+                        return go.utils_project.service_api_call("identities", "patch", {}, updated_subscription, endpoint, im);
                     });
                     clean = false;
                 }
@@ -280,12 +280,12 @@ go.utils = {
     },
 
     opt_out: function(im, contact) {
-        contact.extra.optout_last_attempt = go.utils.get_today(im.config)
+        contact.extra.optout_last_attempt = go.utils_project.get_today(im.config)
             .format('YYYY-MM-DD hh:mm:ss.SSS');
 
         return Q.all([
             im.contacts.save(contact),
-            go.utils.subscription_unsubscribe_all(contact, im),
+            go.utils_project.subscription_unsubscribe_all(contact, im),
             im.api_request('optout.optout', {
                 address_type: "msisdn",
                 address_value: contact.msisdn,
@@ -295,7 +295,7 @@ go.utils = {
     },
 
     opt_in: function(im, contact) {
-        contact.extra.optin_last_attempt = go.utils.get_today(im.config)
+        contact.extra.optin_last_attempt = go.utils_project.get_today(im.config)
             .format('YYYY-MM-DD hh:mm:ss.SSS');
         return Q.all([
             im.contacts.save(contact),
@@ -319,7 +319,7 @@ go.utils = {
         var search_string = 'details__addresses__' + address_type;
         params[search_string] = address_val;
 
-        return go.utils
+        return go.utils_project
             .service_api_call('identities', 'get', params, null, 'identities/search/', im)
             .then(function(json_get_response) {
                 var identities_found = json_get_response.data.results;
@@ -355,7 +355,7 @@ go.utils = {
             payload.operator = operator_id;
         }
 
-        return go.utils
+        return go.utils_project
             .service_api_call("identities", "post", null, payload, 'identities/', im)
             .then(function(json_post_response) {
                 var contact_created = json_post_response.data;
@@ -367,10 +367,10 @@ go.utils = {
     // Gets a contact if it exists, otherwise creates a new one
     get_or_create_identity: function(address, im, operator_id) {
         if (address.msisdn) {
-            address.msisdn = go.utils
+            address.msisdn = go.utils_project
                 .normalize_msisdn(address.msisdn, im.config.country_code);
         }
-        return go.utils
+        return go.utils_project
             // Get contact id using msisdn
             .get_identity_by_address(address, im)
             .then(function(contact) {
@@ -379,7 +379,7 @@ go.utils = {
                     return contact;
                 } else {
                     // If contact doesn't exist, create it
-                    return go.utils
+                    return go.utils_project
                         .create_identity(im, address, null, operator_id)
                         .then(function(contact) {
                             return contact;

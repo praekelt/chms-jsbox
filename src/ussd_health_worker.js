@@ -102,7 +102,7 @@ go.app = function() {
         // override normal state adding
         self.add = function(name, creator) {
             self.states.add(name, function(name, opts) {
-                if (!interrupt || !go.utils.timed_out(self.im))
+                if (!interrupt || !go.utils_project.timed_out(self.im))
                     return creator(name, opts);
 
                 interrupt = false;
@@ -121,7 +121,7 @@ go.app = function() {
                     new Choice('restart', $("No, start new registration"))
                 ],
                 next: function(choice) {
-                    return go.utils
+                    return go.utils_project
                         .track_redials(self.contact, self.im, choice.value)
                         .then(function() {
                             if (choice.value === 'continue') {
@@ -144,7 +144,7 @@ go.app = function() {
         self.add('state_start', function(name) {
             // Reset user answers when restarting the app
             self.im.user.answers = {};
-            return go.utils
+            return go.utils_project
                 .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
                 .then(function(user) {
                     self.im.user.set_answer('user_id', user.id);
@@ -164,7 +164,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    return go.utils
+                    return go.utils_project
                         .find_healthworker_with_personnel_code(self.im, content)
                         .then(function(healthworker) {
                             if (healthworker) {
@@ -199,7 +199,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_msisdn(content)) {
+                    if (go.utils_project.is_valid_msisdn(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -211,13 +211,13 @@ go.app = function() {
 
         // interstitial
         self.add('state_msisdn_check', function(name) {
-            return go.utils
+            return go.utils_project
                 // check if identity with msisdn alreay exists in db
-                .get_identity_by_address({'msisdn': go.utils.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, self.im)
+                .get_identity_by_address({'msisdn': go.utils_project.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, self.im)
                 .then(function(identity) {
                     if (identity) {
                         // check if identity has active? subscriptions
-                        return go.utils
+                        return go.utils_project
                             .has_active_subscriptions(identity.id, self.im)
                             .then(function(hasSubscriptions) {
                                 if (hasSubscriptions) {
@@ -230,8 +230,8 @@ go.app = function() {
                             });
                     }
                     else {
-                        return go.utils
-                            .create_identity(self.im, {'msisdn': go.utils.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, null, self.im.user.operator_id)
+                        return go.utils_project
+                            .create_identity(self.im, {'msisdn': go.utils_project.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, null, self.im.user.operator_id)
                             .then(function(identity) {
                                 return self.states.create('state_household_head_name');
                             });
@@ -261,7 +261,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
+                    if (go.utils_project.is_valid_name(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -276,7 +276,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
+                    if (go.utils_project.is_valid_name(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -288,10 +288,10 @@ go.app = function() {
 
         // ChoiceState st-05
         self.add('state_last_period_month', function(name) {
-            var today = go.utils.get_today(self.im.config);
+            var today = go.utils_project.get_today(self.im.config);
             return new ChoiceState(name, {
                 question: $(questions[name]),
-                choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
+                choices: go.utils_project.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
                 error: $(get_error_text(name)),
                 next: 'state_last_period_day'
             });
@@ -302,7 +302,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_day_of_month(content)) {
+                    if (go.utils_project.is_valid_day_of_month(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -317,7 +317,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
+                    if (go.utils_project.is_valid_name(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -332,7 +332,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_name(content)) {
+                    if (go.utils_project.is_valid_name(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -372,7 +372,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_day_of_month(content)) {
+                    if (go.utils_project.is_valid_day_of_month(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -414,7 +414,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_year(content)) {
+                    if (go.utils_project.is_valid_year(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));

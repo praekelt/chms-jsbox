@@ -115,7 +115,7 @@ go.app = function() {
         // override normal state adding
         self.add = function(name, creator) {
             self.states.add(name, function(name, opts) {
-                if (!interrupt || !go.utils.timed_out(self.im))
+                if (!interrupt || !go.utils_project.timed_out(self.im))
                     return creator(name, opts);
 
                 interrupt = false;
@@ -134,7 +134,7 @@ go.app = function() {
                     new Choice('restart', $("No, start from the beginning"))
                 ],
                 next: function(choice) {
-                    return go.utils
+                    return go.utils_project
                         .track_redials(self.contact, self.im, choice.value)
                         .then(function() {
                             if (choice.value === 'continue') {
@@ -155,7 +155,7 @@ go.app = function() {
     // START STATES
 
         self.add('state_start', function(name) {
-            return go.utils
+            return go.utils_project
                 .check_contact_recognised(self.im.user.addr)
                 .then(function(recognised) {
                     if (recognised) {
@@ -216,7 +216,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_msisdn(content)) {
+                    if (go.utils_project.is_valid_msisdn(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -232,7 +232,7 @@ go.app = function() {
         });
 
         self.add('state_check_registered_user', function(name, opts) {
-            return go.utils
+            return go.utils_project
                 .check_is_registered(opts.msisdn)
                 .then(function(is_registered) {
                     if (is_registered) {
@@ -266,7 +266,7 @@ go.app = function() {
     // Change to baby
         // Interstitial
         self.add('state_check_baby_subscription', function(name) {
-            return go.utils
+            return go.utils_project
                 .check_baby_subscription(self.im.user.addr)
                 .then(function(is_subscribed) {
                     if (is_subscribed) {
@@ -337,7 +337,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_msisdn(content)) {
+                    if (go.utils_project.is_valid_msisdn(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -442,10 +442,10 @@ go.app = function() {
 
         // ChoiceState st-05
         self.add('state_last_period_month', function(name) {
-            var today = go.utils.get_today(self.im.config);
+            var today = go.utils_project.get_today(self.im.config);
             return new ChoiceState(name, {
                 question: $(questions[name]),
-                choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
+                choices: go.utils_project.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
                 error: $(get_error_text(name)),
                 next: 'state_last_period_day'
             });
@@ -456,7 +456,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_day_of_month(content)) {
+                    if (go.utils_project.is_valid_day_of_month(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));

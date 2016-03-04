@@ -54,7 +54,7 @@ go.app = function() {
 
 
         self.states.add('state_start', function() {
-            var user_first_word = go.utils.get_clean_first_word(self.im.msg.content);
+            var user_first_word = go.utils_project.get_clean_first_word(self.im.msg.content);
             switch (user_first_word) {
                 case "STOP":
                     return self.states.create("state_opt_out_enter");
@@ -70,7 +70,7 @@ go.app = function() {
 
     // OPTOUT STATES
         self.states.add('state_opt_out_enter', function(name) {
-            return go.utils
+            return go.utils_project
                 .opt_out(self.im, self.contact)
                 .then(function() {
                     return self.states.create('state_opt_out');
@@ -87,7 +87,7 @@ go.app = function() {
 
     // OPTIN STATES
         self.states.add('state_opt_in_enter', function(name) {
-            return go.utils
+            return go.utils_project
                 .opt_in(self.im, self.contact)
                 .then(function() {
                     return self.states.create('state_opt_in');
