@@ -346,12 +346,6 @@ go.utils_project = {
             });
     },
 
-    check_valid_number: function(input) {
-        // an attempt to solve the insanity of JavaScript numbers
-        var numbers_only = new RegExp('^\\d+$');
-        return input !== '' && numbers_only.test(input) && !Number.isNaN(Number(input));
-    },
-
     check_valid_alpha: function(input) {
         // regular expression below of characters we see as invalid alphabetics; character limit of 150
         var alpha_only = new RegExp('(^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,123456789]{1,150}$)');
