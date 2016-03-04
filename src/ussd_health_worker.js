@@ -102,7 +102,7 @@ go.app = function() {
         // override normal state adding
         self.add = function(name, creator) {
             self.states.add(name, function(name, opts) {
-                if (!interrupt || !go.utils_project.timed_out(self.im))
+                if (!interrupt || !go.utils.timed_out(self.im))
                     return creator(name, opts);
 
                 interrupt = false;

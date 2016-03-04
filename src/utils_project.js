@@ -5,19 +5,6 @@ var Q = require('q');
 // Project utils libraty
 go.utils_project = {
 
-// TIMEOUT HELPERS
-
-    timed_out: function(im) {
-        var no_redirects = [
-            'state_start',
-            'state_end_thank_you',
-            'state_end_thank_translate'
-        ];
-        return im.msg.session_event === 'new'
-            && im.user.state.name
-            && no_redirects.indexOf(im.user.state.name) === -1;
-    },
-
 
 // TEMPORARY HELPERS
 

@@ -29,6 +29,10 @@ describe("familyconnect health worker app", function() {
                             url: "http://localhost:8002/api/v1/"
                         }
                     },
+                    no_timeout_redirects: [
+                        'state_start',
+                        'state_end_thank_you',
+                    ],
                     control: {
                         username: "test_user",
                         api_key: "test_key",

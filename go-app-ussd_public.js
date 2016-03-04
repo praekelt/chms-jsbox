@@ -15,6 +15,15 @@ var Choice = vumigo.states.Choice;
 // GENERIC UTILS
 go.utils = {
 
+// TIMEOUT HELPERS
+
+    timed_out: function(im) {
+        return im.msg.session_event === 'new'
+            && im.user.state.name
+            && im.config.no_timeout_redirects.indexOf(im.user.state.name) === -1;
+    },
+
+
 // SERVICE API CALL HELPERS
 
     service_api_call: function (service, method, params, payload, endpoint, im) {
@@ -436,19 +445,6 @@ var Q = require('q');
 // Project utils libraty
 go.utils_project = {
 
-// TIMEOUT HELPERS
-
-    timed_out: function(im) {
-        var no_redirects = [
-            'state_start',
-            'state_end_thank_you',
-            'state_end_thank_translate'
-        ];
-        return im.msg.session_event === 'new'
-            && im.user.state.name
-            && no_redirects.indexOf(im.user.state.name) === -1;
-    },
-
 
 // TEMPORARY HELPERS
 
@@ -609,7 +605,7 @@ go.app = function() {
         // override normal state adding
         self.add = function(name, creator) {
             self.states.add(name, function(name, opts) {
-                if (!interrupt || !go.utils_project.timed_out(self.im))
+                if (!interrupt || !go.utils.timed_out(self.im))
                     return creator(name, opts);
 
                 interrupt = false;

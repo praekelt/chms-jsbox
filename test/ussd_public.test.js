@@ -26,6 +26,10 @@ describe("familyconnect health worker app", function() {
                     endpoints: {
                         "sms": {"delivery_class": "sms"}
                     },
+                    no_timeout_redirects: [
+                        'state_start',
+                        'state_end_thank_you',
+                    ],
                 })
                 .setup(function(api) {
                     fixtures().forEach(api.http.fixtures.add);
