@@ -217,8 +217,8 @@ go.app = function() {
                 )
                 .then(function(identity) {
                     if (identity) {
-                        // check if identity has active? subscriptions
-                        return go.utils_project
+                        // check if identity has active subscriptions
+                        return go.utils
                             .has_active_subscriptions(identity.id, self.im)
                             .then(function(hasSubscriptions) {
                                 if (hasSubscriptions) {

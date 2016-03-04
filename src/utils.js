@@ -287,5 +287,45 @@ go.utils = {
     },
 
 
+// SUBSCRIPTION HELPERS
+
+    get_active_subscriptions_by_identity_id: function(identity_id, im) {
+      // Returns all active subscriptions - for unlikely case where there
+      // is more than one active subscription
+
+        var params = {
+            contact: identity_id,
+            active: "True"
+        };
+        return go.utils
+            .service_api_call("subscriptions", "get", params, null, "subscriptions/", im)
+            .then(function(json_get_response) {
+                return json_get_response.data.results;
+            });
+    },
+
+    get_active_subscription_by_identity_id: function(identity_id, im) {
+      // Returns first active subscription found
+
+        return go.utils
+            .get_active_subscriptions_by_identity_id(identity_id, im)
+            .then(function(subscriptions) {
+                return subscriptions[0];
+            });
+    },
+
+    has_active_subscriptions: function(identity_id, im) {
+      // Returns whether an identity has an active subscription
+      // Returns true / false
+
+        return go.utils
+            .get_active_subscriptions_by_identity_id(identity_id, im)
+            .then(function(subscriptions) {
+                return subscriptions.length > 0;
+            });
+    },
+
+
+
 "commas": "commas"
 };
