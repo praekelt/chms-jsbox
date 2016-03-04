@@ -8,6 +8,7 @@ go;
 /*jshint -W083 */
 var vumigo = require('vumigo_v02');
 var moment = require('moment');
+var Q = require('q');
 var JsonApi = vumigo.http.api.JsonApi;
 var Choice = vumigo.states.Choice;
 
@@ -332,58 +333,6 @@ go.utils = {
             });
     },
 
-
-
-"commas": "commas"
-};
-
-/*jshint -W083 */
-var Q = require('q');
-
-
-// Project utils libraty
-go.utils_project = {
-
-// TIMEOUT HELPERS
-
-    timed_out: function(im) {
-        var no_redirects = [
-            'state_start',
-            'state_end_thank_you',
-            'state_end_thank_translate'
-        ];
-        return im.msg.session_event === 'new'
-            && im.user.state.name
-            && no_redirects.indexOf(im.user.state.name) === -1;
-    },
-
-
-// TEMPORARY HELPERS
-
-    check_contact_recognised: function(msisdn) {
-        return Q()
-            .then(function(q_response) {
-                return msisdn === '082222' || msisdn === '082333';
-            });
-    },
-
-    check_is_registered: function(msisdn) {
-        return Q()
-            .then(function(q_response) {
-                return msisdn === '082222' || msisdn === '082333';
-            });
-    },
-
-    check_baby_subscription: function(msisdn) {
-        return Q()
-            .then(function(q_response) {
-                return msisdn === '082333';
-            });
-    },
-
-
-// SUBSCRIPTION HELPERS
-
     subscription_unsubscribe_all: function(contact, im) {
         var params = {
             'details__addresses__msisdn': contact.msisdn
@@ -456,7 +405,7 @@ go.utils_project = {
 
         return Q.all([
             im.contacts.save(contact),
-            go.utils_project.subscription_unsubscribe_all(contact, im),
+            go.utils.subscription_unsubscribe_all(contact, im),
             im.api_request('optout.optout', {
                 address_type: "msisdn",
                 address_value: contact.msisdn,
@@ -475,6 +424,53 @@ go.utils_project = {
                 address_value: contact.msisdn
             }),
         ]);
+    },
+
+"commas": "commas"
+};
+
+/*jshint -W083 */
+var Q = require('q');
+
+
+// Project utils libraty
+go.utils_project = {
+
+// TIMEOUT HELPERS
+
+    timed_out: function(im) {
+        var no_redirects = [
+            'state_start',
+            'state_end_thank_you',
+            'state_end_thank_translate'
+        ];
+        return im.msg.session_event === 'new'
+            && im.user.state.name
+            && no_redirects.indexOf(im.user.state.name) === -1;
+    },
+
+
+// TEMPORARY HELPERS
+
+    check_contact_recognised: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222' || msisdn === '082333';
+            });
+    },
+
+    check_is_registered: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082222' || msisdn === '082333';
+            });
+    },
+
+    check_baby_subscription: function(msisdn) {
+        return Q()
+            .then(function(q_response) {
+                return msisdn === '082333';
+            });
     },
 
 
