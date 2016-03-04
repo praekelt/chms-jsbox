@@ -456,7 +456,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_day_of_month(content)) {
+                    if (go.utils.is_valid_day_of_month(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));

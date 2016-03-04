@@ -293,6 +293,8 @@ var Choice = vumigo.states.Choice;
 // Project utils libraty
 go.utils_project = {
 
+// TIMEOUT HELPERS
+
     timed_out: function(im) {
         var no_redirects = [
             'state_start',
@@ -303,6 +305,9 @@ go.utils_project = {
             && im.user.state.name
             && no_redirects.indexOf(im.user.state.name) === -1;
     },
+
+
+// IDENTITY HELPERS
 
     find_healthworker_with_personnel_code: function(im, personnel_code) {
         var params = {
@@ -316,6 +321,9 @@ go.utils_project = {
                 return healthworkers_found[0];
             });
     },
+
+
+// TEMPORARY
 
     check_contact_recognised: function(msisdn) {
         return Q()
@@ -353,13 +361,6 @@ go.utils_project = {
     is_valid_name: function(input) {
         // check that all chars are alphabetical
         return go.utils_project.check_valid_alpha(input);
-    },
-
-    is_valid_day_of_month: function(input) {
-        // check that it is a number and between 1 and 31
-        return go.utils_project.check_valid_number(input)
-            && parseInt(input, 10) >= 1
-            && parseInt(input, 10) <= 31;
     },
 
     is_valid_year: function(input) {
