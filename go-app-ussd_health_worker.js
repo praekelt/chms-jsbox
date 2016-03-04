@@ -304,28 +304,6 @@ go.utils_project = {
             && no_redirects.indexOf(im.user.state.name) === -1;
     },
 
-    normalize_msisdn: function(raw, country_code) {
-        // don't touch shortcodes
-        if (raw.length <= 5) {
-            return raw;
-        }
-        // remove chars that are not numbers or +
-        raw = raw.replace(/[^0-9+]/g);
-        if (raw.substr(0,2) === '00') {
-            return '+' + raw.substr(2);
-        }
-        if (raw.substr(0,1) === '0') {
-            return '+' + country_code + raw.substr(1);
-        }
-        if (raw.substr(0,1) === '+') {
-            return raw;
-        }
-        if (raw.substr(0, country_code.length) === country_code) {
-            return '+' + raw;
-        }
-        return raw;
-    },
-
     find_healthworker_with_personnel_code: function(im, personnel_code) {
         var params = {
             "details__personnel_code": personnel_code
@@ -364,11 +342,6 @@ go.utils_project = {
         // an attempt to solve the insanity of JavaScript numbers
         var numbers_only = new RegExp('^\\d+$');
         return input !== '' && numbers_only.test(input) && !Number.isNaN(Number(input));
-    },
-
-    is_valid_msisdn: function(input) {
-        // check that it is a number, starts with 0, and has at least 10 digits
-        return go.utils_project.check_valid_number(input) && input[0] === '0' && input.length >= 10;
     },
 
     check_valid_alpha: function(input) {
@@ -620,7 +593,7 @@ go.utils_project = {
     // Gets a contact if it exists, otherwise creates a new one
     get_or_create_identity: function(address, im, operator_id) {
         if (address.msisdn) {
-            address.msisdn = go.utils_project
+            address.msisdn = go.utils
                 .normalize_msisdn(address.msisdn, im.config.country_code);
         }
         return go.utils_project
@@ -845,7 +818,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_msisdn(content)) {
+                    if (go.utils.is_valid_msisdn(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -859,7 +832,12 @@ go.app = function() {
         self.add('state_msisdn_check', function(name) {
             return go.utils_project
                 // check if identity with msisdn alreay exists in db
-                .get_identity_by_address({'msisdn': go.utils_project.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, self.im)
+                .get_identity_by_address(
+                    {'msisdn': go.utils.normalize_msisdn(
+                        self.im.user.answers.state_msisdn,
+                        self.im.config.country_code)
+                    }, self.im
+                )
                 .then(function(identity) {
                     if (identity) {
                         // check if identity has active? subscriptions
@@ -867,9 +845,10 @@ go.app = function() {
                             .has_active_subscriptions(identity.id, self.im)
                             .then(function(hasSubscriptions) {
                                 if (hasSubscriptions) {
-                                    return self.states.create('state_msisdn_already_registered'); // should result in a rewrite of existing subscription
-                                                                                                  // info if user choses to continue registration at
-                                                                                                  // next state/screen
+                                    // should result in a rewrite of existing subscription
+                                    // info if user chooses to continue registration at
+                                    // next state/screen
+                                    return self.states.create('state_msisdn_already_registered');
                                 } else {
                                     return self.states.create('state_household_head_name');
                                 }
@@ -877,7 +856,13 @@ go.app = function() {
                     }
                     else {
                         return go.utils_project
-                            .create_identity(self.im, {'msisdn': go.utils_project.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, null, self.im.user.operator_id)
+                            .create_identity(
+                                self.im,
+                                {'msisdn': go.utils.normalize_msisdn(
+                                    self.im.user.answers.state_msisdn,
+                                    self.im.config.country_code)
+                                }, null, self.im.user.operator_id
+                            )
                             .then(function(identity) {
                                 return self.states.create('state_household_head_name');
                             });

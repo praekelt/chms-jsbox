@@ -19,28 +19,6 @@ go.utils_project = {
             && no_redirects.indexOf(im.user.state.name) === -1;
     },
 
-    normalize_msisdn: function(raw, country_code) {
-        // don't touch shortcodes
-        if (raw.length <= 5) {
-            return raw;
-        }
-        // remove chars that are not numbers or +
-        raw = raw.replace(/[^0-9+]/g);
-        if (raw.substr(0,2) === '00') {
-            return '+' + raw.substr(2);
-        }
-        if (raw.substr(0,1) === '0') {
-            return '+' + country_code + raw.substr(1);
-        }
-        if (raw.substr(0,1) === '+') {
-            return raw;
-        }
-        if (raw.substr(0, country_code.length) === country_code) {
-            return '+' + raw;
-        }
-        return raw;
-    },
-
     find_healthworker_with_personnel_code: function(im, personnel_code) {
         var params = {
             "details__personnel_code": personnel_code
@@ -79,11 +57,6 @@ go.utils_project = {
         // an attempt to solve the insanity of JavaScript numbers
         var numbers_only = new RegExp('^\\d+$');
         return input !== '' && numbers_only.test(input) && !Number.isNaN(Number(input));
-    },
-
-    is_valid_msisdn: function(input) {
-        // check that it is a number, starts with 0, and has at least 10 digits
-        return go.utils_project.check_valid_number(input) && input[0] === '0' && input.length >= 10;
     },
 
     check_valid_alpha: function(input) {
@@ -335,7 +308,7 @@ go.utils_project = {
     // Gets a contact if it exists, otherwise creates a new one
     get_or_create_identity: function(address, im, operator_id) {
         if (address.msisdn) {
-            address.msisdn = go.utils_project
+            address.msisdn = go.utils
                 .normalize_msisdn(address.msisdn, im.config.country_code);
         }
         return go.utils_project

@@ -199,7 +199,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils_project.is_valid_msisdn(content)) {
+                    if (go.utils.is_valid_msisdn(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
@@ -213,7 +213,12 @@ go.app = function() {
         self.add('state_msisdn_check', function(name) {
             return go.utils_project
                 // check if identity with msisdn alreay exists in db
-                .get_identity_by_address({'msisdn': go.utils_project.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, self.im)
+                .get_identity_by_address(
+                    {'msisdn': go.utils.normalize_msisdn(
+                        self.im.user.answers.state_msisdn,
+                        self.im.config.country_code)
+                    }, self.im
+                )
                 .then(function(identity) {
                     if (identity) {
                         // check if identity has active? subscriptions
@@ -221,9 +226,10 @@ go.app = function() {
                             .has_active_subscriptions(identity.id, self.im)
                             .then(function(hasSubscriptions) {
                                 if (hasSubscriptions) {
-                                    return self.states.create('state_msisdn_already_registered'); // should result in a rewrite of existing subscription
-                                                                                                  // info if user choses to continue registration at
-                                                                                                  // next state/screen
+                                    // should result in a rewrite of existing subscription
+                                    // info if user chooses to continue registration at
+                                    // next state/screen
+                                    return self.states.create('state_msisdn_already_registered');
                                 } else {
                                     return self.states.create('state_household_head_name');
                                 }
@@ -231,7 +237,13 @@ go.app = function() {
                     }
                     else {
                         return go.utils_project
-                            .create_identity(self.im, {'msisdn': go.utils_project.normalize_msisdn(self.im.user.answers.state_msisdn, self.im.config.country_code)}, null, self.im.user.operator_id)
+                            .create_identity(
+                                self.im,
+                                {'msisdn': go.utils.normalize_msisdn(
+                                    self.im.user.answers.state_msisdn,
+                                    self.im.config.country_code)
+                                }, null, self.im.user.operator_id
+                            )
                             .then(function(identity) {
                                 return self.states.create('state_household_head_name');
                             });
