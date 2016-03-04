@@ -3,7 +3,6 @@ var Q = require('q');
 var moment = require('moment');
 var vumigo = require('vumigo_v02');
 var Choice = vumigo.states.Choice;
-var JsonApi = vumigo.http.api.JsonApi;
 
 
 // Project utils libraty
@@ -46,7 +45,7 @@ go.utils_project = {
         var params = {
             "details__personnel_code": personnel_code
         };
-        return go.utils_project
+        return go.utils
             .service_api_call('identities', 'get', params, null, 'identities/search/', im)
             .then(function(json_get_response) {
                 var healthworkers_found = json_get_response.data.results;
@@ -154,37 +153,6 @@ go.utils_project = {
             .toUpperCase();         // capitalise
     },
 
-    // SERVICE API CALL
-
-    service_api_call: function (service, method, params, payload, endpoint, im) {
-        var http = new JsonApi(im, {
-            headers: {
-                'Authorization': ['Token ' + im.config.services[service].api_token]
-            }
-        });
-        switch (method) {
-            case "post":
-                return http.post(im.config.services[service].url + endpoint, {
-                    data: payload
-                });
-            case "get":
-                return http.get(im.config.services[service].url + endpoint, {
-                    params: params
-                });
-            case "patch":
-                return http.patch(im.config.services[service].url + endpoint, {
-                    data: payload
-                });
-            case "put":
-                return http.put(im.config.services[service].url + endpoint, {
-                    params: params,
-                  data: payload
-                });
-            case "delete":
-                return http.delete(im.config.services[service].url + endpoint);
-            }
-    },
-
     get_active_subscriptions_by_identity_id: function(identity_id, im) {
         // returns all active subscriptions - for unlikely case where there
         // is more than one active subscription
@@ -193,7 +161,7 @@ go.utils_project = {
             active: "True"
         };
 
-        return go.utils_project
+        return go.utils
             .service_api_call("subscriptions", "get", params, null, "subscriptions/", im)
             .then(function(json_get_response) {
                 return json_get_response.data.results;
@@ -221,7 +189,7 @@ go.utils_project = {
         var params = {
             'details__addresses__msisdn': contact.msisdn
         };
-        return go.utils_project
+        return go.utils
         .service_api_call("identities", "get", params, null, 'subscription/', im)
         .then(function(json_result) {
             // make all subscriptions inactive
@@ -235,7 +203,7 @@ go.utils_project = {
                     updated_subscription.active = false;
                     // store the patch calls to be made
                     patch_calls.push(function() {
-                        return go.utils_project.service_api_call("identities", "patch", {}, updated_subscription, endpoint, im);
+                        return go.utils.service_api_call("identities", "patch", {}, updated_subscription, endpoint, im);
                     });
                     clean = false;
                 }
@@ -319,7 +287,7 @@ go.utils_project = {
         var search_string = 'details__addresses__' + address_type;
         params[search_string] = address_val;
 
-        return go.utils_project
+        return go.utils
             .service_api_call('identities', 'get', params, null, 'identities/search/', im)
             .then(function(json_get_response) {
                 var identities_found = json_get_response.data.results;
@@ -355,7 +323,7 @@ go.utils_project = {
             payload.operator = operator_id;
         }
 
-        return go.utils_project
+        return go.utils
             .service_api_call("identities", "post", null, payload, 'identities/', im)
             .then(function(json_post_response) {
                 var contact_created = json_post_response.data;
