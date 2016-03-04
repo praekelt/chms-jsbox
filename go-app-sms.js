@@ -152,6 +152,13 @@ go.utils = {
         return input !== '' && name_check.test(input);
     },
 
+    get_clean_first_word: function(user_message) {
+        return user_message
+            .split(" ")[0]          // split off first word
+            .replace(/\W/g, '')     // remove non letters
+            .toUpperCase();         // capitalise
+    },
+
 
 // CHOICE HELPERS
 
@@ -621,7 +628,7 @@ go.app = function() {
 
 
         self.states.add('state_start', function() {
-            var user_first_word = go.utils_project.get_clean_first_word(self.im.msg.content);
+            var user_first_word = go.utils.get_clean_first_word(self.im.msg.content);
             switch (user_first_word) {
                 case "STOP":
                     return self.states.create("state_opt_out_enter");
