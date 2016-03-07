@@ -130,9 +130,12 @@ go.utils = {
         return moment(date, format, true).isValid();
     },
 
-    is_valid_year: function(input) {
-        // check that it is a number and has four digits
-        return input.length === 4 && go.utils.check_valid_number(input);
+    is_valid_year: function(input, min, max) {  // expecting string parameters
+        // check that it is a number and has four digits of which the first is either a '1' or '2'
+        // AND check that the number is within the range determined by the min/max parameters
+        return input.length === 4 &&
+                go.utils.check_valid_number(input) &&
+                (input >= min) && (input <= max);
     },
 
     is_valid_day_of_month: function(input) {
