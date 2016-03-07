@@ -653,7 +653,6 @@ describe("familyconnect health worker app", function() {
             describe("is_valid_year", function() {
                 it('should return true/false if year is valid', function() {
                     // test data
-                        // needs to start with 0 and be 10 - 13 characters in length to Validate
                     var testDataArray = [
                         ['12345', '1900', '2016'],  // invalid year parameter (length>4)
                         ['2000', '1999', '2016'],  // valid - year parameter within min/max range
