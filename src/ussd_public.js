@@ -50,7 +50,7 @@ go.app = function() {
             "state_language":
                 "Welcome to FamilyConnect. Please choose your language",
             "state_permission":
-                "Welcome to FamilyConnect. Do you have permission to manage the number [MSISDN]?",
+                "Welcome to FamilyConnect. Do you have permission to manage the number {{msisdn}}?",
             "state_permission_required":
                 "Sorry, you need permission.",
             "state_manage_msisdn":
@@ -93,7 +93,7 @@ go.app = function() {
             "state_hiv_messages":
                 "Would they like to receive additional messages about HIV?",
             "state_end_thank_you":
-                "Thank you. Your FamilyConnect ID is [XXX-XXX-XXXX]. You will receive an SMS with it shortly.",
+                "Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly.",
 
             "state_end_general":
                 "Thank you for using the FamilyConnect service"
@@ -151,12 +151,17 @@ go.app = function() {
     // START STATES
 
         self.add('state_start', function(name) {
-            return go.utils_project
-                .check_contact_recognised(self.im.user.addr)
-                .then(function(recognised) {
-                    if (recognised) {
+            // Reset user answers when restarting the app
+            self.im.user.answers = {};
+            return go.utils
+                .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
+                .then(function(user) {
+                    self.im.user.set_answer('user_id', user.id);
+                    if (user.details.receiver_role) {
+                        self.im.user.set_answer('role_player', user.details.receiver_role);
                         return self.states.create('state_permission');
                     } else {
+                        self.im.user.set_answer('role_player', 'guest');
                         return self.states.create('state_language');
                     }
                 });
@@ -179,7 +184,7 @@ go.app = function() {
         // ChoiceState st-C
         self.add('state_permission', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: $(questions[name]).context({msisdn: self.im.user.addr}),
                 choices: [
                     new Choice('has_permission', $('Yes')),
                     new Choice('no_permission', $('No')),
@@ -193,8 +198,12 @@ go.app = function() {
                             creator_opts: {msisdn: self.im.user.addr}
                         };
                     }
-                    else if (choice.value === 'no_permission') {return 'state_permission_required';}
-                    else if (choice.value === 'other_number') {return 'state_manage_msisdn';}
+                    else if (choice.value === 'no_permission') {
+                        return 'state_permission_required';
+                    }
+                    else if (choice.value === 'other_number') {
+                        return 'state_manage_msisdn';
+                    }
                 }
             });
         });
@@ -228,12 +237,15 @@ go.app = function() {
         });
 
         self.add('state_check_registered_user', function(name, opts) {
-            return go.utils_project
-                .check_is_registered(opts.msisdn)
-                .then(function(is_registered) {
-                    if (is_registered) {
+            return go.utils
+                .get_or_create_identity({'msisdn': opts.msisdn}, self.im, null)
+                .then(function(contact) {
+                    if (contact.details.receiver_role) {
+                        self.im.user.set_answer('role_player', contact.details.receiver_role);
+                        self.im.user.set_answer('contact_id', contact.id);
                         return self.states.create('state_change_menu');
                     } else {
+                        self.im.user.set_answer('contact_id', contact.id);
                         return self.states.create('state_msg_receiver');
                     }
                 });
@@ -471,14 +483,23 @@ go.app = function() {
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
                 ],
-                next: 'state_end_thank_you'
+                next: 'state_get_health_id'
             });
+        });
+
+        self.add('state_get_health_id', function(name) {
+            return go.utils
+                .get_identity(self.im.user.answers.contact_id, self.im)
+                .then(function(identity) {
+                    self.im.user.set_answer('health_id', identity.details.health_id);
+                    return self.states.create('state_end_thank_you');
+                });
         });
 
         // EndState st-13
         self.add('state_end_thank_you', function(name) {
             return new EndState(name, {
-                text: $(questions[name]),
+                text: $(questions[name]).context({health_id: self.im.user.answers.health_id}),
                 next: 'state_start'
             });
         });
