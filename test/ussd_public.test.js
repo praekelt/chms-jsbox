@@ -1,9 +1,9 @@
 var vumigo = require('vumigo_v02');
-var fixtures = require('./fixtures');
+var fixtures = require('./fixtures_public');
 var AppTester = vumigo.AppTester;
 
 describe("familyconnect health worker app", function() {
-    describe("for ussd use - auth on", function() {
+    describe("for ussd use", function() {
         var app;
         var tester;
 
@@ -17,14 +17,17 @@ describe("familyconnect health worker app", function() {
                     name: 'familyconnect',
                     channel: '*120*8864*0000#',
                     testing_today: '2015-04-03',
+                    country_code: '256',  // uganda
                     metric_store: 'chms_uganda_test',  // _env at the end
-                    control: {
-                        username: "test_user",
-                        api_key: "test_key",
-                        url: "http://127.0.0.1:8000/subscription/"
-                    },
-                    endpoints: {
-                        "sms": {"delivery_class": "sms"}
+                    services: {
+                        identities: {
+                            api_token: 'test_token_identities',
+                            url: "http://localhost:8001/api/v1/"
+                        },
+                        subscriptions: {
+                            api_token: 'test_token_subscriptions',
+                            url: "http://localhost:8002/api/v1/"
+                        }
                     },
                     no_timeout_redirects: [
                         'state_start',
@@ -37,33 +40,6 @@ describe("familyconnect health worker app", function() {
                 .setup(function(api) {
                     api.metrics.stores = {'chms_uganda_test': {}};
                 })
-                .setup(function(api) {
-                    // new user 082111
-                    api.contacts.add({
-                        msisdn: '+082111',
-                        extra: {},
-                        key: "contact_key_082111",
-                        user_account: "contact_user_account"
-                    });
-                })
-                .setup(function(api) {
-                    // registered user 082222
-                    api.contacts.add({
-                        msisdn: '+082222',
-                        extra: {},
-                        key: "contact_key_082222",
-                        user_account: "contact_user_account"
-                    });
-                })
-                .setup(function(api) {
-                    // registered user 082333 - existing baby subscription
-                    api.contacts.add({
-                        msisdn: '+082333',
-                        extra: {},
-                        key: "contact_key_082333",
-                        user_account: "contact_user_account"
-                    });
-                })
                 ;
         });
 
@@ -72,7 +48,7 @@ describe("familyconnect health worker app", function() {
         describe("Timeout testing", function() {
             it("should ask about continuing", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0720000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '1'  // state_language - english
@@ -91,7 +67,7 @@ describe("familyconnect health worker app", function() {
             });
             it("should continue", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0720000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '1'  // state_language - english
@@ -106,7 +82,7 @@ describe("familyconnect health worker app", function() {
             });
             it("should restart", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0720000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '1'  // state_language - english
@@ -126,7 +102,7 @@ describe("familyconnect health worker app", function() {
         describe("Routing testing", function() {
             it("to state_language", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0720000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                     )
@@ -143,7 +119,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_permission (via state_language)", function() {
                 return tester
-                    .setup.user.addr('082111')
+                    .setup.user.addr('0720000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "2"  // state_language - Runyakore
@@ -151,7 +127,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_permission',
                         reply: [
-                            "Welcome to FamilyConnect. Do you have permission to manage the number [MSISDN]?",
+                            "Welcome to FamilyConnect. Do you have permission to manage the number 0720000111?",
                             "1. Yes",
                             "2. No",
                             "3. Change the number I'd like to manage"
@@ -161,14 +137,14 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_permission (recognised user)", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                     )
                     .check.interaction({
                         state: 'state_permission',
                         reply: [
-                            "Welcome to FamilyConnect. Do you have permission to manage the number [MSISDN]?",
+                            "Welcome to FamilyConnect. Do you have permission to manage the number 0720000222?",
                             "1. Yes",
                             "2. No",
                             "3. Change the number I'd like to manage"
@@ -178,7 +154,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_manage_msisdn", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "3"  // state_permission - change number to manage
@@ -191,11 +167,11 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_msg_receiver", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "3"  // state_permission - change number to manage
-                        , "0820010001"  // state_manage_msisdn - unregistered user
+                        , "0720000333"  // state_manage_msisdn - unregistered user
                     )
                     .check.interaction({
                         state: 'state_msg_receiver',
@@ -211,7 +187,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_change_menu", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -230,7 +206,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_permission_required", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "2"  // state_permission - change number to manage
@@ -249,11 +225,11 @@ describe("familyconnect health worker app", function() {
         describe("Registration testing", function() {
             it("to state_last_period_month", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "3"  // state_permission - change number to manage
-                        , "0820010001"  // state_manage_msisdn - unregistered user
+                        , "0720000333"  // state_manage_msisdn - unregistered user
                         , "4"  // state_msg_receiver - trusted friend
                     )
                     .check.interaction({
@@ -275,11 +251,11 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_last_period_day", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "3"  // state_permission - change number to manage
-                        , "0820010001"  // state_manage_msisdn - unregistered user
+                        , "0720000333"  // state_manage_msisdn - unregistered user
                         , "4"  // state_msg_receiver - trusted friend
                         , "3"  // state_last_period_month - may
                     )
@@ -291,11 +267,11 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_hiv_messages", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "3"  // state_permission - change number to manage
-                        , "0820010001"  // state_manage_msisdn - unregistered user
+                        , "0720000333"  // state_manage_msisdn - unregistered user
                         , "4"  // state_msg_receiver - trusted friend
                         , "3"  // state_last_period_month - may
                         , "22"  // state_last_period_day
@@ -313,11 +289,11 @@ describe("familyconnect health worker app", function() {
 
             it("complete flow - not the mother", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "3"  // state_permission - change number to manage
-                        , "0820010001"  // state_manage_msisdn - unregistered user
+                        , "0720000333"  // state_manage_msisdn - unregistered user
                         , "4"  // state_msg_receiver - trusted friend
                         , "3"  // state_last_period_month - may
                         , "22"  // state_last_period_day
@@ -325,16 +301,16 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. Your FamilyConnect ID is [XXX-XXX-XXXX]. You will receive an SMS with it shortly."
+                        reply: "Thank you. Your FamilyConnect ID is 1234567890. You will receive an SMS with it shortly."
                     })
                     .run();
             });
         });
 
-        describe("Change testing", function() {
+        describe.skip("Change testing", function() {
             it("to state_end_baby", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -396,7 +372,7 @@ describe("familyconnect health worker app", function() {
 
             it("to state_change_language", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -415,7 +391,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_end_language", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -431,7 +407,7 @@ describe("familyconnect health worker app", function() {
 
             it("to state_change_number", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -445,7 +421,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_change_recipient", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -466,7 +442,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_end_recipient", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -483,7 +459,7 @@ describe("familyconnect health worker app", function() {
 
             it("to state_optout_reason", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -504,7 +480,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_loss_subscription", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -523,7 +499,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_end_loss_subscription", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -539,7 +515,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_end_optout (loss)", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
@@ -555,7 +531,7 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_end_optout (non-loss)", function() {
                 return tester
-                    .setup.user.addr('082222')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "1"  // state_permission - change number to manage
