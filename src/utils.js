@@ -125,8 +125,8 @@ go.utils = {
 
     is_valid_year: function(input, min, max) {  // expecting string parameters
         // check that it is a number and has four digits
-        // AND check that the number is within the range determined by the min/max parameters
-        return input.length === 4 &&
+        // AND that the number is within the range determined by the min/max parameters
+        return input.length === 4 && min.length === 4 && max.length === 4 &&
                 go.utils.check_valid_number(input) &&
                 parseInt(input, 10) >= parseInt(min, 10) &&
                 parseInt(input, 10) <= parseInt(max, 10);

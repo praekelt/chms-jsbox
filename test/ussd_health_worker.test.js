@@ -1,5 +1,6 @@
 var vumigo = require('vumigo_v02');
 var fixtures = require('./fixtures');
+var assert = require('assert');
 var AppTester = vumigo.AppTester;
 
 describe("familyconnect health worker app", function() {
@@ -643,6 +644,42 @@ describe("familyconnect health worker app", function() {
                         reply: "Sorry not a valid input. Please enter the first name of the Head of the Household. For example: Isaac."
                     })
                     .run();
+            });
+        });
+
+        // TEST UTILS FUNCTIONS
+
+        describe("utils function testing", function() {
+            describe("is_valid_year", function() {
+                it('should return true/false if year is valid', function() {
+                    // test data
+                        // needs to start with 0 and be 10 - 13 characters in length to Validate
+                    var testDataArray = [
+                        ['12345', '1900', '2016'],  // invalid year parameter (length>4)
+                        ['2000', '1999', '2016'],  // valid - year parameter within min/max range
+                        ['2017', '1900', '2016'],  // year parameter outside max
+                        ['20a4', '1900', '2016'],  // invalid year parameter (alpha in string)
+                        ['2005', '1900', 'bbbb'],  // invalid max parameter (alpha)
+                        ['1981', '1950', '2016'],  // valid - year parameter within min/max range
+                        ['1981', '19501', '2016']  // invalid min parameter (length>4)
+                    ];
+
+                    // function call
+                    var resultsArray = [];
+                    for (var i=0; i<testDataArray.length; i++) {
+                        resultsArray.push(go.utils.is_valid_year(testDataArray[i][0], testDataArray[i][1], testDataArray[i][2]));
+                    }
+
+                    // expected results
+                    assert.equal(resultsArray.length, 7);
+                    assert.equal(resultsArray[0], false);
+                    assert.equal(resultsArray[1], true);
+                    assert.equal(resultsArray[2], false);
+                    assert.equal(resultsArray[3], false);
+                    assert.equal(resultsArray[4], false);
+                    assert.equal(resultsArray[5], true);
+                    assert.equal(resultsArray[6], false);
+                });
             });
         });
     });
