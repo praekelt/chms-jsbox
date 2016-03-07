@@ -128,7 +128,8 @@ go.utils = {
         // AND check that the number is within the range determined by the min/max parameters
         return input.length === 4 &&
                 go.utils.check_valid_number(input) &&
-                (input >= min) && (input <= max);
+                parseInt(input, 10) >= parseInt(min, 10) &&
+                parseInt(input, 10) <= parseInt(max, 10);
     },
 
     is_valid_day_of_month: function(input) {
