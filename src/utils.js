@@ -125,9 +125,9 @@ go.utils = {
 
     is_valid_year: function(year, minYear, maxYear) {  // expecting string parameters
         // check that the number is within the range determined by the minYear/maxYear parameters
-        return go.utils.check_valid_number(year) &&
-                parseInt(year, 10) >= parseInt(minYear, 10) &&
-                parseInt(year, 10) <= parseInt(maxYear, 10);
+        return go.utils.check_valid_number(year)
+            && parseInt(year, 10) >= parseInt(minYear, 10)
+            && parseInt(year, 10) <= parseInt(maxYear, 10);
     },
 
     is_valid_day_of_month: function(input) {
