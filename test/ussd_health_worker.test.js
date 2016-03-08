@@ -660,7 +660,8 @@ describe("familyconnect health worker app", function() {
                         'Jan-Hendrik',
                         '12345',
                         'Zoë',
-                        'Al-YoãHukáé'
+                        'Al-YoãHukáé',
+                        'Rina!'
                     ];
 
                     // function call
@@ -670,16 +671,17 @@ describe("familyconnect health worker app", function() {
                     }
 
                     // expected results
-                    assert.equal(resultsArray.length, 9);
+                    assert.equal(resultsArray.length, 10);
                     assert.equal(resultsArray[0], true);
                     assert.equal(resultsArray[1], true);
                     assert.equal(resultsArray[2], true);
                     assert.equal(resultsArray[3], true);
-                    assert.equal(resultsArray[4], false);
+                    assert.equal(resultsArray[4], false);  // false because 'J0hn' contains a zero
                     assert.equal(resultsArray[5], true);
-                    assert.equal(resultsArray[6], false);
+                    assert.equal(resultsArray[6], false);  // false because '12345' is non-alphabetical
                     assert.equal(resultsArray[7], true);
                     assert.equal(resultsArray[8], true);
+                    assert.equal(resultsArray[9], false);  // false because 'Rina!' contains punctuation mark '!'
                 });
             });
         });
