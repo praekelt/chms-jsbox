@@ -680,6 +680,43 @@ describe("familyconnect health worker app", function() {
                     assert.equal(resultsArray[6], false);
                 });
             });
+
+            describe("is_valid_name", function() {
+                it('should return true/false depending on validity of name', function() {
+                    // test data
+                    var testDataArray = [
+                        'john',
+                        'Sally',
+                        'Mark Anthony',
+                        ' Peter',
+                        'J0hn',
+                        'Jan-Hendrik',
+                        '12345',
+                        'Zoë',
+                        'Al-YoãHukáé',
+                        'Rina!'
+                    ];
+
+                    // function call
+                    var resultsArray = [];
+                    for (var i=0; i<testDataArray.length; i++) {
+                        resultsArray.push(go.utils.is_valid_name(testDataArray[i], 0, 150));
+                    }
+
+                    // expected results
+                    assert.equal(resultsArray.length, 10);
+                    assert.equal(resultsArray[0], true);
+                    assert.equal(resultsArray[1], true);
+                    assert.equal(resultsArray[2], true);
+                    assert.equal(resultsArray[3], true);
+                    assert.equal(resultsArray[4], false);  // false because 'J0hn' contains a zero
+                    assert.equal(resultsArray[5], true);
+                    assert.equal(resultsArray[6], false);  // false because '12345' is non-alphabetical
+                    assert.equal(resultsArray[7], true);
+                    assert.equal(resultsArray[8], true);
+                    assert.equal(resultsArray[9], false);  // false because 'Rina!' contains punctuation mark '!'
+                });
+            });
         });
     });
 

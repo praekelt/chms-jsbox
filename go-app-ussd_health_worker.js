@@ -157,7 +157,7 @@ go.utils = {
         // check that the string does not include the characters listed in the
         // regex, and min <= input string length <= max
         var name_check = new RegExp(
-            '(^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,123456789]{min,max}$)'
+            '(^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,0123456789]{min,max}$)'
             .replace('min', min.toString())
             .replace('max', max.toString())
         );
