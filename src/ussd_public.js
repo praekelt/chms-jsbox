@@ -172,9 +172,10 @@ go.app = function() {
             return new ChoiceState(name, {
                 question: $(questions[name]),
                 choices: [
-                    new Choice('english', $('English')),
-                    new Choice('runyakore', $('Runyakore')),
-                    new Choice('lusoga', $('Lusoga'))
+                    new Choice('eng_UG', $('English')),
+                    new Choice('cgg_UG', $('Rukiga')),
+                    new Choice('xog_UG', $('Lusoga')),
+                    new Choice('lug_UG', $('Luganda'))
                 ],
                 error: $(get_error_text(name)),
                 next: 'state_permission'
@@ -322,9 +323,10 @@ go.app = function() {
             return new ChoiceState(name, {
                 question: $(questions[name]),
                 choices: [
-                    new Choice('english', $('English')),
-                    new Choice('runyakore', $('Runyakore')),
-                    new Choice('lusoga', $('Lusoga'))
+                    new Choice('eng_UG', $('English')),
+                    new Choice('cgg_UG', $('Rukiga')),
+                    new Choice('xog_UG', $('Lusoga')),
+                    new Choice('lug_UG', $('Luganda'))
                 ],
                 error: $(get_error_text(name)),
                 next: 'state_end_language'
