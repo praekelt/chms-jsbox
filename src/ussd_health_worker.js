@@ -440,10 +440,10 @@ go.app = function() {
                 question: $(questions[name]),
                 error: $(get_error_text(name)),
                 choices: [
-                    new Choice('english', $('English')),
-                    new Choice('rukiga', $('Rukiga')),
-                    new Choice('lusoga', $('Lusoga')),
-                    new Choice('luganda', $('Luganda'))
+                    new Choice('eng_UG', $('English')),
+                    new Choice('cgg_UG', $('Rukiga')),
+                    new Choice('xog_UG', $('Lusoga')),
+                    new Choice('lug_UG', $('Luganda'))
                 ],
                 next: 'state_get_health_id'
             });
