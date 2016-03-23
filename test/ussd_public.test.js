@@ -111,8 +111,9 @@ describe("familyconnect health worker app", function() {
                         reply: [
                             "Welcome to FamilyConnect. Please choose your language",
                             "1. English",
-                            "2. Runyakore",
-                            "3. Lusoga"
+                            "2. Rukiga",
+                            "3. Lusoga",
+                            "4. Luganda"
                         ].join('\n')
                     })
                     .run();
@@ -383,8 +384,9 @@ describe("familyconnect health worker app", function() {
                         reply: [
                             "What language would this person like to receive these messages in?",
                             "1. English",
-                            "2. Runyakore",
-                            "3. Lusoga"
+                            "2. Rukiga",
+                            "3. Lusoga",
+                            "4. Luganda"
                         ].join('\n')
                     })
                     .run();
