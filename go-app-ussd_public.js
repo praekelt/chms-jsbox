@@ -665,8 +665,9 @@ go.app = function() {
                 question: $(questions[name]),
                 choices: [
                     new Choice('english', $('English')),
-                    new Choice('runyakore', $('Runyakore')),
-                    new Choice('lusoga', $('Lusoga'))
+                    new Choice('rukiga', $('Rukiga')),
+                    new Choice('lusoga', $('Lusoga')),
+                    new Choice('luganda', $('Luganda'))
                 ],
                 error: $(get_error_text(name)),
                 next: 'state_permission'
@@ -815,8 +816,9 @@ go.app = function() {
                 question: $(questions[name]),
                 choices: [
                     new Choice('english', $('English')),
-                    new Choice('runyakore', $('Runyakore')),
-                    new Choice('lusoga', $('Lusoga'))
+                    new Choice('rukiga', $('Rukiga')),
+                    new Choice('lusoga', $('Lusoga')),
+                    new Choice('luganda', $('Luganda'))
                 ],
                 error: $(get_error_text(name)),
                 next: 'state_end_language'

@@ -933,8 +933,9 @@ go.app = function() {
                 error: $(get_error_text(name)),
                 choices: [
                     new Choice('english', $('English')),
-                    new Choice('runyakore', $('Runyakore')),
-                    new Choice('lusoga', $('Lusoga'))
+                    new Choice('rukiga', $('Rukiga')),
+                    new Choice('lusoga', $('Lusoga')),
+                    new Choice('luganda', $('Luganda'))
                 ],
                 next: 'state_get_health_id'
             });
