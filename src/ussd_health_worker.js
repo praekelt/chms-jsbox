@@ -292,8 +292,22 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_last_period_month'
+                next: 'state_save_identities'
             });
+        });
+
+        // Get or create identities and save their IDs
+        self.add('state_save_identities', function(name) {
+            return go.utils_project
+                .save_identities(
+                    self.im,
+                    self.im.user.answers.state_msg_receiver,
+                    self.im.user.answers.state_msisdn,
+                    self.im.user.answers.operator_id
+                )
+                .then(function() {
+                    return self.states.create('state_last_period_month');
+                });
         });
 
         // ChoiceState st-05

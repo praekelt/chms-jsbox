@@ -178,6 +178,7 @@ return [
 
         // get unregistered identity 0820000333 by msisdn
         {
+            'repeatable': true,
             'request': {
                 'method': 'GET',
                 'params': {
@@ -202,6 +203,7 @@ return [
 
         // create identity 082000000333
         {
+            'repeatable': true,
             'request': {
                 'method': 'POST',
                 'headers': {
@@ -498,6 +500,32 @@ return [
                 "code": 200,
                 "data": {
                     "success": "true"
+                }
+            }
+        },
+
+        // create identity communicate through 09093333333
+        {
+            'request': {
+                'method': 'POST',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': "http://localhost:8001/api/v1/identities/",
+                'data':  {
+                    "communicate_through": "cb245673-aa41-4302-ac47-0000000333",
+                }
+            },
+            'response': {
+                "code": 201,
+                "data": {
+                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-1234567890/",
+                    "id": "cb245673-aa41-4302-ac47-1234567890",
+                    "version": 1,
+                    "communicate_through": "cb245673-aa41-4302-ac47-0000000333",
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
             }
         },
