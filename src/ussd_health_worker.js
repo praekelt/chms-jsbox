@@ -424,7 +424,7 @@ go.app = function() {
             return new FreeText(name, {
                 question: $(questions[name]),
                 check: function(content) {
-                    if (go.utils.is_valid_year(content)) {
+                    if (go.utils.is_valid_year(content, '1900', go.utils.get_today(self.im.config).format('YYYY'))) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
                         return $(get_error_text(name));
