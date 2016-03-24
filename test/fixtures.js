@@ -283,8 +283,8 @@ return [
             'request': {
                 'method': 'GET',
                 'params': {
-                    'active': "True",
-                    'contact': "cb245673-aa41-4302-ac47-00000000444"
+                    'active': 'true',
+                    'identity': "cb245673-aa41-4302-ac47-00000000444"
                 },
                 'headers': {
                     'Authorization': ['Token test_key'],
@@ -360,8 +360,8 @@ return [
             'request': {
                 'method': 'GET',
                 'params': {
-                    'active': "True",
-                    'contact': "cb245673-aa41-4302-ac47-00000000555"
+                    'active': 'true',
+                    'identity': "cb245673-aa41-4302-ac47-00000000555"
                 },
                 'headers': {
                     'Authorization': ['Token test_key'],
