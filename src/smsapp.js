@@ -60,8 +60,6 @@ go.app = function() {
                     return self.states.create("state_opt_out_enter");
                 case "BLOCK":
                     return self.states.create("state_opt_out_enter");
-                case "START":
-                    return self.states.create("state_opt_in_enter");
                 default:
                     return self.states.create("state_unrecognised");
             }
@@ -71,7 +69,7 @@ go.app = function() {
     // OPTOUT STATES
         self.states.add('state_opt_out_enter', function(name) {
             return go.utils
-                .opt_out(self.im, self.contact)
+                .optout(self.im, self.contact)
                 .then(function() {
                     return self.states.create('state_opt_out');
                 });
@@ -80,23 +78,6 @@ go.app = function() {
         self.states.add('state_opt_out', function(name) {
             return new EndState(name, {
                 text: $('Thank you. You will no longer receive messages from us. Reply START to opt back in.'),
-                next: 'state_start'
-            });
-        });
-
-
-    // OPTIN STATES
-        self.states.add('state_opt_in_enter', function(name) {
-            return go.utils
-                .opt_in(self.im, self.contact)
-                .then(function() {
-                    return self.states.create('state_opt_in');
-                });
-        });
-
-        self.states.add('state_opt_in', function(name) {
-            return new EndState(name, {
-                text: $('Thank you. You will now receive messages from us again. Reply STOP to unsubscribe.'),
                 next: 'state_start'
             });
         });

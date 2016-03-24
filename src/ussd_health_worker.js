@@ -218,9 +218,9 @@ go.app = function() {
                 .then(function(identity) {
                     if (identity) {
                         self.im.user.set_answer('contact_id', identity.id);
-                        // check if identity has active subscriptions
+                        // check if identity has active subscription
                         return go.utils
-                            .has_active_subscriptions(identity.id, self.im)
+                            .has_active_subscription(identity.id, self.im)
                             .then(function(hasSubscriptions) {
                                 if (hasSubscriptions) {
                                     // should result in a rewrite of existing subscription
@@ -454,9 +454,10 @@ go.app = function() {
                 question: $(questions[name]),
                 error: $(get_error_text(name)),
                 choices: [
-                    new Choice('english', $('English')),
-                    new Choice('runyakore', $('Runyakore')),
-                    new Choice('lusoga', $('Lusoga'))
+                    new Choice('eng_UG', $('English')),
+                    new Choice('cgg_UG', $('Rukiga')),
+                    new Choice('xog_UG', $('Lusoga')),
+                    new Choice('lug_UG', $('Luganda'))
                 ],
                 next: 'state_get_health_id'
             });
