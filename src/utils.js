@@ -218,10 +218,10 @@ go.utils = {
 // IDENTITY HELPERS
 
     get_identity_by_address: function(address, im) {
-        // Searches the Identity Store for all identities with the provided address.
-        // Returns the first identity object found
-        // Address should be an object {address_type: address}, eg.
-        // {'msisdn': '0821234444'}, {'email': 'me@example.com'}
+      // Searches the Identity Store for all identities with the provided address.
+      // Returns the first identity object found
+      // Address should be an object {address_type: address}, eg.
+      // {'msisdn': '0821234444'}, {'email': 'me@example.com'}
 
         var address_type = Object.keys(address)[0];
         var address_val = address[address_type];
@@ -229,21 +229,24 @@ go.utils = {
         var search_string = 'details__addresses__' + address_type;
         params[search_string] = address_val;
 
-        return go.utils
-            .service_api_call('identities', 'get', params, null, 'identities/search/', im)
-            .then(function(json_get_response) {
-                var identities_found = json_get_response.data.results;
-                // Return the first identity in the list of identities
-                return (identities_found.length > 0)
-                ? identities_found[0]
-                : null;
+        return im
+            .log('Getting identity for: ' + JSON.stringify(params))
+            .then(function() {
+                return go.utils
+                    .service_api_call('identities', 'get', params, null, 'identities/search/', im)
+                    .then(function(json_get_response) {
+                        var identities_found = json_get_response.data.results;
+                        // Return the first identity in the list of identities
+                        return (identities_found.length > 0)
+                        ? identities_found[0]
+                        : null;
+                    });
             });
     },
 
     get_identity: function(identity_id, im) {
       // Gets the identity from the Identity Store
       // Returns the identity object
-
         var endpoint = 'identities/' + identity_id + '/';
         return go.utils
         .service_api_call('identities', 'get', {}, null, endpoint, im)
@@ -256,7 +259,12 @@ go.utils = {
       // Create a new identity
       // Returns the identity object
 
-        var payload = {};
+        var payload = {
+            "details": {
+                "default_addr_type": null,
+                "addresses": {}
+            }
+        };
         // compile base payload
         if (address) {
             var address_type = Object.keys(address);
@@ -277,6 +285,7 @@ go.utils = {
         if (operator_id) {
             payload.operator = operator_id;
         }
+
         return go.utils
             .service_api_call("identities", "post", null, payload, 'identities/', im)
             .then(function(json_post_response) {
