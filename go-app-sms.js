@@ -35,24 +35,45 @@ go.utils = {
         switch (method) {
             case "post":
                 return http.post(im.config.services[service].url + endpoint, {
-                    data: payload
-                });
+                        data: payload
+                    })
+                    .then(go.utils.log_service_api_call(service, method, params, payload, endpoint, im));
             case "get":
                 return http.get(im.config.services[service].url + endpoint, {
-                    params: params
-                });
+                        params: params
+                    })
+                    .then(go.utils.log_service_api_call(service, method, params, payload, endpoint, im));
             case "patch":
                 return http.patch(im.config.services[service].url + endpoint, {
-                    data: payload
-                });
+                        data: payload
+                    })
+                    .then(go.utils.log_service_api_call(service, method, params, payload, endpoint, im));
             case "put":
                 return http.put(im.config.services[service].url + endpoint, {
                     params: params,
-                  data: payload
-                });
+                    data: payload
+                })
+                .then(go.utils.log_service_api_call(service, method, params, payload, endpoint, im));
             case "delete":
-                return http.delete(im.config.services[service].url + endpoint);
+                return http
+                    .delete(im.config.services[service].url + endpoint)
+                    .then(go.utils.log_service_api_call(service, method, params, payload, endpoint, im));
             }
+    },
+
+    log_service_api_call: function(service, method, params, payload, endpoint, im) {
+        return function (response) {
+            return im
+                .log([
+                    'Request: ' + method + ' ' + im.config.services[service].url + endpoint,
+                    'Payload: ' + JSON.stringify(payload),
+                    'Params: ' + JSON.stringify(params),
+                    'Response: ' + JSON.stringify(response),
+                ].join('\n'))
+                .then(function () {
+                    return response;
+                });
+        };
     },
 
 
@@ -130,8 +151,10 @@ go.utils = {
         return moment(date, format, true).isValid();
     },
 
-    is_valid_year: function(year, minYear, maxYear) {  // expecting string parameters
-        // check that the number is within the range determined by the minYear/maxYear parameters
+    is_valid_year: function(year, minYear, maxYear) {
+        // expects string parameters
+        // checks that the number is within the range determined by the
+        // minYear & maxYear parameters
         return go.utils.check_valid_number(year)
             && parseInt(year, 10) >= parseInt(minYear, 10)
             && parseInt(year, 10) <= parseInt(maxYear, 10);
