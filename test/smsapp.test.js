@@ -68,7 +68,7 @@ describe("FamilyConnect app", function() {
 
 
         describe("when the user sends a STOP message", function() {
-            it("should opt them out", function() {
+            it.skip("should opt them out", function() {
                 // opt-out functionality is also being tested via fixture 01
                 return tester
                     .setup.user.addr('064001')
@@ -108,7 +108,7 @@ describe("FamilyConnect app", function() {
         });
 
         describe("when the user sends a BLOCK message", function() {
-            it("should opt them out", function() {
+            it.skip("should opt them out", function() {
                 // opt-out functionality is also being tested via fixture 01
                 return tester
                     .setup.user.addr('064001')
@@ -142,44 +142,6 @@ describe("FamilyConnect app", function() {
                     .check(function(api) {
                         var optout_store = api.resources.resources.optout.optout_store;
                         assert.deepEqual(optout_store.length, 2);
-                    })
-                    .run();
-            });
-        });
-
-        describe("when the user sends a START message", function() {
-            it("should opt them in", function() {
-                // opt-in functionality is also being tested via fixtures
-                return tester
-                    .setup.user.addr('064003')
-                    .inputs('start')
-                    // check navigation
-                    .check.interaction({
-                        state: 'state_opt_in',
-                        reply:
-                            'Thank you. You will now receive messages from us again. Reply STOP to unsubscribe.'
-                    })
-                    // check extras
-                    .check(function(api) {
-                        var contact = _.find(api.contacts.store, {
-                                msisdn: '+064003'
-                            });
-                        assert.equal(contact.extra.optout_last_attempt, '2015-01-01 01:01:01.111');
-                        assert.equal(contact.extra.optin_last_attempt, '2015-04-03 12:00:00.000');
-                    })
-                    // check metrics
-                    .check(function(api) {
-                        var metrics = api.metrics.stores.chms_uganda_test;
-                        assert.equal(Object.keys(metrics).length, 4);
-                        assert.deepEqual(metrics['total.sms.unique_users'].values, [1]);
-                        assert.deepEqual(metrics['total.sms.unique_users.transient'].values, [1]);
-                        assert.deepEqual(metrics['total.optins'].values, [1]);
-                        assert.deepEqual(metrics['total.optins.transient'].values, [1]);
-                    })
-                    // check optout_store
-                    .check(function(api) {
-                        var optout_store = api.resources.resources.optout.optout_store;
-                        assert.deepEqual(optout_store.length, 0);
                     })
                     .run();
             });
