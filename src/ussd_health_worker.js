@@ -218,9 +218,9 @@ go.app = function() {
                 .then(function(identity) {
                     if (identity) {
                         self.im.user.set_answer('contact_id', identity.id);
-                        // check if identity has active subscriptions
+                        // check if identity has active subscription
                         return go.utils
-                            .has_active_subscriptions(identity.id, self.im)
+                            .has_active_subscription(identity.id, self.im)
                             .then(function(hasSubscriptions) {
                                 if (hasSubscriptions) {
                                     // should result in a rewrite of existing subscription
