@@ -490,6 +490,127 @@ go.utils_project = {
     },
 
 
+// REGISTRATION HELPERS
+
+    compile_reg_info: function(im) {
+        var reg_info = {
+            stage: 'prebirth',
+            mother_id: im.user.answers.mother_id,
+            data: {
+                hoh_id: im.user.answers.hoh_id,
+                receiver_id: im.user.answers.receiver_id,
+                operator_id: im.user.answers.operator_id,
+                language: im.user.answers.state_msg_language,
+                msg_type: "text",
+                last_period_date: im.user.answers.last_period_date,
+                msg_receiver: im.user.answers.state_msg_receiver,
+                hoh_name: im.user.answers.state_household_head_name,
+                hoh_surname: im.user.answers.state_household_head_surname,
+                mama_name: im.user.answers.state_mother_name,
+                mama_surname: im.user.answers.state_mother_surname,
+                mama_id_type: im.user.answers.state_id_type
+            }
+        };
+
+        if (im.user.answers.state_id_type === 'ugandan_id') {
+            reg_info.data.mama_id_no = im.user.answers.state_nin;
+        } else {
+            reg_info.data.mama_dob = im.user.answers.mother_dob;
+        }
+
+        return reg_info;
+    },
+
+    update_identities: function(im) {
+      // Saves useful data collected during registration to the relevant identities
+        var msg_receiver = im.user.answers.state_msg_receiver;
+        if (msg_receiver === 'mother_only') {
+            return go.utils
+                .get_identity(im.user.answers.mother_id, im)
+                .then(function(mother_identity) {
+                    mother_identity.details.receiver_role = 'mother';
+                    mother_identity.details.linked_to = null;
+                    mother_identity.details.gravida = im.user.answers.state_gravida;
+                    mother_identity.details.preferred_language = im.user.answers.state_msg_language;
+                    mother_identity.details.preferred_msg_type = im.user.answers.state_msg_type;
+
+                    if (im.user.answers.state_msg_type === 'audio') {
+                        mother_identity.details.preferred_msg_days = im.user.answers.state_voice_days;
+                        mother_identity.details.preferred_msg_times = im.user.answers.state_voice_times;
+                    }
+
+                    return go.utils.update_identity(im, mother_identity);
+                });
+        } else if (['friend_only', 'family_only', 'father_only'].indexOf(msg_receiver) !== -1) {
+            return Q
+                .all([
+                    go.utils.get_identity(im.user.answers.mother_id, im),
+                    go.utils.get_identity(im.user.answers.receiver_id, im)
+                ])
+                .spread(function(mother_identity, receiver_identity) {
+                    mother_identity.details.receiver_role = 'mother';
+                    mother_identity.details.linked_to = im.user.answers.receiver_id;
+                    mother_identity.details.gravida = im.user.answers.state_gravida;
+                    mother_identity.details.preferred_language = im.user.answers.state_msg_language;
+
+                    receiver_identity.details.receiver_role = msg_receiver.replace('_only', '');
+                    receiver_identity.details.linked_to = im.user.answers.mother_id;
+                    receiver_identity.details.preferred_msg_type = im.user.answers.state_msg_type;
+                    receiver_identity.details.preferred_language = im.user.answers.state_msg_language;
+
+                    if (im.user.answers.state_msg_type === 'audio') {
+                        receiver_identity.details.preferred_msg_days = im.user.answers.state_voice_days;
+                        receiver_identity.details.preferred_msg_times = im.user.answers.state_voice_times;
+                    }
+
+                    return Q.all([
+                        go.utils.update_identity(im, mother_identity),
+                        go.utils.update_identity(im, receiver_identity)
+                    ]);
+                });
+        } else if (['mother_friend', 'mother_family', 'mother_father'].indexOf(msg_receiver) !== -1) {
+            return Q
+                .all([
+                    go.utils.get_identity(im.user.answers.mother_id, im),
+                    go.utils.get_identity(im.user.answers.receiver_id, im)
+                ])
+                .spread(function(mother_identity, receiver_identity) {
+                    mother_identity.details.receiver_role = 'mother';
+                    mother_identity.details.linked_to = im.user.answers.receiver_id;
+                    mother_identity.details.preferred_msg_type = im.user.answers.state_msg_type;
+                    mother_identity.details.gravida = im.user.answers.state_gravida;
+                    mother_identity.details.preferred_language = im.user.answers.state_msg_language;
+
+                    receiver_identity.details.receiver_role = msg_receiver.replace('mother_', '');
+                    receiver_identity.details.linked_to = im.user.answers.mother_id;
+                    receiver_identity.details.household_msgs_only = true;
+                    receiver_identity.details.preferred_msg_type = im.user.answers.state_msg_type;
+                    receiver_identity.details.preferred_language = im.user.answers.state_msg_language;
+
+                    if (im.user.answers.state_msg_type === 'audio') {
+                        mother_identity.details.preferred_msg_days = im.user.answers.state_voice_days;
+                        mother_identity.details.preferred_msg_times = im.user.answers.state_voice_times;
+                        receiver_identity.details.preferred_msg_days = im.user.answers.state_voice_days;
+                        receiver_identity.details.preferred_msg_times = im.user.answers.state_voice_times;
+                    }
+
+                    return Q.all([
+                        go.utils.update_identity(im, mother_identity),
+                        go.utils.update_identity(im, receiver_identity)
+                    ]);
+                });
+        }
+    },
+
+    finish_registration: function(im) {
+        var reg_info = go.utils_project.compile_reg_info(im);
+        return Q.all([
+            go.utils.create_registration(im, reg_info),
+            // go.utils_project.update_identities(im)
+        ]);
+    },
+
+
 // IDENTITY HELPERS
 
     find_healthworker_with_personnel_code: function(im, personnel_code) {
@@ -671,8 +792,8 @@ go.app = function() {
             return go.utils
                 .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
                 .then(function(user) {
-                    self.im.user.set_answer('user_id', user.id);
                     if (user.details.personnel_code) {
+                        self.im.user.set_answer('operator_id', user.id);
                         return self.states.create('state_msg_receiver');
                     } else {
                         return self.states.create('state_auth_code');
@@ -860,7 +981,13 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_mother_name'
+                next: function(content) {
+                    var year = self.im.user.answers.state_last_period_month.substr(2,4);
+                    var month = self.im.user.answers.state_last_period_month.substr(1,2);
+                    var day = go.utils.double_digit_number(content);
+                    self.im.user.set_answer('last_period_date', year+month+day);
+                    return 'state_mother_name';
+                }
             });
         });
 
@@ -972,7 +1099,14 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_msg_language'
+                next: function(content) {
+                    var year = content;
+                    var month = self.im.user.answers.state_mother_birth_month;
+                    var day = go.utils.double_digit_number(
+                        self.im.user.answers.state_mother_birth_day);
+                    self.im.user.set_answer('mother_dob', year+month+day);
+                    return 'state_msg_language';
+                }
             });
         });
 
@@ -1009,7 +1143,13 @@ go.app = function() {
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
                 ],
-                next: 'state_end_thank_you'
+                next: function() {
+                    return go.utils_project
+                        .finish_registration(self.im)
+                        .then(function() {
+                            return 'state_end_thank_you';
+                        });
+                }
             });
         });
 

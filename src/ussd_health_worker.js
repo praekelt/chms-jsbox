@@ -116,8 +116,8 @@ go.app = function() {
             return go.utils
                 .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
                 .then(function(user) {
-                    self.im.user.set_answer('user_id', user.id);
                     if (user.details.personnel_code) {
+                        self.im.user.set_answer('operator_id', user.id);
                         return self.states.create('state_msg_receiver');
                     } else {
                         return self.states.create('state_auth_code');
@@ -305,7 +305,13 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_mother_name'
+                next: function(content) {
+                    var year = self.im.user.answers.state_last_period_month.substr(2,4);
+                    var month = self.im.user.answers.state_last_period_month.substr(1,2);
+                    var day = go.utils.double_digit_number(content);
+                    self.im.user.set_answer('last_period_date', year+month+day);
+                    return 'state_mother_name';
+                }
             });
         });
 
@@ -417,7 +423,14 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_msg_language'
+                next: function(content) {
+                    var year = content;
+                    var month = self.im.user.answers.state_mother_birth_month;
+                    var day = go.utils.double_digit_number(
+                        self.im.user.answers.state_mother_birth_day);
+                    self.im.user.set_answer('mother_dob', year+month+day);
+                    return 'state_msg_language';
+                }
             });
         });
 
@@ -454,7 +467,13 @@ go.app = function() {
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
                 ],
-                next: 'state_end_thank_you'
+                next: function() {
+                    return go.utils_project
+                        .finish_registration(self.im)
+                        .then(function() {
+                            return 'state_end_thank_you';
+                        });
+                }
             });
         });
 

@@ -15,39 +15,43 @@ describe("familyconnect health worker app", function() {
             tester
                 .setup.char_limit(182)
                 .setup.config.app({
-                    name: 'familyconnect',
+                    name: 'ussd-healthworker-test',
                     country_code: '256',  // uganda
                     channel: '*120*8864*0000#',
                     testing_today: '2015-04-03',
-                    metric_store: 'chms_uganda_test',  // _env at the end
                     services: {
                         identities: {
                             api_token: 'test_token_identities',
                             url: "http://localhost:8001/api/v1/"
                         },
+                        registrations: {
+                            api_token: 'test_token_registrations',
+                            url: "http://localhost:8002/api/v1/"
+                        },
+                        messagesets: {
+                            api_token: 'test_token_messagesets',
+                            url: "http://localhost:8003/api/v1/"
+                        },
+                        voice_content: {
+                            api_token: "test_token_voice_content",
+                            url: "http://localhost:8004/api/v1/"
+                        },
                         subscriptions: {
                             api_token: 'test_token_subscriptions',
-                            url: "http://localhost:8002/api/v1/"
+                            url: "http://localhost:8005/api/v1/"
+                        },
+                        outbound: {
+                            api_token: 'test_token_outbond',
+                            url: "http://localhost:8006/api/v1/"
                         }
                     },
                     no_timeout_redirects: [
                         'state_start',
                         'state_end_thank_you',
                     ],
-                    control: {
-                        username: "test_user",
-                        api_key: "test_key",
-                        url: "http://127.0.0.1:8000/subscription/"
-                    },
-                    endpoints: {
-                        "sms": {"delivery_class": "sms"}
-                    },
                 })
                 .setup(function(api) {
                     fixtures().forEach(api.http.fixtures.add);
-                })
-                .setup(function(api) {
-                    api.metrics.stores = {'chms_uganda_test': {}};
                 })
                 ;
         });
@@ -645,7 +649,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. The woman's FamilyConnect ID is 1600000000. They will now start receiving messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,16,18]);
+                        go.utils.checkFixturesUsed(api, [0,5,6,16,18,20]);
                     })
                     .run();
             });
@@ -675,7 +679,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. The woman's FamilyConnect ID is 6000000000. They will now start receiving messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,17,19]);
+                        go.utils.checkFixturesUsed(api, [0,5,6,17,19,21]);
                     })
                     .run();
             });

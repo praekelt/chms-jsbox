@@ -219,7 +219,8 @@ return [
                                 "+256820000333": {}
                             }
                         }
-                    }
+                    },
+                    "operator": "identity-uuid-00"
                 }
             },
             'response': {
@@ -236,6 +237,7 @@ return [
                             }
                         }
                     },
+                    "operator": "identity-uuid-00",
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
@@ -292,7 +294,7 @@ return [
                     'Authorization': ['Token test_key'],
                     'Content-Type': ['application/json']
                 },
-                'url': 'http://localhost:8002/api/v1/subscriptions/',
+                'url': 'http://localhost:8005/api/v1/subscriptions/',
             },
             'response': {
                 "code": 200,
@@ -301,7 +303,7 @@ return [
                     "next": null,
                     "previous": null,
                     "results": [{
-                        "url": "http://localhost:8002/api/v1/subscriptions/cb245673-aa41-4302-ac47-00000000444/",
+                        "url": "http://localhost:8005/api/v1/subscriptions/cb245673-aa41-4302-ac47-00000000444/",
                         "id": "cb245673-aa41-4302-ac47-00000000444",
                         "version": 1,
                         "details": {
@@ -369,7 +371,7 @@ return [
                     'Authorization': ['Token test_key'],
                     'Content-Type': ['application/json']
                 },
-                'url': 'http://localhost:8002/api/v1/subscriptions/',
+                'url': 'http://localhost:8005/api/v1/subscriptions/',
             },
             'response': {
                 "code": 200,
@@ -545,7 +547,8 @@ return [
                         "default_addr_type": null,
                         "addresses": {}
                     },
-                    "communicate_through": "identity-uuid-09"
+                    "communicate_through": "identity-uuid-09",
+                    "operator": "identity-uuid-00"
                 }
             },
             'response': {
@@ -559,6 +562,7 @@ return [
                         "addresses": {}
                     },
                     "communicate_through": "cb245673-aa41-4302-ac47-000000000555",
+                    "operator": "identity-uuid-00",
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
@@ -579,7 +583,8 @@ return [
                         "default_addr_type": null,
                         "addresses": {}
                     },
-                    "communicate_through": "identity-uuid-06"
+                    "communicate_through": "identity-uuid-06",
+                    "operator": "identity-uuid-00"
                 }
             },
             'response': {
@@ -593,6 +598,7 @@ return [
                         "addresses": {}
                     },
                     "communicate_through": "identity-uuid-06",
+                    "operator": "identity-uuid-00",
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
@@ -613,6 +619,7 @@ return [
                         "default_addr_type": null,
                         "addresses": {}
                     },
+                    "operator": "identity-uuid-00"
                 }
             },
             'response': {
@@ -625,6 +632,7 @@ return [
                         "default_addr_type": null,
                         "addresses": {}
                     },
+                    "operator": "identity-uuid-00",
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
@@ -697,5 +705,74 @@ return [
             }
         },
 
+        // 20: create registration 1
+        {
+            'request': {
+                'method': 'POST',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8002/api/v1/registrations/',
+                'data':  {
+                    "stage": "prebirth",
+                    "mother_id": "identity-uuid-16",
+                    "data": {
+                        "hoh_id": "identity-uuid-06",
+                        "receiver_id": "identity-uuid-06",
+                        "operator_id": "identity-uuid-00",
+                        "language": "xog_UG",
+                        "msg_type": "text",
+                        "last_period_date": "20154221",
+                        "msg_receiver": "head_of_household",
+                        "hoh_name": "Isaac",
+                        "hoh_surname": "Mbire",
+                        "mama_name": "Sharon",
+                        "mama_surname": "Nalule",
+                        "mama_id_type": "ugandan_id",
+                        "mama_id_no": "444"
+                    }
+                }
+            },
+            'response': {
+                "code": 201,
+                "data": {}
+            }
+        },
+
+        // 21: create registration 2
+        {
+            'request': {
+                'method': 'POST',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8002/api/v1/registrations/',
+                'data':  {
+                    "stage": "prebirth",
+                    "mother_id": "identity-uuid-06",
+                    "data": {
+                        "hoh_id": "identity-uuid-17",
+                        "receiver_id": "identity-uuid-06",
+                        "operator_id": "identity-uuid-00",
+                        "language": "xog_UG",
+                        "msg_type": "text",
+                        "last_period_date": "20154221",
+                        "msg_receiver": "mother_to_be",
+                        "hoh_name": "Isaac",
+                        "hoh_surname": "Mbire",
+                        "mama_name": "Mary",
+                        "mama_surname": "Nalule",
+                        "mama_id_type": "other",
+                        "mama_dob": "19820513"
+                    }
+                }
+            },
+            'response': {
+                "code": 201,
+                "data": {}
+            }
+        },
 ];
 };

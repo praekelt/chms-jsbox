@@ -490,6 +490,127 @@ go.utils_project = {
     },
 
 
+// REGISTRATION HELPERS
+
+    compile_reg_info: function(im) {
+        var reg_info = {
+            stage: 'prebirth',
+            mother_id: im.user.answers.mother_id,
+            data: {
+                hoh_id: im.user.answers.hoh_id,
+                receiver_id: im.user.answers.receiver_id,
+                operator_id: im.user.answers.operator_id,
+                language: im.user.answers.state_msg_language,
+                msg_type: "text",
+                last_period_date: im.user.answers.last_period_date,
+                msg_receiver: im.user.answers.state_msg_receiver,
+                hoh_name: im.user.answers.state_household_head_name,
+                hoh_surname: im.user.answers.state_household_head_surname,
+                mama_name: im.user.answers.state_mother_name,
+                mama_surname: im.user.answers.state_mother_surname,
+                mama_id_type: im.user.answers.state_id_type
+            }
+        };
+
+        if (im.user.answers.state_id_type === 'ugandan_id') {
+            reg_info.data.mama_id_no = im.user.answers.state_nin;
+        } else {
+            reg_info.data.mama_dob = im.user.answers.mother_dob;
+        }
+
+        return reg_info;
+    },
+
+    update_identities: function(im) {
+      // Saves useful data collected during registration to the relevant identities
+        var msg_receiver = im.user.answers.state_msg_receiver;
+        if (msg_receiver === 'mother_only') {
+            return go.utils
+                .get_identity(im.user.answers.mother_id, im)
+                .then(function(mother_identity) {
+                    mother_identity.details.receiver_role = 'mother';
+                    mother_identity.details.linked_to = null;
+                    mother_identity.details.gravida = im.user.answers.state_gravida;
+                    mother_identity.details.preferred_language = im.user.answers.state_msg_language;
+                    mother_identity.details.preferred_msg_type = im.user.answers.state_msg_type;
+
+                    if (im.user.answers.state_msg_type === 'audio') {
+                        mother_identity.details.preferred_msg_days = im.user.answers.state_voice_days;
+                        mother_identity.details.preferred_msg_times = im.user.answers.state_voice_times;
+                    }
+
+                    return go.utils.update_identity(im, mother_identity);
+                });
+        } else if (['friend_only', 'family_only', 'father_only'].indexOf(msg_receiver) !== -1) {
+            return Q
+                .all([
+                    go.utils.get_identity(im.user.answers.mother_id, im),
+                    go.utils.get_identity(im.user.answers.receiver_id, im)
+                ])
+                .spread(function(mother_identity, receiver_identity) {
+                    mother_identity.details.receiver_role = 'mother';
+                    mother_identity.details.linked_to = im.user.answers.receiver_id;
+                    mother_identity.details.gravida = im.user.answers.state_gravida;
+                    mother_identity.details.preferred_language = im.user.answers.state_msg_language;
+
+                    receiver_identity.details.receiver_role = msg_receiver.replace('_only', '');
+                    receiver_identity.details.linked_to = im.user.answers.mother_id;
+                    receiver_identity.details.preferred_msg_type = im.user.answers.state_msg_type;
+                    receiver_identity.details.preferred_language = im.user.answers.state_msg_language;
+
+                    if (im.user.answers.state_msg_type === 'audio') {
+                        receiver_identity.details.preferred_msg_days = im.user.answers.state_voice_days;
+                        receiver_identity.details.preferred_msg_times = im.user.answers.state_voice_times;
+                    }
+
+                    return Q.all([
+                        go.utils.update_identity(im, mother_identity),
+                        go.utils.update_identity(im, receiver_identity)
+                    ]);
+                });
+        } else if (['mother_friend', 'mother_family', 'mother_father'].indexOf(msg_receiver) !== -1) {
+            return Q
+                .all([
+                    go.utils.get_identity(im.user.answers.mother_id, im),
+                    go.utils.get_identity(im.user.answers.receiver_id, im)
+                ])
+                .spread(function(mother_identity, receiver_identity) {
+                    mother_identity.details.receiver_role = 'mother';
+                    mother_identity.details.linked_to = im.user.answers.receiver_id;
+                    mother_identity.details.preferred_msg_type = im.user.answers.state_msg_type;
+                    mother_identity.details.gravida = im.user.answers.state_gravida;
+                    mother_identity.details.preferred_language = im.user.answers.state_msg_language;
+
+                    receiver_identity.details.receiver_role = msg_receiver.replace('mother_', '');
+                    receiver_identity.details.linked_to = im.user.answers.mother_id;
+                    receiver_identity.details.household_msgs_only = true;
+                    receiver_identity.details.preferred_msg_type = im.user.answers.state_msg_type;
+                    receiver_identity.details.preferred_language = im.user.answers.state_msg_language;
+
+                    if (im.user.answers.state_msg_type === 'audio') {
+                        mother_identity.details.preferred_msg_days = im.user.answers.state_voice_days;
+                        mother_identity.details.preferred_msg_times = im.user.answers.state_voice_times;
+                        receiver_identity.details.preferred_msg_days = im.user.answers.state_voice_days;
+                        receiver_identity.details.preferred_msg_times = im.user.answers.state_voice_times;
+                    }
+
+                    return Q.all([
+                        go.utils.update_identity(im, mother_identity),
+                        go.utils.update_identity(im, receiver_identity)
+                    ]);
+                });
+        }
+    },
+
+    finish_registration: function(im) {
+        var reg_info = go.utils_project.compile_reg_info(im);
+        return Q.all([
+            go.utils.create_registration(im, reg_info),
+            // go.utils_project.update_identities(im)
+        ]);
+    },
+
+
 // IDENTITY HELPERS
 
     find_healthworker_with_personnel_code: function(im, personnel_code) {
