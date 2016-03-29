@@ -11,7 +11,6 @@ go.app = function() {
     var GoFC = App.extend(function(self) {
         App.call(self, 'state_start');
         var $ = self.$;
-        var interrupt = true;
 
         self.init = function() {
 
@@ -115,10 +114,9 @@ go.app = function() {
         // override normal state adding
         self.add = function(name, creator) {
             self.states.add(name, function(name, opts) {
-                if (!interrupt || !go.utils.timed_out(self.im))
+                if (!go.utils.timed_out(self.im))
                     return creator(name, opts);
 
-                interrupt = false;
                 opts = opts || {};
                 opts.name = name;
                 return self.states.create('state_timed_out', opts);
