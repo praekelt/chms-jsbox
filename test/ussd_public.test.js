@@ -45,55 +45,74 @@ describe("familyconnect health worker app", function() {
 
         // TEST TIMEOUTS
 
-        describe("Timeout testing", function() {
-            it("should ask about continuing", function() {
-                return tester
-                    .setup.user.addr('0720000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '1'  // state_language - english
-                        , {session_event: 'close'}
-                        , {session_event: 'new'}
-                    )
-                    .check.interaction({
-                        state: 'state_timed_out',
-                        reply: [
-                            "You have an incomplete registration. Would you like to continue with this registration?",
-                            "1. Yes",
-                            "2. No, start from the beginning"
-                        ].join('\n')
-                    })
-                    .run();
+        describe.skip("Timeout testing", function() {
+            describe("in State Change", function() {
+                it("should ask about continuing", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , "3"  // state_permission - change number to manage
+                            , "0720000333"  // state_manage_msisdn - unregistered user
+                            , "4"  // state_msg_receiver - trusted friend
+                            , "3"  // state_last_period_month - may
+                            , "22"  // state_last_period_day
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                        )
+                        .check.interaction({
+                            state: 'state_permission',
+                            reply: "Welcome to FamilyConnect. Do you have permission to manage the number 0720000333?"
+                        })
+                        .run();
+                });
             });
-            it("should continue", function() {
-                return tester
-                    .setup.user.addr('0720000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '1'  // state_language - english
-                        , {session_event: 'close'}
-                        , {session_event: 'new'}
-                        , '1'  // state_timed_out - continue
-                    )
-                    .check.interaction({
-                        state: 'state_permission'
-                    })
-                    .run();
-            });
-            it("should restart", function() {
-                return tester
-                    .setup.user.addr('0720000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '1'  // state_language - english
-                        , {session_event: 'close'}
-                        , {session_event: 'new'}
-                        , '2'  // state_timed_out - restart
-                    )
-                    .check.interaction({
-                        state: 'state_language'
-                    })
-                    .run();
+            describe("in Registration", function() {
+                it("should continue", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_language - english
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                            , '1'  // state_timed_out - continue
+                        )
+                        .check.interaction({
+                            state: 'state_permission'
+                        })
+                        .run();
+                });
+                it("should restart", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_language - english
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                            , '2'  // state_timed_out - restart
+                        )
+                        .check.interaction({
+                            state: 'state_language'
+                        })
+                        .run();
+                });
+                it("should restart", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_language - english
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                            , '2'  // state_timed_out - restart
+                        )
+                        .check.interaction({
+                            state: 'state_language'
+                        })
+                        .run();
+                });
             });
         });
 
