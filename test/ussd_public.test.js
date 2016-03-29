@@ -285,6 +285,9 @@ describe("familyconnect health worker app", function() {
                             "2. No"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                    })
                     .run();
             });
 
