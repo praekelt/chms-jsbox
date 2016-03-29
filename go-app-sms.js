@@ -8,11 +8,24 @@ go;
 /*jshint -W083 */
 var vumigo = require('vumigo_v02');
 var moment = require('moment');
+var assert = require('assert');
 var JsonApi = vumigo.http.api.JsonApi;
 var Choice = vumigo.states.Choice;
 
 // GENERIC UTILS
 go.utils = {
+
+// FIXTURES HELPERS
+
+    checkFixturesUsed: function(api, fixturesArray) {
+        var expected_used = fixturesArray;
+        var fixts = api.http.fixtures.fixtures;
+        var fixts_used = [];
+        fixts.forEach(function(f, i) {
+            f.uses > 0 ? fixts_used.push(i) : null;
+        });
+        assert.deepEqual(fixts_used, expected_used);
+    },
 
 // TIMEOUT HELPERS
 

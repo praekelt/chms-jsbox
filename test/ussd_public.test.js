@@ -63,6 +63,9 @@ describe("familyconnect health worker app", function() {
                             "2. No, start from the beginning"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,1]);
+                    })
                     .run();
             });
             it("should continue", function() {
@@ -78,6 +81,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_permission'
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,1]);
+                    })
                     .run();
             });
             it("should restart", function() {
@@ -92,6 +98,9 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_language'
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,1]);
                     })
                     .run();
             });
@@ -116,6 +125,9 @@ describe("familyconnect health worker app", function() {
                             "4. Luganda"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,1]);
+                    })
                     .run();
             });
             it("to state_permission (via state_language)", function() {
@@ -134,6 +146,9 @@ describe("familyconnect health worker app", function() {
                             "3. Change the number I'd like to manage"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,1]);
+                    })
                     .run();
             });
             it("to state_permission (recognised user)", function() {
@@ -151,6 +166,9 @@ describe("familyconnect health worker app", function() {
                             "3. Change the number I'd like to manage"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
+                    })
                     .run();
             });
             it("to state_manage_msisdn", function() {
@@ -163,6 +181,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_manage_msisdn',
                         reply: "Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number."
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
                     })
                     .run();
             });
@@ -184,6 +205,9 @@ describe("familyconnect health worker app", function() {
                             "4. Trusted friend"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                    })
                     .run();
             });
             it("to state_change_menu", function() {
@@ -202,6 +226,9 @@ describe("familyconnect health worker app", function() {
                             "3. Change the number which gets SMSs",
                             "4. Stop SMSs"
                         ].join('\n')
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
                     })
                     .run();
             });
@@ -248,6 +275,9 @@ describe("familyconnect health worker app", function() {
                             "9. Aug 14"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                    })
                     .run();
             });
             it("to state_last_period_day", function() {
@@ -263,6 +293,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_last_period_day',
                         reply: "What day of the month did the woman start her last period? For example, 12."
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,3,4]);
                     })
                     .run();
             });
@@ -285,6 +318,9 @@ describe("familyconnect health worker app", function() {
                             "2. No"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                    })
                     .run();
             });
 
@@ -304,6 +340,9 @@ describe("familyconnect health worker app", function() {
                         state: 'state_end_thank_you',
                         reply: "Thank you. Your FamilyConnect ID is 1234567890. You will receive an SMS with it shortly."
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,3,4,5]);
+                    })
                     .run();
             });
         });
@@ -320,6 +359,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_end_baby',
                         reply: "You will receive baby messages."
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
                     })
                     .run();
             });
@@ -339,6 +381,9 @@ describe("familyconnect health worker app", function() {
                             "2. Exit"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, []);
+                    })
                     .run();
             });
             it("to state_end_general", function() {
@@ -354,6 +399,9 @@ describe("familyconnect health worker app", function() {
                         state: 'state_end_general',
                         reply: "Thank you for using the FamilyConnect service"
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, []);
+                    })
                     .run();
             });
             it("back to state_change_menu", function() {
@@ -367,6 +415,9 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_change_menu'
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, []);
                     })
                     .run();
             });
@@ -389,6 +440,9 @@ describe("familyconnect health worker app", function() {
                             "4. Luganda"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
+                    })
                     .run();
             });
             it("to state_end_language", function() {
@@ -404,6 +458,9 @@ describe("familyconnect health worker app", function() {
                         state: 'state_end_language',
                         reply: "Thank you. Your language preference has been updated and you will start to receive SMSs in this language."
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
+                    })
                     .run();
             });
 
@@ -418,6 +475,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_change_number',
                         reply: "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899"
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
                     })
                     .run();
             });
@@ -440,6 +500,9 @@ describe("familyconnect health worker app", function() {
                             "4. Trusted friend"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
+                    })
                     .run();
             });
             it("to state_end_recipient", function() {
@@ -455,6 +518,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_end_recipient',
                         reply: "Thank you. The number which receives messages has been updated."
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
                     })
                     .run();
             });
@@ -478,6 +544,9 @@ describe("familyconnect health worker app", function() {
                             "5. Other"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
+                    })
                     .run();
             });
             it("to state_loss_subscription", function() {
@@ -497,6 +566,9 @@ describe("familyconnect health worker app", function() {
                             "2. No"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
+                    })
                     .run();
             });
             it("to state_end_loss_subscription", function() {
@@ -512,6 +584,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_end_loss_subscription',
                         reply: "Thank you. You will now receive messages to support you during this difficult time."
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
                     })
                     .run();
             });
@@ -529,6 +604,9 @@ describe("familyconnect health worker app", function() {
                         state: 'state_end_optout',
                         reply: "Thank you. You will no longer receive messages"
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
+                    })
                     .run();
             });
             it("to state_end_optout (non-loss)", function() {
@@ -543,6 +621,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_end_optout',
                         reply: "Thank you. You will no longer receive messages"
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2]);
                     })
                     .run();
             });
