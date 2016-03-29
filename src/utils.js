@@ -28,6 +28,10 @@ go.utils = {
             && im.config.no_timeout_redirects.indexOf(im.user.state.name) === -1;
     },
 
+    timeout_redirect: function(im) {
+        return im.config.timeout_redirects.indexOf(im.user.state.name) !== -1;
+    },
+
 
 // SERVICE API CALL HELPERS
 
