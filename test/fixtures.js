@@ -30,7 +30,7 @@ return [
                     "previous": null,
                     "results": [{
                         "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082111/",
-                        "id": "cb245673-aa41-4302-ac47-00000082111",
+                        "id": "identity-uuid-00",
                         "version": 1,
                         "details": {
                             "default_addr_type": "msisdn",
@@ -201,7 +201,7 @@ return [
             }
         },
 
-        // 6: create identity 082000000333
+        // 6: create identity 0820000333
         {
             'repeatable': true,
             'request': {
@@ -225,8 +225,8 @@ return [
             'response': {
                 "code": 201,
                 "data": {
-                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000333/",
-                    "id": "cb245673-aa41-4302-ac47-0000000333",
+                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-000000000333/",
+                    "id": "identity-uuid-06",
                     "version": 1,
                     "details": {
                         "default_addr_type": "msisdn",
@@ -339,8 +339,8 @@ return [
                     "next": null,
                     "previous": null,
                     "results": [{
-                        "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000000555/",
-                        "id": "cb245673-aa41-4302-ac47-00000000555",
+                        "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-000000000555/",
+                        "id": "identity-uuid-09",
                         "version": 1,
                         "details": {
                             "default_addr_type": "msisdn",
@@ -363,7 +363,7 @@ return [
                 'method': 'GET',
                 'params': {
                     'active': 'true',
-                    'identity': "cb245673-aa41-4302-ac47-00000000555"
+                    'identity': "identity-uuid-09"
                 },
                 'headers': {
                     'Authorization': ['Token test_key'],
@@ -382,7 +382,7 @@ return [
             }
         },
 
-        // 11: get identity cb245673-aa41-4302-ac47-0000000333
+        // 11: get identity cb245673-aa41-4302-ac47-000000000333
         {
             'repeatable': true,
             'request': {
@@ -392,13 +392,13 @@ return [
                     'Authorization': ['Token test_key'],
                     'Content-Type': ['application/json']
                 },
-                "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000333/",
+                "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-000000000333/",
             },
             'response': {
                 "code": 200,
                 "data": {
-                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000333/",
-                    "id": "cb245673-aa41-4302-ac47-0000000333",
+                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-000000000333/",
+                    "id": "cb245673-aa41-4302-ac47-000000000333",
                     "version": 1,
                     "details": {
                         "default_addr_type": "msisdn",
@@ -417,7 +417,7 @@ return [
 
 
     // Optout 064001
-        // 12: #get #subscription #064001
+        // 12: get subscription 064001
         {
             'request': {
                 'method': 'GET',
@@ -472,7 +472,8 @@ return [
                 ]
             }
         },
-        // 13: #patch #subscription #064001
+
+        // 13: patch subscription 064001
         {
             'request': {
                 'method': 'PATCH',
@@ -504,7 +505,7 @@ return [
             }
         },
 
-        // create identity communicate through 09093333333
+        // 14: create identity communicate through 09093333333
         {
             'request': {
                 'method': 'POST',
@@ -514,7 +515,7 @@ return [
                 },
                 'url': "http://localhost:8001/api/v1/identities/",
                 'data':  {
-                    "communicate_through": "cb245673-aa41-4302-ac47-0000000333",
+                    "communicate_through": "cb245673-aa41-4302-ac47-000000000333",
                 }
             },
             'response': {
@@ -523,11 +524,178 @@ return [
                     "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-1234567890/",
                     "id": "cb245673-aa41-4302-ac47-1234567890",
                     "version": 1,
-                    "communicate_through": "cb245673-aa41-4302-ac47-0000000333",
+                    "communicate_through": "cb245673-aa41-4302-ac47-000000000333",
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
             }
         },
+
+        // 15: create identity communicate through identity-uuid-09
+        {
+            'request': {
+                'method': 'POST',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/',
+                'data':  {
+                    "details": {
+                        "default_addr_type": null,
+                        "addresses": {}
+                    },
+                    "communicate_through": "identity-uuid-09"
+                }
+            },
+            'response': {
+                "code": 201,
+                "data": {
+                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082222/",
+                    "id": "identity-uuid-15",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": null,
+                        "addresses": {}
+                    },
+                    "communicate_through": "cb245673-aa41-4302-ac47-000000000555",
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            }
+        },
+
+        // 16: create identity communicate through cb245673-aa41-4302-ac47-00000000333
+        {
+            'request': {
+                'method': 'POST',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/',
+                'data':  {
+                    "details": {
+                        "default_addr_type": null,
+                        "addresses": {}
+                    },
+                    "communicate_through": "identity-uuid-06"
+                }
+            },
+            'response': {
+                "code": 201,
+                "data": {
+                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082222/",
+                    "id": "identity-uuid-16",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": null,
+                        "addresses": {}
+                    },
+                    "communicate_through": "identity-uuid-06",
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            }
+        },
+
+        // 17: create identity
+        {
+            'request': {
+                'method': 'POST',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/',
+                'data':  {
+                    "details": {
+                        "default_addr_type": null,
+                        "addresses": {}
+                    },
+                }
+            },
+            'response': {
+                "code": 201,
+                "data": {
+                    "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082222/",
+                    "id": "identity-uuid-17",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": null,
+                        "addresses": {}
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            }
+        },
+
+        // 18: get identity identity-uuid-16
+        {
+            'repeatable': true,
+            'request': {
+                'method': 'GET',
+                'params': {},
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                "url": "http://localhost:8001/api/v1/identities/identity-uuid-16/",
+            },
+            'response': {
+                "code": 200,
+                "data": {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-16/",
+                    "id": "identity-uuid-16",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 1600000000
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            }
+        },
+
+        // 19: get identity identity-uuid-06
+        {
+            'repeatable': true,
+            'request': {
+                'method': 'GET',
+                'params': {},
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                "url": "http://localhost:8001/api/v1/identities/identity-uuid-06/",
+            },
+            'response': {
+                "code": 200,
+                "data": {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-06/",
+                    "id": "identity-uuid-06",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 6000000000
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            }
+        },
+
 ];
 };

@@ -135,6 +135,9 @@ describe("familyconnect health worker app", function() {
                         state: 'state_auth_code',
                         reply: "Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345"
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [3,4]);
+                    })
                     .run();
             });
             it("to state_msg_receiver", function() {
@@ -153,6 +156,9 @@ describe("familyconnect health worker app", function() {
                             "4. Trusted friend"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0]);
+                    })
                     .run();
             });
             it("to state_msisdn", function() {
@@ -166,6 +172,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_msisdn',
                         reply: "Please enter the mobile number which the messages will be sent to. For example, 0803304899"
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0]);
                     })
                     .run();
             });
@@ -186,9 +195,12 @@ describe("familyconnect health worker app", function() {
                             "2. Register a different number"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,7,8]);
+                    })
                     .run();
             });
-            it("to state_household_head_name (registered msisdn with no subscriptions)", function() {
+            it("to state_household_head_name (hoh, recognised, no active subs)", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
@@ -201,9 +213,17 @@ describe("familyconnect health worker app", function() {
                         state: 'state_household_head_name',
                         reply: "Please enter the first name of the Head of the Household. For example: Isaac."
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,9,10,15]);
+                    })
+                    .check.user.answer('state_msg_receiver', 'head_of_household')
+                    .check.user.answer('receiver_id', 'identity-uuid-09')
+                    .check.user.answer('mother_id', 'identity-uuid-15')
+                    .check.user.answer('hoh_id', 'identity-uuid-09')
+                    .check.user.answer('ff_id', undefined)
                     .run();
             });
-            it("to state_household_head_name (unregistered msisdn)", function() {
+            it("to state_household_head_name (hoh, unrecognised)", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
@@ -216,6 +236,60 @@ describe("familyconnect health worker app", function() {
                         state: 'state_household_head_name',
                         reply: "Please enter the first name of the Head of the Household. For example: Isaac."
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,5,6,16]);
+                    })
+                    .check.user.answer('state_msg_receiver', 'head_of_household')
+                    .check.user.answer('receiver_id', 'identity-uuid-06')
+                    .check.user.answer('hoh_id', 'identity-uuid-06')
+                    .check.user.answer('mother_id', 'identity-uuid-16')
+                    .check.user.answer('ff_id', undefined)
+                    .run();
+            });
+            it("to state_household_head_name (mother, unrecognised)", function() {
+                return tester
+                    .setup.user.addr('0820000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '2'  // state_msg_receiver - mother_to_be
+                        , '0820000333'  // state_msisdn
+                    )
+                    .check.interaction({
+                        state: 'state_household_head_name',
+                        reply: "Please enter the first name of the Head of the Household. For example: Isaac."
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,5,6,17]);
+                    })
+                    .check.user.answer('state_msg_receiver', 'mother_to_be')
+                    .check.user.answer('receiver_id', 'identity-uuid-06')
+                    .check.user.answer('mother_id', 'identity-uuid-06')
+                    .check.user.answer('hoh_id', 'identity-uuid-17')
+                    .check.user.answer('ff_id', undefined)
+                    .run();
+            });
+            it("to state_household_head_name (friend, unrecognised)", function() {
+                return tester
+                    .setup.user.addr('0820000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '4'  // state_msg_receiver - trusted_friend
+                        , '0820000333'  // state_msisdn
+                    )
+                    .check.interaction({
+                        state: 'state_household_head_name',
+                        reply: "Please enter the first name of the Head of the Household. For example: Isaac."
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,5,6,16,17]);
+                    })
+                    .check.user.answer('state_msg_receiver', 'trusted_friend')
+                    .check.user.answer('receiver_id', 'identity-uuid-06')
+                    .check.user.answer('ff_id', 'identity-uuid-06')
+                    .check.user.answer('hoh_id', 'identity-uuid-17')
+                    .check.user.answer('mother_id', 'identity-uuid-16')
                     .run();
             });
             it("to state_household_head_surname", function() {
@@ -231,6 +305,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_household_head_surname',
                         reply: "Please enter the surname of the Head of the Household. For example: Mbire."
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,5,6,16]);
                     })
                     .run();
             });
@@ -538,6 +615,9 @@ describe("familyconnect health worker app", function() {
                             "2. No"
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,5,6,16,18]);
+                    })
                     .run();
             });
 
@@ -562,10 +642,10 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. The woman's FamilyConnect ID is 1234567890. They will now start receiving messages"
+                        reply: "Thank you. The woman's FamilyConnect ID is 1600000000. They will now start receiving messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,11]);
+                        go.utils.checkFixturesUsed(api, [0,5,6,16,18]);
                     })
                     .run();
             });
@@ -592,10 +672,10 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. The woman's FamilyConnect ID is 1234567890. They will now start receiving messages"
+                        reply: "Thank you. The woman's FamilyConnect ID is 6000000000. They will now start receiving messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,11]);
+                        go.utils.checkFixturesUsed(api, [0,5,6,17,19]);
                     })
                     .run();
             });

@@ -505,35 +505,47 @@ go.utils_project = {
             });
     },
 
-    save_identities: function(im, msg_receiver, receiver_msisdn, operator_id) {
-      // Creates identities for the msisdns entered in various states
-      // and sets the identitity id's to user.answers for later use
+    save_identities: function(im, msg_receiver, receiver_id, operator_id) {
+      // At this point the receiver identity has already been created
+      // Creates identities for additional roles as required and sets
+      // the identitity id's to user.answers for later use.
       // msg_receiver: (str) person who will receive messages eg. 'mother_to_be'
-      // *_msisdn: (str) msisdns of role players
+      // receiver_id: (str - uuid) id of the message receiver
       // operator_id: (str - uuid) id of healthworker making the registration
 
         if (msg_receiver === 'mother_to_be') {
+            // set the mother as the receiver
+            im.user.set_answer('mother_id', receiver_id);
+            // create the hoh identity
             return go.utils
-                // get or create mother's identity
-                .get_or_create_identity({'msisdn': receiver_msisdn}, im, operator_id)
-                .then(function(mother) {
-                    im.user.set_answer('mother_id', mother.id);
-                    im.user.set_answer('receiver_id', mother.id);
+                .create_identity(im, null, null, operator_id)
+                .then(function(hoh) {
+                    im.user.set_answer('hoh_id', hoh.id);
                     return;
                 });
-        } else if (['head_of_household', 'family_member', 'trusted_friend'].indexOf(msg_receiver) !== -1) {
+        } else if (msg_receiver === 'head_of_household') {
+            // set the hoh as the receiver
+            im.user.set_answer('hoh_id', receiver_id);
+            // create the mother identity - cannot get as no identifying information
             return go.utils
-                // get or create msg_receiver's identity
-                .get_or_create_identity({'msisdn': receiver_msisdn}, im, operator_id)
-                .then(function(msg_receiver) {
-                    im.user.set_answer('receiver_id', msg_receiver.id);
-                    return go.utils
-                        // create mother's identity - cannot get as no identifying information
-                        .create_identity(im, null, msg_receiver.id, operator_id)
-                        .then(function(mother) {
-                            im.user.set_answer('mother_id', mother.id);
-                            return;
-                        });
+                .create_identity(im, null, receiver_id, operator_id)
+                .then(function(mother) {
+                    im.user.set_answer('mother_id', mother.id);
+                    return;
+                });
+        } else {  // msg_receiver == family_member / trusted_friend
+            // set the friend/family as the receiver
+            im.user.set_answer('ff_id', receiver_id);
+            // create the hoh identity and the mother identity
+            return Q
+                .all([
+                    go.utils.create_identity(im, null, null, operator_id),  // hoh
+                    go.utils.create_identity(im, null, receiver_id, operator_id),  // mother
+                ])
+                .spread(function(hoh, mother) {
+                    im.user.set_answer('hoh_id', hoh.id);
+                    im.user.set_answer('mother_id', mother.id);
+                    return;
                 });
         }
     },
@@ -733,7 +745,7 @@ go.app = function() {
                 )
                 .then(function(identity) {
                     if (identity) {
-                        self.im.user.set_answer('contact_id', identity.id);
+                        self.im.user.set_answer('receiver_id', identity.id);
                         // check if identity has active subscription
                         return go.utils
                             .has_active_subscription(identity.id, self.im)
@@ -744,7 +756,7 @@ go.app = function() {
                                     // next state/screen
                                     return self.states.create('state_msisdn_already_registered');
                                 } else {
-                                    return self.states.create('state_household_head_name');
+                                    return self.states.create('state_save_identities');
                                 }
                             });
                     }
@@ -755,11 +767,11 @@ go.app = function() {
                                 {'msisdn': go.utils.normalize_msisdn(
                                     self.im.user.answers.state_msisdn,
                                     self.im.config.country_code)
-                                }, null, self.im.user.operator_id
+                                }, null, self.im.user.answers.operator_id
                             )
                             .then(function(identity) {
-                                self.im.user.set_answer('contact_id', identity.id);
-                                return self.states.create('state_household_head_name');
+                                self.im.user.set_answer('receiver_id', identity.id);
+                                return self.states.create('state_save_identities');
                             });
                     }
                 });
@@ -780,6 +792,20 @@ go.app = function() {
                         : 'state_msisdn';
                 }
             });
+        });
+
+        // Get or create identities and save their IDs
+        self.add('state_save_identities', function(name) {
+            return go.utils_project
+                .save_identities(
+                    self.im,
+                    self.im.user.answers.state_msg_receiver,
+                    self.im.user.answers.receiver_id,
+                    self.im.user.answers.operator_id
+                )
+                .then(function() {
+                    return self.states.create('state_household_head_name');
+                });
         });
 
         // FreeText st-03
@@ -808,22 +834,8 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_save_identities'
+                next: 'state_last_period_month'
             });
-        });
-
-        // Get or create identities and save their IDs
-        self.add('state_save_identities', function(name) {
-            return go.utils_project
-                .save_identities(
-                    self.im,
-                    self.im.user.answers.state_msg_receiver,
-                    self.im.user.answers.state_msisdn,
-                    self.im.user.answers.operator_id
-                )
-                .then(function() {
-                    return self.states.create('state_last_period_month');
-                });
         });
 
         // ChoiceState st-05
@@ -981,7 +993,7 @@ go.app = function() {
 
         self.add('state_get_health_id', function(name) {
             return go.utils
-                .get_identity(self.im.user.answers.contact_id, self.im)
+                .get_identity(self.im.user.answers.mother_id, self.im)
                 .then(function(identity) {
                     self.im.user.set_answer('health_id', identity.details.health_id);
                     return self.states.create('state_hiv_messages');

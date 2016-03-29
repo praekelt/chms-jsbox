@@ -190,7 +190,7 @@ go.app = function() {
                 )
                 .then(function(identity) {
                     if (identity) {
-                        self.im.user.set_answer('contact_id', identity.id);
+                        self.im.user.set_answer('receiver_id', identity.id);
                         // check if identity has active subscription
                         return go.utils
                             .has_active_subscription(identity.id, self.im)
@@ -201,7 +201,7 @@ go.app = function() {
                                     // next state/screen
                                     return self.states.create('state_msisdn_already_registered');
                                 } else {
-                                    return self.states.create('state_household_head_name');
+                                    return self.states.create('state_save_identities');
                                 }
                             });
                     }
@@ -212,11 +212,11 @@ go.app = function() {
                                 {'msisdn': go.utils.normalize_msisdn(
                                     self.im.user.answers.state_msisdn,
                                     self.im.config.country_code)
-                                }, null, self.im.user.operator_id
+                                }, null, self.im.user.answers.operator_id
                             )
                             .then(function(identity) {
-                                self.im.user.set_answer('contact_id', identity.id);
-                                return self.states.create('state_household_head_name');
+                                self.im.user.set_answer('receiver_id', identity.id);
+                                return self.states.create('state_save_identities');
                             });
                     }
                 });
@@ -237,6 +237,20 @@ go.app = function() {
                         : 'state_msisdn';
                 }
             });
+        });
+
+        // Get or create identities and save their IDs
+        self.add('state_save_identities', function(name) {
+            return go.utils_project
+                .save_identities(
+                    self.im,
+                    self.im.user.answers.state_msg_receiver,
+                    self.im.user.answers.receiver_id,
+                    self.im.user.answers.operator_id
+                )
+                .then(function() {
+                    return self.states.create('state_household_head_name');
+                });
         });
 
         // FreeText st-03
@@ -265,22 +279,8 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_save_identities'
+                next: 'state_last_period_month'
             });
-        });
-
-        // Get or create identities and save their IDs
-        self.add('state_save_identities', function(name) {
-            return go.utils_project
-                .save_identities(
-                    self.im,
-                    self.im.user.answers.state_msg_receiver,
-                    self.im.user.answers.state_msisdn,
-                    self.im.user.answers.operator_id
-                )
-                .then(function() {
-                    return self.states.create('state_last_period_month');
-                });
         });
 
         // ChoiceState st-05
@@ -438,7 +438,7 @@ go.app = function() {
 
         self.add('state_get_health_id', function(name) {
             return go.utils
-                .get_identity(self.im.user.answers.contact_id, self.im)
+                .get_identity(self.im.user.answers.mother_id, self.im)
                 .then(function(identity) {
                     self.im.user.set_answer('health_id', identity.details.health_id);
                     return self.states.create('state_hiv_messages');
