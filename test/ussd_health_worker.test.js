@@ -625,7 +625,7 @@ describe("familyconnect health worker app", function() {
                     .run();
             });
 
-            it("complete flow - uganda ID, english, hiv messages", function() {
+            it("complete flow - hoh, uganda ID, english, hiv messages", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
@@ -649,7 +649,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. The woman's FamilyConnect ID is 1600000000. They will now start receiving messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,16,18,20]);
+                        go.utils.checkFixturesUsed(api, [0,5,6,16,18,19,20,25,26]);
                     })
                     .run();
             });
@@ -679,7 +679,37 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. The woman's FamilyConnect ID is 6000000000. They will now start receiving messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,17,19,21]);
+                        go.utils.checkFixturesUsed(api, [0,5,6,17,19,21,22,23,24]);
+                    })
+                    .run();
+            });
+            it("complete flow - friend, other ID, lusoga, hiv msgs", function() {
+                return tester
+                    .setup.user.addr('0820000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '4'  // state_msg_receiver - trusted_friend
+                        , '0820000333'  // state_msisdn
+                        , 'Isaac'  // state_household_head_name
+                        , 'Mbire'  // state_household_head_surname
+                        , '1'  // state_last_period_month - July 2015
+                        , '21'  // state_last_period_day - 21st
+                        , 'Mary'  // state_mother_name
+                        , 'Nalule'  // state_mother_surname
+                        , '2'  // state_id_type - other ID
+                        , '13'  // state_mother_birth_day - 13th
+                        , '5'  // state_mother_birth_month - may
+                        , '1982'  // state_mother_birth_year - 1982
+                        , '3'  // state_msg_language - lusoga
+                        , '2'  // state_hiv_messages - yes
+                    )
+                    .check.interaction({
+                        state: 'state_end_thank_you',
+                        reply: "Thank you. The woman's FamilyConnect ID is 1600000000. They will now start receiving messages"
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,5,6,16,17,18,19,23,27,28,29,30]);
                     })
                     .run();
             });

@@ -307,7 +307,7 @@ go.app = function() {
                 },
                 next: function(content) {
                     var year = self.im.user.answers.state_last_period_month.substr(2,4);
-                    var month = self.im.user.answers.state_last_period_month.substr(1,2);
+                    var month = self.im.user.answers.state_last_period_month.substr(0,2);
                     var day = go.utils.double_digit_number(content);
                     self.im.user.set_answer('last_period_date', year+month+day);
                     return 'state_mother_name';

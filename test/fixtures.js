@@ -723,7 +723,7 @@ return [
                         "operator_id": "identity-uuid-00",
                         "language": "xog_UG",
                         "msg_type": "text",
-                        "last_period_date": "20154221",
+                        "last_period_date": "20150421",
                         "msg_receiver": "head_of_household",
                         "hoh_name": "Isaac",
                         "hoh_surname": "Mbire",
@@ -758,7 +758,7 @@ return [
                         "operator_id": "identity-uuid-00",
                         "language": "xog_UG",
                         "msg_type": "text",
-                        "last_period_date": "20154221",
+                        "last_period_date": "20150421",
                         "msg_receiver": "mother_to_be",
                         "hoh_name": "Isaac",
                         "hoh_surname": "Mbire",
@@ -774,5 +774,357 @@ return [
                 "data": {}
             }
         },
+
+        // 22: patch identity 1
+        {
+            'request': {
+                'method': 'PATCH',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/identity-uuid-06/',
+                'data':  {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-06/",
+                    "id": "identity-uuid-06",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 6000000000,
+                        "role": "mother",
+                        "msg_receiver": "mother_to_be",
+                        "hoh_id": "identity-uuid-17",
+                        "preferred_language": "xog_UG",
+                        "preferred_msg_type": "text",
+                        "first_name": "Mary",
+                        "surname": "Nalule",
+                        "name": "Mary Nalule",
+                        "id_type": "other",
+                        "hiv_interest": "no_hiv_msgs",
+                        "dob": "19820513"
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            },
+            'response': {
+                "code": 200,
+                "data": {}
+            }
+        },
+
+        // 23: get identity identity-uuid-17
+        {
+            'repeatable': true,
+            'request': {
+                'method': 'GET',
+                'params': {},
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                "url": "http://localhost:8001/api/v1/identities/identity-uuid-17/",
+            },
+            'response': {
+                "code": 200,
+                "data": {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-17/",
+                    "id": "identity-uuid-17",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 6000000000
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            }
+        },
+
+        // 24: patch identity 2
+        {
+            'request': {
+                'method': 'PATCH',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/identity-uuid-17/',
+                'data':  {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-17/",
+                    "id": "identity-uuid-17",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 6000000000,
+                        "role": "head_of_household",
+                        "mother_id": "identity-uuid-06",
+                        "preferred_language": "xog_UG",
+                        "preferred_msg_type": "text",
+                        "first_name": "Isaac",
+                        "surname": "Mbire",
+                        "name": "Isaac Mbire"
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            },
+            'response': {
+                "code": 200,
+                "data": {}
+            }
+        },
+
+        // 25: patch identity 3
+        {
+            'request': {
+                'method': 'PATCH',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/identity-uuid-16/',
+                'data':  {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-16/",
+                    "id": "identity-uuid-16",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 1600000000,
+                        "role": "mother",
+                        "hoh_id": "identity-uuid-06",
+                        "preferred_language": "xog_UG",
+                        "preferred_msg_type": "text",
+                        "first_name": "Sharon",
+                        "surname": "Nalule",
+                        "name": "Sharon Nalule",
+                        "id_type": "ugandan_id",
+                        "hiv_interest": "yes_hiv_msgs",
+                        "nin": "444",
+                        "msg_receiver": "head_of_household"
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            },
+            'response': {
+                "code": 200,
+                "data": {}
+            }
+        },
+
+        // 26: patch identity 4
+        {
+            'request': {
+                'method': 'PATCH',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/identity-uuid-06/',
+                'data':  {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-06/",
+                    "id": "identity-uuid-06",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 6000000000,
+                        "role": "head_of_household",
+                        "mother_id": "identity-uuid-16",
+                        "preferred_language": "xog_UG",
+                        "preferred_msg_type": "text",
+                        "first_name": "Isaac",
+                        "surname": "Mbire",
+                        "name": "Isaac Mbire"
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            },
+            'response': {
+                "code": 200,
+                "data": {}
+            }
+        },
+
+        // 27: create registration 2
+        {
+            'request': {
+                'method': 'POST',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8002/api/v1/registrations/',
+                'data':  {
+                    "stage": "prebirth",
+                    "mother_id": "identity-uuid-16",
+                    "data": {
+                        "hoh_id": "identity-uuid-17",
+                        "receiver_id": "identity-uuid-06",
+                        "operator_id": "identity-uuid-00",
+                        "language": "xog_UG",
+                        "msg_type": "text",
+                        "last_period_date": "20150421",
+                        "msg_receiver": "trusted_friend",
+                        "hoh_name": "Isaac",
+                        "hoh_surname": "Mbire",
+                        "mama_name": "Mary",
+                        "mama_surname": "Nalule",
+                        "mama_id_type": "other",
+                        "mama_dob": "19820513"
+                    }
+                }
+            },
+            'response': {
+                "code": 201,
+                "data": {}
+            }
+        },
+
+        // 28: patch identity 5
+        {
+            'request': {
+                'method': 'PATCH',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/identity-uuid-16/',
+                'data':  {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-16/",
+                    "id": "identity-uuid-16",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 1600000000,
+                        "msg_receiver": "trusted_friend",
+                        "role": "mother",
+                        "hoh_id": "identity-uuid-17",
+                        "preferred_language": "xog_UG",
+                        "preferred_msg_type": "text",
+                        "first_name": "Mary",
+                        "surname": "Nalule",
+                        "name": "Mary Nalule",
+                        "id_type": "other",
+                        "hiv_interest": "no_hiv_msgs",
+                        "dob": "19820513"
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            },
+            'response': {
+                "code": 200,
+                "data": {}
+            }
+        },
+
+        // 29: patch identity 6
+        {
+            'request': {
+                'method': 'PATCH',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/identity-uuid-17/',
+                'data':  {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-17/",
+                    "id": "identity-uuid-17",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 6000000000,
+                        "role": "head_of_household",
+                        "mother_id": "identity-uuid-16",
+                        "preferred_language": "xog_UG",
+                        "preferred_msg_type": "text",
+                        "first_name": "Isaac",
+                        "surname": "Mbire",
+                        "name": "Isaac Mbire"
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            },
+            'response': {
+                "code": 200,
+                "data": {}
+            }
+        },
+
+        // 30: patch identity 7
+        {
+            'request': {
+                'method': 'PATCH',
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/identity-uuid-06/',
+                'data':  {
+                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-06/",
+                    "id": "identity-uuid-06",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+2345059993333": {}
+                            }
+                        },
+                        "health_id": 6000000000,
+                        "role": "trusted_friend",
+                        "mother_id": "identity-uuid-16",
+                        "preferred_language": "xog_UG",
+                        "preferred_msg_type": "text"
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }
+            },
+            'response': {
+                "code": 200,
+                "data": {}
+            }
+        },
+
+
 ];
 };
