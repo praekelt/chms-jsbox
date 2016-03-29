@@ -262,7 +262,7 @@ go.app = function() {
                         return self.states.create('state_change_menu');
                     } else {
                         self.im.user.set_answer('contact_id', contact.id);
-                        return self.states.create('state_registration_menu');
+                        return self.states.create('state_msg_receiver');  // for phase 1, state_registration_menu will be skipped
                     }
                 });
         });

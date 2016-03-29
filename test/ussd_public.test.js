@@ -57,7 +57,7 @@ describe("familyconnect health worker app", function() {
 
         // TEST TIMEOUTS
 
-        describe.only("Timeout testing", function() {
+        describe("Timeout testing", function() {
             describe("in State Change", function() {
                 it("should restart at state C (state_permission)", function() {
                     return tester
@@ -134,7 +134,6 @@ describe("familyconnect health worker app", function() {
                         .inputs(
                             {session_event: 'new'}  // dial in
                             , '1'  // state_permission
-                            , '1'  // state_registeration_menu - register
                             , '1'  // state_msg_receiver - head of household
                             , {session_event: 'close'}
                             , {session_event: 'new'}
@@ -155,7 +154,6 @@ describe("familyconnect health worker app", function() {
                         .inputs(
                             {session_event: 'new'}  // dial in
                             , '1'  // state_permission
-                            , '1'  // state_registeration_menu - register
                             , '1'  // state_msg_receiver - head of household
                             , {session_event: 'close'}
                             , {session_event: 'new'}
@@ -179,7 +177,6 @@ describe("familyconnect health worker app", function() {
                         .inputs(
                             {session_event: 'new'}  // dial in
                             , '1'  // state_permission
-                            , '1'  // state_registeration_menu - register
                             , '1'  // state_msg_receiver - head of household
                             , '3'  // state_last_period_month
                             , {session_event: 'close'}
