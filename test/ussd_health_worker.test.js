@@ -564,6 +564,9 @@ describe("familyconnect health worker app", function() {
                         state: 'state_end_thank_you',
                         reply: "Thank you. The woman's FamilyConnect ID is 1234567890. They will now start receiving messages"
                     })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,5,6,11]);
+                    })
                     .run();
             });
             it("complete flow - mother, other ID, lusoga, no hiv msgs", function() {
@@ -590,6 +593,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_end_thank_you',
                         reply: "Thank you. The woman's FamilyConnect ID is 1234567890. They will now start receiving messages"
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [0,5,6,11]);
                     })
                     .run();
             });

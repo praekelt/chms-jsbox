@@ -9,7 +9,7 @@ module.exports = function() {
 return [
 
     // authentication
-        // get identity 0820000111 by msisdn (to validate msisdn check)
+        // 0: get identity 0820000111 by msisdn (to validate msisdn check)
         {
             'request': {
                 'method': 'GET',
@@ -48,7 +48,7 @@ return [
             }
         },
 
-        // get identity 0820000111 by personnel code 12345 (passing personnel_code check st-B))
+        // 1: get identity 0820000111 by personnel code 12345 (passing personnel_code check st-B))
         {
             'request': {
                 'method': 'GET',
@@ -86,7 +86,7 @@ return [
             }
         },
 
-        // get identity 0820000111 by personnel code aaaaa (failing personnel_code check st-B))
+        // 2: get identity 0820000111 by personnel code aaaaa (failing personnel_code check st-B))
         {
             'request': {
                 'method': 'GET',
@@ -110,7 +110,7 @@ return [
             }
         },
 
-        // get unregistered identity 0820000222 by msisdn
+        // 3: get unregistered identity 0820000222 by msisdn
         {
             'repeatable': true,  // enables time-out testing
             'request': {
@@ -135,7 +135,7 @@ return [
             }
         },
 
-        // create identity 0820000222
+        // 4: create identity 0820000222
         {
             'repeatable': true,  // enables time-out testing
             'request': {
@@ -176,7 +176,7 @@ return [
             }
         },
 
-        // get unregistered identity 0820000333 by msisdn
+        // 5: get unregistered identity 0820000333 by msisdn
         {
             'repeatable': true,
             'request': {
@@ -201,7 +201,7 @@ return [
             }
         },
 
-        // create identity 082000000333
+        // 6: create identity 082000000333
         {
             'repeatable': true,
             'request': {
@@ -242,7 +242,7 @@ return [
             }
         },
 
-        // get identity 0820000444 by msisdn
+        // 7: get identity 0820000444 by msisdn
         {
             'request': {
                 'method': 'GET',
@@ -280,7 +280,7 @@ return [
             }
         },
 
-        // get identity 0820000444 subscriptions
+        // 8: get identity 0820000444 subscriptions
         {
             'request': {
                 'method': 'GET',
@@ -319,7 +319,7 @@ return [
             }
         },
 
-        // get identity 0820000555 by msisdn
+        // 9: get identity 0820000555 by msisdn
         {
             'request': {
                 'method': 'GET',
@@ -357,7 +357,7 @@ return [
             }
         },
 
-        // get identity 0820000555 subscriptions (which doesn't exist)
+        // 10: get identity 0820000555 subscriptions (which doesn't exist)
         {
             'request': {
                 'method': 'GET',
@@ -382,7 +382,7 @@ return [
             }
         },
 
-        // get identity cb245673-aa41-4302-ac47-0000000333
+        // 11: get identity cb245673-aa41-4302-ac47-0000000333
         {
             'repeatable': true,
             'request': {
@@ -417,7 +417,7 @@ return [
 
 
     // Optout 064001
-        // #get #subscription #064001
+        // 12: #get #subscription #064001
         {
             'request': {
                 'method': 'GET',
@@ -472,7 +472,7 @@ return [
                 ]
             }
         },
-        // #patch #subscription #064001
+        // 13: #patch #subscription #064001
         {
             'request': {
                 'method': 'PATCH',
