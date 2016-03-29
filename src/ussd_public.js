@@ -126,6 +126,8 @@ go.app = function() {
                     } else {
                         // Prevent previous content being passed to next state
                         self.im.msg.session_event = null;
+                        // reset user answers
+                        self.im.user.answers = {};
 
                         return self.states.create('state_permission', pass_opts);
                     }
@@ -152,7 +154,7 @@ go.app = function() {
                         };
                         // return creator_opts.name;
                     } else if (choice.value === 'restart') {
-                        // Reset user answers when restarting the app
+                        // reset user answers
                         self.im.user.answers = {};
                         return 'state_start';
                     }
