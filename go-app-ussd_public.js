@@ -628,7 +628,7 @@ go.app = function() {
                         // Prevent previous content being passed to next state
                         self.im.msg.session_event = null;
 
-                        return self.states.create('state_start', pass_opts);
+                        return self.states.create('state_permission', pass_opts);
                     }
 
                 }

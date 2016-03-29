@@ -59,7 +59,7 @@ describe("familyconnect health worker app", function() {
 
         describe.only("Timeout testing", function() {
             describe("in State Change", function() {
-                it("should ask about continuing", function() {
+                it("should restart at state C (state_permission)", function() {
                     return tester
                         .setup.user.addr('0720000222')
                         .inputs(
@@ -73,6 +73,52 @@ describe("familyconnect health worker app", function() {
                             state: 'state_permission',
                             reply: [
                                 "Welcome to FamilyConnect. Do you have permission to manage the number 0720000222?",
+                                "1. Yes",
+                                "2. No",
+                                "3. Change the number I'd like to manage"
+                            ].join('\n')
+                        })
+                        .run();
+                });
+                it("should restart at state C (state_permission) after two time-outs", function() {
+                    return tester
+                        .setup.user.addr('0720000222')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_permission - yes
+                            , '3'  // state_change_menu - change number
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                            , '1'  // state_permission - yes
+                            , '3'  // state_change_menu - change number
+                            , '0720000111'  // state_change_number
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                        )
+                        .check.interaction({
+                            state: 'state_permission',
+                            reply: [
+                                "Welcome to FamilyConnect. Do you have permission to manage the number 0720000222?",
+                                "1. Yes",
+                                "2. No",
+                                "3. Change the number I'd like to manage"
+                            ].join('\n')
+                        })
+                        .run();
+                });
+                it("should restart at state C (state_permission) as guest with unrecognised number", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_language - english
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                        )
+                        .check.interaction({
+                            state: 'state_permission',
+                            reply: [
+                                "Welcome to FamilyConnect. Do you have permission to manage the number 0720000111?",
                                 "1. Yes",
                                 "2. No",
                                 "3. Change the number I'd like to manage"
