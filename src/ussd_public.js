@@ -259,12 +259,78 @@ go.app = function() {
                     if (contact.details.receiver_role) {
                         self.im.user.set_answer('role_player', contact.details.receiver_role);
                         self.im.user.set_answer('contact_id', contact.id);
-                        return self.states.create('state_change_menu');
                     } else {
+                        console.log("inside check registered -- "+ self.im.user.answers.role_player);
                         self.im.user.set_answer('contact_id', contact.id);
-                        return self.states.create('state_msg_receiver');  // for phase 1, state_registration_menu will be skipped
                     }
+
+                    return self.states.create('state_check_receiver_role');
                 });
+        });
+
+        self.add('state_check_receiver_role', function(name) {
+            var role = self.im.user.answers.role_player;
+            var contact_id = self.im.user.answers.contact_id;
+            if (role === 'mother') {
+                // lookup contact so we can get the link to the household receiver (if any)
+                return go.utils
+                    .get_identity(contact_id, self.im)
+                    .then(function(mother) {
+                        self.im.user.set_answer('mother_id', contact_id);
+                        self.im.user.set_answer('mother_msisdn',
+                            Object.keys(mother.details.addresses.msisdn)[0]);
+                        if (mother.details.linked_to) {
+                            self.im.user.set_answer('household_id', mother.details.linked_to);
+                            self.im.user.set_answer('seperate_household_receiver', true);
+                            self.im.user.set_answer('reg_type', 'mother_and_other');
+                            // lookup household so we can save their msisdn
+                            return go.utils
+                                .get_identity(self.im.user.answers.household_id, self.im)
+                                .then(function(household) {
+                                    self.im.user.set_answer('household_msisdn',
+                                        Object.keys(household.details.addresses.msisdn)[0]);
+                                    return self.states.create('state_change_menu');
+                                });
+                        } else {
+                            // mother_only
+                            self.im.user.set_answer('household_id', null);
+                            self.im.user.set_answer('seperate_household_receiver', false);
+                            self.im.user.set_answer('reg_type', 'mother_only');
+                            return self.states.create('state_change_menu');
+                        }
+                    });
+            } else {
+                console.log(role);
+                var nextState = (role === null || role === 'guest') ? 'state_change_menu' : 'state_msg_receiver';  // for phase 1, state_registration_menu will be skipped
+                // lookup contact so we can get the link to the mother
+                return go.utils
+                    .get_identity(contact_id, self.im)
+                    .then(function(contact) {
+                        self.im.user.set_answer('household_id', contact_id);
+                        self.im.user.set_answer('mother_id', contact.details.linked_to);
+                        self.im.user.set_answer('household_msisdn',
+                            Object.keys(contact.details.addresses.msisdn)[0]);
+                        if (contact.details.household_msgs_only) {
+                            // set true for head_of_household, family_member identification
+                            self.im.user.set_answer('seperate_household_receiver', true);
+                            self.im.user.set_answer('reg_type', 'mother_and_other');
+                            // lookup mother so we can save her msisdn
+                            return go.utils
+                                .get_identity(self.im.user.answers.mother_id, self.im)
+                                .then(function(mother) {
+                                    self.im.user.set_answer('mother_msisdn',
+                                        Object.keys(mother.details.addresses.msisdn)[0]);
+                                    return self.states.create(nextState);
+                                });
+                        } else {
+                            // set false for trusted_friend
+                            // cannot set mother msisdn as it doesn't exist
+                            self.im.user.set_answer('seperate_household_receiver', false);
+                            self.im.user.set_answer('reg_type', 'other_only');
+                            return self.states.create(nextState);
+                        }
+                    });
+            }
         });
 
         // ChoiceState st-A1
