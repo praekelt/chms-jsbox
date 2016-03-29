@@ -22,6 +22,10 @@ go.utils = {
             && im.config.no_timeout_redirects.indexOf(im.user.state.name) === -1;
     },
 
+    timeout_redirect: function(im) {
+        return im.config.timeout_redirects.indexOf(im.user.state.name) !== -1;
+    },
+
 
 // SERVICE API CALL HELPERS
 
@@ -553,6 +557,8 @@ go.app = function() {
                 "Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number.",
             "state_change_menu":
                 "Choose:",
+            "state_registration_menu":
+                "Choose from:",
 
             "state_already_baby":
                 "You are already registered for baby messages.",
@@ -611,12 +617,23 @@ go.app = function() {
         // override normal state adding
         self.add = function(name, creator) {
             self.states.add(name, function(name, opts) {
-                if (!go.utils.timed_out(self.im))
-                    return creator(name, opts);
+                var pass_opts = opts || {};
+                pass_opts.name = name;
 
-                opts = opts || {};
-                opts.name = name;
-                return self.states.create('state_timed_out', opts);
+                if (go.utils.timed_out(self.im))
+                {
+                    if (go.utils.timeout_redirect(self.im)) {
+                        return self.states.create('state_timed_out', pass_opts);
+                    } else {
+                        // Prevent previous content being passed to next state
+                        self.im.msg.session_event = null;
+
+                        return self.states.create('state_start', pass_opts);
+                    }
+
+                }
+
+                return creator(name, pass_opts);
             });
         };
 
@@ -636,6 +653,8 @@ go.app = function() {
                         };
                         // return creator_opts.name;
                     } else if (choice.value === 'restart') {
+                        // Reset user answers when restarting the app
+                        self.im.user.answers = {};
                         return 'state_start';
                     }
                 }
@@ -680,7 +699,7 @@ go.app = function() {
         // ChoiceState st-C
         self.add('state_permission', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]).context({msisdn: self.im.user.addr}),
+                question: $(questions[name]).context({'msisdn': self.im.user.addr}),
                 choices: [
                     new Choice('has_permission', $('Yes')),
                     new Choice('no_permission', $('No')),
@@ -742,7 +761,7 @@ go.app = function() {
                         return self.states.create('state_change_menu');
                     } else {
                         self.im.user.set_answer('contact_id', contact.id);
-                        return self.states.create('state_msg_receiver');
+                        return self.states.create('state_registration_menu');
                     }
                 });
         });
@@ -757,6 +776,20 @@ go.app = function() {
                     new Choice('state_change_language', $('Update language')),
                     new Choice('state_change_number', $("Change the number which gets SMSs")),
                     new Choice('state_optout_reason', $("Stop SMSs")),
+                ],
+                next: function(choice) {
+                    return choice.value;
+                }
+            });
+        });
+
+        // ChoiceState st-A2
+        self.add('state_registration_menu', function(name) {
+            return new ChoiceState(name, {
+                question: $(questions[name]),
+                error: $(get_error_text(name)),
+                choices: [
+                    new Choice('state_msg_receiver', $('Register to receive SMSs about you & your baby'))
                 ],
                 next: function(choice) {
                     return choice.value;

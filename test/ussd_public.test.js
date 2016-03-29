@@ -31,7 +31,19 @@ describe("familyconnect health worker app", function() {
                     },
                     no_timeout_redirects: [
                         'state_start',
+                        'state_end_baby',
+                        'state_end_language',
+                        'state_end_recipient',
+                        'state_end_loss_subscription',
+                        'state_end_optout',
                         'state_end_thank_you',
+                    ],
+                    timeout_redirects: [
+                        // registration states
+                        'state_msg_receiver',
+                        'state_last_period_month',
+                        'state_last_period_day',
+                        'state_hiv_messages',
                     ],
                 })
                 .setup(function(api) {
@@ -45,41 +57,73 @@ describe("familyconnect health worker app", function() {
 
         // TEST TIMEOUTS
 
-        describe.skip("Timeout testing", function() {
+        describe.only("Timeout testing", function() {
             describe("in State Change", function() {
                 it("should ask about continuing", function() {
                     return tester
-                        .setup.user.addr('0720000111')
+                        .setup.user.addr('0720000222')
                         .inputs(
                             {session_event: 'new'}  // dial in
-                            , "3"  // state_permission - change number to manage
-                            , "0720000333"  // state_manage_msisdn - unregistered user
-                            , "4"  // state_msg_receiver - trusted friend
-                            , "3"  // state_last_period_month - may
-                            , "22"  // state_last_period_day
+                            , '1'  // state_permission - yes
+                            , '3'  // state_change_menu - change number
                             , {session_event: 'close'}
                             , {session_event: 'new'}
                         )
                         .check.interaction({
                             state: 'state_permission',
-                            reply: "Welcome to FamilyConnect. Do you have permission to manage the number 0720000333?"
+                            reply: [
+                                "Welcome to FamilyConnect. Do you have permission to manage the number 0720000222?",
+                                "1. Yes",
+                                "2. No",
+                                "3. Change the number I'd like to manage"
+                            ].join('\n')
                         })
                         .run();
                 });
             });
             describe("in Registration", function() {
+                it("to state_timed_out", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_permission
+                            , '1'  // state_registeration_menu - register
+                            , '1'  // state_msg_receiver - head of household
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                        )
+                        .check.interaction({
+                            state: 'state_timed_out',
+                            reply: [
+                                "You have an incomplete registration. Would you like to continue with this registration?",
+                                "1. Yes",
+                                "2. No, start from the beginning"
+                            ].join('\n')
+                        })
+                        .run();
+                });
                 it("should continue", function() {
                     return tester
                         .setup.user.addr('0720000111')
                         .inputs(
                             {session_event: 'new'}  // dial in
-                            , '1'  // state_language - english
+                            , '1'  // state_permission
+                            , '1'  // state_registeration_menu - register
+                            , '1'  // state_msg_receiver - head of household
                             , {session_event: 'close'}
                             , {session_event: 'new'}
                             , '1'  // state_timed_out - continue
                         )
                         .check.interaction({
-                            state: 'state_permission'
+                            state: 'state_msg_receiver',
+                            reply: [
+                                "Who will receive these messages?",
+                                "1. Head of the Household",
+                                "2. Mother to be",
+                                "3. Family member",
+                                "4. Trusted friend"
+                            ].join('\n')
                         })
                         .run();
                 });
@@ -88,28 +132,23 @@ describe("familyconnect health worker app", function() {
                         .setup.user.addr('0720000111')
                         .inputs(
                             {session_event: 'new'}  // dial in
-                            , '1'  // state_language - english
+                            , '1'  // state_permission
+                            , '1'  // state_registeration_menu - register
+                            , '1'  // state_msg_receiver - head of household
+                            , '3'  // state_last_period_month
                             , {session_event: 'close'}
                             , {session_event: 'new'}
                             , '2'  // state_timed_out - restart
                         )
                         .check.interaction({
-                            state: 'state_language'
-                        })
-                        .run();
-                });
-                it("should restart", function() {
-                    return tester
-                        .setup.user.addr('0720000111')
-                        .inputs(
-                            {session_event: 'new'}  // dial in
-                            , '1'  // state_language - english
-                            , {session_event: 'close'}
-                            , {session_event: 'new'}
-                            , '2'  // state_timed_out - restart
-                        )
-                        .check.interaction({
-                            state: 'state_language'
+                            state: 'state_language',
+                            reply: [
+                                "Welcome to FamilyConnect. Please choose your language",
+                                "1. English",
+                                "2. Rukiga",
+                                "3. Lusoga",
+                                "4. Luganda"
+                            ].join('\n')
                         })
                         .run();
                 });
