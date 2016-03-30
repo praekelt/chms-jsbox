@@ -1200,6 +1200,7 @@ go.app = function() {
                 ],
                 error: $(get_error_text(name)),
                 next: function() {
+                    self.im.user.set_answer('receiver_id', self.im.user.answers.contact_id);
                     return self.states.create('state_save_identities');
                 }
             });

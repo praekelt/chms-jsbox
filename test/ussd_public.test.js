@@ -151,6 +151,9 @@ describe("familyconnect health worker app", function() {
                                 "2. No, start from the beginning"
                             ].join('\n')
                         })
+                        .check(function(api) {
+                            go.utils.checkFixturesUsed(api, [0,1,11]);
+                        })
                         .run();
                 });
                 it("should continue", function() {
@@ -368,7 +371,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4,6]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,6,9]);
                     })
                     .run();
             });
@@ -387,7 +390,7 @@ describe("familyconnect health worker app", function() {
                         reply: "What day of the month did the woman start her last period? For example, 12."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4,6]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,6,9]);
                     })
                     .run();
             });
@@ -411,13 +414,13 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4,6,8]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,6,9,10]);
                     })
                     .check.user.answer('state_msg_receiver', 'trusted_friend')
-                    //.check.user.answer('receiver_id', 'identity-uuid-09')
-                    .check.user.answer('mother_id', 'identity-uuid-17')
-                    .check.user.answer('hoh_id', 'identity-uuid-17')
-                    .check.user.answer('ff_id', undefined)
+                    .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000333')
+                    .check.user.answer('mother_id', 'identity-uuid-09')
+                    .check.user.answer('hoh_id', 'identity-uuid-06')
+                    .check.user.answer('ff_id', 'cb245673-aa41-4302-ac47-0000000333')
                     .run();
             });
 
