@@ -258,7 +258,6 @@ return [
                 },
                 'url': 'http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000222/',
                 'data': {
-                    "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000222/",
                     "id": "3f7c8851-5204-43f7-af7f-000000000222",
                     "version": 1,
                     "details": {
@@ -270,8 +269,6 @@ return [
                         },
                         "health_id": 1234567890,
                     },
-                    "created_at": "2015-07-10T06:13:29.693272Z",
-                    "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
 
             },
@@ -348,7 +345,6 @@ return [
                     },
                     'url': 'http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000222/',
                     'data': {
-                        "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000222/",
                         "id": "3f7c8851-5204-43f7-af7f-000000000222",
                         "version": 1,
                         "details": {
@@ -360,8 +356,6 @@ return [
                             },
                             "health_id": 1234567890,
                         },
-                        "created_at": "2015-07-10T06:13:29.693272Z",
-                        "updated_at": "2015-07-10T06:13:29.693298Z"
                     }
 
                 },
