@@ -439,8 +439,8 @@ describe("familyconnect health worker app", function() {
             });
         });
 
-        describe.skip("Change testing", function() {
-            it("to state_end_baby", function() {
+        describe("Change testing", function() {
+            it.skip("to state_end_baby", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -457,7 +457,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_already_baby", function() {
+            it.skip("to state_already_baby", function() {
                 return tester
                     .setup.user.addr('082333')
                     .inputs(
@@ -478,7 +478,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_end_general", function() {
+            it.skip("to state_end_general", function() {
                 return tester
                     .setup.user.addr('082333')
                     .inputs(
@@ -496,7 +496,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("back to state_change_menu", function() {
+            it.skip("back to state_change_menu", function() {
                 return tester
                     .setup.user.addr('082333')
                     .inputs(
@@ -514,7 +514,7 @@ describe("familyconnect health worker app", function() {
                     .run();
             });
 
-            it("to state_change_language", function() {
+            it.skip("to state_change_language", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -537,7 +537,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_end_language", function() {
+            it.skip("to state_end_language", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -561,8 +561,8 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , "1"  // state_permission - change number to manage
-                        , "3"  // state_change_menu - change number
+                        , '1'  // state_permission - change number to manage
+                        , '3'  // state_change_menu - change number
                     )
                     .check.interaction({
                         state: 'state_change_number',
@@ -578,9 +578,9 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , "1"  // state_permission - change number to manage
-                        , "3"  // state_change_menu - change number
-                        , "0820020002"  // state_change_number
+                        , '1'  // state_permission - change number to manage
+                        , '3'  // state_change_menu - change number
+                        , '0720000111'  // state_change_number
                     )
                     .check.interaction({
                         state: 'state_change_recipient',
@@ -602,10 +602,10 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , "1"  // state_permission - change number to manage
-                        , "3"  // state_change_menu - change number
-                        , "0820020002"  // state_change_number
-                        , "1"  // state_change_recipient - head of household
+                        , '1'  // state_permission - change number to manage
+                        , '3'  // state_change_menu - change number
+                        , '0720000111'  // state_change_number
+                        , '1'  // state_change_recipient - head of household
                     )
                     .check.interaction({
                         state: 'state_end_recipient',
@@ -617,7 +617,7 @@ describe("familyconnect health worker app", function() {
                     .run();
             });
 
-            it("to state_optout_reason", function() {
+            it.skip("to state_optout_reason", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -641,7 +641,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_loss_subscription", function() {
+            it.skip("to state_loss_subscription", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -663,7 +663,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_end_loss_subscription", function() {
+            it.skip("to state_end_loss_subscription", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -682,7 +682,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_end_optout (loss)", function() {
+            it.skip("to state_end_optout (loss)", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -701,7 +701,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_end_optout (non-loss)", function() {
+            it.skip("to state_end_optout (non-loss)", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
