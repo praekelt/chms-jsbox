@@ -20,18 +20,14 @@ describe("familyconnect health worker app", function() {
                     country_code: '256',  // uganda
                     metric_store: 'chms_uganda_test',  // _env at the end
                     services: {
-                        identities: {
+                        identities: {  // used
                             api_token: 'test_token_identities',
                             url: "http://localhost:8001/api/v1/"
                         },
-                        subscriptions: {
-                            api_token: 'test_token_subscriptions',
-                            url: "http://localhost:8002/api/v1/"
-                        },
-                        registrations: {
+                        registrations: {  // used
                             api_token: 'test_token_registrations',
                             url: "http://localhost:8002/api/v1/"
-                        }
+                        },
                     },
                     no_timeout_redirects: [
                         'state_start',
