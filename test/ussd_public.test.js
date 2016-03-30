@@ -593,7 +593,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2]);
+                        go.utils.checkFixturesUsed(api, [0,2,6,7]);
                     })
                     .run();
             });
@@ -612,7 +612,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. The number which receives messages has been updated."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2]);
+                        go.utils.checkFixturesUsed(api, [0,2,6,7]);
                     })
                     .run();
             });
