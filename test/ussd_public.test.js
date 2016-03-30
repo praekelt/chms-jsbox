@@ -80,7 +80,7 @@ describe("familyconnect health worker app", function() {
                         })
                         .run();
                 });
-                it("should restart at state C (state_permission) after two time-outs", function() {
+                it("should restart after two time-outs", function() {
                     return tester
                         .setup.user.addr('0720000222')
                         .inputs(
@@ -106,7 +106,7 @@ describe("familyconnect health worker app", function() {
                         })
                         .run();
                 });
-                it("should restart at state C (state_permission) as guest with unrecognised number", function() {
+                it("should restart (guest with unrecognised number)", function() {
                     return tester
                         .setup.user.addr('0720000111')
                         .inputs(
@@ -116,13 +116,7 @@ describe("familyconnect health worker app", function() {
                             , {session_event: 'new'}
                         )
                         .check.interaction({
-                            state: 'state_permission',
-                            reply: [
-                                "Welcome to FamilyConnect. Do you have permission to manage the number 0720000111?",
-                                "1. Yes",
-                                "2. No",
-                                "3. Change the number I'd like to manage"
-                            ].join('\n')
+                            state: 'state_language'
                         })
                         .run();
                 });

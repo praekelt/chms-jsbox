@@ -104,7 +104,7 @@ go.app = function() {
                         // reset user answers
                         self.im.user.answers = {};
 
-                        return self.states.create('state_permission', pass_opts);
+                        return self.states.create('state_start', pass_opts);
                     }
 
                 }
