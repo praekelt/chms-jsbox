@@ -525,6 +525,24 @@ go.utils_project = {
         return reg_info;
     },
 
+    compile_public_reg_info: function(im) {
+        var reg_info = {
+            stage: 'prebirth',
+            mother_id: im.user.answers.mother_id,
+            data: {
+                hoh_id: im.user.answers.hoh_id,
+                receiver_id: im.user.answers.receiver_id,
+                operator_id: im.user.answers.operator_id,
+                language: im.user.answers.state_msg_language,
+                msg_type: "text",
+                last_period_date: im.user.answers.last_period_date,
+                msg_receiver: im.user.answers.state_msg_receiver,
+            }
+        };
+
+        return reg_info;
+    },
+
     set_standard_mother_details: function(im, details) {
         details.msg_receiver = im.user.answers.state_msg_receiver;
         details.role = 'mother';
@@ -547,6 +565,17 @@ go.utils_project = {
         return details;
     },
 
+    set_public_mother_details: function(im, details) {
+        details.msg_receiver = im.user.answers.state_msg_receiver;
+        details.role = 'mother';
+        details.hoh_id = im.user.answers.hoh_id;
+        details.preferred_language = im.user.answers.state_msg_language;
+        details.preferred_msg_type = 'text';  // omit?
+        details.hiv_interest = im.user.answers.state_hiv_messages;
+
+        return details;
+    },
+
     set_standard_hoh_details: function(im, details) {
         details.role = 'head_of_household';
         details.mother_id = im.user.answers.mother_id;
@@ -560,6 +589,14 @@ go.utils_project = {
         return details;
     },
 
+    set_public_hoh_details: function(im, details) {
+        details.role = 'head_of_household';
+        details.mother_id = im.user.answers.mother_id;
+        details.preferred_language = im.user.answers.state_msg_language;
+        details.preferred_msg_type = 'text';  // omit?
+        return details;
+    },
+
     set_standard_ff_details: function(im, details) {
         details.role = im.user.answers.state_msg_receiver;
         details.mother_id = im.user.answers.mother_id;
@@ -568,7 +605,7 @@ go.utils_project = {
         return details;
     },
 
-    update_identities: function(im) {
+    update_identities: function(im, isPublicRegistration) {
       // Saves useful data collected during registration to the relevant identities
         var msg_receiver = im.user.answers.state_msg_receiver;
         if (msg_receiver === 'mother_to_be' || (msg_receiver === 'head_of_household')) {
@@ -578,10 +615,16 @@ go.utils_project = {
                     go.utils.get_identity(im.user.answers.hoh_id, im)
                 ])
                 .spread(function(mother, hoh) {
-                    mother.details = go.utils_project
-                        .set_standard_mother_details(im, mother.details);
-                    hoh.details = go.utils_project
-                        .set_standard_hoh_details(im, hoh.details);
+                    mother.details = isPublicRegistration
+                                    ? go.utils_project
+                                        .set_public_mother_details(im, mother.details)
+                                    : go.utils_project
+                                        .set_standard_mother_details(im, mother.details);
+                    hoh.details = isPublicRegistration
+                                    ? go.utils_project
+                                        .set_public_hoh_details(im, hoh.details)
+                                    : go.utils_project
+                                        .set_standard_hoh_details(im, hoh.details);
                     return Q.all([
                         go.utils.update_identity(im, mother),
                         go.utils.update_identity(im, hoh)
@@ -595,12 +638,18 @@ go.utils_project = {
                     go.utils.get_identity(im.user.answers.ff_id, im)
                 ])
                 .spread(function(mother, hoh, ff) {
-                    mother.details = go.utils_project
-                        .set_standard_mother_details(im, mother.details);
-                    hoh.details = go.utils_project
-                        .set_standard_hoh_details(im, hoh.details);
+                    mother.details = isPublicRegistration
+                                    ? go.utils_project
+                                        .set_public_mother_details(im, mother.details)
+                                    : go.utils_project
+                                        .set_standard_mother_details(im, mother.details);
+                    hoh.details = isPublicRegistration
+                                    ? go.utils_project
+                                        .set_public_hoh_details(im, hoh.details)
+                                    : go.utils_project
+                                        .set_standard_hoh_details(im, hoh.details);
                     ff.details = go.utils_project
-                        .set_standard_ff_details(im, ff.details);
+                                        .set_standard_ff_details(im, ff.details);
                     return Q.all([
                         go.utils.update_identity(im, mother),
                         go.utils.update_identity(im, hoh),
@@ -615,6 +664,14 @@ go.utils_project = {
         return Q.all([
             go.utils.create_registration(im, reg_info),
             go.utils_project.update_identities(im)
+        ]);
+    },
+
+    finish_public_registration: function(im) {
+        var reg_info = go.utils_project.compile_public_reg_info(im);
+        return Q.all([
+            go.utils.create_registration(im, reg_info),
+            go.utils_project.update_public_identities(im)
         ]);
     },
 
