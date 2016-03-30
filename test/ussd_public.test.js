@@ -420,7 +420,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. Your FamilyConnect ID is 1234567890. You will receive an SMS with it shortly."
+                        reply: "Thank you. Your FamilyConnect ID is . You will receive an SMS with it shortly."
                     })
                     .check(function(api) {
                         go.utils.checkFixturesUsed(api, [2,3,4,5]);
@@ -583,7 +583,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,2,6,7]);
+                        go.utils.checkFixturesUsed(api, [0,2,22,23]);
                     })
                     .run();
             });
@@ -602,7 +602,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. The number which receives messages has been updated."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,2,6,7]);
+                        go.utils.checkFixturesUsed(api, [0,2,22,23]);
                     })
                     .run();
             });
@@ -624,7 +624,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,8]);
+                        go.utils.checkFixturesUsed(api, [2,24]);
                     })
                     .run();
             });
@@ -643,7 +643,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,8]);
+                        go.utils.checkFixturesUsed(api, [2,24]);
                     })
                     .run();
             });
@@ -662,7 +662,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you for using the FamilyConnect service"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,8]);
+                        go.utils.checkFixturesUsed(api, [2,24]);
                     })
                     .run();
             });
