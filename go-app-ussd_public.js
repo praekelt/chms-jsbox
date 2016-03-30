@@ -1231,8 +1231,17 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_hiv_messages'
+                next: 'state_get_health_id'
             });
+        });
+
+        self.add('state_get_health_id', function(name) {
+            return go.utils
+                .get_identity(self.im.user.answers.mother_id, self.im)
+                .then(function(identity) {
+                    self.im.user.set_answer('health_id', identity.details.health_id);
+                    return self.states.create('state_hiv_messages');
+                });
         });
 
         // ChoiceState st-12
@@ -1244,18 +1253,17 @@ go.app = function() {
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
                 ],
-                next: 'state_get_health_id'
+                next: function() {
+                    return go.utils_project
+                        .finish_public_registration(self.im)
+                        .then(function() {
+                            return 'state_end_thank_you';
+                        });
+                }
             });
         });
 
-        self.add('state_get_health_id', function(name) {
-            return go.utils
-                .get_identity(self.im.user.answers.contact_id, self.im)
-                .then(function(identity) {
-                    self.im.user.set_answer('health_id', identity.details.health_id);
-                    return self.states.create('state_end_thank_you');
-                });
-        });
+
 
         // EndState st-13
         self.add('state_end_thank_you', function(name) {

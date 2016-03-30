@@ -247,5 +247,58 @@ return [
         }
     },
 
+    // 7: create registration
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/registrations/',
+            'data':  {
+                "stage": "prebirth",
+                "mother_id": "identity-uuid-17",
+                "data": {
+                    "hoh_id": "identity-uuid-17",
+                    "msg_type": "text",
+                    "msg_receiver": "trusted_friend",
+                }
+            }
+        },
+        'response': {
+            "code": 201,
+            "data": {}
+        }
+    },
+
+    // 8: get identity identity-uuid-17
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'params': {},
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            "url": "http://localhost:8001/api/v1/identities/identity-uuid-17/",
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "url": "http://localhost:8001/api/v1/identities/identity-uuid-17/",
+                "id": "identity-uuid-17",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {},
+                },
+                "created_at": "2015-07-10T06:13:29.693272Z",
+                "updated_at": "2015-07-10T06:13:29.693298Z"
+            }
+        }
+    },
+
 ];
 };
