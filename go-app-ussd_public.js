@@ -542,8 +542,8 @@ go.utils_project = {
             data: {
                 hoh_id: im.user.answers.hoh_id,
                 receiver_id: im.user.answers.receiver_id,
-                operator_id: im.user.answers.operator_id,
-                language: im.user.answers.state_msg_language,
+                operator_id: null,
+                language: im.user.answers.state_language,
                 msg_type: "text",
                 last_period_date: im.user.answers.last_period_date,
                 msg_receiver: im.user.answers.state_msg_receiver,
@@ -626,15 +626,11 @@ go.utils_project = {
                 ])
                 .spread(function(mother, hoh) {
                     mother.details = isPublicRegistration
-                                    ? go.utils_project
-                                        .set_public_mother_details(im, mother.details)
-                                    : go.utils_project
-                                        .set_standard_mother_details(im, mother.details);
+                        ? go.utils_project.set_public_mother_details(im, mother.details)
+                        : go.utils_project.set_standard_mother_details(im, mother.details);
                     hoh.details = isPublicRegistration
-                                    ? go.utils_project
-                                        .set_public_hoh_details(im, hoh.details)
-                                    : go.utils_project
-                                        .set_standard_hoh_details(im, hoh.details);
+                        ? go.utils_project.set_public_hoh_details(im, hoh.details)
+                        : go.utils_project.set_standard_hoh_details(im, hoh.details);
                     return Q.all([
                         go.utils.update_identity(im, mother),
                         go.utils.update_identity(im, hoh)
@@ -649,17 +645,13 @@ go.utils_project = {
                 ])
                 .spread(function(mother, hoh, ff) {
                     mother.details = isPublicRegistration
-                                    ? go.utils_project
-                                        .set_public_mother_details(im, mother.details)
-                                    : go.utils_project
-                                        .set_standard_mother_details(im, mother.details);
+                        ? go.utils_project.set_public_mother_details(im, mother.details)
+                        : go.utils_project.set_standard_mother_details(im, mother.details);
                     hoh.details = isPublicRegistration
-                                    ? go.utils_project
-                                        .set_public_hoh_details(im, hoh.details)
-                                    : go.utils_project
-                                        .set_standard_hoh_details(im, hoh.details);
+                        ? go.utils_project.set_public_hoh_details(im, hoh.details)
+                        : go.utils_project.set_standard_hoh_details(im, hoh.details);
                     ff.details = go.utils_project
-                                        .set_standard_ff_details(im, ff.details);
+                        .set_standard_ff_details(im, ff.details);
                     return Q.all([
                         go.utils.update_identity(im, mother),
                         go.utils.update_identity(im, hoh),
@@ -898,6 +890,7 @@ go.app = function() {
                     self.im.user.set_answer('user_id', user.id);
                     if (user.details.role) {
                         self.im.user.set_answer('role', user.details.role);
+                        self.im.user.set_answer('state_language', user.details.preferred_language);
                         return self.states.create('state_permission');
                     } else {
                         self.im.user.set_answer('role', 'guest');
@@ -1242,7 +1235,13 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_get_health_id'
+                next: function(content) {
+                    var year = self.im.user.answers.state_last_period_month.substr(2,4);
+                    var month = self.im.user.answers.state_last_period_month.substr(0,2);
+                    var day = go.utils.double_digit_number(content);
+                    self.im.user.set_answer('last_period_date', year+month+day);
+                    return 'state_get_health_id';
+                }
             });
         });
 
@@ -1273,8 +1272,6 @@ go.app = function() {
                 }
             });
         });
-
-
 
         // EndState st-13
         self.add('state_end_thank_you', function(name) {

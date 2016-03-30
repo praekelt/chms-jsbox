@@ -1,7 +1,8 @@
 // Contact roles
 // 0720000111: heretofore unseen number
-// 0720000222: registered user - mother, lusoga, sms
+// 0720000222: registered user - mother, english, sms
 // 0720000333: unregistered user - number entered manually
+// 0720000444: unregistered user - number entered manually - mother_to_be registration
 
 module.exports = function() {
 return [
@@ -106,7 +107,7 @@ return [
                         },
                         "role": "mother",
                         "preferred_msg_type": "sms",
-                        "preferred_language": "lusoga"
+                        "preferred_language": "eng_UG"
                     },
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
@@ -206,7 +207,6 @@ return [
                             "+256720000222": {}
                         }
                     },
-                    "health_id": 1234567890
                 },
                 "created_at": "2015-07-10T06:13:29.693272Z",
                 "updated_at": "2015-07-10T06:13:29.693298Z"
@@ -356,6 +356,7 @@ return [
                 "details": {
                     "default_addr_type": "msisdn",
                     "addresses": {},
+                    "health_id": 9999999999,
                 },
                 "communicate_through": "cb245673-aa41-4302-ac47-0000000333",
                 "created_at": "2015-07-10T06:13:29.693272Z",
@@ -396,6 +397,314 @@ return [
                 "created_at": "2015-07-10T06:13:29.693272Z",
                 "updated_at": "2015-07-10T06:13:29.693298Z"
             }
+        }
+    },
+
+    // 12: create registration 1
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/registrations/',
+            'data':  {
+                "stage": "prebirth",
+                "mother_id": "identity-uuid-09",
+                "data": {
+                    "hoh_id": "identity-uuid-06",
+                    "receiver_id": "cb245673-aa41-4302-ac47-0000000333",
+                    "operator_id": null,
+                    "language": "eng_UG",
+                    "msg_type": "text",
+                    "last_period_date": "20150222",
+                    "msg_receiver": "trusted_friend"
+                }
+            }
+        },
+        'response': {
+            "code": 201,
+            "data": {}
+        }
+    },
+
+    // 13: patch identity 09
+    {
+        'request': {
+            'method': 'PATCH',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/identity-uuid-09/',
+            'data':  {
+                "id": "identity-uuid-09",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {},
+                    "health_id": 9999999999,
+                    "msg_receiver": "trusted_friend",
+                    "role": "mother",
+                    "hoh_id": "identity-uuid-06",
+                    "preferred_msg_type": "text",
+                    "hiv_interest": "yes_hiv_msgs"
+                },
+                "communicate_through": "cb245673-aa41-4302-ac47-0000000333"
+            }
+        },
+        'response': {
+            "code": 200,
+            "data": {}
+        }
+    },
+
+    // 14: patch identity 06
+    {
+        'request': {
+            'method': 'PATCH',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/identity-uuid-06/',
+            'data':  {
+                "id": "identity-uuid-06",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {},
+                    "role": "head_of_household",
+                    "mother_id": "identity-uuid-09",
+                    "preferred_msg_type": "text"
+                }
+            }
+        },
+        'response': {
+            "code": 200,
+            "data": {}
+        }
+    },
+
+    // 14: patch identity 000333
+    {
+        'request': {
+            'method': 'PATCH',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000333/',
+            'data':  {
+                "id": "cb245673-aa41-4302-ac47-0000000333",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {
+                        "msisdn": {
+                            "+256720000222": {}
+                        }
+                    },
+                    "role": "trusted_friend",
+                    "mother_id": "identity-uuid-09",
+                    "preferred_msg_type": "text"
+                }
+            }
+        },
+        'response': {
+            "code": 200,
+            "data": {}
+        }
+    },
+
+    // 15: get identity 0720000444 by msisdn - no results
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'params': {
+                'details__addresses__msisdn': '+256720000444'
+            },
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/search/',
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "count": 0,
+                "next": null,
+                "previous": null,
+                "results": []
+            }
+        }
+    },
+
+    // 16: create identity 0720000444
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': "http://localhost:8001/api/v1/identities/",
+            'data': {
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {
+                        "msisdn": {
+                            "+256720000444": {}
+                        }
+                    }
+                }
+            }
+        },
+        'response': {
+            "code": 201,
+            "data": {
+                "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000444/",
+                "id": "cb245673-aa41-4302-ac47-0000000444",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {
+                        "msisdn": {
+                            "+256720000444": {}
+                        }
+                    }
+                },
+                "operator": null,
+                "created_at": "2015-07-10T06:13:29.693272Z",
+                "updated_at": "2015-07-10T06:13:29.693298Z"
+            }
+        }
+    },
+
+    // 17: get identity cb245673-aa41-4302-ac47-0000000444
+    {
+        'repeatable': true,  // second time gets the health_id
+        'request': {
+            'method': 'GET',
+            'params': {},
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000444/",
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000444/",
+                "id": "cb245673-aa41-4302-ac47-0000000444",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {
+                        "msisdn": {
+                            "+256720000444": {}
+                        }
+                    },
+                    "health_id": 4444444444,
+                },
+                "created_at": "2015-07-10T06:13:29.693272Z",
+                "updated_at": "2015-07-10T06:13:29.693298Z"
+            }
+        }
+    },
+
+    // 18: create registration 2
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/registrations/',
+            'data':  {
+                "stage": "prebirth",
+                "mother_id": "cb245673-aa41-4302-ac47-0000000444",
+                "data": {
+                    "hoh_id": "identity-uuid-06",
+                    "receiver_id": "cb245673-aa41-4302-ac47-0000000444",
+                    "operator_id": null,
+                    "language": "eng_UG",
+                    "msg_type": "text",
+                    "last_period_date": "20150222",
+                    "msg_receiver": "mother_to_be"
+                }
+            }
+        },
+        'response': {
+            "code": 201,
+            "data": {}
+        }
+    },
+
+    // 19: patch identity 444
+    {
+        'request': {
+            'method': 'PATCH',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000444/',
+            'data':  {
+                "id": "cb245673-aa41-4302-ac47-0000000444",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {
+                        "msisdn": {
+                            "+256720000444": {}
+                        }
+                    },
+                    "health_id": 4444444444,
+                    "msg_receiver": "mother_to_be",
+                    "role": "mother",
+                    "hoh_id": "identity-uuid-06",
+                    "preferred_msg_type": "text",
+                    "hiv_interest": "yes_hiv_msgs"
+                }
+            }
+        },
+        'response': {
+            "code": 200,
+            "data": {}
+        }
+    },
+
+    // 20: patch identity 06
+    {
+        'request': {
+            'method': 'PATCH',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/identity-uuid-06/',
+            'data':  {
+                "id": "identity-uuid-06",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {},
+                    "role": "head_of_household",
+                    "mother_id": "cb245673-aa41-4302-ac47-0000000444",
+                    "preferred_msg_type": "text"
+                }
+            }
+        },
+        'response': {
+            "code": 200,
+            "data": {}
         }
     },
 

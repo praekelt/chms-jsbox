@@ -542,8 +542,8 @@ go.utils_project = {
             data: {
                 hoh_id: im.user.answers.hoh_id,
                 receiver_id: im.user.answers.receiver_id,
-                operator_id: im.user.answers.operator_id,
-                language: im.user.answers.state_msg_language,
+                operator_id: null,
+                language: im.user.answers.state_language,
                 msg_type: "text",
                 last_period_date: im.user.answers.last_period_date,
                 msg_receiver: im.user.answers.state_msg_receiver,
@@ -626,15 +626,11 @@ go.utils_project = {
                 ])
                 .spread(function(mother, hoh) {
                     mother.details = isPublicRegistration
-                                    ? go.utils_project
-                                        .set_public_mother_details(im, mother.details)
-                                    : go.utils_project
-                                        .set_standard_mother_details(im, mother.details);
+                        ? go.utils_project.set_public_mother_details(im, mother.details)
+                        : go.utils_project.set_standard_mother_details(im, mother.details);
                     hoh.details = isPublicRegistration
-                                    ? go.utils_project
-                                        .set_public_hoh_details(im, hoh.details)
-                                    : go.utils_project
-                                        .set_standard_hoh_details(im, hoh.details);
+                        ? go.utils_project.set_public_hoh_details(im, hoh.details)
+                        : go.utils_project.set_standard_hoh_details(im, hoh.details);
                     return Q.all([
                         go.utils.update_identity(im, mother),
                         go.utils.update_identity(im, hoh)
@@ -649,17 +645,13 @@ go.utils_project = {
                 ])
                 .spread(function(mother, hoh, ff) {
                     mother.details = isPublicRegistration
-                                    ? go.utils_project
-                                        .set_public_mother_details(im, mother.details)
-                                    : go.utils_project
-                                        .set_standard_mother_details(im, mother.details);
+                        ? go.utils_project.set_public_mother_details(im, mother.details)
+                        : go.utils_project.set_standard_mother_details(im, mother.details);
                     hoh.details = isPublicRegistration
-                                    ? go.utils_project
-                                        .set_public_hoh_details(im, hoh.details)
-                                    : go.utils_project
-                                        .set_standard_hoh_details(im, hoh.details);
+                        ? go.utils_project.set_public_hoh_details(im, hoh.details)
+                        : go.utils_project.set_standard_hoh_details(im, hoh.details);
                     ff.details = go.utils_project
-                                        .set_standard_ff_details(im, ff.details);
+                        .set_standard_ff_details(im, ff.details);
                     return Q.all([
                         go.utils.update_identity(im, mother),
                         go.utils.update_identity(im, hoh),
