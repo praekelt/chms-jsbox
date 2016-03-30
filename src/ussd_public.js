@@ -172,11 +172,11 @@ go.app = function() {
                 .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
                 .then(function(user) {
                     self.im.user.set_answer('user_id', user.id);
-                    if (user.details.receiver_role) {
-                        self.im.user.set_answer('role_player', user.details.receiver_role);
+                    if (user.details.role) {
+                        self.im.user.set_answer('role', user.details.role);
                         return self.states.create('state_permission');
                     } else {
-                        self.im.user.set_answer('role_player', 'guest');
+                        self.im.user.set_answer('role', 'guest');
                         return self.states.create('state_language');
                     }
                 });
@@ -256,8 +256,8 @@ go.app = function() {
             return go.utils
                 .get_or_create_identity({'msisdn': opts.msisdn}, self.im, null)
                 .then(function(contact) {
-                    if (contact.details.receiver_role) {
-                        self.im.user.set_answer('role_player', contact.details.receiver_role);
+                    if (contact.details.role) {
+                        self.im.user.set_answer('role', contact.details.role);
                         self.im.user.set_answer('contact_id', contact.id);
                         return self.states.create('state_change_menu');
                     } else {
