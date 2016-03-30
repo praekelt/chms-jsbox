@@ -1,6 +1,5 @@
 go.app = function() {
     var vumigo = require('vumigo_v02');
-    var MetricsHelper = require('go-jsbox-metrics-helper');
     var App = vumigo.App;
     var Choice = vumigo.states.Choice;
     var ChoiceState = vumigo.states.ChoiceState;
@@ -14,33 +13,7 @@ go.app = function() {
         var $ = self.$;
         var interrupt = true;
 
-        self.init = function() {
-
-            // Use the metrics helper to add some metrics
-            mh = new MetricsHelper(self.im);
-            mh
-                // Total unique users
-                .add.total_unique_users('total.ussd.unique_users')
-
-                // Total sessions
-                .add.total_sessions('total.ussd.sessions')
-
-                // Total times reached state_timed_out
-                .add.total_state_actions(
-                    {
-                        state: 'state_timed_out',
-                        action: 'enter'
-                    },
-                    'total.reached_state_timed_out'
-                );
-
-            // Load self.contact
-            return self.im.contacts
-                .for_user()
-                .then(function(user_contact) {
-                   self.contact = user_contact;
-                });
-        };
+        self.init = function() {};
 
 
     // TEXT CONTENT
@@ -143,8 +116,8 @@ go.app = function() {
             return go.utils
                 .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
                 .then(function(user) {
-                    self.im.user.set_answer('user_id', user.id);
                     if (user.details.personnel_code) {
+                        self.im.user.set_answer('operator_id', user.id);
                         return self.states.create('state_msg_receiver');
                     } else {
                         return self.states.create('state_auth_code');
@@ -217,7 +190,7 @@ go.app = function() {
                 )
                 .then(function(identity) {
                     if (identity) {
-                        self.im.user.set_answer('contact_id', identity.id);
+                        self.im.user.set_answer('receiver_id', identity.id);
                         // check if identity has active subscription
                         return go.utils
                             .has_active_subscription(identity.id, self.im)
@@ -228,7 +201,7 @@ go.app = function() {
                                     // next state/screen
                                     return self.states.create('state_msisdn_already_registered');
                                 } else {
-                                    return self.states.create('state_household_head_name');
+                                    return self.states.create('state_save_identities');
                                 }
                             });
                     }
@@ -239,11 +212,11 @@ go.app = function() {
                                 {'msisdn': go.utils.normalize_msisdn(
                                     self.im.user.answers.state_msisdn,
                                     self.im.config.country_code)
-                                }, null, self.im.user.operator_id
+                                }, null, self.im.user.answers.operator_id
                             )
                             .then(function(identity) {
-                                self.im.user.set_answer('contact_id', identity.id);
-                                return self.states.create('state_household_head_name');
+                                self.im.user.set_answer('receiver_id', identity.id);
+                                return self.states.create('state_save_identities');
                             });
                     }
                 });
@@ -264,6 +237,20 @@ go.app = function() {
                         : 'state_msisdn';
                 }
             });
+        });
+
+        // Get or create identities and save their IDs
+        self.add('state_save_identities', function(name) {
+            return go.utils_project
+                .save_identities(
+                    self.im,
+                    self.im.user.answers.state_msg_receiver,
+                    self.im.user.answers.receiver_id,
+                    self.im.user.answers.operator_id
+                )
+                .then(function() {
+                    return self.states.create('state_household_head_name');
+                });
         });
 
         // FreeText st-03
@@ -318,7 +305,13 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_mother_name'
+                next: function(content) {
+                    var year = self.im.user.answers.state_last_period_month.substr(2,4);
+                    var month = self.im.user.answers.state_last_period_month.substr(0,2);
+                    var day = go.utils.double_digit_number(content);
+                    self.im.user.set_answer('last_period_date', year+month+day);
+                    return 'state_mother_name';
+                }
             });
         });
 
@@ -430,7 +423,14 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_msg_language'
+                next: function(content) {
+                    var year = content;
+                    var month = self.im.user.answers.state_mother_birth_month;
+                    var day = go.utils.double_digit_number(
+                        self.im.user.answers.state_mother_birth_day);
+                    self.im.user.set_answer('mother_dob', year+month+day);
+                    return 'state_msg_language';
+                }
             });
         });
 
@@ -451,7 +451,7 @@ go.app = function() {
 
         self.add('state_get_health_id', function(name) {
             return go.utils
-                .get_identity(self.im.user.answers.contact_id, self.im)
+                .get_identity(self.im.user.answers.mother_id, self.im)
                 .then(function(identity) {
                     self.im.user.set_answer('health_id', identity.details.health_id);
                     return self.states.create('state_hiv_messages');
@@ -467,7 +467,13 @@ go.app = function() {
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
                 ],
-                next: 'state_end_thank_you'
+                next: function() {
+                    return go.utils_project
+                        .finish_registration(self.im)
+                        .then(function() {
+                            return 'state_end_thank_you';
+                        });
+                }
             });
         });
 
