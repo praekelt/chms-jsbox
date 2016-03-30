@@ -199,7 +199,7 @@ go.utils_project = {
         var reg_info = go.utils_project.compile_reg_info(im);
         return Q.all([
             go.utils.create_registration(im, reg_info),
-            go.utils_project.update_identities(im)
+            go.utils_project.update_identities(im, false)
         ]);
     },
 
@@ -207,7 +207,7 @@ go.utils_project = {
         var reg_info = go.utils_project.compile_public_reg_info(im);
         return Q.all([
             go.utils.create_registration(im, reg_info),
-            go.utils_project.update_public_identities(im)
+            go.utils_project.update_identities(im, true)
         ]);
     },
 
