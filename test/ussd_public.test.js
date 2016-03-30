@@ -133,7 +133,8 @@ describe("familyconnect health worker app", function() {
                         .setup.user.addr('0720000111')
                         .inputs(
                             {session_event: 'new'}  // dial in
-                            , '1'  // state_permission
+                            , '1'  // state_language - english
+                            , '1'  // state_permission - has_permission
                             , '1'  // state_msg_receiver - head of household
                             , {session_event: 'close'}
                             , {session_event: 'new'}
@@ -153,21 +154,15 @@ describe("familyconnect health worker app", function() {
                         .setup.user.addr('0720000111')
                         .inputs(
                             {session_event: 'new'}  // dial in
-                            , '1'  // state_permission
+                            , '1'  // state_language - english
+                            , '1'  // state_permission - has_permission
                             , '1'  // state_msg_receiver - head of household
                             , {session_event: 'close'}
                             , {session_event: 'new'}
                             , '1'  // state_timed_out - continue
                         )
                         .check.interaction({
-                            state: 'state_msg_receiver',
-                            reply: [
-                                "Who will receive these messages?",
-                                "1. Head of the Household",
-                                "2. Mother to be",
-                                "3. Family member",
-                                "4. Trusted friend"
-                            ].join('\n')
+                            state: 'state_last_period_month'
                         })
                         .run();
                 });
@@ -176,7 +171,8 @@ describe("familyconnect health worker app", function() {
                         .setup.user.addr('0720000111')
                         .inputs(
                             {session_event: 'new'}  // dial in
-                            , '1'  // state_permission
+                            , '1'  // state_language - english
+                            , '1'  // state_permission - has_permission
                             , '1'  // state_msg_receiver - head of household
                             , '3'  // state_last_period_month
                             , {session_event: 'close'}
@@ -368,7 +364,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,6]);
                     })
                     .run();
             });
@@ -387,7 +383,7 @@ describe("familyconnect health worker app", function() {
                         reply: "What day of the month did the woman start her last period? For example, 12."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,6]);
                     })
                     .run();
             });
@@ -411,7 +407,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,6]);
                     })
                     .run();
             });
@@ -433,7 +429,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. Your FamilyConnect ID is 1234567890. You will receive an SMS with it shortly."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4,5]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,5,6]);
                     })
                     .run();
             });

@@ -893,10 +893,10 @@ go.app = function() {
                 error: $(get_error_text(name)),
                 next: function(choice) {
                     if (choice.value === 'has_permission') {
-                        return {
-                            name: 'state_check_registered_user',
-                            creator_opts: {msisdn: self.im.user.addr}
-                        };
+                        self.im.user.set_answer('contact_id', self.im.user.answers.user_id);
+                        return self.im.user.answers.role_player === 'guest'
+                            ? 'state_msg_receiver'
+                            : 'state_change_menu';
                     }
                     else if (choice.value === 'no_permission') {
                         return 'state_permission_required';
@@ -1159,8 +1159,24 @@ go.app = function() {
                     new Choice('trusted_friend', $("Trusted friend"))
                 ],
                 error: $(get_error_text(name)),
-                next: 'state_last_period_month'
+                next: function() {
+                    return self.states.create('state_save_identities');
+                }
             });
+        });
+
+        // Get or create identities and save their IDs
+        self.add('state_save_identities', function(name) {
+            return go.utils_project
+                .save_identities(
+                    self.im,
+                    self.im.user.answers.state_msg_receiver,
+                    self.im.user.answers.receiver_id,
+                    null
+                )
+                .then(function() {
+                    return self.states.create('state_last_period_month');
+                });
         });
 
         // ChoiceState st-05

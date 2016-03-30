@@ -214,5 +214,38 @@ return [
         }
     },
 
+    // 6: create identity
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/',
+            'data':  {
+                "details": {
+                    "default_addr_type": null,
+                    "addresses": {}
+                },
+            }
+        },
+        'response': {
+            "code": 201,
+            "data": {
+                "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-00000082222/",
+                "id": "identity-uuid-17",
+                "version": 1,
+                "details": {
+                    "default_addr_type": null,
+                    "addresses": {}
+                },
+                "created_at": "2015-07-10T06:13:29.693272Z",
+                "updated_at": "2015-07-10T06:13:29.693298Z"
+            }
+        }
+    },
+
 ];
 };
