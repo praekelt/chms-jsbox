@@ -904,7 +904,7 @@ go.app = function() {
                     return go.utils
                         .get_identity_by_address({'msisdn': msisdn}, self.im)
                         .then(function(identity) {
-                            if (identity && identity.details && identity.details.role) {
+                            if (identity && identity.details && identity.details.role_player) {
                                 return 'state_number_in_use';
                             } else {
                                 return {

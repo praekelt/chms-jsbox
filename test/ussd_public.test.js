@@ -616,6 +616,66 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
+            it("to state_number_in_use", function() {
+                return tester
+                    .setup.user.addr('0720000222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '1'  // state_permission - change number to manage
+                        , '3'  // state_change_menu - change number
+                        , '0720000444'  // state_change_number
+                    )
+                    .check.interaction({
+                        state: 'state_number_in_use',
+                        reply: [
+                            "Sorry, this number is already registered.",
+                            "1. Try a different number",
+                            "2. Exit"
+                        ].join('\n')
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,8]);
+                    })
+                    .run();
+            });
+            it("to state_change_number (via state_number_in_use)", function() {
+                return tester
+                    .setup.user.addr('0720000222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '1'  // state_permission - change number to manage
+                        , '3'  // state_change_menu - change number
+                        , '0720000444'  // state_change_number
+                        , '1'  // state_number_in_use - try different number
+                    )
+                    .check.interaction({
+                        state: 'state_change_number',
+                        reply: "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899"
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,8]);
+                    })
+                    .run();
+            });
+            it("to state_end_general (via state_number_in_use)", function() {
+                return tester
+                    .setup.user.addr('0720000222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '1'  // state_permission - change number to manage
+                        , '3'  // state_change_menu - change number
+                        , '0720000444'  // state_change_number
+                        , '2'  // state_number_in_use - exit
+                    )
+                    .check.interaction({
+                        state: 'state_end_general',
+                        reply: "Thank you for using the FamilyConnect service"
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,8]);
+                    })
+                    .run();
+            });
 
             it.skip("to state_optout_reason", function() {
                 return tester

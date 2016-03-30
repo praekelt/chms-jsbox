@@ -2,6 +2,7 @@
 // 0720000111: heretofore unseen number
 // 0720000222: registered user - mother, lusoga, sms
 // 0720000333: unregistered user - number entered manually
+// 0720000444: registered user - mother, lusoga, sms
 
 module.exports = function() {
 return [
@@ -246,7 +247,7 @@ return [
         }
     },
 
-    // 10: patch identity 3f7c8851-5204-43f7-af7f-000000000222
+    // 7: patch identity 3f7c8851-5204-43f7-af7f-000000000222
         {
             'request': {
                 'method': 'PATCH',
@@ -288,6 +289,7 @@ return [
                             }
                         },
                         "health_id": 1234567890,
+                        "role_player": "mother"
                     },
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
@@ -295,5 +297,94 @@ return [
             }
         },
 
+        // 8: get identity 0720000444 by msisdn
+        {
+            'repeatable': true,
+            'request': {
+                'method': 'GET',
+                'params': {
+                    'details__addresses__msisdn': '+256720000444'
+                },
+                'headers': {
+                    'Authorization': ['Token test_key'],
+                    'Content-Type': ['application/json']
+                },
+                'url': 'http://localhost:8001/api/v1/identities/search/',
+            },
+            'response': {
+                "code": 200,
+                "data": {
+                    "count": 1,
+                    "next": null,
+                    "previous": null,
+                    "results": [{
+                        "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000444/",
+                        "id": "3f7c8851-5204-43f7-af7f-000000000444",
+                        "version": 1,
+                        "details": {
+                            "default_addr_type": "msisdn",
+                            "addresses": {
+                                "msisdn": {
+                                    "+256720000444": {}
+                                }
+                            },
+                            "role_player": "mother"
+                        },
+                        "created_at": "2015-07-10T06:13:29.693272Z",
+                        "updated_at": "2015-07-10T06:13:29.693298Z"
+                    }]
+                }
+            }
+        },
+
+        // 9: patch identity 3f7c8851-5204-43f7-af7f-000000000222
+            {
+                'request': {
+                    'method': 'PATCH',
+                    'params': {},
+                    'headers': {
+                        'Authorization': ['Token test_key'],
+                        'Content-Type': ['application/json']
+                    },
+                    'url': 'http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000222/',
+                    'data': {
+                        "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000222/",
+                        "id": "3f7c8851-5204-43f7-af7f-000000000222",
+                        "version": 1,
+                        "details": {
+                            "default_addr_type": "msisdn",
+                            "addresses": {
+                                "msisdn": {
+                                    "+256720000444": {}
+                                }
+                            },
+                            "health_id": 1234567890,
+                        },
+                        "created_at": "2015-07-10T06:13:29.693272Z",
+                        "updated_at": "2015-07-10T06:13:29.693298Z"
+                    }
+
+                },
+                'response': {
+                    "code": 200,
+                    "data": {
+                        "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000222/",
+                        "id": "3f7c8851-5204-43f7-af7f-000000000222",
+                        "version": 1,
+                        "details": {
+                            "default_addr_type": "msisdn",
+                            "addresses": {
+                                "msisdn": {
+                                    "+256720000111": {}
+                                }
+                            },
+                            "health_id": 1234567890,
+                            "role_player": "mother"
+                        },
+                        "created_at": "2015-07-10T06:13:29.693272Z",
+                        "updated_at": "2015-07-10T06:13:29.693298Z"
+                    }
+                }
+            },
 ];
 };
