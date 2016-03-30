@@ -343,7 +343,17 @@ go.utils = {
 
     update_identity: function(im, identity) {
       // Update an identity by passing in the full updated identity object
+      // Removes potentially added fields that auto-complete and should not
+      // be submitted
       // Returns the id (which should be the same as the identity's id)
+
+        auto_fields = ["url", "created_at", "updated_at", "created_by", "updated_by", "user"];
+        for (var i in auto_fields) {
+            field = auto_fields[i];
+            if (field in identity) {
+                delete identity[field];
+            }
+        }
 
         var endpoint = 'identities/' + identity.id + '/';
         return go.utils

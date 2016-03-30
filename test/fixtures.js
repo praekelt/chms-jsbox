@@ -785,7 +785,6 @@ return [
                 },
                 'url': 'http://localhost:8001/api/v1/identities/identity-uuid-06/',
                 'data':  {
-                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-06/",
                     "id": "identity-uuid-06",
                     "version": 1,
                     "details": {
@@ -808,8 +807,6 @@ return [
                         "hiv_interest": "no_hiv_msgs",
                         "dob": "19820513"
                     },
-                    "created_at": "2015-07-10T06:13:29.693272Z",
-                    "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
             },
             'response': {
@@ -861,7 +858,6 @@ return [
                 },
                 'url': 'http://localhost:8001/api/v1/identities/identity-uuid-17/',
                 'data':  {
-                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-17/",
                     "id": "identity-uuid-17",
                     "version": 1,
                     "details": {
@@ -880,8 +876,6 @@ return [
                         "surname": "Mbire",
                         "name": "Isaac Mbire"
                     },
-                    "created_at": "2015-07-10T06:13:29.693272Z",
-                    "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
             },
             'response': {
@@ -900,7 +894,6 @@ return [
                 },
                 'url': 'http://localhost:8001/api/v1/identities/identity-uuid-16/',
                 'data':  {
-                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-16/",
                     "id": "identity-uuid-16",
                     "version": 1,
                     "details": {
@@ -923,8 +916,6 @@ return [
                         "nin": "444",
                         "msg_receiver": "head_of_household"
                     },
-                    "created_at": "2015-07-10T06:13:29.693272Z",
-                    "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
             },
             'response': {
@@ -943,7 +934,6 @@ return [
                 },
                 'url': 'http://localhost:8001/api/v1/identities/identity-uuid-06/',
                 'data':  {
-                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-06/",
                     "id": "identity-uuid-06",
                     "version": 1,
                     "details": {
@@ -962,8 +952,6 @@ return [
                         "surname": "Mbire",
                         "name": "Isaac Mbire"
                     },
-                    "created_at": "2015-07-10T06:13:29.693272Z",
-                    "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
             },
             'response': {
@@ -1017,7 +1005,6 @@ return [
                 },
                 'url': 'http://localhost:8001/api/v1/identities/identity-uuid-16/',
                 'data':  {
-                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-16/",
                     "id": "identity-uuid-16",
                     "version": 1,
                     "details": {
@@ -1040,8 +1027,6 @@ return [
                         "hiv_interest": "no_hiv_msgs",
                         "dob": "19820513"
                     },
-                    "created_at": "2015-07-10T06:13:29.693272Z",
-                    "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
             },
             'response': {
@@ -1060,7 +1045,6 @@ return [
                 },
                 'url': 'http://localhost:8001/api/v1/identities/identity-uuid-17/',
                 'data':  {
-                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-17/",
                     "id": "identity-uuid-17",
                     "version": 1,
                     "details": {
@@ -1079,8 +1063,6 @@ return [
                         "surname": "Mbire",
                         "name": "Isaac Mbire"
                     },
-                    "created_at": "2015-07-10T06:13:29.693272Z",
-                    "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
             },
             'response': {
@@ -1099,7 +1081,6 @@ return [
                 },
                 'url': 'http://localhost:8001/api/v1/identities/identity-uuid-06/',
                 'data':  {
-                    "url": "http://localhost:8001/api/v1/identities/identity-uuid-06/",
                     "id": "identity-uuid-06",
                     "version": 1,
                     "details": {
@@ -1115,8 +1096,6 @@ return [
                         "preferred_language": "xog_UG",
                         "preferred_msg_type": "text"
                     },
-                    "created_at": "2015-07-10T06:13:29.693272Z",
-                    "updated_at": "2015-07-10T06:13:29.693298Z"
                 }
             },
             'response': {
