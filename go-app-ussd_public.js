@@ -696,10 +696,10 @@ go.app = function() {
                 error: $(get_error_text(name)),
                 next: function(choice) {
                     if (choice.value === 'has_permission') {
-                        return {
-                            name: 'state_check_registered_user',
-                            creator_opts: {msisdn: self.im.user.addr}
-                        };
+                        self.im.user.set_answer('contact_id', self.im.user.answers.user_id);
+                        return self.im.user.answers.role === 'guest'
+                            ? 'state_msg_receiver'
+                            : 'state_change_menu';
                     }
                     else if (choice.value === 'no_permission') {
                         return 'state_permission_required';
