@@ -1,6 +1,5 @@
 go.app = function() {
     var vumigo = require('vumigo_v02');
-    var MetricsHelper = require('go-jsbox-metrics-helper');
     var App = vumigo.App;
     var Choice = vumigo.states.Choice;
     var ChoiceState = vumigo.states.ChoiceState;
@@ -11,35 +10,8 @@ go.app = function() {
     var GoFC = App.extend(function(self) {
         App.call(self, 'state_start');
         var $ = self.$;
-        var interrupt = true;
 
-        self.init = function() {
-
-            // Use the metrics helper to add some metrics
-            mh = new MetricsHelper(self.im);
-            mh
-                // Total unique users
-                .add.total_unique_users('total.ussd.unique_users')
-
-                // Total sessions
-                .add.total_sessions('total.ussd.sessions')
-
-                // Total times reached state_timed_out
-                .add.total_state_actions(
-                    {
-                        state: 'state_timed_out',
-                        action: 'enter'
-                    },
-                    'total.reached_state_timed_out'
-                );
-
-            // Load self.contact
-            return self.im.contacts
-                .for_user()
-                .then(function(user_contact) {
-                   self.contact = user_contact;
-                });
-        };
+        self.init = function() {};
 
 
     // TEXT CONTENT
@@ -57,6 +29,8 @@ go.app = function() {
                 "Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number.",
             "state_change_menu":
                 "Choose:",
+            "state_registration_menu":
+                "Choose from:",
 
             "state_already_baby":
                 "You are already registered for baby messages.",
@@ -115,13 +89,25 @@ go.app = function() {
         // override normal state adding
         self.add = function(name, creator) {
             self.states.add(name, function(name, opts) {
-                if (!interrupt || !go.utils.timed_out(self.im))
-                    return creator(name, opts);
+                var pass_opts = opts || {};
+                pass_opts.name = name;
 
-                interrupt = false;
-                opts = opts || {};
-                opts.name = name;
-                return self.states.create('state_timed_out', opts);
+                if (go.utils.timed_out(self.im))
+                {
+                    if (go.utils.timeout_redirect(self.im)) {
+                        return self.states.create('state_timed_out', pass_opts);
+                    } else {
+                        // Prevent previous content being passed to next state
+                        self.im.msg.session_event = null;
+                        // reset user answers
+                        self.im.user.answers = {};
+
+                        return self.states.create('state_permission', pass_opts);
+                    }
+
+                }
+
+                return creator(name, pass_opts);
             });
         };
 
@@ -141,6 +127,8 @@ go.app = function() {
                         };
                         // return creator_opts.name;
                     } else if (choice.value === 'restart') {
+                        // reset user answers
+                        self.im.user.answers = {};
                         return 'state_start';
                     }
                 }
@@ -157,11 +145,11 @@ go.app = function() {
                 .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
                 .then(function(user) {
                     self.im.user.set_answer('user_id', user.id);
-                    if (user.details.receiver_role) {
-                        self.im.user.set_answer('role_player', user.details.receiver_role);
+                    if (user.details.role) {
+                        self.im.user.set_answer('role', user.details.role);
                         return self.states.create('state_permission');
                     } else {
-                        self.im.user.set_answer('role_player', 'guest');
+                        self.im.user.set_answer('role', 'guest');
                         return self.states.create('state_language');
                     }
                 });
@@ -185,7 +173,7 @@ go.app = function() {
         // ChoiceState st-C
         self.add('state_permission', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]).context({msisdn: self.im.user.addr}),
+                question: $(questions[name]).context({'msisdn': self.im.user.addr}),
                 choices: [
                     new Choice('has_permission', $('Yes')),
                     new Choice('no_permission', $('No')),
@@ -194,10 +182,10 @@ go.app = function() {
                 error: $(get_error_text(name)),
                 next: function(choice) {
                     if (choice.value === 'has_permission') {
-                        return {
-                            name: 'state_check_registered_user',
-                            creator_opts: {msisdn: self.im.user.addr}
-                        };
+                        self.im.user.set_answer('contact_id', self.im.user.answers.user_id);
+                        return self.im.user.answers.role === 'guest'
+                            ? 'state_msg_receiver'
+                            : 'state_change_menu';
                     }
                     else if (choice.value === 'no_permission') {
                         return 'state_permission_required';
@@ -241,8 +229,8 @@ go.app = function() {
             return go.utils
                 .get_or_create_identity({'msisdn': opts.msisdn}, self.im, null)
                 .then(function(contact) {
-                    if (contact.details.receiver_role) {
-                        self.im.user.set_answer('role_player', contact.details.receiver_role);
+                    if (contact.details.role) {
+                        self.im.user.set_answer('role', contact.details.role);
                         self.im.user.set_answer('contact_id', contact.id);
                         return self.states.create('state_change_menu');
                     } else {
@@ -262,6 +250,20 @@ go.app = function() {
                     new Choice('state_change_language', $('Update language')),
                     new Choice('state_change_number', $("Change the number which gets SMSs")),
                     new Choice('state_optout_reason', $("Stop SMSs")),
+                ],
+                next: function(choice) {
+                    return choice.value;
+                }
+            });
+        });
+
+        // ChoiceState st-A2
+        self.add('state_registration_menu', function(name) {
+            return new ChoiceState(name, {
+                question: $(questions[name]),
+                error: $(get_error_text(name)),
+                choices: [
+                    new Choice('state_msg_receiver', $('Register to receive SMSs about you & your baby'))
                 ],
                 next: function(choice) {
                     return choice.value;

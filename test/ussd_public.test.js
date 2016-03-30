@@ -31,7 +31,19 @@ describe("familyconnect health worker app", function() {
                     },
                     no_timeout_redirects: [
                         'state_start',
+                        'state_end_baby',
+                        'state_end_language',
+                        'state_end_recipient',
+                        'state_end_loss_subscription',
+                        'state_end_optout',
                         'state_end_thank_you',
+                    ],
+                    timeout_redirects: [
+                        // registration states
+                        'state_msg_receiver',
+                        'state_last_period_month',
+                        'state_last_period_day',
+                        'state_hiv_messages',
                     ],
                 })
                 .setup(function(api) {
@@ -46,63 +58,139 @@ describe("familyconnect health worker app", function() {
         // TEST TIMEOUTS
 
         describe("Timeout testing", function() {
-            it("should ask about continuing", function() {
-                return tester
-                    .setup.user.addr('0720000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '1'  // state_language - english
-                        , {session_event: 'close'}
-                        , {session_event: 'new'}
-                    )
-                    .check.interaction({
-                        state: 'state_timed_out',
-                        reply: [
-                            "You have an incomplete registration. Would you like to continue with this registration?",
-                            "1. Yes",
-                            "2. No, start from the beginning"
-                        ].join('\n')
-                    })
-                    .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,1]);
-                    })
-                    .run();
+            describe("in State Change", function() {
+                it("should restart at state C (state_permission)", function() {
+                    return tester
+                        .setup.user.addr('0720000222')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_permission - yes
+                            , '3'  // state_change_menu - change number
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                        )
+                        .check.interaction({
+                            state: 'state_permission',
+                            reply: [
+                                "Welcome to FamilyConnect. Do you have permission to manage the number 0720000222?",
+                                "1. Yes",
+                                "2. No",
+                                "3. Change the number I'd like to manage"
+                            ].join('\n')
+                        })
+                        .run();
+                });
+                it("should restart at state C (state_permission) after two time-outs", function() {
+                    return tester
+                        .setup.user.addr('0720000222')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_permission - yes
+                            , '3'  // state_change_menu - change number
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                            , '1'  // state_permission - yes
+                            , '3'  // state_change_menu - change number
+                            , '0720000111'  // state_change_number
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                        )
+                        .check.interaction({
+                            state: 'state_permission',
+                            reply: [
+                                "Welcome to FamilyConnect. Do you have permission to manage the number 0720000222?",
+                                "1. Yes",
+                                "2. No",
+                                "3. Change the number I'd like to manage"
+                            ].join('\n')
+                        })
+                        .run();
+                });
+                it("should restart at state C (state_permission) as guest with unrecognised number", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_language - english
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                        )
+                        .check.interaction({
+                            state: 'state_permission',
+                            reply: [
+                                "Welcome to FamilyConnect. Do you have permission to manage the number 0720000111?",
+                                "1. Yes",
+                                "2. No",
+                                "3. Change the number I'd like to manage"
+                            ].join('\n')
+                        })
+                        .run();
+                });
             });
-            it("should continue", function() {
-                return tester
-                    .setup.user.addr('0720000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '1'  // state_language - english
-                        , {session_event: 'close'}
-                        , {session_event: 'new'}
-                        , '1'  // state_timed_out - continue
-                    )
-                    .check.interaction({
-                        state: 'state_permission'
-                    })
-                    .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,1]);
-                    })
-                    .run();
-            });
-            it("should restart", function() {
-                return tester
-                    .setup.user.addr('0720000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '1'  // state_language - english
-                        , {session_event: 'close'}
-                        , {session_event: 'new'}
-                        , '2'  // state_timed_out - restart
-                    )
-                    .check.interaction({
-                        state: 'state_language'
-                    })
-                    .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,1]);
-                    })
-                    .run();
+            describe("in Registration", function() {
+                it("to state_timed_out", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_language - english
+                            , '1'  // state_permission - has_permission
+                            , '1'  // state_msg_receiver - head of household
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                        )
+                        .check.interaction({
+                            state: 'state_timed_out',
+                            reply: [
+                                "You have an incomplete registration. Would you like to continue with this registration?",
+                                "1. Yes",
+                                "2. No, start from the beginning"
+                            ].join('\n')
+                        })
+                        .run();
+                });
+                it("should continue", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_language - english
+                            , '1'  // state_permission - has_permission
+                            , '1'  // state_msg_receiver - head of household
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                            , '1'  // state_timed_out - continue
+                        )
+                        .check.interaction({
+                            state: 'state_last_period_month'
+                        })
+                        .run();
+                });
+                it("should restart", function() {
+                    return tester
+                        .setup.user.addr('0720000111')
+                        .inputs(
+                            {session_event: 'new'}  // dial in
+                            , '1'  // state_language - english
+                            , '1'  // state_permission - has_permission
+                            , '1'  // state_msg_receiver - head of household
+                            , '3'  // state_last_period_month
+                            , {session_event: 'close'}
+                            , {session_event: 'new'}
+                            , '2'  // state_timed_out - restart
+                        )
+                        .check.interaction({
+                            state: 'state_language',
+                            reply: [
+                                "Welcome to FamilyConnect. Please choose your language",
+                                "1. English",
+                                "2. Rukiga",
+                                "3. Lusoga",
+                                "4. Luganda"
+                            ].join('\n')
+                        })
+                        .run();
+                });
             });
         });
 
