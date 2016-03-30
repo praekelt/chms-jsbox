@@ -104,7 +104,7 @@ return [
                                 "+256720000222": {}
                             }
                         },
-                        "receiver_role": "mother",
+                        "role": "mother",
                         "preferred_msg_type": "sms",
                         "preferred_language": "lusoga"
                     },
