@@ -20,14 +20,14 @@ describe("familyconnect health worker app", function() {
                     country_code: '256',  // uganda
                     metric_store: 'chms_uganda_test',  // _env at the end
                     services: {
-                        identities: {
+                        identities: {  // used
                             api_token: 'test_token_identities',
                             url: "http://localhost:8001/api/v1/"
                         },
-                        subscriptions: {
-                            api_token: 'test_token_subscriptions',
+                        registrations: {  // used
+                            api_token: 'test_token_registrations',
                             url: "http://localhost:8002/api/v1/"
-                        }
+                        },
                     },
                     no_timeout_redirects: [
                         'state_start',
@@ -140,6 +140,9 @@ describe("familyconnect health worker app", function() {
                                 "1. Yes",
                                 "2. No, start from the beginning"
                             ].join('\n')
+                        })
+                        .check(function(api) {
+                            go.utils.checkFixturesUsed(api, [0,1,11]);
                         })
                         .run();
                 });
@@ -358,7 +361,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,6,9]);
                     })
                     .run();
             });
@@ -377,7 +380,7 @@ describe("familyconnect health worker app", function() {
                         reply: "What day of the month did the woman start her last period? For example, 12."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,6,9]);
                     })
                     .run();
             });
@@ -401,12 +404,17 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,6,9,10]);
                     })
+                    .check.user.answer('state_msg_receiver', 'trusted_friend')
+                    .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000333')
+                    .check.user.answer('mother_id', 'identity-uuid-09')
+                    .check.user.answer('hoh_id', 'identity-uuid-06')
+                    .check.user.answer('ff_id', 'cb245673-aa41-4302-ac47-0000000333')
                     .run();
             });
 
-            it("complete flow - not the mother", function() {
+            it("complete flow - trusted_friend", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -414,16 +422,47 @@ describe("familyconnect health worker app", function() {
                         , "3"  // state_permission - change number to manage
                         , "0720000333"  // state_manage_msisdn - unregistered user
                         , "4"  // state_msg_receiver - trusted friend
-                        , "3"  // state_last_period_month - may
-                        , "22"  // state_last_period_day
+                        , "3"  // state_last_period_month - feb 15
+                        , "22"  // state_last_period_day - 22
                         , "1"  // state_hiv_messages - yes
                     )
+                    .check.user.answer('state_msg_receiver', 'trusted_friend')
+                    .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000333')
+                    .check.user.answer('mother_id', 'identity-uuid-09')
+                    .check.user.answer('hoh_id', 'identity-uuid-06')
+                    .check.user.answer('ff_id', 'cb245673-aa41-4302-ac47-0000000333')
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. Your FamilyConnect ID is . You will receive an SMS with it shortly."
+                        reply: "Thank you. Your FamilyConnect ID is 9999999999. You will receive an SMS with it shortly."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,3,4,5]);
+                        go.utils.checkFixturesUsed(api, [2,3,4,5,6,8,9,10,12,13,14,15]);
+                    })
+                    .run();
+            });
+            it("complete flow - mother_to_be", function() {
+                return tester
+                    .setup.user.addr('0720000222')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "3"  // state_permission - change number to manage
+                        , "0720000555"  // state_manage_msisdn - unregistered user
+                        , "2"  // state_msg_receiver - mother_to_be
+                        , "3"  // state_last_period_month - feb 15
+                        , "22"  // state_last_period_day - 22
+                        , "1"  // state_hiv_messages - yes
+                    )
+                    .check.user.answer('state_msg_receiver', 'mother_to_be')
+                    .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000555')
+                    .check.user.answer('mother_id', 'cb245673-aa41-4302-ac47-0000000555')
+                    .check.user.answer('hoh_id', 'identity-uuid-06')
+                    .check.user.answer('ff_id', undefined)
+                    .check.interaction({
+                        state: 'state_end_thank_you',
+                        reply: "Thank you. Your FamilyConnect ID is 5555555555. You will receive an SMS with it shortly."
+                    })
+                    .check(function(api) {
+                        go.utils.checkFixturesUsed(api, [2,6,8,16,17,18,19,20,21]);
                     })
                     .run();
             });

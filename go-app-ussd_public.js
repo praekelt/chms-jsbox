@@ -535,6 +535,24 @@ go.utils_project = {
         return reg_info;
     },
 
+    compile_public_reg_info: function(im) {
+        var reg_info = {
+            stage: 'prebirth',
+            mother_id: im.user.answers.mother_id,
+            data: {
+                hoh_id: im.user.answers.hoh_id,
+                receiver_id: im.user.answers.receiver_id,
+                operator_id: null,
+                language: im.user.answers.state_language,
+                msg_type: "text",
+                last_period_date: im.user.answers.last_period_date,
+                msg_receiver: im.user.answers.state_msg_receiver,
+            }
+        };
+
+        return reg_info;
+    },
+
     set_standard_mother_details: function(im, details) {
         details.msg_receiver = im.user.answers.state_msg_receiver;
         details.role = 'mother';
@@ -557,6 +575,17 @@ go.utils_project = {
         return details;
     },
 
+    set_public_mother_details: function(im, details) {
+        details.msg_receiver = im.user.answers.state_msg_receiver;
+        details.role = 'mother';
+        details.hoh_id = im.user.answers.hoh_id;
+        details.preferred_language = im.user.answers.state_msg_language;
+        details.preferred_msg_type = 'text';  // omit?
+        details.hiv_interest = im.user.answers.state_hiv_messages;
+
+        return details;
+    },
+
     set_standard_hoh_details: function(im, details) {
         details.role = 'head_of_household';
         details.mother_id = im.user.answers.mother_id;
@@ -570,6 +599,14 @@ go.utils_project = {
         return details;
     },
 
+    set_public_hoh_details: function(im, details) {
+        details.role = 'head_of_household';
+        details.mother_id = im.user.answers.mother_id;
+        details.preferred_language = im.user.answers.state_msg_language;
+        details.preferred_msg_type = 'text';  // omit?
+        return details;
+    },
+
     set_standard_ff_details: function(im, details) {
         details.role = im.user.answers.state_msg_receiver;
         details.mother_id = im.user.answers.mother_id;
@@ -578,7 +615,7 @@ go.utils_project = {
         return details;
     },
 
-    update_identities: function(im) {
+    update_identities: function(im, isPublicRegistration) {
       // Saves useful data collected during registration to the relevant identities
         var msg_receiver = im.user.answers.state_msg_receiver;
         if (msg_receiver === 'mother_to_be' || (msg_receiver === 'head_of_household')) {
@@ -588,10 +625,12 @@ go.utils_project = {
                     go.utils.get_identity(im.user.answers.hoh_id, im)
                 ])
                 .spread(function(mother, hoh) {
-                    mother.details = go.utils_project
-                        .set_standard_mother_details(im, mother.details);
-                    hoh.details = go.utils_project
-                        .set_standard_hoh_details(im, hoh.details);
+                    mother.details = isPublicRegistration
+                        ? go.utils_project.set_public_mother_details(im, mother.details)
+                        : go.utils_project.set_standard_mother_details(im, mother.details);
+                    hoh.details = isPublicRegistration
+                        ? go.utils_project.set_public_hoh_details(im, hoh.details)
+                        : go.utils_project.set_standard_hoh_details(im, hoh.details);
                     return Q.all([
                         go.utils.update_identity(im, mother),
                         go.utils.update_identity(im, hoh)
@@ -605,10 +644,12 @@ go.utils_project = {
                     go.utils.get_identity(im.user.answers.ff_id, im)
                 ])
                 .spread(function(mother, hoh, ff) {
-                    mother.details = go.utils_project
-                        .set_standard_mother_details(im, mother.details);
-                    hoh.details = go.utils_project
-                        .set_standard_hoh_details(im, hoh.details);
+                    mother.details = isPublicRegistration
+                        ? go.utils_project.set_public_mother_details(im, mother.details)
+                        : go.utils_project.set_standard_mother_details(im, mother.details);
+                    hoh.details = isPublicRegistration
+                        ? go.utils_project.set_public_hoh_details(im, hoh.details)
+                        : go.utils_project.set_standard_hoh_details(im, hoh.details);
                     ff.details = go.utils_project
                         .set_standard_ff_details(im, ff.details);
                     return Q.all([
@@ -624,7 +665,15 @@ go.utils_project = {
         var reg_info = go.utils_project.compile_reg_info(im);
         return Q.all([
             go.utils.create_registration(im, reg_info),
-            go.utils_project.update_identities(im)
+            go.utils_project.update_identities(im, false)
+        ]);
+    },
+
+    finish_public_registration: function(im) {
+        var reg_info = go.utils_project.compile_public_reg_info(im);
+        return Q.all([
+            go.utils.create_registration(im, reg_info),
+            go.utils_project.update_identities(im, true)
         ]);
     },
 
@@ -843,6 +892,7 @@ go.app = function() {
                     self.im.user.set_answer('user_id', user.id);
                     if (user.details.role) {
                         self.im.user.set_answer('role', user.details.role);
+                        self.im.user.set_answer('state_language', user.details.preferred_language);
                         return self.states.create('state_permission');
                     } else {
                         self.im.user.set_answer('role', 'guest');
@@ -1189,8 +1239,25 @@ go.app = function() {
                     new Choice('trusted_friend', $("Trusted friend"))
                 ],
                 error: $(get_error_text(name)),
-                next: 'state_last_period_month'
+                next: function() {
+                    self.im.user.set_answer('receiver_id', self.im.user.answers.contact_id);
+                    return self.states.create('state_save_identities');
+                }
             });
+        });
+
+        // Get or create identities and save their IDs
+        self.add('state_save_identities', function(name) {
+            return go.utils_project
+                .save_identities(
+                    self.im,
+                    self.im.user.answers.state_msg_receiver,
+                    self.im.user.answers.receiver_id,
+                    null
+                )
+                .then(function() {
+                    return self.states.create('state_last_period_month');
+                });
         });
 
         // ChoiceState st-05
@@ -1215,8 +1282,23 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_hiv_messages'
+                next: function(content) {
+                    var year = self.im.user.answers.state_last_period_month.substr(2,4);
+                    var month = self.im.user.answers.state_last_period_month.substr(0,2);
+                    var day = go.utils.double_digit_number(content);
+                    self.im.user.set_answer('last_period_date', year+month+day);
+                    return 'state_get_health_id';
+                }
             });
+        });
+
+        self.add('state_get_health_id', function(name) {
+            return go.utils
+                .get_identity(self.im.user.answers.mother_id, self.im)
+                .then(function(identity) {
+                    self.im.user.set_answer('health_id', identity.details.health_id);
+                    return self.states.create('state_hiv_messages');
+                });
         });
 
         // ChoiceState st-12
@@ -1228,17 +1310,14 @@ go.app = function() {
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
                 ],
-                next: 'state_get_health_id'
+                next: function() {
+                    return go.utils_project
+                        .finish_public_registration(self.im)
+                        .then(function() {
+                            return 'state_end_thank_you';
+                        });
+                }
             });
-        });
-
-        self.add('state_get_health_id', function(name) {
-            return go.utils
-                .get_identity(self.im.user.answers.contact_id, self.im)
-                .then(function(identity) {
-                    self.im.user.set_answer('health_id', identity.details.health_id);
-                    return self.states.create('state_end_thank_you');
-                });
         });
 
         // EndState st-13

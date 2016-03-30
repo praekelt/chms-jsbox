@@ -149,6 +149,7 @@ go.app = function() {
                     self.im.user.set_answer('user_id', user.id);
                     if (user.details.role) {
                         self.im.user.set_answer('role', user.details.role);
+                        self.im.user.set_answer('state_language', user.details.preferred_language);
                         return self.states.create('state_permission');
                     } else {
                         self.im.user.set_answer('role', 'guest');
@@ -495,8 +496,25 @@ go.app = function() {
                     new Choice('trusted_friend', $("Trusted friend"))
                 ],
                 error: $(get_error_text(name)),
-                next: 'state_last_period_month'
+                next: function() {
+                    self.im.user.set_answer('receiver_id', self.im.user.answers.contact_id);
+                    return self.states.create('state_save_identities');
+                }
             });
+        });
+
+        // Get or create identities and save their IDs
+        self.add('state_save_identities', function(name) {
+            return go.utils_project
+                .save_identities(
+                    self.im,
+                    self.im.user.answers.state_msg_receiver,
+                    self.im.user.answers.receiver_id,
+                    null
+                )
+                .then(function() {
+                    return self.states.create('state_last_period_month');
+                });
         });
 
         // ChoiceState st-05
@@ -521,8 +539,23 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_hiv_messages'
+                next: function(content) {
+                    var year = self.im.user.answers.state_last_period_month.substr(2,4);
+                    var month = self.im.user.answers.state_last_period_month.substr(0,2);
+                    var day = go.utils.double_digit_number(content);
+                    self.im.user.set_answer('last_period_date', year+month+day);
+                    return 'state_get_health_id';
+                }
             });
+        });
+
+        self.add('state_get_health_id', function(name) {
+            return go.utils
+                .get_identity(self.im.user.answers.mother_id, self.im)
+                .then(function(identity) {
+                    self.im.user.set_answer('health_id', identity.details.health_id);
+                    return self.states.create('state_hiv_messages');
+                });
         });
 
         // ChoiceState st-12
@@ -534,17 +567,14 @@ go.app = function() {
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
                 ],
-                next: 'state_get_health_id'
+                next: function() {
+                    return go.utils_project
+                        .finish_public_registration(self.im)
+                        .then(function() {
+                            return 'state_end_thank_you';
+                        });
+                }
             });
-        });
-
-        self.add('state_get_health_id', function(name) {
-            return go.utils
-                .get_identity(self.im.user.answers.contact_id, self.im)
-                .then(function(identity) {
-                    self.im.user.set_answer('health_id', identity.details.health_id);
-                    return self.states.create('state_end_thank_you');
-                });
         });
 
         // EndState st-13
