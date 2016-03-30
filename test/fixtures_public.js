@@ -2,7 +2,7 @@
 // 0720000111: heretofore unseen number
 // 0720000222: registered user - mother, english, sms
 // 0720000333: unregistered user - number entered manually
-// 0720000444: unregistered user - number entered manually - mother_to_be registration
+// 0720000555: unregistered user - number entered manually - mother_to_be registration
 
 module.exports = function() {
 return [
@@ -518,13 +518,13 @@ return [
         }
     },
 
-    // 15: get identity 0720000444 by msisdn - no results
+    // 15: get identity 0720000555 by msisdn - no results
     {
         'repeatable': true,
         'request': {
             'method': 'GET',
             'params': {
-                'details__addresses__msisdn': '+256720000444'
+                'details__addresses__msisdn': '+256720000555'
             },
             'headers': {
                 'Authorization': ['Token test_key'],
@@ -543,7 +543,7 @@ return [
         }
     },
 
-    // 16: create identity 0720000444
+    // 16: create identity 0720000555
     {
         'repeatable': true,
         'request': {
@@ -558,7 +558,7 @@ return [
                     "default_addr_type": "msisdn",
                     "addresses": {
                         "msisdn": {
-                            "+256720000444": {}
+                            "+256720000555": {}
                         }
                     }
                 }
@@ -567,14 +567,14 @@ return [
         'response': {
             "code": 201,
             "data": {
-                "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000444/",
-                "id": "cb245673-aa41-4302-ac47-0000000444",
+                "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000555/",
+                "id": "cb245673-aa41-4302-ac47-0000000555",
                 "version": 1,
                 "details": {
                     "default_addr_type": "msisdn",
                     "addresses": {
                         "msisdn": {
-                            "+256720000444": {}
+                            "+256720000555": {}
                         }
                     }
                 },
@@ -585,7 +585,7 @@ return [
         }
     },
 
-    // 17: get identity cb245673-aa41-4302-ac47-0000000444
+    // 17: get identity cb245673-aa41-4302-ac47-0000000555
     {
         'repeatable': true,  // second time gets the health_id
         'request': {
@@ -595,22 +595,22 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000444/",
+            'url': "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000555/",
         },
         'response': {
             "code": 200,
             "data": {
-                "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000444/",
-                "id": "cb245673-aa41-4302-ac47-0000000444",
+                "url": "http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000555/",
+                "id": "cb245673-aa41-4302-ac47-0000000555",
                 "version": 1,
                 "details": {
                     "default_addr_type": "msisdn",
                     "addresses": {
                         "msisdn": {
-                            "+256720000444": {}
+                            "+256720000555": {}
                         }
                     },
-                    "health_id": 4444444444,
+                    "health_id": 5555555555,
                 },
                 "created_at": "2015-07-10T06:13:29.693272Z",
                 "updated_at": "2015-07-10T06:13:29.693298Z"
@@ -629,10 +629,10 @@ return [
             'url': 'http://localhost:8002/api/v1/registrations/',
             'data':  {
                 "stage": "prebirth",
-                "mother_id": "cb245673-aa41-4302-ac47-0000000444",
+                "mother_id": "cb245673-aa41-4302-ac47-0000000555",
                 "data": {
                     "hoh_id": "identity-uuid-06",
-                    "receiver_id": "cb245673-aa41-4302-ac47-0000000444",
+                    "receiver_id": "cb245673-aa41-4302-ac47-0000000555",
                     "operator_id": null,
                     "language": "eng_UG",
                     "msg_type": "text",
@@ -647,7 +647,7 @@ return [
         }
     },
 
-    // 19: patch identity 444
+    // 19: patch identity 555
     {
         'request': {
             'method': 'PATCH',
@@ -655,18 +655,18 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000444/',
+            'url': 'http://localhost:8001/api/v1/identities/cb245673-aa41-4302-ac47-0000000555/',
             'data':  {
-                "id": "cb245673-aa41-4302-ac47-0000000444",
+                "id": "cb245673-aa41-4302-ac47-0000000555",
                 "version": 1,
                 "details": {
                     "default_addr_type": "msisdn",
                     "addresses": {
                         "msisdn": {
-                            "+256720000444": {}
+                            "+256720000555": {}
                         }
                     },
-                    "health_id": 4444444444,
+                    "health_id": 5555555555,
                     "msg_receiver": "mother_to_be",
                     "role": "mother",
                     "hoh_id": "identity-uuid-06",
@@ -697,7 +697,7 @@ return [
                     "default_addr_type": "msisdn",
                     "addresses": {},
                     "role": "head_of_household",
-                    "mother_id": "cb245673-aa41-4302-ac47-0000000444",
+                    "mother_id": "cb245673-aa41-4302-ac47-0000000555",
                     "preferred_msg_type": "text"
                 }
             }

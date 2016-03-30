@@ -452,20 +452,20 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "3"  // state_permission - change number to manage
-                        , "0720000444"  // state_manage_msisdn - unregistered user
+                        , "0720000555"  // state_manage_msisdn - unregistered user
                         , "2"  // state_msg_receiver - mother_to_be
                         , "3"  // state_last_period_month - feb 15
                         , "22"  // state_last_period_day - 22
                         , "1"  // state_hiv_messages - yes
                     )
                     .check.user.answer('state_msg_receiver', 'mother_to_be')
-                    .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000444')
-                    .check.user.answer('mother_id', 'cb245673-aa41-4302-ac47-0000000444')
+                    .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000555')
+                    .check.user.answer('mother_id', 'cb245673-aa41-4302-ac47-0000000555')
                     .check.user.answer('hoh_id', 'identity-uuid-06')
                     .check.user.answer('ff_id', undefined)
                     .check.interaction({
                         state: 'state_end_thank_you',
-                        reply: "Thank you. Your FamilyConnect ID is 4444444444. You will receive an SMS with it shortly."
+                        reply: "Thank you. Your FamilyConnect ID is 5555555555. You will receive an SMS with it shortly."
                     })
                     .check(function(api) {
                         go.utils.checkFixturesUsed(api, [2,6,8,16,17,18,19,20,21]);
