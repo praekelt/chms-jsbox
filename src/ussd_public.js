@@ -1,6 +1,5 @@
 go.app = function() {
     var vumigo = require('vumigo_v02');
-    var MetricsHelper = require('go-jsbox-metrics-helper');
     var App = vumigo.App;
     var Choice = vumigo.states.Choice;
     var ChoiceState = vumigo.states.ChoiceState;
@@ -12,33 +11,7 @@ go.app = function() {
         App.call(self, 'state_start');
         var $ = self.$;
 
-        self.init = function() {
-
-            // Use the metrics helper to add some metrics
-            mh = new MetricsHelper(self.im);
-            mh
-                // Total unique users
-                .add.total_unique_users('total.ussd.unique_users')
-
-                // Total sessions
-                .add.total_sessions('total.ussd.sessions')
-
-                // Total times reached state_timed_out
-                .add.total_state_actions(
-                    {
-                        state: 'state_timed_out',
-                        action: 'enter'
-                    },
-                    'total.reached_state_timed_out'
-                );
-
-            // Load self.contact
-            return self.im.contacts
-                .for_user()
-                .then(function(user_contact) {
-                   self.contact = user_contact;
-                });
-        };
+        self.init = function() {};
 
 
     // TEXT CONTENT
