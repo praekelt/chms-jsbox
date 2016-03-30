@@ -303,7 +303,7 @@ go.app = function() {
 
     // CHANGE STATES
 
-    // Change to baby
+        // Change to baby
         // Interstitial
         self.add('state_check_baby_subscription', function(name) {
             return go.utils_project
@@ -348,7 +348,7 @@ go.app = function() {
             });
         });
 
-    // Change message language
+        // Change message language
         // ChoiceState st-03
         self.add('state_change_language', function(name) {
             return new ChoiceState(name, {
@@ -372,7 +372,7 @@ go.app = function() {
             });
         });
 
-    // Change number
+        // Change number
         // FreeText st-05
         self.add('state_change_number', function(name) {
             return new FreeText(name, {
@@ -423,8 +423,6 @@ go.app = function() {
             return go.utils
                 .get_identity(self.im.user.answers.contact_id, self.im)
                 .then(function(contact) {
-                    // TODO #70: Handle multiple addresses, currently overwrites existing
-                    // on assumption we're dealing with one msisdn only
                     contact.details.addresses.msisdn = {};
                     contact.details.addresses.msisdn[creator_opts.new_msisdn] = {};
                     return go.utils
@@ -458,7 +456,7 @@ go.app = function() {
             });
         });
 
-    // Optout
+        // Optout
         // ChoiceState st-08
         self.add('state_optout_reason', function(name) {
             var loss_reasons = ['miscarriage', 'stillborn', 'baby_died'];
