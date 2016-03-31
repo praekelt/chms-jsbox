@@ -787,6 +787,8 @@ go.app = function() {
 
             "state_change_number":
                 "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899",
+            "state_number_in_use":
+                "Sorry, this number is already registered.",
             "state_change_recipient":
                 "Who will receive these messages?",
             "state_end_recipient":
@@ -845,7 +847,7 @@ go.app = function() {
                         // reset user answers
                         self.im.user.answers = {};
 
-                        return self.states.create('state_permission', pass_opts);
+                        return self.states.create('state_start', pass_opts);
                     }
 
                 }
@@ -1018,7 +1020,7 @@ go.app = function() {
 
     // CHANGE STATES
 
-    // Change to baby
+        // Change to baby
         // Interstitial
         self.add('state_check_baby_subscription', function(name) {
             return go.utils_project
@@ -1063,7 +1065,7 @@ go.app = function() {
             });
         });
 
-    // Change message language
+        // Change message language
         // ChoiceState st-03
         self.add('state_change_language', function(name) {
             return new ChoiceState(name, {
@@ -1087,7 +1089,7 @@ go.app = function() {
             });
         });
 
-    // Change number
+        // Change number
         // FreeText st-05
         self.add('state_change_number', function(name) {
             return new FreeText(name, {
@@ -1099,8 +1101,53 @@ go.app = function() {
                         return $(get_error_text(name));
                     }
                 },
-                next: 'state_change_recipient'
+                next: function(content) {
+                    var msisdn = go.utils.normalize_msisdn(
+                        content, self.im.config.country_code);
+                    return go.utils
+                        .get_identity_by_address({'msisdn': msisdn}, self.im)
+                        .then(function(identity) {
+                            if (identity && identity.details && identity.details.role_player) {
+                                return 'state_number_in_use';
+                            } else {
+                                return {
+                                    'name': 'state_update_number',
+                                    'creator_opts': {'new_msisdn': msisdn}
+                                };
+                            }
+                        });
+                }
             });
+        });
+
+        // ChoiceState
+        self.add('state_number_in_use', function(name) {
+            return new ChoiceState(name, {
+                question: $(questions[name]),
+                error: $(get_error_text(name)),
+                choices: [
+                    new Choice('state_change_number', $("Try a different number")),
+                    new Choice('state_end_general', $("Exit"))
+                ],
+                next: function(choice) {
+                    return choice.value;
+                }
+            });
+        });
+
+        // Interstitial
+        self.add('state_update_number', function(name, creator_opts) {
+            return go.utils
+                .get_identity(self.im.user.answers.contact_id, self.im)
+                .then(function(contact) {
+                    contact.details.addresses.msisdn = {};
+                    contact.details.addresses.msisdn[creator_opts.new_msisdn] = {};
+                    return go.utils
+                        .update_identity(self.im, contact)
+                        .then(function() {
+                            return self.states.create('state_change_recipient');
+                        });
+                });
         });
 
         // ChoiceState st-06
@@ -1126,7 +1173,7 @@ go.app = function() {
             });
         });
 
-    // Optout
+        // Optout
         // ChoiceState st-08
         self.add('state_optout_reason', function(name) {
             var loss_reasons = ['miscarriage', 'stillborn', 'baby_died'];
@@ -1251,11 +1298,10 @@ go.app = function() {
                 .then(function(identity) {
                     if (identity.details.health_id) {
                         self.im.user.set_answer('health_id', identity.details.health_id);
-                        return self.states.create('state_hiv_messages');
                     } else {
                         self.im.user.set_answer('health_id', 'no_health_id_found');
-                        return self.states.create('state_hiv_messages');
                     }
+                    return self.states.create('state_hiv_messages');
                 });
         });
 
