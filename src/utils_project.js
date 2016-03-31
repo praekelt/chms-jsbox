@@ -141,7 +141,7 @@ go.utils_project = {
         return details;
     },
 
-    update_identities: function(im, isPublicRegistration) {
+    update_identities: function(im, is_public_registration) {
       // Saves useful data collected during registration to the relevant identities
         var msg_receiver = im.user.answers.state_msg_receiver;
         if (msg_receiver === 'mother_to_be' || (msg_receiver === 'head_of_household')) {
@@ -151,10 +151,10 @@ go.utils_project = {
                     go.utils.get_identity(im.user.answers.hoh_id, im)
                 ])
                 .spread(function(mother, hoh) {
-                    mother.details = isPublicRegistration
+                    mother.details = is_public_registration
                         ? go.utils_project.set_public_mother_details(im, mother.details)
                         : go.utils_project.set_standard_mother_details(im, mother.details);
-                    hoh.details = isPublicRegistration
+                    hoh.details = is_public_registration
                         ? go.utils_project.set_public_hoh_details(im, hoh.details)
                         : go.utils_project.set_standard_hoh_details(im, hoh.details);
                     return Q.all([
@@ -170,10 +170,10 @@ go.utils_project = {
                     go.utils.get_identity(im.user.answers.ff_id, im)
                 ])
                 .spread(function(mother, hoh, ff) {
-                    mother.details = isPublicRegistration
+                    mother.details = is_public_registration
                         ? go.utils_project.set_public_mother_details(im, mother.details)
                         : go.utils_project.set_standard_mother_details(im, mother.details);
-                    hoh.details = isPublicRegistration
+                    hoh.details = is_public_registration
                         ? go.utils_project.set_public_hoh_details(im, hoh.details)
                         : go.utils_project.set_standard_hoh_details(im, hoh.details);
                     ff.details = go.utils_project
