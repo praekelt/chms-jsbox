@@ -554,7 +554,7 @@ describe("familyconnect health worker app", function() {
                     .run();
             });
 
-            it.skip("to state_change_language", function() {
+            it("to state_change_language", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -577,7 +577,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it.skip("to state_end_language", function() {
+            it("to state_end_language", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -591,7 +591,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. Your language preference has been updated and you will start to receive SMSs in this language."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2]);
+                        go.utils.checkFixturesUsed(api, [2,22,32,33]);
                     })
                     .run();
             });
