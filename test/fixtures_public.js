@@ -4,6 +4,7 @@
 // 0720000333: unregistered user - number entered manually
 // 0720000444: change number - new number
 // 0720000555: unregistered user - number entered manually - mother_to_be registration
+// 0720000666: registered user - has baby(postbirth) subscription
 
 module.exports = function() {
 return [
@@ -780,7 +781,7 @@ return [
                         }
                     },
                     "health_id": 1234567890,
-                    "role_player": "mother"
+                    "role": "mother"
                 },
                 "created_at": "2015-07-10T06:13:29.693272Z",
                 "updated_at": "2015-07-10T06:13:29.693298Z"
@@ -819,7 +820,7 @@ return [
                                 "+256720000444": {}
                             }
                         },
-                        "role_player": "mother"
+                        "role": "mother"
                     },
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
@@ -867,12 +868,214 @@ return [
                         }
                     },
                     "health_id": 1234567890,
-                    "role_player": "mother"
+                    "role": "mother"
                 },
                 "created_at": "2015-07-10T06:13:29.693272Z",
                 "updated_at": "2015-07-10T06:13:29.693298Z"
             }
         }
     },
+
+    // 26: get subscriptions for 000222
+    {
+        'request': {
+            'method': 'GET',
+            'params': {
+                'active': 'true',
+                'identity': '3f7c8851-5204-43f7-af7f-000000000222'
+            },
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': "http://localhost:8005/api/v1/subscriptions/",
+        },
+        'response': {
+                "code": 200,
+                "data": {
+                    "count": 1,
+                    "next": null,
+                    "previous": null,
+                    "results": [
+                        {
+                            'url': 'http://localhost:8005/api/v1/subscriptions/3f7c8851-5204-43f7-af7f-000000000222',
+                            'id': '51fcca25-2e85-4c44-subscription-2222',
+                            'version': 1,
+                            'identity': '3f7c8851-5204-43f7-af7f-000000000222',
+                            'messageset': 1,
+                            'next_sequence_number': 1,
+                            'lang': "eng_NG",
+                            'active': true,
+                            'completed': false,
+                            'schedule': 1,
+                            'process_status': 0,
+                            'metadata': {},
+                            'created_at': "2015-07-10T06:13:29.693272Z",
+                            'updated_at': "2015-07-10T06:13:29.693272Z"
+                        }
+                    ]
+                }
+            }
+    },
+
+    // 27: get messageset 1
+    {
+        'request': {
+            'method': 'GET',
+            'params': {},
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8003/api/v1/messagesets/1/'
+        },
+        'response': {
+            'code': 200,
+            'data': {
+                'id': 1,
+                'short_name': 'prebirth.mother.hw_full',
+                'notes': null,
+                'next_set': 2,
+                'default_schedule': 1,
+                'content_type': 'text',
+                'created_at': "2015-07-10T06:13:29.693272Z",
+                'updated_at': "2015-07-10T06:13:29.693272Z"
+            }
+        }
+    },
+
+    // 28: Change to baby - 2222
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/change/',
+            'data': {
+                "mother_id": "3f7c8851-5204-43f7-af7f-000000000222",
+                "action": "change_baby",
+                "data": {}
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    },
+
+    // 29: get identity 0720000555 by msisdn
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'params': {
+                'details__addresses__msisdn': '+256720000666'
+            },
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/search/',
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "count": 0,
+                "next": null,
+                "previous": null,
+                "results": [{
+                    "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000666/",
+                    "id": "3f7c8851-5204-43f7-af7f-000000000666",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+256720000666": {}
+                            }
+                        },
+                        "role": "mother",
+                        "preferred_msg_type": "text",
+                        "preferred_language": "eng_UG"
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }]
+            }
+        }
+    },
+
+    // 30: get subscriptions for 000666
+    {
+        'request': {
+            'method': 'GET',
+            'params': {
+                'active': 'true',
+                'identity': '3f7c8851-5204-43f7-af7f-000000000666'
+            },
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': "http://localhost:8005/api/v1/subscriptions/",
+        },
+        'response': {
+                "code": 200,
+                "data": {
+                    "count": 1,
+                    "next": null,
+                    "previous": null,
+                    "results": [
+                        {
+                            'url': 'http://localhost:8005/api/v1/subscriptions/3f7c8851-5204-43f7-af7f-000000000666',
+                            'id': '51fcca25-2e85-4c44-subscription-0666',
+                            'version': 1,
+                            'identity': '3f7c8851-5204-43f7-af7f-000000000666',
+                            'messageset': 2,
+                            'next_sequence_number': 1,
+                            'lang': "eng_NG",
+                            'active': true,
+                            'completed': false,
+                            'schedule': 1,
+                            'process_status': 0,
+                            'metadata': {},
+                            'created_at': "2015-07-10T06:13:29.693272Z",
+                            'updated_at': "2015-07-10T06:13:29.693272Z"
+                        }
+                    ]
+                }
+            }
+    },
+
+    // 31: get messageset 2
+    {
+        'request': {
+            'method': 'GET',
+            'params': {},
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8003/api/v1/messagesets/2/'
+        },
+        'response': {
+            'code': 200,
+            'data': {
+                'id': 2,
+                'short_name': 'postbirth.mother.hw_full',
+                'notes': null,
+                'next_set': null,
+                'default_schedule': 1,
+                'content_type': 'text',
+                'created_at': "2015-07-10T06:13:29.693272Z",
+                'updated_at': "2015-07-10T06:13:29.693272Z"
+            }
+        }
+    },
+
 ];
 };
