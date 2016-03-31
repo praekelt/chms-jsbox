@@ -476,7 +476,7 @@ describe("familyconnect health worker app", function() {
             });
         });
 
-        describe("Change testing", function() {
+        describe.only("Change testing", function() {
             it("to state_end_baby", function() {
                 return tester
                     .setup.user.addr('0720000222')
@@ -717,7 +717,7 @@ describe("familyconnect health worker app", function() {
                     .run();
             });
 
-            it.skip("to state_optout_reason", function() {
+            it("to state_optout_reason", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -741,7 +741,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it.skip("to state_loss_subscription", function() {
+            it("to state_loss_subscription", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -763,7 +763,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it.skip("to state_end_loss_subscription", function() {
+            it("to state_end_loss_subscription", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -778,11 +778,11 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. You will now receive messages to support you during this difficult time."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2]);
+                        go.utils.checkFixturesUsed(api, [2,34]);
                     })
                     .run();
             });
-            it.skip("to state_end_optout (loss)", function() {
+            it("to state_end_optout (loss)", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -797,11 +797,11 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. You will no longer receive messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2]);
+                        go.utils.checkFixturesUsed(api, [2,35]);
                     })
                     .run();
             });
-            it.skip("to state_end_optout (non-loss)", function() {
+            it("to state_end_optout (non-loss)", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -815,7 +815,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. You will no longer receive messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2]);
+                        go.utils.checkFixturesUsed(api, [2,36]);
                     })
                     .run();
             });

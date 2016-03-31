@@ -750,6 +750,45 @@ go.utils_project = {
             });
     },
 
+    switch_to_loss: function(im, mother_id, reason) {
+      // Sends an Api request to the registration store to switch the mother
+      // to loss messages
+
+        var change_data = {
+            "mother_id": mother_id,
+            "action": "change_loss",
+            "data": {
+                "reason": reason
+            }
+        };
+
+        return go.utils
+            .service_api_call("registrations", "post", null, change_data, "change/", im)
+            .then(function(response) {
+                return response;
+            });
+    },
+
+    unsubscribe_mother: function(im, mother_id, reason) {
+      // A unique change endpoint that unsubscribes from the mother messages only
+      // in an _only registration case; rather than doing an optout which would
+      // block the household messages from getting through to the receiver
+
+        var change_data = {
+            "mother_id": mother_id,
+            "action": "unsubscribe",
+            "data": {
+                "reason": reason
+            }
+        };
+
+        return go.utils
+            .service_api_call("registrations", "post", null, change_data, "change/", im)
+            .then(function(response) {
+                return response;
+            });
+    },
+
 
 // IDENTITY HELPERS
 
@@ -1280,13 +1319,13 @@ go.app = function() {
         // Optout
         // ChoiceState st-08
         self.add('state_optout_reason', function(name) {
-            var loss_reasons = ['miscarriage', 'stillborn', 'baby_died'];
+            var loss_reasons = ['miscarriage', 'stillborn', 'baby_death'];
             return new ChoiceState(name, {
                 question: $(questions[name]),
                 choices: [
                     new Choice('miscarriage', $("Mother miscarried")),
                     new Choice('stillborn', $("Baby stillborn")),
-                    new Choice('baby_died', $("Baby passed away")),
+                    new Choice('baby_death', $("Baby passed away")),
                     new Choice('not_useful', $("Messages not useful")),
                     new Choice('other', $("Other"))
                 ],
@@ -1294,7 +1333,7 @@ go.app = function() {
                 next: function(choice) {
                     return loss_reasons.indexOf(choice.value) !== -1
                         ? 'state_loss_subscription'
-                        : 'state_end_optout';
+                        : 'state_optout';
                 }
             });
         });
@@ -1304,8 +1343,8 @@ go.app = function() {
             return new ChoiceState(name, {
                 question: $(questions[name]),
                 choices: [
-                    new Choice('state_end_loss_subscription', $("Yes")),
-                    new Choice('state_end_optout', $("No"))
+                    new Choice('state_switch_loss', $("Yes")),
+                    new Choice('state_optout', $("No"))
                 ],
                 error: $(get_error_text(name)),
                 next: function(choice) {
@@ -1314,12 +1353,30 @@ go.app = function() {
             });
         });
 
+        self.add('state_switch_loss', function(name) {
+            return go.utils_project
+                .switch_to_loss(self.im, self.im.user.answers.mother_id,
+                                self.im.user.answers.state_optout_reason)
+                .then(function() {
+                    return self.states.create('state_end_loss_subscription');
+                });
+        });
+
         // EndState st-10
         self.add('state_end_loss_subscription', function(name) {
             return new EndState(name, {
                 text: $(questions[name]),
                 next: 'state_start'
             });
+        });
+
+        self.add('state_optout', function(name) {
+            return go.utils_project
+                .unsubscribe_mother(self.im, self.im.user.answers.mother_id,
+                                    self.im.user.answers.state_optout_reason)
+                .then(function() {
+                    return self.states.create('state_end_optout');
+                });
         });
 
         // EndState st-11

@@ -1134,5 +1134,80 @@ return [
         }
     },
 
+    // 34: Change to loss - 000222
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/change/',
+            'data': {
+                "mother_id": "3f7c8851-5204-43f7-af7f-000000000222",
+                "action": "change_loss",
+                "data": {
+                    "reason": "miscarriage"
+                }
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    },
+
+    // 35: Optout 000222
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/change/',
+            'data': {
+                "mother_id": "3f7c8851-5204-43f7-af7f-000000000222",
+                "action": "unsubscribe",
+                "data": {
+                    "reason": "miscarriage"
+                }
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    },
+
+    // 36: Optout 000222
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/change/',
+            'data': {
+                "mother_id": "3f7c8851-5204-43f7-af7f-000000000222",
+                "action": "unsubscribe",
+                "data": {
+                    "reason": "other"
+                }
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    },
+
 ];
 };
