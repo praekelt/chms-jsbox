@@ -477,7 +477,7 @@ describe("familyconnect health worker app", function() {
             });
         });
 
-        describe.only("Change testing", function() {
+        describe("Change testing", function() {
             it("to state_end_baby", function() {
                 return tester
                     .setup.user.addr('0720000222')
