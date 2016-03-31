@@ -115,9 +115,9 @@ module.exports = function (grunt) {
             options: {
                 reporter: 'spec'
             },
-            // test_ussd_health_worker: {
-            //     src: ['<%= paths.test.ussd_health_worker %>']
-            // },
+            test_ussd_health_worker: {
+                src: ['<%= paths.test.ussd_health_worker %>']
+            },
             test_ussd_public: {
                 src: ['<%= paths.test.ussd_public %>']
             },
