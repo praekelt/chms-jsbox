@@ -927,7 +927,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8003/api/v1/messagesets/1/'
+            'url': 'http://localhost:8005/api/v1/messageset/1/'
         },
         'response': {
             'code': 200,
@@ -1060,7 +1060,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8003/api/v1/messagesets/2/'
+            'url': 'http://localhost:8005/api/v1/messageset/2/'
         },
         'response': {
             'code': 200,
