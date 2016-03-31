@@ -353,8 +353,20 @@ go.app = function() {
                     new Choice('lug_UG', $('Luganda'))
                 ],
                 error: $(get_error_text(name)),
-                next: 'state_end_language'
+                next: 'state_switch_language'
             });
+        });
+
+        self.add('state_switch_language', function(name) {
+            return go.utils_project
+                .change_language(
+                    self.im,
+                    self.im.user.answers.state_change_language,
+                    self.im.user.answers.mother_id
+                )
+                .then(function() {
+                    return self.states.create('state_end_language');
+                });
         });
 
         // EndState st-04

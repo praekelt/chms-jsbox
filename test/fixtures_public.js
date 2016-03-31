@@ -1077,5 +1077,62 @@ return [
         }
     },
 
+    // 32: Change language - 000222
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/change/',
+            'data': {
+                "mother_id": "3f7c8851-5204-43f7-af7f-000000000222",
+                "action": "change_language",
+                "data": {
+                    "new_language": "xog_UG"
+                }
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    },
+
+    // 33: patch identity 3f7c8851-5204-43f7-af7f-000000000222
+    {
+        'request': {
+            'method': 'PATCH',
+            'params': {},
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000222/',
+            'data': {
+                "id": "3f7c8851-5204-43f7-af7f-000000000222",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {
+                        "msisdn": {
+                            "+256720000222": {}
+                        }
+                    },
+                    "health_id": 1234567890,
+                    "preferred_language": "xog_UG"
+                }
+            }
+
+        },
+        'response': {
+            "code": 200,
+            "data": {}
+        }
+    },
+
 ];
 };

@@ -251,6 +251,31 @@ go.utils_project = {
             });
     },
 
+    change_language: function(im, new_lang, mother_id) {
+      // Sends an Api request to the registration store to change the
+      // subscriptions' languages, and sends a patch request to the identity
+      // store to change the identities' languages
+
+        var change_data = {
+            "mother_id": mother_id,
+            "action": "change_language",
+            "data": {
+                "new_language": new_lang
+            }
+        };
+
+        return go.utils
+            .get_identity(mother_id, im)
+            .then(function(mother_identity) {
+                mother_identity.details.preferred_language = new_lang;
+                return Q
+                    .all([
+                        go.utils.update_identity(im, mother_identity),
+                        go.utils.service_api_call("registrations", "post", null, change_data, "change/", im)
+                    ]);
+            });
+    },
+
 
 // IDENTITY HELPERS
 
