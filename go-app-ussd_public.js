@@ -231,7 +231,7 @@ go.utils = {
 
     create_registration: function(im, reg_info) {
         return go.utils
-            .service_api_call("registrations", "post", null, reg_info, "registrations/", im)
+            .service_api_call("registrations", "post", null, reg_info, "registration/", im)
             .then(function(result) {
                 return result.id;
             });

@@ -257,7 +257,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8002/api/v1/registrations/',
+            'url': 'http://localhost:8002/api/v1/registration/',
             'data':  {
                 "stage": "prebirth",
                 "mother_id": "identity-uuid-06",
@@ -410,7 +410,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8002/api/v1/registrations/',
+            'url': 'http://localhost:8002/api/v1/registration/',
             'data':  {
                 "stage": "prebirth",
                 "mother_id": "identity-uuid-09",
@@ -628,7 +628,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8002/api/v1/registrations/',
+            'url': 'http://localhost:8002/api/v1/registration/',
             'data':  {
                 "stage": "prebirth",
                 "mother_id": "cb245673-aa41-4302-ac47-0000000555",
