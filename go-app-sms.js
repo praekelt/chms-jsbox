@@ -506,7 +506,7 @@ go.utils_project = {
                 if (messageset === 'no_active_subs_found') {
                     return 'no_active_subs_found';
                 } else {
-                    return messageset.short_name.indexOf('postbirth') > 0;
+                    return messageset.short_name.indexOf('postbirth') > -1;
                 }
             });
     },

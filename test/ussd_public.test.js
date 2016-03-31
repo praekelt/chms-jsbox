@@ -477,7 +477,7 @@ describe("familyconnect health worker app", function() {
         });
 
         describe("Change testing", function() {
-            it.only("to state_end_baby", function() {
+            it("to state_end_baby", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -496,10 +496,11 @@ describe("familyconnect health worker app", function() {
             });
             it("to state_already_baby", function() {
                 return tester
-                    .setup.user.addr('082333')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , "1"  // state_permission - change number to manage
+                        , "3"  // state_permission - change number to manage
+                        , "0720000666"  // state_change_menu - baby
                         , "1"  // state_change_menu - baby
                     )
                     .check.interaction({
@@ -511,16 +512,17 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, []);
+                        go.utils.checkFixturesUsed(api, [2,29,30,31]);
                     })
                     .run();
             });
             it("to state_end_general", function() {
                 return tester
-                    .setup.user.addr('082333')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , "1"  // state_permission - change number to manage
+                        , "3"  // state_permission - change number to manage
+                        , "0720000666"  // state_change_menu - baby
                         , "1"  // state_change_menu - baby
                         , "2"  // state_already_baby - exit
                     )
@@ -529,16 +531,17 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you for using the FamilyConnect service"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, []);
+                        go.utils.checkFixturesUsed(api, [2,29,30,31]);
                     })
                     .run();
             });
             it("back to state_change_menu", function() {
                 return tester
-                    .setup.user.addr('082333')
+                    .setup.user.addr('0720000222')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , "1"  // state_permission - change number to manage
+                        , "3"  // state_permission - change number to manage
+                        , "0720000666"  // state_change_menu - baby
                         , "1"  // state_change_menu - baby
                         , "1"  // state_already_baby - back to main menu
                     )
@@ -546,7 +549,7 @@ describe("familyconnect health worker app", function() {
                         state: 'state_change_menu'
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, []);
+                        go.utils.checkFixturesUsed(api, [2,29,30,31]);
                     })
                     .run();
             });
