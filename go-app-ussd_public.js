@@ -1298,11 +1298,10 @@ go.app = function() {
                 .then(function(identity) {
                     if (identity.details.health_id) {
                         self.im.user.set_answer('health_id', identity.details.health_id);
-                        return self.states.create('state_hiv_messages');
                     } else {
                         self.im.user.set_answer('health_id', 'no_health_id_found');
-                        return self.states.create('state_hiv_messages');
                     }
+                    return self.states.create('state_hiv_messages');
                 });
         });
 
