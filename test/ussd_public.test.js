@@ -28,6 +28,14 @@ describe("familyconnect health worker app", function() {
                             api_token: 'test_token_registrations',
                             url: "http://localhost:8002/api/v1/"
                         },
+                        messagesets: {
+                            api_token: 'test_token_messagesets',
+                            url: "http://localhost:8003/api/v1/"
+                        },
+                        subscriptions: {
+                            api_token: 'test_token_subscriptions',
+                            url: "http://localhost:8005/api/v1/"
+                        },
                     },
                     no_timeout_redirects: [
                         'state_start',
@@ -469,7 +477,7 @@ describe("familyconnect health worker app", function() {
         });
 
         describe("Change testing", function() {
-            it.skip("to state_end_baby", function() {
+            it.only("to state_end_baby", function() {
                 return tester
                     .setup.user.addr('0720000222')
                     .inputs(
@@ -482,11 +490,11 @@ describe("familyconnect health worker app", function() {
                         reply: "You will receive baby messages."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2]);
+                        go.utils.checkFixturesUsed(api, [2,26,27,28]);
                     })
                     .run();
             });
-            it.skip("to state_already_baby", function() {
+            it("to state_already_baby", function() {
                 return tester
                     .setup.user.addr('082333')
                     .inputs(
@@ -507,7 +515,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it.skip("to state_end_general", function() {
+            it("to state_end_general", function() {
                 return tester
                     .setup.user.addr('082333')
                     .inputs(
@@ -525,7 +533,7 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it.skip("back to state_change_menu", function() {
+            it("back to state_change_menu", function() {
                 return tester
                     .setup.user.addr('082333')
                     .inputs(

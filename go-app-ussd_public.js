@@ -496,10 +496,38 @@ go.utils_project = {
             });
     },
 
-    check_baby_subscription: function(msisdn) {
-        return Q()
-            .then(function(q_response) {
-                return msisdn === '082333';
+// SUBSCRIPTION HELPERS
+
+    check_postbirth_subscription: function(im, mother_id) {
+      // Look up if the mother is subscribed to postbirth messages
+        return go.utils_project
+            .get_subscription_messageset_through_identity(im, mother_id)
+            .then(function(messageset) {
+                if (messageset === 'no_active_subs_found') {
+                    return 'no_active_subs_found';
+                } else {
+                    return messageset.short_name.indexOf('postbirth') > 0;
+                }
+            });
+    },
+
+    get_subscription_messageset_through_identity: function(im, mother_id) {
+      // Return the messageset that an identity is subscribed to
+
+        // get subscription
+        return go.utils
+            .get_active_subscription_by_identity(im, mother_id)
+            .then(function(subscription) {
+                if (subscription === null) {
+                    return 'no_active_subs_found';
+                } else {
+                    // get messageset
+                    return go.utils
+                        .get_messageset(im, subscription.messageset)
+                        .then(function(messageset) {
+                            return messageset;
+                        });
+                    }
             });
     },
 
@@ -675,6 +703,26 @@ go.utils_project = {
             go.utils.create_registration(im, reg_info),
             go.utils_project.update_identities(im, true)
         ]);
+    },
+
+
+// CHANGE HELPERS
+
+    switch_to_baby: function(im, mother_id) {
+      // Sends an Api request to the registration store to switch the mother
+      // to baby messages
+
+        var change_data = {
+            "mother_id": mother_id,
+            "action": "change_baby",
+            "data": {}
+        };
+
+        return go.utils
+            .service_api_call("registrations", "post", null, change_data, "change/", im)
+            .then(function(response) {
+                return response;
+            });
     },
 
 
@@ -893,6 +941,11 @@ go.app = function() {
                     if (user.details.role) {
                         self.im.user.set_answer('role', user.details.role);
                         self.im.user.set_answer('state_language', user.details.preferred_language);
+                        if (user.details.role === 'mother') {
+                            self.im.user.set_answer('mother_id', user.id);
+                        } else {
+                            self.im.user.set_answer('mother_id', user.details.mother_id);
+                        }
                         return self.states.create('state_permission');
                     } else {
                         self.im.user.set_answer('role', 'guest');
@@ -978,6 +1031,11 @@ go.app = function() {
                     if (contact.details.role) {
                         self.im.user.set_answer('role', contact.details.role);
                         self.im.user.set_answer('contact_id', contact.id);
+                        if (contact.details.role === 'mother') {
+                            self.im.user.set_answer('mother_id', contact.id);
+                        } else {
+                            self.im.user.set_answer('mother_id', contact.details.mother_id);
+                        }
                         return self.states.create('state_change_menu');
                     } else {
                         self.im.user.set_answer('contact_id', contact.id);
@@ -1024,12 +1082,13 @@ go.app = function() {
         // Interstitial
         self.add('state_check_baby_subscription', function(name) {
             return go.utils_project
-                .check_baby_subscription(self.im.user.addr)
-                .then(function(is_subscribed) {
-                    if (is_subscribed) {
+                .check_postbirth_subscription(self.im, self.im.user.answers.mother_id)
+                // .check_baby_subscription(self.im.user.addr)
+                .then(function(has_posbirth_sub) {
+                    if (has_posbirth_sub) {
                         return self.states.create('state_already_baby');
                     } else {
-                        return self.states.create('state_end_baby');
+                        return self.states.create('state_change_baby');
                     }
                 });
         });
@@ -1047,6 +1106,14 @@ go.app = function() {
                     return choice.value;
                 }
             });
+        });
+
+        self.add('state_change_baby', function(name) {
+            return go.utils_project
+                .switch_to_baby(self.im, self.im.user.answers.mother_id)
+                .then(function() {
+                    return self.states.create('state_end_baby');
+                });
         });
 
         // EndState st-02
@@ -1107,7 +1174,7 @@ go.app = function() {
                     return go.utils
                         .get_identity_by_address({'msisdn': msisdn}, self.im)
                         .then(function(identity) {
-                            if (identity && identity.details && identity.details.role_player) {
+                            if (identity && identity.details && identity.details.role) {
                                 return 'state_number_in_use';
                             } else {
                                 return {
