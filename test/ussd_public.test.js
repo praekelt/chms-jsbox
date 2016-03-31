@@ -16,7 +16,8 @@ describe("familyconnect health worker app", function() {
                 .setup.config.app({
                     name: 'familyconnect',
                     channel: '*120*8864*0000#',
-                    testing_today: '2015-04-03',
+                    testing_today: '2015-04-03',  // testing only
+                    testing_message_id: '0170b7bb-978e-4b8a-35d2-662af5b6daee',  // testing only
                     country_code: '256',  // uganda
                     metric_store: 'chms_uganda_test',  // _env at the end
                     services: {
@@ -797,7 +798,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. You will no longer receive messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,35]);
+                        go.utils.checkFixturesUsed(api, [2,35,37]);
                     })
                     .run();
             });
@@ -815,7 +816,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. You will no longer receive messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [2,36]);
+                        go.utils.checkFixturesUsed(api, [2,36,38]);
                     })
                     .run();
             });

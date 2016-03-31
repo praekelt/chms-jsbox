@@ -789,6 +789,19 @@ go.utils_project = {
             });
     },
 
+    optout_contact: function(im, request_source) {
+        return go.utils.optout(
+            im,
+            im.user.answers.contact_id,
+            im.user.answers.state_optout_reason,
+            'msisdn',
+            im.user.answers.contact_msisdn,
+            request_source,
+            im.config.testing_message_id || im.msg.message_id,
+            'stop'
+        );
+    },
+
 
 // IDENTITY HELPERS
 
@@ -855,6 +868,7 @@ go.utils_project = {
 
 go.app = function() {
     var vumigo = require('vumigo_v02');
+    var Q = require('q');
     var App = vumigo.App;
     var Choice = vumigo.states.Choice;
     var ChoiceState = vumigo.states.ChoiceState;
@@ -1002,6 +1016,8 @@ go.app = function() {
                 .get_or_create_identity({'msisdn': self.im.user.addr}, self.im, null)
                 .then(function(user) {
                     self.im.user.set_answer('user_id', user.id);
+                    self.im.user.set_answer('user_msisdn',
+                        Object.keys(user.details.addresses.msisdn)[0]);  // TODO use default msisdn
                     if (user.details.role) {
                         self.im.user.set_answer('role', user.details.role);
                         self.im.user.set_answer('state_language', user.details.preferred_language);
@@ -1046,6 +1062,7 @@ go.app = function() {
                 next: function(choice) {
                     if (choice.value === 'has_permission') {
                         self.im.user.set_answer('contact_id', self.im.user.answers.user_id);
+                        self.im.user.set_answer('contact_msisdn', self.im.user.answers.user_msisdn);
                         return self.im.user.answers.role === 'guest'
                             ? 'state_msg_receiver'
                             : 'state_change_menu';
@@ -1095,6 +1112,8 @@ go.app = function() {
                     if (contact.details.role) {
                         self.im.user.set_answer('role', contact.details.role);
                         self.im.user.set_answer('contact_id', contact.id);
+                        self.im.user.set_answer('contact_msisdn',
+                            Object.keys(contact.details.addresses.msisdn)[0]);
                         if (contact.details.role === 'mother') {
                             self.im.user.set_answer('mother_id', contact.id);
                         } else {
@@ -1371,9 +1390,14 @@ go.app = function() {
         });
 
         self.add('state_optout', function(name) {
-            return go.utils_project
-                .unsubscribe_mother(self.im, self.im.user.answers.mother_id,
-                                    self.im.user.answers.state_optout_reason)
+            return Q
+                .all([
+                    go.utils_project.optout_contact(self.im, 'ussd_public'),
+                    go.utils_project.unsubscribe_mother(
+                        self.im,
+                        self.im.user.answers.mother_id,
+                        self.im.user.answers.state_optout_reason)
+                ])
                 .then(function() {
                     return self.states.create('state_end_optout');
                 });

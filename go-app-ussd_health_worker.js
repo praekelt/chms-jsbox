@@ -789,6 +789,19 @@ go.utils_project = {
             });
     },
 
+    optout_contact: function(im, request_source) {
+        return go.utils.optout(
+            im,
+            im.user.answers.contact_id,
+            im.user.answers.state_optout_reason,
+            'msisdn',
+            im.user.answers.contact_msisdn,
+            request_source,
+            im.config.testing_message_id || im.msg.message_id,
+            'stop'
+        );
+    },
+
 
 // IDENTITY HELPERS
 
