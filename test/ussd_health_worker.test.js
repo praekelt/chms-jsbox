@@ -32,10 +32,6 @@ describe("familyconnect health worker app", function() {
                             api_token: 'test_token_messagesets',
                             url: "http://localhost:8003/api/v1/"
                         },
-                        voice_content: {
-                            api_token: "test_token_voice_content",
-                            url: "http://localhost:8004/api/v1/"
-                        },
                         subscriptions: {
                             api_token: 'test_token_subscriptions',
                             url: "http://localhost:8005/api/v1/"
