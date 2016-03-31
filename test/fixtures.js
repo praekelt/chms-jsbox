@@ -449,7 +449,7 @@ return [
                         "created_at": "2014-08-05T11:22:34.838969",
                         "id": 1,
                         "lang": "en",
-                        "messageset_id": 1,
+                        "messageset": 1,
                         "next_sequence_number": 1,
                         "process_status": 0,
                         "schedule": 1,
@@ -464,7 +464,7 @@ return [
                         "created_at": "2014-08-05T11:31:50.908974",
                         "id": 2,
                         "lang": "af",
-                        "messageset_id": 1,
+                        "messageset": 1,
                         "next_sequence_number": 1,
                         "process_status": 0,
                         "schedule": 1,
@@ -491,7 +491,7 @@ return [
                     "created_at": "2014-08-05T11:31:50.908974",
                     "id": 2,
                     "lang": "af",
-                    "messageset_id": 1,
+                    "messageset": 1,
                     "next_sequence_number": 1,
                     "process_status": 0,
                     "schedule": 1,
@@ -713,7 +713,7 @@ return [
                     'Authorization': ['Token test_key'],
                     'Content-Type': ['application/json']
                 },
-                'url': 'http://localhost:8002/api/v1/registrations/',
+                'url': 'http://localhost:8002/api/v1/registration/',
                 'data':  {
                     "stage": "prebirth",
                     "mother_id": "identity-uuid-16",
@@ -748,7 +748,7 @@ return [
                     'Authorization': ['Token test_key'],
                     'Content-Type': ['application/json']
                 },
-                'url': 'http://localhost:8002/api/v1/registrations/',
+                'url': 'http://localhost:8002/api/v1/registration/',
                 'data':  {
                     "stage": "prebirth",
                     "mother_id": "identity-uuid-06",
@@ -968,7 +968,7 @@ return [
                     'Authorization': ['Token test_key'],
                     'Content-Type': ['application/json']
                 },
-                'url': 'http://localhost:8002/api/v1/registrations/',
+                'url': 'http://localhost:8002/api/v1/registration/',
                 'data':  {
                     "stage": "prebirth",
                     "mother_id": "identity-uuid-16",

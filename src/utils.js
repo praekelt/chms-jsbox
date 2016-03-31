@@ -224,7 +224,7 @@ go.utils = {
 
     create_registration: function(im, reg_info) {
         return go.utils
-            .service_api_call("registrations", "post", null, reg_info, "registrations/", im)
+            .service_api_call("registrations", "post", null, reg_info, "registration/", im)
             .then(function(result) {
                 return result.id;
             });
@@ -430,9 +430,9 @@ go.utils = {
       // Gets the messageset from the Stage-base Store
       // Returns the messageset object
 
-        var endpoint = 'messagesets/' + messageset_id + '/';
+        var endpoint = 'messageset/' + messageset_id + '/';
         return go.utils
-            .service_api_call('messagesets', 'get', {}, null, endpoint, im)
+            .service_api_call('subscriptions', 'get', {}, null, endpoint, im)
             .then(function(response) {
                 return response.data;
             });
