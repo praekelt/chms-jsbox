@@ -1017,7 +1017,7 @@ go.app = function() {
                 .then(function(user) {
                     self.im.user.set_answer('user_id', user.id);
                     self.im.user.set_answer('user_msisdn',
-                        Object.keys(user.details.addresses.msisdn)[0]);  // TODO use default msisdn
+                        Object.keys(user.details.addresses.msisdn)[0]);
                     if (user.details.role) {
                         self.im.user.set_answer('role', user.details.role);
                         self.im.user.set_answer('state_language', user.details.preferred_language);
