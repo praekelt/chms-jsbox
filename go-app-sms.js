@@ -750,6 +750,58 @@ go.utils_project = {
             });
     },
 
+    switch_to_loss: function(im, mother_id, reason) {
+      // Sends an Api request to the registration store to switch the mother
+      // to loss messages
+
+        var change_data = {
+            "mother_id": mother_id,
+            "action": "change_loss",
+            "data": {
+                "reason": reason
+            }
+        };
+
+        return go.utils
+            .service_api_call("registrations", "post", null, change_data, "change/", im)
+            .then(function(response) {
+                return response;
+            });
+    },
+
+    unsubscribe_mother: function(im, mother_id, reason) {
+      // A unique change endpoint that unsubscribes from the mother messages only
+      // in an _only registration case; rather than doing an optout which would
+      // block the household messages from getting through to the receiver
+
+        var change_data = {
+            "mother_id": mother_id,
+            "action": "unsubscribe",
+            "data": {
+                "reason": reason
+            }
+        };
+
+        return go.utils
+            .service_api_call("registrations", "post", null, change_data, "change/", im)
+            .then(function(response) {
+                return response;
+            });
+    },
+
+    optout_contact: function(im, request_source) {
+        return go.utils.optout(
+            im,
+            im.user.answers.contact_id,
+            im.user.answers.state_optout_reason,
+            'msisdn',
+            im.user.answers.contact_msisdn,
+            request_source,
+            im.config.testing_message_id || im.msg.message_id,
+            'stop'
+        );
+    },
+
 
 // IDENTITY HELPERS
 
