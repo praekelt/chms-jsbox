@@ -70,8 +70,50 @@ describe("FamilyConnect SMS app", function() {
                     .setup.user.addr('0720000111')
                     .inputs('stop')
                     .check.interaction({
-                        state: 'state_end_unrecognised',
+                        state: 'state_end_unrecognised_opt_out',
                         reply: "We do not recognise your number and can therefore not opt you out."
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [2]);
+                    })
+                    .run();
+            });
+        });
+
+        describe("when the user sends a BABY message", function() {
+            it("should switch them to baby messages if on prebirth messages", function() {
+                return tester
+                    .setup.user.addr('0720000222')
+                    .inputs('baby')
+                    .check.interaction({
+                        state: 'state_end_postbirth_subscription',
+                        reply: "Congratulations! You will now receive messages relating to your baby."
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [0,4,5,6]);
+                    })
+                    .run();
+            });
+            it("should NOT switch them to baby messages if already on postbirth messages", function() {
+                return tester
+                    .setup.user.addr('0720000333')
+                    .inputs('baby is born')
+                    .check.interaction({
+                        state: 'state_end_already_postbirth',
+                        reply: "You are already subscribed to baby messages."
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [7,8,9]);
+                    })
+                    .run();
+            });
+            it("should report problem if contact not found", function() {
+                return tester
+                    .setup.user.addr('0720000111')
+                    .inputs('baby')
+                    .check.interaction({
+                        state: 'state_end_unrecognised_baby',
+                        reply: "We do not recognise your number and can therefore not subscribe you to baby messages."
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [2]);
