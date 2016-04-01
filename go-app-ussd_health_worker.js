@@ -17,8 +17,7 @@ go.utils = {
 
 // FIXTURES HELPERS
 
-    checkFixturesUsed: function(api, fixturesArray) {
-        var expected_used = fixturesArray;
+    check_fixtures_used: function(api, expected_used) {
         var fixts = api.http.fixtures.fixtures;
         var fixts_used = [];
         fixts.forEach(function(f, i) {
@@ -446,6 +445,31 @@ go.utils = {
     },
 
 
+// MESSAGE_SENDER HELPERS
+
+    save_inbound_message: function(im, from_addr, content) {
+      // Saves the inbound messages to seed-message-sender
+
+        var payload = {
+            "message_id": im.config.testing_message_id || im.msg.message_id,
+            "in_reply_to": null,
+            "to_addr": im.config.channel,
+            "from_addr": from_addr,
+            "content": content,
+            "transport_name": im.config.transport_name,
+            "transport_type": im.config.transport_type,
+            "helper_metadata": {}
+        };
+        return go.utils
+            .service_api_call("message_sender", "post", null, payload, 'inbound/', im)
+            .then(function(json_post_response) {
+                var inbound_response = json_post_response.data;
+                // Return the inbound id
+                return inbound_response.id;
+            });
+    },
+
+
 // OPTOUT & OPTIN HELPERS
 
     optout: function(im, identity_id, optout_reason, address_type, address,
@@ -479,22 +503,6 @@ var Q = require('q');
 // Project utils libraty
 go.utils_project = {
 
-
-// TEMPORARY HELPERS
-
-    check_contact_recognised: function(msisdn) {
-        return Q()
-            .then(function(q_response) {
-                return msisdn === '082222' || msisdn === '082333';
-            });
-    },
-
-    check_is_registered: function(msisdn) {
-        return Q()
-            .then(function(q_response) {
-                return msisdn === '082222' || msisdn === '082333';
-            });
-    },
 
 // SUBSCRIPTION HELPERS
 

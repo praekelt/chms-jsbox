@@ -10,7 +10,7 @@ module.exports = function (grunt) {
                 app: {
                     ussd_health_worker: 'src/ussd_health_worker.js',
                     ussd_public: 'src/ussd_public.js',
-                    smsapp: 'src/smsapp.js'
+                    sms_inbound: 'src/sms_inbound.js'
                 },
                 ussd_health_worker: [
                     'src/index.js',
@@ -26,11 +26,11 @@ module.exports = function (grunt) {
                     '<%= paths.src.app.ussd_public %>',
                     'src/init.js'
                 ],
-                smsapp: [
+                sms_inbound: [
                     'src/index.js',
                     'src/utils.js',
                     'src/utils_project.js',
-                    '<%= paths.src.app.smsapp %>',
+                    '<%= paths.src.app.sms_inbound %>',
                     'src/init.js'
                 ],
                 all: [
@@ -40,7 +40,7 @@ module.exports = function (grunt) {
             dest: {
                 ussd_health_worker: 'go-app-ussd_health_worker.js',
                 ussd_public: 'go-app-ussd_public.js',
-                smsapp: 'go-app-sms.js'
+                sms_inbound: 'go-app-sms.js'
             },
             test: {
                 ussd_health_worker: [
@@ -57,12 +57,12 @@ module.exports = function (grunt) {
                     '<%= paths.src.app.ussd_public %>',
                     'test/ussd_public.test.js'
                 ],
-                smsapp: [
+                sms_inbound: [
                     'test/setup.js',
                     'src/utils.js',
                     'src/utils_project.js',
-                    '<%= paths.src.app.smsapp %>',
-                    'test/smsapp.test.js'
+                    '<%= paths.src.app.sms_inbound %>',
+                    'test/sms_inbound.test.js'
                 ]
             }
         },
@@ -104,9 +104,9 @@ module.exports = function (grunt) {
                 src: ['<%= paths.src.ussd_public %>'],
                 dest: '<%= paths.dest.ussd_public %>'
             },
-            smsapp: {
-                src: ['<%= paths.src.smsapp %>'],
-                dest: '<%= paths.dest.smsapp %>'
+            sms_inbound: {
+                src: ['<%= paths.src.sms_inbound %>'],
+                dest: '<%= paths.dest.sms_inbound %>'
             },
 
         },
@@ -121,8 +121,8 @@ module.exports = function (grunt) {
             test_ussd_public: {
                 src: ['<%= paths.test.ussd_public %>']
             },
-            test_smsapp: {
-                src: ['<%= paths.test.smsapp %>']
+            test_sms_inbound: {
+                src: ['<%= paths.test.sms_inbound %>']
             }
         }
     });

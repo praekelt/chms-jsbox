@@ -297,9 +297,8 @@ go.app = function() {
         self.add('state_check_baby_subscription', function(name) {
             return go.utils_project
                 .check_postbirth_subscription(self.im, self.im.user.answers.mother_id)
-                // .check_baby_subscription(self.im.user.addr)
-                .then(function(has_posbirth_sub) {
-                    if (has_posbirth_sub) {
+                .then(function(has_postbirth_sub) {
+                    if (has_postbirth_sub) {
                         return self.states.create('state_already_baby');
                     } else {
                         return self.states.create('state_change_baby');
