@@ -16,7 +16,7 @@ describe("FamilyConnect SMS app", function() {
                 .setup.char_limit(160)
                 .setup.config.app({
                     name: 'sms_inbound',
-                    country_code: '256',  // nigeria
+                    country_code: '256',  // uganda
                     channel: '2561234',
                     transport_name: 'aggregator_sms',
                     transport_type: 'sms',
