@@ -32,8 +32,8 @@ describe("familyconnect health worker app", function() {
                             api_token: 'test_token_subscriptions',
                             url: "http://localhost:8005/api/v1/"
                         },
-                        outbound: {
-                            api_token: 'test_token_outbound',
+                        message_sender: {
+                            api_token: 'test_token_message_sender',
                             url: "http://localhost:8006/api/v1/"
                         }
                     },
@@ -132,7 +132,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [3,4]);
+                        go.utils.check_fixtures_used(api, [3,4]);
                     })
                     .run();
             });
@@ -153,7 +153,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0]);
+                        go.utils.check_fixtures_used(api, [0]);
                     })
                     .run();
             });
@@ -170,7 +170,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Please enter the mobile number which the messages will be sent to. For example, 0803304899"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0]);
+                        go.utils.check_fixtures_used(api, [0]);
                     })
                     .run();
             });
@@ -192,7 +192,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,7,8]);
+                        go.utils.check_fixtures_used(api, [0,7,8]);
                     })
                     .run();
             });
@@ -210,7 +210,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Please enter the first name of the Head of the Household. For example: Isaac."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,9,10,15]);
+                        go.utils.check_fixtures_used(api, [0,9,10,15]);
                     })
                     .check.user.answer('state_msg_receiver', 'head_of_household')
                     .check.user.answer('receiver_id', 'identity-uuid-09')
@@ -233,7 +233,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Please enter the first name of the Head of the Household. For example: Isaac."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,16]);
+                        go.utils.check_fixtures_used(api, [0,5,6,16]);
                     })
                     .check.user.answer('state_msg_receiver', 'head_of_household')
                     .check.user.answer('receiver_id', 'identity-uuid-06')
@@ -256,7 +256,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Please enter the first name of the Head of the Household. For example: Isaac."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,17]);
+                        go.utils.check_fixtures_used(api, [0,5,6,17]);
                     })
                     .check.user.answer('state_msg_receiver', 'mother_to_be')
                     .check.user.answer('receiver_id', 'identity-uuid-06')
@@ -279,7 +279,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Please enter the first name of the Head of the Household. For example: Isaac."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,16,17]);
+                        go.utils.check_fixtures_used(api, [0,5,6,16,17]);
                     })
                     .check.user.answer('state_msg_receiver', 'trusted_friend')
                     .check.user.answer('receiver_id', 'identity-uuid-06')
@@ -303,7 +303,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Please enter the surname of the Head of the Household. For example: Mbire."
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,16]);
+                        go.utils.check_fixtures_used(api, [0,5,6,16]);
                     })
                     .run();
             });
@@ -612,7 +612,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,16,18]);
+                        go.utils.check_fixtures_used(api, [0,5,6,16,18]);
                     })
                     .run();
             });
@@ -641,7 +641,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. The woman's FamilyConnect ID is 1600000000. They will now start receiving messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,16,18,19,20,25,26]);
+                        go.utils.check_fixtures_used(api, [0,5,6,16,18,19,20,25,26]);
                     })
                     .run();
             });
@@ -671,7 +671,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. The woman's FamilyConnect ID is 6000000000. They will now start receiving messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,17,19,21,22,23,24]);
+                        go.utils.check_fixtures_used(api, [0,5,6,17,19,21,22,23,24]);
                     })
                     .run();
             });
@@ -701,7 +701,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you. The woman's FamilyConnect ID is 1600000000. They will now start receiving messages"
                     })
                     .check(function(api) {
-                        go.utils.checkFixturesUsed(api, [0,5,6,16,17,18,19,23,27,28,29,30]);
+                        go.utils.check_fixtures_used(api, [0,5,6,16,17,18,19,23,27,28,29,30]);
                     })
                     .run();
             });

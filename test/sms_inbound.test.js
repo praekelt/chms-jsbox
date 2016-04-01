@@ -1,183 +1,97 @@
 var vumigo = require('vumigo_v02');
-var fixtures = require('./fixtures');
+var fixtures = require('./fixtures_sms_inbound');
 var AppTester = vumigo.AppTester;
-var assert = require('assert');
-var optoutstore = require('./optoutstore');
-var DummyOptoutResource = optoutstore.DummyOptoutResource;
-var _ = require('lodash');
 
-describe("FamilyConnect app", function() {
-    describe("for sms use", function() {
+
+describe("FamilyConnect SMS app", function() {
+    describe("SMS inbound reply test", function() {
         var app;
         var tester;
 
         beforeEach(function() {
-            app = new go.app.GoFC();
-
+            app = new go.app.GoApp();
             tester = new AppTester(app);
 
             tester
                 .setup.char_limit(160)
                 .setup.config.app({
-                    name: 'smsapp',
-                    testing_today: '2015-04-03',
-                    metric_store: 'chms_uganda_test',  // _env at the end
+                    name: 'sms_inbound',
+                    country_code: '256',  // nigeria
+                    channel: '2561234',
+                    transport_name: 'aggregator_sms',
+                    transport_type: 'sms',
+                    testing_today: '2015-04-03',  // testing only
+                    testing_message_id: '0170b7bb-978e-4b8a-35d2-662af5b6daee',  // testing only
                     services: {
                         identities: {
                             api_token: 'test_token_identities',
                             url: "http://localhost:8001/api/v1/"
+                        },
+                        registrations: {
+                            api_token: 'test_token_registrations',
+                            url: "http://localhost:8002/api/v1/"
+                        },
+                        voice_content: {
+                            api_token: "test_token_voice_content",
+                            url: "http://localhost:8004/api/v1/"
+                        },
+                        subscriptions: {
+                            api_token: 'test_token_subscriptions',
+                            url: "http://localhost:8005/api/v1/"
+                        },
+                        message_sender: {
+                            api_token: 'test_token_message_sender',
+                            url: "http://localhost:8006/api/v1/"
                         }
                     },
-                    control: {
-                        username: 'test_user',
-                        api_key: 'test_key',
-                        url: "http://127.0.0.1:8000/api/v1/subscription/"
-                    }
-                })
-                .setup(function(api) {
-                    api.resources.add(new DummyOptoutResource());
-                    api.resources.attach(api);
-                })
-                .setup(function(api) {
-                    api.metrics.stores = {'chms_uganda_test': {}};
                 })
                 .setup(function(api) {
                     fixtures().forEach(api.http.fixtures.add);
                 })
-                .setup(function(api) {
-                    // registered contact 064001
-                    api.contacts.add({
-                        msisdn: '+064001',
-                        extra: {},
-                        key: "contact_key",
-                        user_account: "contact_user_account"
-                    });
-                })
-                .setup(function(api) {
-                    // registered contact 064003 (opted out contact)
-                    api.contacts.add({
-                        msisdn: '+064003',
-                        extra: {
-                            optout_last_attempt: '2015-01-01 01:01:01.111'
-                        },
-                        key: "contact_key",
-                        user_account: "contact_user_account"
-                    });
-                });
+                ;
         });
-
 
         describe("when the user sends a STOP message", function() {
-            it.skip("should opt them out", function() {
-                // opt-out functionality is also being tested via fixture 01
+            it("should opt them out if contact found", function() {
                 return tester
-                    .setup.user.addr('064001')
-                    .inputs('"stop" in the name of love')
-                    // check navigation
+                    .setup.user.addr('0720000222')
+                    .inputs('stop and wait for green')
                     .check.interaction({
-                        state: 'state_opt_out',
-                        reply:
-                            'Thank you. You will no longer receive messages from us. Reply START to opt back in.'
+                        state: 'state_end_opt_out',
+                        reply: 'You will no longer receive messages from Hello Mama. Should you ever want to re-subscribe, contact your local community health extension worker'
                     })
-                    // check extras
                     .check(function(api) {
-                        var contact = _.find(api.contacts.store, {
-                                msisdn: '+064001'
-                            });
-                        assert.equal(contact.extra.optout_last_attempt, '2015-04-03 12:00:00.000');
-                        assert.equal(contact.extra.optin_last_attempt, undefined);
+                        go.utils.check_fixtures_used(api, [0,1]);
                     })
-                    // check metrics
-                    .check(function(api) {
-                        var metrics = api.metrics.stores.chms_uganda_test;
-                        assert.equal(Object.keys(metrics).length, 6);
-                        assert.deepEqual(metrics['total.sms.unique_users'].values, [1]);
-                        assert.deepEqual(metrics['total.sms.unique_users.transient'].values, [1]);
-                        assert.deepEqual(metrics['total.optouts'].values, [1]);
-                        assert.deepEqual(metrics['total.optouts.transient'].values, [1]);
-                        assert.deepEqual(metrics['total.subscription_unsubscribe_success.last'].values, [1]);
-                        assert.deepEqual(metrics['total.subscription_unsubscribe_success.sum'].values, [1]);
+                    .run();
+            });
+            it("should report problem if contact not found", function() {
+                return tester
+                    .setup.user.addr('0720000111')
+                    .inputs('stop')
+                    .check.interaction({
+                        state: 'state_end_unrecognised',
+                        reply: "We do not recognise your number and can therefore not opt you out."
                     })
-                    // check optout_store
                     .check(function(api) {
-                        var optout_store = api.resources.resources.optout.optout_store;
-                        assert.deepEqual(optout_store.length, 2);
+                        go.utils.check_fixtures_used(api, [2]);
                     })
                     .run();
             });
         });
 
-        describe("when the user sends a BLOCK message", function() {
-            it.skip("should opt them out", function() {
-                // opt-out functionality is also being tested via fixture 01
+        describe("when the user sends any other message", function() {
+            it("should display helpdesk message", function() {
                 return tester
-                    .setup.user.addr('064001')
-                    .inputs('BLOCK')
-                    // check navigation
+                    .setup.user.addr('0720000111')
+                    .inputs('go when the light is green')
                     .check.interaction({
-                        state: 'state_opt_out',
+                        state: 'state_end_helpdesk',
                         reply:
-                            'Thank you. You will no longer receive messages from us. Reply START to opt back in.'
-                    })
-                    // check extras
-                    .check(function(api) {
-                        var contact = _.find(api.contacts.store, {
-                                msisdn: '+064001'
-                            });
-                        assert.equal(contact.extra.optout_last_attempt, '2015-04-03 12:00:00.000');
-                        assert.equal(contact.extra.optin_last_attempt, undefined);
-                    })
-                    // check metrics
-                    .check(function(api) {
-                        var metrics = api.metrics.stores.chms_uganda_test;
-                        assert.equal(Object.keys(metrics).length, 6);
-                        assert.deepEqual(metrics['total.sms.unique_users'].values, [1]);
-                        assert.deepEqual(metrics['total.sms.unique_users.transient'].values, [1]);
-                        assert.deepEqual(metrics['total.optouts'].values, [1]);
-                        assert.deepEqual(metrics['total.optouts.transient'].values, [1]);
-                        assert.deepEqual(metrics['total.subscription_unsubscribe_success.last'].values, [1]);
-                        assert.deepEqual(metrics['total.subscription_unsubscribe_success.sum'].values, [1]);
-                    })
-                    // check optout_store
-                    .check(function(api) {
-                        var optout_store = api.resources.resources.optout.optout_store;
-                        assert.deepEqual(optout_store.length, 2);
-                    })
-                    .run();
-            });
-        });
-
-        describe("when the user sends a different message", function() {
-            it("should tell them how to opt out", function() {
-                return tester
-                    .setup.user.addr('064001')
-                    .inputs('lhr')
-                    // check navigation
-                    .check.interaction({
-                        state: 'state_unrecognised',
-                        reply:
-                            'We do not recognise the message you sent us. Reply STOP to unsubscribe.'
-                    })
-                    // check extras
-                    .check(function(api) {
-                        var contact = _.find(api.contacts.store, {
-                                msisdn: '+064001'
-                            });
-                        assert.equal(contact.extra.optout_last_attempt, undefined);
-                        assert.equal(contact.extra.optin_last_attempt, undefined);
-                    })
-                    // check metrics
-                    .check(function(api) {
-                        var metrics = api.metrics.stores.chms_uganda_test;
-                        assert.equal(Object.keys(metrics).length, 4);
-                        assert.deepEqual(metrics['total.sms.unique_users'].values, [1]);
-                        assert.deepEqual(metrics['total.sms.unique_users.transient'].values, [1]);
-                        assert.deepEqual(metrics['total.unrecognised_sms'].values, [1]);
-                        assert.deepEqual(metrics['total.unrecognised_sms.transient'].values, [1]);
+                            'Currently no helpdesk functionality is active. Reply STOP to unsubscribe.'
                     })
                     .check(function(api) {
-                        var optout_store = api.resources.resources.optout.optout_store;
-                        assert.deepEqual(optout_store.length, 1);
+                        go.utils.check_fixtures_used(api, [3]);
                     })
                     .run();
             });
