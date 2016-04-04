@@ -816,7 +816,7 @@ describe("familyconnect health worker app", function() {
 
         // TEST SERVICERATING FLOW
 
-        describe("Servicerating testing", function() {
+        describe("Service Rating testing", function() {
             it("to state_servicerating_question1", function() {
                 return tester
                     .setup.user.addr('0720000777')
