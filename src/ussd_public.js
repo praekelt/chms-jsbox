@@ -666,10 +666,10 @@ go.app = function() {
         // ChoiceState
         self.add('state_servicerating_question1', function(name) {
             //var q_id = '1';
-            var q_text_en = "Welcome. When you signed up, were staff at the facility friendly & helpful?";
+            var q_text_en = $("Welcome. When you signed up, were staff at the facility friendly & helpful?");
 
             return new ChoiceState(name, {
-                question: $(q_text_en),
+                question: q_text_en,
                 choices: [
                     new Choice('very-satisfied', $('Very Satisfied')),
                     new Choice('satisfied', $('Satisfied')),
@@ -683,10 +683,10 @@ go.app = function() {
         // ChoiceState
         self.add('state_servicerating_question2', function(name) {
             //var q_id = '2';
-            var q_text_en = "How do you feel about the time you had to wait at the facility?";
+            var q_text_en = $("How do you feel about the time you had to wait at the facility?");
 
             return new ChoiceState(name, {
-                question: $(q_text_en),
+                question: q_text_en,
                 choices: [
                     new Choice('very-satisfied', $('Very Satisfied')),
                     new Choice('satisfied', $('Satisfied')),
@@ -700,10 +700,10 @@ go.app = function() {
         // ChoiceState
         self.add('state_servicerating_question3', function(name) {
             //var q_id = '3';
-            var q_text_en = "How long did you wait to be helped at the clinic?";
+            var q_text_en = $("How long did you wait to be helped at the clinic?");
 
             return new ChoiceState(name, {
-                question: $(q_text_en),
+                question: q_text_en,
                 choices: [
                     new Choice('less-than-an-hour', $('Less than an hour')),
                     new Choice('between-1-and-3-hours', $('Between 1 and 3 hours')),
@@ -717,10 +717,10 @@ go.app = function() {
         // ChoiceState
         self.add('state_servicerating_question4', function(name) {
             //var q_id = '4';
-            var q_text_en = "Was the facility clean?";
+            var q_text_en = $("Was the facility clean?");
 
             return new ChoiceState(name, {
-                question: $(q_text_en),
+                question: q_text_en,
                 choices: [
                     new Choice('very-satisfied', $('Very Satisfied')),
                     new Choice('satisfied', $('Satisfied')),
@@ -734,10 +734,10 @@ go.app = function() {
         // ChoiceState
         self.add('state_servicerating_question5', function(name) {
             //var q_id = '5';
-            var q_text_en = "Did you feel that your privacy was respected by the staff?";
+            var q_text_en = $("Did you feel that your privacy was respected by the staff?");
 
             return new ChoiceState(name, {
-                question: $(q_text_en),
+                question: q_text_en,
                 choices: [
                     new Choice('very-satisfied', $('Very Satisfied')),
                     new Choice('satisfied', $('Satisfied')),
