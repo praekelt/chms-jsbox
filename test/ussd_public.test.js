@@ -833,6 +833,9 @@ describe("familyconnect health worker app", function() {
                             '4. Very unsatisfied'
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [39]);
+                    })
                     .run();
             });
             it("to state_servicerating_question2", function() {
@@ -851,6 +854,9 @@ describe("familyconnect health worker app", function() {
                             '3. Not Satisfied',
                             '4. Very unsatisfied'
                         ].join('\n')
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [39]);
                     })
                     .run();
             });
@@ -872,6 +878,9 @@ describe("familyconnect health worker app", function() {
                             '4. All day'
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [39]);
+                    })
                     .run();
             });
             it("to state_servicerating_question4", function() {
@@ -892,6 +901,9 @@ describe("familyconnect health worker app", function() {
                             '3. Not Satisfied',
                             '4. Very unsatisfied'
                         ].join('\n')
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [39]);
                     })
                     .run();
             });
@@ -915,6 +927,9 @@ describe("familyconnect health worker app", function() {
                             '4. Very unsatisfied'
                         ].join('\n')
                     })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [39]);
+                    })
                     .run();
             });
 
@@ -932,6 +947,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_end_servicerating',
                         reply: "Thank you for rating the FamilyConnect service."
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [39]);
                     })
                     .check.reply.ends_session()
                     .run();
