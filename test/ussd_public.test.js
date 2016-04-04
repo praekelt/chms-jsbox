@@ -814,6 +814,130 @@ describe("familyconnect health worker app", function() {
             });
         });
 
+        // TEST SERVICERATING FLOW
+
+        describe("Servicerating testing", function() {
+            it("to state_servicerating_question1", function() {
+                return tester
+                    .setup.user.addr('0720000777')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                    )
+                    .check.interaction({
+                        state: 'state_servicerating_question1',
+                        reply: [
+                            'Welcome. When you signed up, were staff at the facility friendly & helpful?',
+                            '1. Very Satisfied',
+                            '2. Satisfied',
+                            '3. Not Satisfied',
+                            '4. Very unsatisfied'
+                        ].join('\n')
+                    })
+                    .run();
+            });
+            it("to state_servicerating_question2", function() {
+                return tester
+                    .setup.user.addr('0720000777')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '2'  // state_servicerating_question1 - satisfied
+                    )
+                    .check.interaction({
+                        state: 'state_servicerating_question2',
+                        reply: [
+                            'How do you feel about the time you had to wait at the facility?',
+                            '1. Very Satisfied',
+                            '2. Satisfied',
+                            '3. Not Satisfied',
+                            '4. Very unsatisfied'
+                        ].join('\n')
+                    })
+                    .run();
+            });
+            it("to state_servicerating_question3", function() {
+                return tester
+                    .setup.user.addr('0720000777')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '2'  // state_servicerating_question1 - satisfied
+                        , '2'  // state_servicerating_question2 - satisfied
+                    )
+                    .check.interaction({
+                        state: 'state_servicerating_question3',
+                        reply: [
+                            'How long did you wait to be helped at the clinic?',
+                            '1. Less than an hour',
+                            '2. Between 1 and 3 hours',
+                            '3. More than 4 hours',
+                            '4. All day'
+                        ].join('\n')
+                    })
+                    .run();
+            });
+            it("to state_servicerating_question4", function() {
+                return tester
+                    .setup.user.addr('0720000777')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '2'  // state_servicerating_question1 - satisfied
+                        , '2'  // state_servicerating_question2 - satisfied
+                        , '3'  // state_servicerating_question3 - more than 4hours
+                    )
+                    .check.interaction({
+                        state: 'state_servicerating_question4',
+                        reply: [
+                            'Was the facility clean?',
+                            '1. Very Satisfied',
+                            '2. Satisfied',
+                            '3. Not Satisfied',
+                            '4. Very unsatisfied'
+                        ].join('\n')
+                    })
+                    .run();
+            });
+            it("to state_servicerating_question5", function() {
+                return tester
+                    .setup.user.addr('0720000777')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '2'  // state_servicerating_question1 - satisfied
+                        , '2'  // state_servicerating_question2 - satisfied
+                        , '3'  // state_servicerating_question3 - more than 4hours
+                        , '4'  // state_servicerating_question4 - very unsatisfied
+                    )
+                    .check.interaction({
+                        state: 'state_servicerating_question5',
+                        reply: [
+                            'Did you feel that your privacy was respected by the staff?',
+                            '1. Very Satisfied',
+                            '2. Satisfied',
+                            '3. Not Satisfied',
+                            '4. Very unsatisfied'
+                        ].join('\n')
+                    })
+                    .run();
+            });
+
+            it("to state_end_servicerating", function() {
+                return tester
+                    .setup.user.addr('0720000777')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '2'  // state_servicerating_question1 - satisfied
+                        , '2'  // state_servicerating_question2 - satisfied
+                        , '3'  // state_servicerating_question3 - more than 4hours
+                        , '4'  // state_servicerating_question4 - very unsatisfied
+                        , '1'  // state_servicerating_question5 - very satisfied
+                    )
+                    .check.interaction({
+                        state: 'state_end_servicerating',
+                        reply: "Thank you for rating the FamilyConnect service."
+                    })
+                    .check.reply.ends_session()
+                    .run();
+            });
+        });
+
     });
 
 });

@@ -878,7 +878,7 @@ go.utils_project = {
         return go.utils
             .get_identity_by_address(address, im)
             .then(function(identity) {
-                return identity.servicerating_unanswered;
+                return identity.details.servicerating_unanswered;
             });
     },
 
