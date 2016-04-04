@@ -665,7 +665,7 @@ go.app = function() {
 
         // ChoiceState 1
         self.add('state_servicerating_question1', function(name) {
-            //var q_id = '1';
+            var q_id = '1';
             var q_text_en = $("Welcome. When you signed up, were staff at the facility friendly & helpful?");
 
             return new ChoiceState(name, {
@@ -676,13 +676,19 @@ go.app = function() {
                     new Choice('not-satisfied', $('Not Satisfied')),
                     new Choice('very-unsatisfied', $('Very unsatisfied'))
                 ],
-                next: 'state_servicerating_question2'
+                next: function(choice) {
+                    return go.utils_project
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .then(function() {
+                            return 'state_servicerating_question2';
+                        });
+                }
             });
         });
 
         // ChoiceState 2
         self.add('state_servicerating_question2', function(name) {
-            //var q_id = '2';
+            var q_id = '2';
             var q_text_en = $("How do you feel about the time you had to wait at the facility?");
 
             return new ChoiceState(name, {
@@ -693,13 +699,19 @@ go.app = function() {
                     new Choice('not-satisfied', $('Not Satisfied')),
                     new Choice('very-unsatisfied', $('Very unsatisfied'))
                 ],
-                next: 'state_servicerating_question3'
+                next: function(choice) {
+                    return go.utils_project
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .then(function() {
+                            return 'state_servicerating_question3';
+                        });
+                }
             });
         });
 
         // ChoiceState 3
         self.add('state_servicerating_question3', function(name) {
-            //var q_id = '3';
+            var q_id = '3';
             var q_text_en = $("How long did you wait to be helped at the clinic?");
 
             return new ChoiceState(name, {
@@ -710,13 +722,19 @@ go.app = function() {
                     new Choice('more-than-4-hours', $('More than 4 hours')),
                     new Choice('all-day', $('All day'))
                 ],
-                next: 'state_servicerating_question4'
+                next: function(choice) {
+                    return go.utils_project
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .then(function() {
+                            return 'state_servicerating_question4';
+                        });
+                }
             });
         });
 
         // ChoiceState 4
         self.add('state_servicerating_question4', function(name) {
-            //var q_id = '4';
+            var q_id = '4';
             var q_text_en = $("Was the facility clean?");
 
             return new ChoiceState(name, {
@@ -727,13 +745,19 @@ go.app = function() {
                     new Choice('not-satisfied', $('Not Satisfied')),
                     new Choice('very-unsatisfied', $('Very unsatisfied'))
                 ],
-                next: 'state_servicerating_question5'
+                next: function(choice) {
+                    return go.utils_project
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .then(function() {
+                            return 'state_servicerating_question5';
+                        });
+                }
             });
         });
 
         // ChoiceState 5
         self.add('state_servicerating_question5', function(name) {
-            //var q_id = '5';
+            var q_id = '5';
             var q_text_en = $("Did you feel that your privacy was respected by the staff?");
 
             return new ChoiceState(name, {
@@ -744,13 +768,20 @@ go.app = function() {
                     new Choice('not-satisfied', $('Not Satisfied')),
                     new Choice('very-unsatisfied', $('Very unsatisfied'))
                 ],
-                next: 'state_end_servicerating'
+                next: function(choice) {
+                    return go.utils_project
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .then(function() {
+                            return 'state_end_servicerating';
+                        });
+                }
             });
         });
 
         // EndState 6
         self.add('state_end_servicerating', function(name) {
-            // set servicerating_unanswered flag to false...
+            // sets servicerating_unanswered to false indicating completed servicerating feedback
+            self.im.user.set_answer('servicerating_unanswered', false);
             return new EndState(name, {
                 text: $("Thank you for rating the FamilyConnect service."),
                 next: 'state_start'

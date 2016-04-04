@@ -882,19 +882,24 @@ go.utils_project = {
             });
     },
 
-    // saves service rating info and sets servicerating_unanswered flag
-    save_servicerating_info: function(identity_id, im) {
+    // saves servicerating info
+    post_servicerating_feedback: function(im, q_id, q_text, answer_text, answer_value) {
+        var payload = {
+            "identity_id": im.user.answers.user_id,
+            "question_id": q_id,
+            "question_text": q_text,
+            "answer_text": answer_text,
+            "answer_value": answer_value
+        };
+
         return go.utils
-            .get_identity(identity_id, im)
-            .then(function(identity) {
-                identity.details.question1 = im.user.answers.state_servicerating_question1;
-                identity.details.question2 = im.user.answers.state_servicerating_question2;
-                identity.details.question3 = im.user.answers.state_servicerating_question3;
-                identity.details.question4 = im.user.answers.state_servicerating_question4;
-                identity.details.question5 = im.user.answers.state_servicerating_question5;
-                identity.details.servicerating_unanswered = false;
+            .service_api_call("servicerating", "post", null, payload, "servicerating/", im)
+            .then(function(response) {
+                return response;
             });
     },
+
+
 
     "commas": "commas"
 };
