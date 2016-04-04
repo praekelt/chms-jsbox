@@ -882,6 +882,20 @@ go.utils_project = {
             });
     },
 
+    // saves service rating info and sets servicerating_unanswered flag
+    save_servicerating_info: function(identity_id, im) {
+        return go.utils
+            .get_identity(identity_id, im)
+            .then(function(identity) {
+                identity.details.question1 = im.user.answers.state_servicerating_question1;
+                identity.details.question2 = im.user.answers.state_servicerating_question2;
+                identity.details.question3 = im.user.answers.state_servicerating_question3;
+                identity.details.question4 = im.user.answers.state_servicerating_question4;
+                identity.details.question5 = im.user.answers.state_servicerating_question5;
+                identity.details.servicerating_unanswered = false;
+            });
+    },
+
     "commas": "commas"
 };
 
@@ -1548,9 +1562,9 @@ go.app = function() {
             });
         });
 
-    // REGISTRATION STATES
+    // SERVICERATING STATES
 
-        // ChoiceState
+        // ChoiceState 1
         self.add('state_servicerating_question1', function(name) {
             //var q_id = '1';
             var q_text_en = $("Welcome. When you signed up, were staff at the facility friendly & helpful?");
@@ -1567,7 +1581,7 @@ go.app = function() {
             });
         });
 
-        // ChoiceState
+        // ChoiceState 2
         self.add('state_servicerating_question2', function(name) {
             //var q_id = '2';
             var q_text_en = $("How do you feel about the time you had to wait at the facility?");
@@ -1584,7 +1598,7 @@ go.app = function() {
             });
         });
 
-        // ChoiceState
+        // ChoiceState 3
         self.add('state_servicerating_question3', function(name) {
             //var q_id = '3';
             var q_text_en = $("How long did you wait to be helped at the clinic?");
@@ -1601,7 +1615,7 @@ go.app = function() {
             });
         });
 
-        // ChoiceState
+        // ChoiceState 4
         self.add('state_servicerating_question4', function(name) {
             //var q_id = '4';
             var q_text_en = $("Was the facility clean?");
@@ -1618,7 +1632,7 @@ go.app = function() {
             });
         });
 
-        // ChoiceState
+        // ChoiceState 5
         self.add('state_servicerating_question5', function(name) {
             //var q_id = '5';
             var q_text_en = $("Did you feel that your privacy was respected by the staff?");
@@ -1635,7 +1649,7 @@ go.app = function() {
             });
         });
 
-        // EndState
+        // EndState 6
         self.add('state_end_servicerating', function(name) {
             // set servicerating_unanswered flag to false...
             return new EndState(name, {
