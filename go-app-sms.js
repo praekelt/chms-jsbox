@@ -871,6 +871,17 @@ go.utils_project = {
         }
     },
 
+    // SERVICERATING HELPERS
+
+    // returns true if service rating unanswered
+    check_servicerating_status: function(address, im) {
+        return go.utils
+            .get_identity_by_address(address, im)
+            .then(function(identity) {
+                return identity.details.servicerating_unanswered;
+            });
+    },
+
     "commas": "commas"
 };
 

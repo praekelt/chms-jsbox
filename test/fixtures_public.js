@@ -5,6 +5,7 @@
 // 0720000444: change number - new number
 // 0720000555: unregistered user - number entered manually - mother_to_be registration
 // 0720000666: registered user - has baby(postbirth) subscription
+// 0720000777: registered user - servicerating_unanswered flag set to true
 
 module.exports = function() {
 return [
@@ -109,7 +110,7 @@ return [
                         },
                         "role": "mother",
                         "preferred_msg_type": "sms",
-                        "preferred_language": "eng_UG"
+                        "preferred_language": "eng_UG",
                     },
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
@@ -1259,6 +1260,49 @@ return [
             'code': 201,
             'data': {
                 'id': 1
+            }
+        }
+    },
+
+    // 39: get identity 0720000222 by msisdn
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'params': {
+                'details__addresses__msisdn': '+256720000777'
+            },
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/search/',
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "count": 1,
+                "next": null,
+                "previous": null,
+                "results": [{
+                    "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000777/",
+                    "id": "3f7c8851-5204-43f7-af7f-000000000777",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+256720000222": {}
+                            }
+                        },
+                        "role": "mother",
+                        "preferred_msg_type": "sms",
+                        "preferred_language": "eng_UG",
+                        "servicerating_unanswered": true
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }]
             }
         }
     },
