@@ -33,7 +33,7 @@ describe("familyconnect health worker app", function() {
                             url: "http://localhost:8005/api/v1/"
                         },
                         servicerating: {
-                            api_token: 'test_token_servingrating',
+                            api_token: 'test_token_servicerating',
                             url: "http://localhost:8006/api/v1/"
                         }
                     },
