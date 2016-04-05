@@ -390,7 +390,7 @@ go.utils_project = {
     // saves servicerating info
     post_servicerating_feedback: function(im, q_id, q_text, answer_text, answer_value, version_number, invite_uuid) {
         var payload = {
-            "identity_id": im.user.answers.user_id,
+            "identity": im.user.answers.user_id,
             "invite": invite_uuid,
             "version": version_number,
             "question_id": q_id,
