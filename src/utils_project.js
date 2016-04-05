@@ -380,9 +380,33 @@ go.utils_project = {
         return go.utils
             .get_identity_by_address(address, im)
             .then(function(identity) {
-                return identity.details.servicerating_unanswered;
+                return {
+                    unanswered: identity.details.servicerating_unanswered,
+                    invite_uuid: identity.details.invite,
+                };
             });
     },
+
+    // saves servicerating info
+    post_servicerating_feedback: function(im, q_id, q_text, answer_text, answer_value, version_number, invite_uuid) {
+        var payload = {
+            "identity": im.user.answers.user_id,
+            "invite": invite_uuid,
+            "version": version_number,
+            "question_id": q_id,
+            "question_text": q_text,
+            "answer_text": answer_text,
+            "answer_value": answer_value
+        };
+
+        return go.utils
+            .service_api_call("service_rating", "post", null, payload, "rating/", im)
+            .then(function(response) {
+                return response;
+            });
+    },
+
+
 
     "commas": "commas"
 };

@@ -32,6 +32,10 @@ describe("familyconnect health worker app", function() {
                             api_token: 'test_token_subscriptions',
                             url: "http://localhost:8005/api/v1/"
                         },
+                        service_rating: {
+                            api_token: 'test_token_service_rating',
+                            url: "http://localhost:8006/api/v1/"
+                        }
                     },
                     no_timeout_redirects: [
                         'state_start',
@@ -41,6 +45,7 @@ describe("familyconnect health worker app", function() {
                         'state_end_loss_subscription',
                         'state_end_optout',
                         'state_end_thank_you',
+                        'state_end_servicerating'
                     ],
                     timeout_redirects: [
                         // registration states
@@ -856,7 +861,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39]);
+                        go.utils.check_fixtures_used(api, [39,40]);
                     })
                     .run();
             });
@@ -879,7 +884,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39]);
+                        go.utils.check_fixtures_used(api, [39,40,41]);
                     })
                     .run();
             });
@@ -903,7 +908,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39]);
+                        go.utils.check_fixtures_used(api, [39,40,41,42]);
                     })
                     .run();
             });
@@ -928,7 +933,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39]);
+                        go.utils.check_fixtures_used(api, [39,40,41,42,43]);
                     })
                     .run();
             });
@@ -949,7 +954,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you for rating the FamilyConnect service."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39]);
+                        go.utils.check_fixtures_used(api, [39,40,41,42,43,44]);
                     })
                     .check.reply.ends_session()
                     .run();

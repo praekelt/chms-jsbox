@@ -1298,7 +1298,8 @@ return [
                         "role": "mother",
                         "preferred_msg_type": "sms",
                         "preferred_language": "eng_UG",
-                        "servicerating_unanswered": true
+                        "servicerating_unanswered": true,
+                        "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
                     },
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
@@ -1306,6 +1307,141 @@ return [
             }
         }
     },
+
+    // 40: save servicerating question 1 feedback - 0007777
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8006/api/v1/rating/',
+            'data': {
+                "identity": "3f7c8851-5204-43f7-af7f-000000000777",
+                "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
+                "version": 1,
+                "question_id": 1,
+                "question_text": "Welcome. When you signed up, were staff at the facility friendly & helpful?",
+                "answer_text": "Satisfied",
+                "answer_value": "satisfied"
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    },
+
+    // 41: save servicerating question 2 feedback - 0007777
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8006/api/v1/rating/',
+            'data': {
+                "identity": "3f7c8851-5204-43f7-af7f-000000000777",
+                "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
+                "version": 1,
+                "question_id": 2,
+                "question_text": "How do you feel about the time you had to wait at the facility?",
+                "answer_text": "Satisfied",
+                "answer_value": "satisfied"
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    },
+
+    // 42: save servicerating question 3 feedback - 0007777
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8006/api/v1/rating/',
+            'data': {
+                "identity": "3f7c8851-5204-43f7-af7f-000000000777",
+                "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
+                "version": 1,
+                "question_id": 3,
+                "question_text": "How long did you wait to be helped at the clinic?",
+                "answer_text": "More than 4 hours",
+                "answer_value": "more-than-4-hours"
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    },
+
+    // 43: save servicerating question 4 feedback - 0007777
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8006/api/v1/rating/',
+            'data': {
+                "identity": "3f7c8851-5204-43f7-af7f-000000000777",
+                "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
+                "version": 1,
+                "question_id": 4,
+                "question_text": "Was the facility clean?",
+                "answer_text": "Very unsatisfied",
+                "answer_value": "very-unsatisfied"
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    },
+
+    // 44: save servicerating question 5 feedback - 0007777
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8006/api/v1/rating/',
+            'data': {
+                "identity": "3f7c8851-5204-43f7-af7f-000000000777",
+                "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
+                "version": 1,
+                "question_id": 5,
+                "question_text": "Did you feel that your privacy was respected by the staff?",
+                "answer_text": "Very Satisfied",
+                "answer_value": "very-satisfied"
+            }
+        },
+        'response': {
+            'code': 201,
+            'data': {
+                'id': 1
+            }
+        }
+    }
 
 ];
 };
