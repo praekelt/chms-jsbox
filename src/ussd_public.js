@@ -160,8 +160,8 @@ go.app = function() {
                         return go.utils_project
                             .check_servicerating_status(user.id, self.im)
                             .then(function(status_data) {
-                                if (status_data.results.id) {
-                                    self.im.user.set_answer('invite_uuid', status_data.results.id);
+                                if (status_data.results.length > 0) {
+                                    self.im.user.set_answer('invite_uuid', status_data.results[0].id);
                                     return self.states.create('state_servicerating_question1');
                                 }
                                 else {

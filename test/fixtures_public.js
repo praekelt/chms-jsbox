@@ -1489,13 +1489,13 @@ return [
                 "count": 1,
                 "next": null,
                 "previous": null,
-                "results": {
+                "results": [{
                     "updated_at": "2016-04-04T17:06:08.411867Z",
                     "created_at": "2016-04-04T17:06:08.411843Z",
                     "version": 1,
                     "id": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
                     "identity": "3f7c8851-5204-43f7-af7f-000000000777",
-                }
+                }]
             }
         }
     },
