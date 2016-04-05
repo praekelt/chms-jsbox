@@ -878,8 +878,8 @@ go.utils_project = {
     check_servicerating_status: function(identity, im) {
         var params = {
             "identity": identity,
-            "completed": false,
-            "expired": false
+            "completed": 'False',
+            "expired": 'False'
         };
         return go.utils
             .service_api_call("service_rating", "get", params, null, "invite/", im)
@@ -1077,8 +1077,8 @@ go.app = function() {
                         return go.utils_project
                             .check_servicerating_status(user.id, self.im)
                             .then(function(status_data) {
-                                if (status_data.details.id) {
-                                    self.im.user.set_answer('invite_uuid', status_data.details.id);
+                                if (status_data.results.id) {
+                                    self.im.user.set_answer('invite_uuid', status_data.results.id);
                                     return self.states.create('state_servicerating_question1');
                                 }
                                 else {

@@ -380,8 +380,8 @@ go.utils_project = {
     check_servicerating_status: function(identity, im) {
         var params = {
             "identity": identity,
-            "completed": false,
-            "expired": false
+            "completed": 'False',
+            "expired": 'False'
         };
         return go.utils
             .service_api_call("service_rating", "get", params, null, "invite/", im)

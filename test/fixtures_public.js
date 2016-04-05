@@ -1443,18 +1443,19 @@ return [
 
     // 45: get identity 3f7c8851-5204-43f7-af7f-000000000222 service rating status
     {
+        'repeatable': true,
         'request': {
             'method': 'GET',
             'params': {
-                //"identity": "3f7c8851-5204-43f7-af7f-000000000222",
-                "completed": false,
-                "expired": false
+                "identity": "3f7c8851-5204-43f7-af7f-000000000222",
+                "completed": 'False',
+                "expired": 'False'
             },
             'headers': {
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/invite/?3f7c8851-5204-43f7-af7f-000000000222',
+            'url': 'http://localhost:8006/api/v1/invite/',
         },
         'response': {
             "code": 200,
@@ -1471,10 +1472,10 @@ return [
     {
         'request': {
             'method': 'GET',
-            'param': {
+            'params': {
                 "identity": "3f7c8851-5204-43f7-af7f-000000000777",
-                "completed": false,
-                "expired": false
+                "completed": 'False',
+                "expired": 'False'
             },
             'headers': {
                 'Authorization': ['Token test_key'],
@@ -1488,7 +1489,7 @@ return [
                 "count": 1,
                 "next": null,
                 "previous": null,
-                "details": {
+                "results": {
                     "updated_at": "2016-04-04T17:06:08.411867Z",
                     "created_at": "2016-04-04T17:06:08.411843Z",
                     "version": 1,
