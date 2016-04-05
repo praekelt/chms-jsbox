@@ -873,12 +873,20 @@ go.utils_project = {
 
     // SERVICERATING HELPERS
 
-    // get service rating status / invite
-    get_servicerating_status: function(identity, im) {
-        var endpoint = 'invite/'+identity+'/';
+    // check service rating status
+
+    check_servicerating_status: function(identity, im) {
+        var params = {
+            "identity": identity,
+            "completed": false,
+            "expired": false
+        };
         return go.utils
-            .service_api_call("service_rating", "get", null, null, endpoint, im)
+            .service_api_call("service_rating", "get", params, null, "invite/", im)
             .then(function(json_get_response) {
+                /*util = require('util');
+                var dataObj = util.inspect(json_get_response.data);
+                console.log(dataObj);*/
                 return json_get_response.data;
             });
     },

@@ -158,10 +158,10 @@ go.app = function() {
                         }
 
                         return go.utils_project
-                            .get_servicerating_status(user.id, self.im)
+                            .check_servicerating_status(user.id, self.im)
                             .then(function(status_data) {
-                                self.im.user.set_answer('invite_uuid', status_data.details.id);
-                                if (!status_data.details.expired && !status_data.details.completed) {
+                                if (status_data.details.id) {
+                                    self.im.user.set_answer('invite_uuid', status_data.details.id);
                                     return self.states.create('state_servicerating_question1');
                                 }
                                 else {

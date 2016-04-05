@@ -1441,56 +1441,46 @@ return [
         }
     },
 
-    // 45: get identity 3f7c8851-5204-43f7-af7f-000000000222 service rating
+    // 45: get identity 3f7c8851-5204-43f7-af7f-000000000222 service rating status
     {
-        'repeatable': true,
         'request': {
             'method': 'GET',
+            'params': {
+                //"identity": "3f7c8851-5204-43f7-af7f-000000000222",
+                "completed": false,
+                "expired": false
+            },
             'headers': {
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/invite/3f7c8851-5204-43f7-af7f-000000000222/',
+            'url': 'http://localhost:8006/api/v1/invite/?3f7c8851-5204-43f7-af7f-000000000222',
         },
         'response': {
             "code": 200,
             "data": {
-                "count": 1,
+                "count": 0,
                 "next": null,
                 "previous": null,
-                "details": {
-                    "updated_at": "2016-04-04T17:06:08.411867Z",
-                    "created_at": "2016-04-04T17:06:08.411843Z",
-                    "version": 1,
-                    "expired": true,
-                    "id": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
-                    "identity": "3f7c8851-5204-43f7-af7f-000000000222",
-                    "completed": false,
-                    "invited": false,
-                    "expires_at": null,
-                    "invite": {
-                        "content": "Please dial *120*1234# and rate our service",
-                        "to_addr": "+27123",
-                        "metadata": {}
-                    }
-                }
+                "results": []
             }
         }
     },
 
-    // 46: get identity 3f7c8851-5204-43f7-af7f-000000000777 service rating
+    // 46: get identity 3f7c8851-5204-43f7-af7f-000000000777 service rating status
     {
-        'repeatable': true,
         'request': {
             'method': 'GET',
             'param': {
-                "user_uuid": "3f7c8851-5204-43f7-af7f-000000000777"
+                "identity": "3f7c8851-5204-43f7-af7f-000000000777",
+                "completed": false,
+                "expired": false
             },
             'headers': {
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/invite/3f7c8851-5204-43f7-af7f-000000000777/',
+            'url': 'http://localhost:8006/api/v1/invite/',
         },
         'response': {
             "code": 200,
@@ -1502,17 +1492,8 @@ return [
                     "updated_at": "2016-04-04T17:06:08.411867Z",
                     "created_at": "2016-04-04T17:06:08.411843Z",
                     "version": 1,
-                    "expired": false,
                     "id": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
                     "identity": "3f7c8851-5204-43f7-af7f-000000000777",
-                    "completed": false,
-                    "invited": true,
-                    "expires_at": null,
-                    "invite": {
-                        "content": "Please dial *120*1234# and rate our service",
-                        "to_addr": "+27123",
-                        "metadata": {}
-                    }
                 }
             }
         }
