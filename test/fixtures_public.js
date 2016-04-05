@@ -1316,7 +1316,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/rating/',
+            'url': 'http://localhost:8006/api/v1/service_rating/',
             'data': {
                 "identity_id": "3f7c8851-5204-43f7-af7f-000000000777",
                 "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
@@ -1343,7 +1343,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/rating/',
+            'url': 'http://localhost:8006/api/v1/service_rating/',
             'data': {
                 "identity_id": "3f7c8851-5204-43f7-af7f-000000000777",
                 "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
@@ -1370,7 +1370,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/rating/',
+            'url': 'http://localhost:8006/api/v1/service_rating/',
             'data': {
                 "identity_id": "3f7c8851-5204-43f7-af7f-000000000777",
                 "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
@@ -1397,7 +1397,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/rating/',
+            'url': 'http://localhost:8006/api/v1/service_rating/',
             'data': {
                 "identity_id": "3f7c8851-5204-43f7-af7f-000000000777",
                 "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
@@ -1424,7 +1424,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/rating/',
+            'url': 'http://localhost:8006/api/v1/service_rating/',
             'data': {
                 "identity_id": "3f7c8851-5204-43f7-af7f-000000000777",
                 "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
