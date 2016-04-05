@@ -162,8 +162,10 @@ go.app = function() {
 
                         return go.utils_project
                             .check_servicerating_status({'msisdn': msisdn}, self.im)
-                            .then(function(servicerating_unanswered) {
-                                return servicerating_unanswered
+                            .then(function(servicerating_status) {
+                                self.im.user.set_answer('invite_uuid', servicerating_status.invite_uuid);
+                                self.im.user.set_answer('servicerating_unanswered', servicerating_status.unanswered);
+                                return self.im.user.answers.servicerating_unanswered
                                         ? self.states.create('state_servicerating_question1')
                                         : self.states.create('state_permission');
                             });
@@ -665,7 +667,7 @@ go.app = function() {
 
         // ChoiceState 1
         self.add('state_servicerating_question1', function(name) {
-            var q_id = '1';
+            var q_id = 1;
             var q_text_en = $("Welcome. When you signed up, were staff at the facility friendly & helpful?");
 
             return new ChoiceState(name, {
@@ -678,7 +680,7 @@ go.app = function() {
                 ],
                 next: function(choice) {
                     return go.utils_project
-                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value, 1, self.im.user.answers.invite_uuid)
                         .then(function() {
                             return 'state_servicerating_question2';
                         });
@@ -688,7 +690,7 @@ go.app = function() {
 
         // ChoiceState 2
         self.add('state_servicerating_question2', function(name) {
-            var q_id = '2';
+            var q_id = 2;
             var q_text_en = $("How do you feel about the time you had to wait at the facility?");
 
             return new ChoiceState(name, {
@@ -701,7 +703,7 @@ go.app = function() {
                 ],
                 next: function(choice) {
                     return go.utils_project
-                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value, 1, self.im.user.answers.invite_uuid)
                         .then(function() {
                             return 'state_servicerating_question3';
                         });
@@ -711,7 +713,7 @@ go.app = function() {
 
         // ChoiceState 3
         self.add('state_servicerating_question3', function(name) {
-            var q_id = '3';
+            var q_id = 3;
             var q_text_en = $("How long did you wait to be helped at the clinic?");
 
             return new ChoiceState(name, {
@@ -724,7 +726,7 @@ go.app = function() {
                 ],
                 next: function(choice) {
                     return go.utils_project
-                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value, 1, self.im.user.answers.invite_uuid)
                         .then(function() {
                             return 'state_servicerating_question4';
                         });
@@ -734,7 +736,7 @@ go.app = function() {
 
         // ChoiceState 4
         self.add('state_servicerating_question4', function(name) {
-            var q_id = '4';
+            var q_id = 4;
             var q_text_en = $("Was the facility clean?");
 
             return new ChoiceState(name, {
@@ -747,7 +749,7 @@ go.app = function() {
                 ],
                 next: function(choice) {
                     return go.utils_project
-                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value, 1, self.im.user.answers.invite_uuid)
                         .then(function() {
                             return 'state_servicerating_question5';
                         });
@@ -757,7 +759,7 @@ go.app = function() {
 
         // ChoiceState 5
         self.add('state_servicerating_question5', function(name) {
-            var q_id = '5';
+            var q_id = 5;
             var q_text_en = $("Did you feel that your privacy was respected by the staff?");
 
             return new ChoiceState(name, {
@@ -770,7 +772,7 @@ go.app = function() {
                 ],
                 next: function(choice) {
                     return go.utils_project
-                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value)
+                        .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value, 1, self.im.user.answers.invite_uuid)
                         .then(function() {
                             return 'state_end_servicerating';
                         });
