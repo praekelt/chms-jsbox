@@ -884,9 +884,6 @@ go.utils_project = {
         return go.utils
             .service_api_call("service_rating", "get", params, null, "invite/", im)
             .then(function(json_get_response) {
-                /*util = require('util');
-                var dataObj = util.inspect(json_get_response.data);
-                console.log(dataObj);*/
                 return json_get_response.data;
             });
     },
