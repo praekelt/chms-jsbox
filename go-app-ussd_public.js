@@ -873,15 +873,17 @@ go.utils_project = {
 
     // SERVICERATING HELPERS
 
-    // returns true if service rating unanswered
-    check_servicerating_status: function(address, im) {
+    // ...
+    check_servicerating_status: function(identity, im) {
+        var endpoint = 'invite/';
         return go.utils
-            .get_identity_by_address(address, im)
-            .then(function(identity) {
-                return {
-                    unanswered: identity.details.servicerating_unanswered,
-                    invite_uuid: identity.details.invite,
-                };
+            .service_api_call("service_rating", "get", null, null, endpoint, im)
+            .then(function(json_get_response) {
+                /*console.log("***");
+                util = require("util");
+                var data = util.inspect(json_get_response);
+                console.log(data);*/
+                return json_get_response.data;
             });
     },
 
@@ -1068,17 +1070,21 @@ go.app = function() {
                             self.im.user.set_answer('mother_id', user.details.mother_id);
                         }
 
-                        var msisdn = go.utils.normalize_msisdn(
-                            self.im.user.addr, self.im.config.country_code);
+                        //var msisdn = go.utils.normalize_msisdn(
+                        //    self.im.user.addr, self.im.config.country_code);
 
                         return go.utils_project
-                            .check_servicerating_status({'msisdn': msisdn}, self.im)
-                            .then(function(servicerating_status) {
-                                self.im.user.set_answer('invite_uuid', servicerating_status.invite_uuid);
-                                self.im.user.set_answer('servicerating_unanswered', servicerating_status.unanswered);
-                                return self.im.user.answers.servicerating_unanswered
-                                        ? self.states.create('state_servicerating_question1')
-                                        : self.states.create('state_permission');
+                            .check_servicerating_status(user.id, self.im)
+                            .then(function(status_data) {
+                                self.im.user.set_answer('invite_uuid', status_data.id);
+                                console.log("ussd_public.js->state_start UUID: "+status_data.id/*status_data.details.id*/);
+                                console.log("ussd_public.js->state_start CHECK: "+status_data.expired+" "+status_data.completed);
+                                if (!status_data.expired && !status_data.completed) {
+                                    return self.states.create('state_servicerating_question1');
+                                }
+                                else {
+                                    return self.states.create('state_permission');
+                                }
                             });
                     } else {
                         self.im.user.set_answer('role', 'guest');

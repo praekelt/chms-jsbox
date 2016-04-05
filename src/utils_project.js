@@ -375,15 +375,17 @@ go.utils_project = {
 
     // SERVICERATING HELPERS
 
-    // returns true if service rating unanswered
-    check_servicerating_status: function(address, im) {
+    // ...
+    check_servicerating_status: function(identity, im) {
+        var endpoint = 'invite/';
         return go.utils
-            .get_identity_by_address(address, im)
-            .then(function(identity) {
-                return {
-                    unanswered: identity.details.servicerating_unanswered,
-                    invite_uuid: identity.details.invite,
-                };
+            .service_api_call("service_rating", "get", null, null, endpoint, im)
+            .then(function(json_get_response) {
+                /*console.log("***");
+                util = require("util");
+                var data = util.inspect(json_get_response);
+                console.log(data);*/
+                return json_get_response.data;
             });
     },
 

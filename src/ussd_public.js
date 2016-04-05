@@ -157,17 +157,21 @@ go.app = function() {
                             self.im.user.set_answer('mother_id', user.details.mother_id);
                         }
 
-                        var msisdn = go.utils.normalize_msisdn(
-                            self.im.user.addr, self.im.config.country_code);
+                        //var msisdn = go.utils.normalize_msisdn(
+                        //    self.im.user.addr, self.im.config.country_code);
 
                         return go.utils_project
-                            .check_servicerating_status({'msisdn': msisdn}, self.im)
-                            .then(function(servicerating_status) {
-                                self.im.user.set_answer('invite_uuid', servicerating_status.invite_uuid);
-                                self.im.user.set_answer('servicerating_unanswered', servicerating_status.unanswered);
-                                return self.im.user.answers.servicerating_unanswered
-                                        ? self.states.create('state_servicerating_question1')
-                                        : self.states.create('state_permission');
+                            .check_servicerating_status(user.id, self.im)
+                            .then(function(status_data) {
+                                self.im.user.set_answer('invite_uuid', status_data.id);
+                                console.log("ussd_public.js->state_start UUID: "+status_data.id/*status_data.details.id*/);
+                                console.log("ussd_public.js->state_start CHECK: "+status_data.expired+" "+status_data.completed);
+                                if (!status_data.expired && !status_data.completed) {
+                                    return self.states.create('state_servicerating_question1');
+                                }
+                                else {
+                                    return self.states.create('state_permission');
+                                }
                             });
                     } else {
                         self.im.user.set_answer('role', 'guest');

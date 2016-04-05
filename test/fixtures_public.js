@@ -1264,7 +1264,7 @@ return [
         }
     },
 
-    // 39: get identity 0720000222 by msisdn
+    // 39: get identity 0720000777 by msisdn
     {
         'repeatable': true,
         'request': {
@@ -1298,8 +1298,6 @@ return [
                         "role": "mother",
                         "preferred_msg_type": "sms",
                         "preferred_language": "eng_UG",
-                        "servicerating_unanswered": true,
-                        "invite": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
                     },
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
@@ -1441,7 +1439,87 @@ return [
                 'id': 1
             }
         }
-    }
+    },
+
+    // 45: get identity 3f7c8851-5204-43f7-af7f-000000000222 service rating
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8006/api/v1/invite/',
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "count": 1,
+                "next": null,
+                "previous": null,
+                "details": [{
+                    "updated_at": "2016-04-04T17:06:08.411867Z",
+                    "created_at": "2016-04-04T17:06:08.411843Z",
+                    "version": 1,
+                    "expired": false,
+                    "id": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
+                    "identity": "3f7c8851-5204-43f7-af7f-000000000222",
+                    "completed": false,
+                    "invited": false,
+                    "expires_at": null,
+                    "invite": {
+                        "content": "Please dial *120*1234# and rate our service",
+                        "to_addr": "+27123",
+                        "metadata": {}
+                    }
+                }]
+            }
+        }
+    },
+
+    // 46: get identity 3f7c8851-5204-43f7-af7f-000000000777 service rating
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'params': {
+                "expired": false,
+                "completed": false,
+                "identity": "3f7c8851-5204-43f7-af7f-000000000777"
+            },
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8006/api/v1/invite/',
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "count": 1,
+                "next": null,
+                "previous": null,
+                "results": [{
+                    "url": "http://localhost:8006/api/v1/invite/1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
+                    "id": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
+                    "version": 1,
+                    "expired": false,
+                    "identity": "3f7c8851-5204-43f7-af7f-000000000777",
+                    "completed": false,
+                    "invited": true,
+                    "expires_at": null,
+                    "invite": {
+                        "content": "Please dial *120*1234# and rate our service",
+                        "to_addr": "+27123",
+                        "metadata": {}
+                    },
+                    "updated_at": "2016-04-04T17:06:08.411867Z",
+                    "created_at": "2016-04-04T17:06:08.411843Z"
+                }]
+            }
+        }
+    },
 
 ];
 };
