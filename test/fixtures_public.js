@@ -1450,7 +1450,7 @@ return [
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/invite/',
+            'url': 'http://localhost:8006/api/v1/invite/3f7c8851-5204-43f7-af7f-000000000222/',
         },
         'response': {
             "code": 200,
@@ -1458,11 +1458,11 @@ return [
                 "count": 1,
                 "next": null,
                 "previous": null,
-                "details": [{
+                "details": {
                     "updated_at": "2016-04-04T17:06:08.411867Z",
                     "created_at": "2016-04-04T17:06:08.411843Z",
                     "version": 1,
-                    "expired": false,
+                    "expired": true,
                     "id": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
                     "identity": "3f7c8851-5204-43f7-af7f-000000000222",
                     "completed": false,
@@ -1473,7 +1473,7 @@ return [
                         "to_addr": "+27123",
                         "metadata": {}
                     }
-                }]
+                }
             }
         }
     },
@@ -1483,16 +1483,14 @@ return [
         'repeatable': true,
         'request': {
             'method': 'GET',
-            'params': {
-                "expired": false,
-                "completed": false,
-                "identity": "3f7c8851-5204-43f7-af7f-000000000777"
+            'param': {
+                "user_uuid": "3f7c8851-5204-43f7-af7f-000000000777"
             },
             'headers': {
                 'Authorization': ['Token test_key'],
                 'Content-Type': ['application/json']
             },
-            'url': 'http://localhost:8006/api/v1/invite/',
+            'url': 'http://localhost:8006/api/v1/invite/3f7c8851-5204-43f7-af7f-000000000777/',
         },
         'response': {
             "code": 200,
@@ -1500,11 +1498,12 @@ return [
                 "count": 1,
                 "next": null,
                 "previous": null,
-                "results": [{
-                    "url": "http://localhost:8006/api/v1/invite/1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
-                    "id": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
+                "details": {
+                    "updated_at": "2016-04-04T17:06:08.411867Z",
+                    "created_at": "2016-04-04T17:06:08.411843Z",
                     "version": 1,
                     "expired": false,
+                    "id": "1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b",
                     "identity": "3f7c8851-5204-43f7-af7f-000000000777",
                     "completed": false,
                     "invited": true,
@@ -1513,10 +1512,8 @@ return [
                         "content": "Please dial *120*1234# and rate our service",
                         "to_addr": "+27123",
                         "metadata": {}
-                    },
-                    "updated_at": "2016-04-04T17:06:08.411867Z",
-                    "created_at": "2016-04-04T17:06:08.411843Z"
-                }]
+                    }
+                }
             }
         }
     },

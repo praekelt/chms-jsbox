@@ -2,7 +2,7 @@ var vumigo = require('vumigo_v02');
 var fixtures = require('./fixtures_public');
 var AppTester = vumigo.AppTester;
 
-describe.skip("familyconnect health worker app", function() {
+describe("familyconnect health worker app", function() {
     describe("for ussd use", function() {
         var app;
         var tester;
@@ -258,7 +258,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2]);
+                        go.utils.check_fixtures_used(api, [2,45]);
                     })
                     .run();
             });
@@ -274,7 +274,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2]);
+                        go.utils.check_fixtures_used(api, [2,45]);
                     })
                     .run();
             });
@@ -297,7 +297,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,3,4]);
+                        go.utils.check_fixtures_used(api, [2,3,4,45]);
                     })
                     .run();
             });
@@ -319,7 +319,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2]);
+                        go.utils.check_fixtures_used(api, [2,45]);
                     })
                     .run();
             });
@@ -367,7 +367,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,3,4,6,9]);
+                        go.utils.check_fixtures_used(api, [2,3,4,6,9,45]);
                     })
                     .run();
             });
@@ -386,7 +386,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "What day of the month did the woman start her last period? For example, 12."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,3,4,6,9]);
+                        go.utils.check_fixtures_used(api, [2,3,4,6,9,45]);
                     })
                     .run();
             });
@@ -410,7 +410,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,3,4,6,9,10]);
+                        go.utils.check_fixtures_used(api, [2,3,4,6,9,10,45]);
                     })
                     .check.user.answer('state_msg_receiver', 'trusted_friend')
                     .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000333')
@@ -442,7 +442,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you. Your FamilyConnect ID is 9999999999. You will receive an SMS with it shortly."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,3,4,5,6,8,9,10,12,13,14,15]);
+                        go.utils.check_fixtures_used(api, [2,3,4,5,6,8,9,10,12,13,14,15,45]);
                     })
                     .run();
             });
@@ -468,7 +468,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you. Your FamilyConnect ID is 5555555555. You will receive an SMS with it shortly."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,6,8,16,17,18,19,20,21]);
+                        go.utils.check_fixtures_used(api, [2,6,8,16,17,18,19,20,21,45]);
                     })
                     .run();
             });
@@ -488,7 +488,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "You will receive baby messages."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,26,27,28]);
+                        go.utils.check_fixtures_used(api, [2,26,27,28,45]);
                     })
                     .run();
             });
@@ -510,7 +510,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,29,30,31]);
+                        go.utils.check_fixtures_used(api, [2,29,30,31,45]);
                     })
                     .run();
             });
@@ -529,7 +529,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you for using the FamilyConnect service"
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,29,30,31]);
+                        go.utils.check_fixtures_used(api, [2,29,30,31,45]);
                     })
                     .run();
             });
@@ -547,7 +547,7 @@ describe.skip("familyconnect health worker app", function() {
                         state: 'state_change_menu'
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,29,30,31]);
+                        go.utils.check_fixtures_used(api, [2,29,30,31,45]);
                     })
                     .run();
             });
@@ -571,7 +571,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2]);
+                        go.utils.check_fixtures_used(api, [2,45]);
                     })
                     .run();
             });
@@ -589,7 +589,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you. Your language preference has been updated and you will start to receive SMSs in this language."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,22,32,33]);
+                        go.utils.check_fixtures_used(api, [2,22,32,33,45]);
                     })
                     .run();
             });
@@ -607,7 +607,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899"
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2]);
+                        go.utils.check_fixtures_used(api, [2,45]);
                     })
                     .run();
             });
@@ -631,7 +631,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,2,22,23]);
+                        go.utils.check_fixtures_used(api, [0,2,22,23,45]);
                     })
                     .run();
             });
@@ -650,7 +650,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you. The number which receives messages has been updated."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,2,22,23]);
+                        go.utils.check_fixtures_used(api, [0,2,22,23,45]);
                     })
                     .run();
             });
@@ -672,7 +672,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,24]);
+                        go.utils.check_fixtures_used(api, [2,24,45]);
                     })
                     .run();
             });
@@ -691,7 +691,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899"
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,24]);
+                        go.utils.check_fixtures_used(api, [2,24,45]);
                     })
                     .run();
             });
@@ -710,7 +710,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you for using the FamilyConnect service"
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,24]);
+                        go.utils.check_fixtures_used(api, [2,24,45]);
                     })
                     .run();
             });
@@ -735,7 +735,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2]);
+                        go.utils.check_fixtures_used(api, [2,45]);
                     })
                     .run();
             });
@@ -757,7 +757,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2]);
+                        go.utils.check_fixtures_used(api, [2,45]);
                     })
                     .run();
             });
@@ -776,7 +776,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you. You will now receive messages to support you during this difficult time."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,34]);
+                        go.utils.check_fixtures_used(api, [2,34,45]);
                     })
                     .run();
             });
@@ -795,7 +795,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you. You will no longer receive messages"
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,35,37]);
+                        go.utils.check_fixtures_used(api, [2,35,37,45]);
                     })
                     .run();
             });
@@ -813,7 +813,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you. You will no longer receive messages"
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [2,36,38]);
+                        go.utils.check_fixtures_used(api, [2,36,38,45]);
                     })
                     .run();
             });
@@ -839,7 +839,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39]);
+                        go.utils.check_fixtures_used(api, [39,46]);
                     })
                     .run();
             });
@@ -861,7 +861,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39,40]);
+                        go.utils.check_fixtures_used(api, [39,40,46]);
                     })
                     .run();
             });
@@ -884,7 +884,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39,40,41]);
+                        go.utils.check_fixtures_used(api, [39,40,41,46]);
                     })
                     .run();
             });
@@ -908,7 +908,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39,40,41,42]);
+                        go.utils.check_fixtures_used(api, [39,40,41,42,46]);
                     })
                     .run();
             });
@@ -933,7 +933,7 @@ describe.skip("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39,40,41,42,43]);
+                        go.utils.check_fixtures_used(api, [39,40,41,42,43,46]);
                     })
                     .run();
             });
@@ -954,7 +954,7 @@ describe.skip("familyconnect health worker app", function() {
                         reply: "Thank you for rating the FamilyConnect service."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39,40,41,42,43,44]);
+                        go.utils.check_fixtures_used(api, [39,40,41,42,43,44,46]);
                     })
                     .check.reply.ends_session()
                     .run();

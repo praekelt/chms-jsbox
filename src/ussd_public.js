@@ -157,16 +157,11 @@ go.app = function() {
                             self.im.user.set_answer('mother_id', user.details.mother_id);
                         }
 
-                        //var msisdn = go.utils.normalize_msisdn(
-                        //    self.im.user.addr, self.im.config.country_code);
-
                         return go.utils_project
-                            .check_servicerating_status(user.id, self.im)
+                            .get_servicerating_status(user.id, self.im)
                             .then(function(status_data) {
-                                self.im.user.set_answer('invite_uuid', status_data.id);
-                                console.log("ussd_public.js->state_start UUID: "+status_data.id/*status_data.details.id*/);
-                                console.log("ussd_public.js->state_start CHECK: "+status_data.expired+" "+status_data.completed);
-                                if (!status_data.expired && !status_data.completed) {
+                                self.im.user.set_answer('invite_uuid', status_data.details.id);
+                                if (!status_data.details.expired && !status_data.details.completed) {
                                     return self.states.create('state_servicerating_question1');
                                 }
                                 else {
