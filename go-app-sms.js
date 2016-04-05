@@ -898,7 +898,7 @@ go.utils_project = {
         };
 
         return go.utils
-            .service_api_call("service_rating", "post", null, payload, "service_rating/", im)
+            .service_api_call("service_rating", "post", null, payload, "rating/", im)
             .then(function(response) {
                 return response;
             });
