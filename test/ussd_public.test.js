@@ -954,7 +954,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Thank you for rating the FamilyConnect service."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [39,40,41,42,43,44,46]);
+                        go.utils.check_fixtures_used(api, [39,40,41,42,43,44,46,47]);
                     })
                     .check.reply.ends_session()
                     .run();

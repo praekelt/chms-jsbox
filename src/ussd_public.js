@@ -773,16 +773,26 @@ go.app = function() {
                     return go.utils_project
                         .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value, 1, self.im.user.answers.invite_uuid)
                         .then(function() {
-                            return 'state_end_servicerating';
+                            return 'state_set_servicerating_completed';
                         });
                 }
             });
         });
 
+        // Interstitial
+        self.add('state_set_servicerating_completed', function(name) {
+            return go.utils_project
+                .set_servicerating_status_completed(self.im)
+                .then(function(response) {
+                    if (response.code === 200) {  // patch successful
+                        return self.states.create('state_end_servicerating');
+                    }
+                });
+        });
+
         // EndState 6
         self.add('state_end_servicerating', function(name) {
-            // sets servicerating_unanswered to false indicating completed servicerating feedback
-            self.im.user.set_answer('servicerating_unanswered', false);
+            // sets service rating status as completed
             return new EndState(name, {
                 text: $("Thank you for rating the FamilyConnect service."),
                 next: 'state_start'

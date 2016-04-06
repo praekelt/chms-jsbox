@@ -873,8 +873,7 @@ go.utils_project = {
 
     // SERVICERATING HELPERS
 
-    // check service rating status
-
+    // check for service rating status not completed yet
     check_servicerating_status: function(identity, im) {
         var params = {
             "identity": identity,
@@ -907,6 +906,19 @@ go.utils_project = {
             });
     },
 
+    // sets service rating 'completed' to true
+    set_servicerating_status_completed: function(im) {
+        var endpoint = "invite/"+im.user.answers.invite_uuid+"/";
+        var payload = {
+            "completed": 'True'
+        };
+
+        return go.utils
+            .service_api_call("service_rating", "patch", null, payload, endpoint, im)
+            .then(function(response) {
+                return response;
+            });
+    },
 
 
     "commas": "commas"
@@ -1687,16 +1699,26 @@ go.app = function() {
                     return go.utils_project
                         .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value, 1, self.im.user.answers.invite_uuid)
                         .then(function() {
-                            return 'state_end_servicerating';
+                            return 'state_set_servicerating_completed';
                         });
                 }
             });
         });
 
+        // Interstitial
+        self.add('state_set_servicerating_completed', function(name) {
+            return go.utils_project
+                .set_servicerating_status_completed(self.im)
+                .then(function(response) {
+                    if (response.code === 200) {
+                        return self.states.create('state_end_servicerating');
+                    }
+                });
+        });
+
         // EndState 6
         self.add('state_end_servicerating', function(name) {
-            // sets servicerating_unanswered to false indicating completed servicerating feedback
-            self.im.user.set_answer('servicerating_unanswered', false);
+            // sets service rating status as completed
             return new EndState(name, {
                 text: $("Thank you for rating the FamilyConnect service."),
                 next: 'state_start'

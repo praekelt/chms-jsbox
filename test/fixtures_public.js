@@ -1500,5 +1500,25 @@ return [
         }
     },
 
+    // 47: patch service rating invite 1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b
+    {
+        'request': {
+            'method': 'PATCH',
+            'headers': {
+                'Authorization': ['Token test_key']
+            },
+            'url': 'http://localhost:8006/api/v1/invite/1b47bab8-1c37-44a2-94e6-85c3ee9a8c8b/',
+            "data": {
+                "completed": 'True'
+            }
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "success": "true"
+            }
+        }
+    },
+
 ];
 };

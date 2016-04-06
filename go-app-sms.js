@@ -873,8 +873,7 @@ go.utils_project = {
 
     // SERVICERATING HELPERS
 
-    // check service rating status
-
+    // check for service rating status not completed yet
     check_servicerating_status: function(identity, im) {
         var params = {
             "identity": identity,
@@ -907,6 +906,19 @@ go.utils_project = {
             });
     },
 
+    // sets service rating 'completed' to true
+    set_servicerating_status_completed: function(im) {
+        var endpoint = "invite/"+im.user.answers.invite_uuid+"/";
+        var payload = {
+            "completed": 'True'
+        };
+
+        return go.utils
+            .service_api_call("service_rating", "patch", null, payload, endpoint, im)
+            .then(function(response) {
+                return response;
+            });
+    },
 
 
     "commas": "commas"
