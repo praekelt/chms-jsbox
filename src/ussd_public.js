@@ -784,9 +784,7 @@ go.app = function() {
             return go.utils_project
                 .set_servicerating_status_completed(self.im)
                 .then(function(response) {
-                    if (response.code === 200) {  // patch successful
-                        return self.states.create('state_end_servicerating');
-                    }
+                    return self.states.create('state_end_servicerating');
                 });
         });
 

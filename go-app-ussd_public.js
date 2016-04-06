@@ -877,8 +877,8 @@ go.utils_project = {
     check_servicerating_status: function(identity, im) {
         var params = {
             "identity": identity,
-            "completed": 'False',
-            "expired": 'False'
+            "completed": "False",
+            "expired": "False"
         };
         return go.utils
             .service_api_call("service_rating", "get", params, null, "invite/", im)
@@ -910,7 +910,7 @@ go.utils_project = {
     set_servicerating_status_completed: function(im) {
         var endpoint = "invite/"+im.user.answers.invite_uuid+"/";
         var payload = {
-            "completed": 'True'
+            "completed": "True"
         };
 
         return go.utils
@@ -1710,9 +1710,7 @@ go.app = function() {
             return go.utils_project
                 .set_servicerating_status_completed(self.im)
                 .then(function(response) {
-                    if (response.code === 200) {
-                        return self.states.create('state_end_servicerating');
-                    }
+                    return self.states.create('state_end_servicerating');
                 });
         });
 
