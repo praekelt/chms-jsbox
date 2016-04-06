@@ -157,17 +157,16 @@ go.app = function() {
                             self.im.user.set_answer('mother_id', user.details.mother_id);
                         }
 
-                        var msisdn = go.utils.normalize_msisdn(
-                            self.im.user.addr, self.im.config.country_code);
-
                         return go.utils_project
-                            .check_servicerating_status({'msisdn': msisdn}, self.im)
-                            .then(function(servicerating_status) {
-                                self.im.user.set_answer('invite_uuid', servicerating_status.invite_uuid);
-                                self.im.user.set_answer('servicerating_unanswered', servicerating_status.unanswered);
-                                return self.im.user.answers.servicerating_unanswered
-                                        ? self.states.create('state_servicerating_question1')
-                                        : self.states.create('state_permission');
+                            .check_servicerating_status(user.id, self.im)
+                            .then(function(status_data) {
+                                if (status_data.results.length > 0) {
+                                    self.im.user.set_answer('invite_uuid', status_data.results[0].id);
+                                    return self.states.create('state_servicerating_question1');
+                                }
+                                else {
+                                    return self.states.create('state_permission');
+                                }
                             });
                     } else {
                         self.im.user.set_answer('role', 'guest');
@@ -774,16 +773,24 @@ go.app = function() {
                     return go.utils_project
                         .post_servicerating_feedback(self.im, q_id, q_text_en.args[0], choice.label, choice.value, 1, self.im.user.answers.invite_uuid)
                         .then(function() {
-                            return 'state_end_servicerating';
+                            return 'state_set_servicerating_completed';
                         });
                 }
             });
         });
 
+        // Interstitial
+        self.add('state_set_servicerating_completed', function(name) {
+            return go.utils_project
+                .set_servicerating_status_completed(self.im)
+                .then(function(response) {
+                    return self.states.create('state_end_servicerating');
+                });
+        });
+
         // EndState 6
         self.add('state_end_servicerating', function(name) {
-            // sets servicerating_unanswered to false indicating completed servicerating feedback
-            self.im.user.set_answer('servicerating_unanswered', false);
+            // sets service rating status as completed
             return new EndState(name, {
                 text: $("Thank you for rating the FamilyConnect service."),
                 next: 'state_start'

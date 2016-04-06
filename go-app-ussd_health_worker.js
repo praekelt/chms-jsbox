@@ -873,15 +873,17 @@ go.utils_project = {
 
     // SERVICERATING HELPERS
 
-    // returns true if service rating unanswered
-    check_servicerating_status: function(address, im) {
+    // check for service rating status not completed yet
+    check_servicerating_status: function(identity, im) {
+        var params = {
+            "identity": identity,
+            "completed": "False",
+            "expired": "False"
+        };
         return go.utils
-            .get_identity_by_address(address, im)
-            .then(function(identity) {
-                return {
-                    unanswered: identity.details.servicerating_unanswered,
-                    invite_uuid: identity.details.invite,
-                };
+            .service_api_call("service_rating", "get", params, null, "invite/", im)
+            .then(function(json_get_response) {
+                return json_get_response.data;
             });
     },
 
@@ -904,6 +906,19 @@ go.utils_project = {
             });
     },
 
+    // sets service rating 'completed' to true
+    set_servicerating_status_completed: function(im) {
+        var endpoint = "invite/"+im.user.answers.invite_uuid+"/";
+        var payload = {
+            "completed": "True"
+        };
+
+        return go.utils
+            .service_api_call("service_rating", "patch", null, payload, endpoint, im)
+            .then(function(response) {
+                return response;
+            });
+    },
 
 
     "commas": "commas"
