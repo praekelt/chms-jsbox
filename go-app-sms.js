@@ -213,12 +213,68 @@ go.utils = {
 // CHOICE HELPERS
 
     make_month_choices: function($, startDate, limit, increment, valueFormat, labelFormat) {
-        var choices = [];
+      // Currently supports month translation in formats MMMM and MM
 
+        var choices = [];
         var monthIterator = startDate;
         for (var i=0; i<limit; i++) {
+            var raw_label = monthIterator.format(labelFormat);
+            var prefix, suffix, month, translation;
+
+            var quad_month_index = labelFormat.indexOf("MMMM");
+            var trip_month_index = labelFormat.indexOf("MMM");
+
+            if (quad_month_index > -1) {
+                month = monthIterator.format("MMMM");
+                prefix = raw_label.substring(0, quad_month_index);
+                suffix = raw_label.substring(quad_month_index+month.length, raw_label.length);
+                translation = {
+                    January: $("{{pre}}January{{post}}"),
+                    February: $("{{pre}}February{{post}}"),
+                    March: $("{{pre}}March{{post}}"),
+                    April: $("{{pre}}April{{post}}"),
+                    May: $("{{pre}}May{{post}}"),
+                    June: $("{{pre}}June{{post}}"),
+                    July: $("{{pre}}July{{post}}"),
+                    August: $("{{pre}}August{{post}}"),
+                    September: $("{{pre}}September{{post}}"),
+                    October: $("{{pre}}October{{post}}"),
+                    November: $("{{pre}}November{{post}}"),
+                    December: $("{{pre}}December{{post}}"),
+                };
+                translated_label = translation[month].context({
+                    pre: prefix,
+                    post: suffix
+                });
+            } else if (trip_month_index > -1) {
+                month = monthIterator.format("MMM");
+                prefix = raw_label.substring(0, trip_month_index);
+                suffix = raw_label.substring(trip_month_index+month.length, raw_label.length);
+                translation = {
+                    Jan: $("{{pre}}Jan{{post}}"),
+                    Feb: $("{{pre}}Feb{{post}}"),
+                    Mar: $("{{pre}}Mar{{post}}"),
+                    Apr: $("{{pre}}Apr{{post}}"),
+                    May: $("{{pre}}May{{post}}"),
+                    Jun: $("{{pre}}Jun{{post}}"),
+                    Jul: $("{{pre}}Jul{{post}}"),
+                    Aug: $("{{pre}}Aug{{post}}"),
+                    Sep: $("{{pre}}Sep{{post}}"),
+                    Oct: $("{{pre}}Oct{{post}}"),
+                    Nov: $("{{pre}}Nov{{post}}"),
+                    Dec: $("{{pre}}Dec{{post}}"),
+                };
+                translated_label = translation[month].context({
+                    pre: prefix,
+                    post: suffix
+                });
+            } else {
+                // assume numbers don't need translation
+                translated_label = raw_label;
+            }
+
             choices.push(new Choice(monthIterator.format(valueFormat),
-                                    $(monthIterator.format(labelFormat))));
+                                    translated_label));
             monthIterator.add(increment, 'months');
         }
 

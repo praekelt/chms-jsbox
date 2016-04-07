@@ -1,0 +1,130 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2016-04-07 02:07:+0000\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+
+#: go-app-sms.js:232
+msgid "{{pre}}January{{post}}"
+msgstr ""
+
+#: go-app-sms.js:233
+msgid "{{pre}}February{{post}}"
+msgstr ""
+
+#: go-app-sms.js:234
+msgid "{{pre}}March{{post}}"
+msgstr ""
+
+#: go-app-sms.js:235
+msgid "{{pre}}April{{post}}"
+msgstr ""
+
+#: go-app-sms.js:236 go-app-sms.js:258
+msgid "{{pre}}May{{post}}"
+msgstr ""
+
+#: go-app-sms.js:237
+msgid "{{pre}}June{{post}}"
+msgstr ""
+
+#: go-app-sms.js:238
+msgid "{{pre}}July{{post}}"
+msgstr ""
+
+#: go-app-sms.js:239
+msgid "{{pre}}August{{post}}"
+msgstr ""
+
+#: go-app-sms.js:240
+msgid "{{pre}}September{{post}}"
+msgstr ""
+
+#: go-app-sms.js:241
+msgid "{{pre}}October{{post}}"
+msgstr ""
+
+#: go-app-sms.js:242
+msgid "{{pre}}November{{post}}"
+msgstr ""
+
+#: go-app-sms.js:243
+msgid "{{pre}}December{{post}}"
+msgstr ""
+
+#: go-app-sms.js:254
+msgid "{{pre}}Jan{{post}}"
+msgstr ""
+
+#: go-app-sms.js:255
+msgid "{{pre}}Feb{{post}}"
+msgstr ""
+
+#: go-app-sms.js:256
+msgid "{{pre}}Mar{{post}}"
+msgstr ""
+
+#: go-app-sms.js:257
+msgid "{{pre}}Apr{{post}}"
+msgstr ""
+
+#: go-app-sms.js:259
+msgid "{{pre}}Jun{{post}}"
+msgstr ""
+
+#: go-app-sms.js:260
+msgid "{{pre}}Jul{{post}}"
+msgstr ""
+
+#: go-app-sms.js:261
+msgid "{{pre}}Aug{{post}}"
+msgstr ""
+
+#: go-app-sms.js:262
+msgid "{{pre}}Sep{{post}}"
+msgstr ""
+
+#: go-app-sms.js:263
+msgid "{{pre}}Oct{{post}}"
+msgstr ""
+
+#: go-app-sms.js:264
+msgid "{{pre}}Nov{{post}}"
+msgstr ""
+
+#: go-app-sms.js:265
+msgid "{{pre}}Dec{{post}}"
+msgstr ""
+
+#: go-app-sms.js:1047
+msgid ""
+"You will no longer receive messages from Hello Mama. Should you ever want "
+"to re-subscribe, contact your local community health extension worker"
+msgstr ""
+
+#: go-app-sms.js:1054
+msgid "We do not recognise your number and can therefore not opt you out."
+msgstr ""
+
+#: go-app-sms.js:1097
+msgid "Congratulations! You will now receive messages relating to your baby."
+msgstr ""
+
+#: go-app-sms.js:1104
+msgid "You are already subscribed to baby messages."
+msgstr ""
+
+#: go-app-sms.js:1111
+msgid ""
+"We do not recognise your number and can therefore not subscribe you to baby "
+"messages."
+msgstr ""
+
+#: go-app-sms.js:1129
+msgid "Currently no helpdesk functionality is active. Reply STOP to unsubscribe."
+msgstr ""
