@@ -100,13 +100,6 @@ go.app = function() {
                 $("Sorry not a valid input. Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages"),
         };
 
-        get_error_text = function(name) {
-
-            return errors[name];
-            // return errors[name] || questions[name] + $("Sorry not a valid input. ")();
-        };
-
-
 
     // TIMEOUT HANDLING
 
@@ -266,7 +259,7 @@ go.app = function() {
                 question: questions[name].context({
                     msisdn: self.im.user.answers.state_msisdn
                 }),
-                error: get_error_text(name),
+                error: errors[name],
                 choices: [
                     new Choice('continue', $("Continue registration")),
                     new Choice('register', $("Register a different number"))
@@ -301,7 +294,7 @@ go.app = function() {
                     if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return get_error_text(name);
+                        return errors[name];
                     }
                 },
                 next: 'state_household_head_surname'
@@ -316,7 +309,7 @@ go.app = function() {
                     if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return get_error_text(name);
+                        return errors[name];
                     }
                 },
                 next: 'state_last_period_month'
@@ -329,7 +322,7 @@ go.app = function() {
             return new ChoiceState(name, {
                 question: questions[name],
                 choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
-                error: get_error_text(name),
+                error: errors[name],
                 next: 'state_last_period_day'
             });
         });
@@ -342,7 +335,7 @@ go.app = function() {
                     if (go.utils.is_valid_day_of_month(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return get_error_text(name);
+                        return errors[name];
                     }
                 },
                 next: function(content) {
@@ -363,7 +356,7 @@ go.app = function() {
                     if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return get_error_text(name);
+                        return errors[name];
                     }
                 },
                 next: 'state_mother_surname'
@@ -378,7 +371,7 @@ go.app = function() {
                     if (go.utils.is_valid_name(content, 1, 150)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return get_error_text(name);
+                        return errors[name];
                     }
                 },
                 next: 'state_id_type'
@@ -389,7 +382,7 @@ go.app = function() {
         self.add('state_id_type', function(name) {
             return new ChoiceState(name, {
                 question: questions[name],
-                error: get_error_text(name),
+                error: errors[name],
                 choices: [
                     new Choice('ugandan_id', $("Ugandan National Identity Number")),
                     new Choice('other', $("Other"))
@@ -418,7 +411,7 @@ go.app = function() {
                     if (go.utils.is_valid_day_of_month(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return get_error_text(name);
+                        return errors[name];
                     }
                 },
                 next: 'state_mother_birth_month'
@@ -429,7 +422,7 @@ go.app = function() {
         self.add('state_mother_birth_month', function(name) {
             return new PaginatedChoiceState(name, {
                 question: questions[name],
-                error: get_error_text(name),
+                error: errors[name],
                 characters_per_page: 160,
                 options_per_page: null,
                 more: $('More'),
@@ -460,7 +453,7 @@ go.app = function() {
                     if (go.utils.is_valid_year(content, '1900', go.utils.get_today(self.im.config).format('YYYY'))) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return get_error_text(name);
+                        return errors[name];
                     }
                 },
                 next: function(content) {
@@ -478,7 +471,7 @@ go.app = function() {
         self.add('state_msg_language', function(name) {
             return new ChoiceState(name, {
                 question: questions[name],
-                error: get_error_text(name),
+                error: errors[name],
                 choices: [
                     new Choice('eng_UG', $('English')),
                     new Choice('cgg_UG', $('Rukiga')),
@@ -502,7 +495,7 @@ go.app = function() {
         self.add('state_hiv_messages', function(name) {
             return new ChoiceState(name, {
                 question: questions[name],
-                error: get_error_text(name),
+                error: errors[name],
                 choices: [
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
