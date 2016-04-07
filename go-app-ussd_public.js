@@ -1001,72 +1001,121 @@ go.app = function() {
 
         var questions = {
             "state_timed_out":
-                "You have an incomplete registration. Would you like to continue with this registration?",
+                $("You have an incomplete registration. Would you like to continue with this registration?"),
             "state_language":
-                "Welcome to FamilyConnect. Please choose your language",
+                $("Welcome to FamilyConnect. Please choose your language"),
             "state_permission":
-                "Welcome to FamilyConnect. Do you have permission to manage the number {{msisdn}}?",
+                $("Welcome to FamilyConnect. Do you have permission to manage the number {{msisdn}}?"),
             "state_permission_required":
-                "Sorry, you need permission.",
+                $("Sorry, you need permission."),
             "state_manage_msisdn":
-                "Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number.",
+                $("Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number."),
             "state_change_menu":
-                "Choose:",
+                $("Choose:"),
             "state_registration_menu":
-                "Choose from:",
+                $("Choose from:"),
 
             "state_already_baby":
-                "You are already registered for baby messages.",
+                $("You are already registered for baby messages."),
             "state_end_baby":
-                "You will receive baby messages.",
+                $("You will receive baby messages."),
 
             "state_change_language":
-                "What language would this person like to receive these messages in?",
+                $("What language would this person like to receive these messages in?"),
             "state_end_language":
-                "Thank you. Your language preference has been updated and you will start to receive SMSs in this language.",
+                $("Thank you. Your language preference has been updated and you will start to receive SMSs in this language."),
 
             "state_change_number":
-                "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899",
+                $("Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899"),
             "state_number_in_use":
-                "Sorry, this number is already registered.",
+                $("Sorry, this number is already registered."),
             "state_change_recipient":
-                "Who will receive these messages?",
+                $("Who will receive these messages?"),
             "state_end_recipient":
-                "Thank you. The number which receives messages has been updated.",
+                $("Thank you. The number which receives messages has been updated."),
 
             "state_optout_reason":
-                "Please tell us why you no longer want to receive messages so we can help you further.",
+                $("Please tell us why you no longer want to receive messages so we can help you further."),
             "state_loss_subscription":
-                "We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?",
+                $("We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?"),
             "state_end_loss_subscription":
-                "Thank you. You will now receive messages to support you during this difficult time.",
+                $("Thank you. You will now receive messages to support you during this difficult time."),
             "state_end_optout":
-                "Thank you. You will no longer receive messages",
+                $("Thank you. You will no longer receive messages"),
 
             "state_msg_receiver":
-                "Who will receive these messages?",
+                $("Who will receive these messages?"),
             "state_last_period_month":
-                "When did the woman have her last period",
+                $("When did the woman have her last period"),
             "state_last_period_day":
-                "What day of the month did the woman start her last period? For example, 12.",
+                $("What day of the month did the woman start her last period? For example, 12."),
             "state_hiv_messages":
-                "Would they like to receive additional messages about HIV?",
+                $("Would they like to receive additional messages about HIV?"),
             "state_end_thank_you":
-                "Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly.",
+                $("Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly."),
 
             "state_end_general":
-                "Thank you for using the FamilyConnect service"
+                $("Thank you for using the FamilyConnect service")
         };
 
         var errors = {
-            "state_auth_code":
-                "That code is not recognised. Please enter your 5 digit personnel code.",
-        };
+            "state_timed_out":
+                $("Sorry not a valid input. You have an incomplete registration. Would you like to continue with this registration?"),
+            "state_language":
+                $("Sorry not a valid input. Welcome to FamilyConnect. Please choose your language"),
+            "state_permission":
+                $("Sorry not a valid input. Welcome to FamilyConnect. Do you have permission to manage the number {{msisdn}}?"),
+            "state_permission_required":
+                $("Sorry not a valid input. Sorry, you need permission."),
+            "state_manage_msisdn":
+                $("Sorry not a valid input. Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number."),
+            "state_change_menu":
+                $("Sorry not a valid input. Choose:"),
+            "state_registration_menu":
+                $("Sorry not a valid input. Choose from:"),
 
-        get_error_text = function(name) {
-            return errors[name] || "Sorry not a valid input. " + questions[name];
-        };
+            "state_already_baby":
+                $("Sorry not a valid input. You are already registered for baby messages."),
+            "state_end_baby":
+                $("Sorry not a valid input. You will receive baby messages."),
 
+            "state_change_language":
+                $("Sorry not a valid input. What language would this person like to receive these messages in?"),
+            "state_end_language":
+                $("Sorry not a valid input. Thank you. Your language preference has been updated and you will start to receive SMSs in this language."),
+
+            "state_change_number":
+                $("Sorry not a valid input. Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899"),
+            "state_number_in_use":
+                $("Sorry not a valid input. Sorry, this number is already registered."),
+            "state_change_recipient":
+                $("Sorry not a valid input. Who will receive these messages?"),
+            "state_end_recipient":
+                $("Sorry not a valid input. Thank you. The number which receives messages has been updated."),
+
+            "state_optout_reason":
+                $("Sorry not a valid input. Please tell us why you no longer want to receive messages so we can help you further."),
+            "state_loss_subscription":
+                $("Sorry not a valid input. We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?"),
+            "state_end_loss_subscription":
+                $("Sorry not a valid input. Thank you. You will now receive messages to support you during this difficult time."),
+            "state_end_optout":
+                $("Sorry not a valid input. Thank you. You will no longer receive messages"),
+
+            "state_msg_receiver":
+                $("Sorry not a valid input. Who will receive these messages?"),
+            "state_last_period_month":
+                $("Sorry not a valid input. When did the woman have her last period"),
+            "state_last_period_day":
+                $("Sorry not a valid input. What day of the month did the woman start her last period? For example, 12."),
+            "state_hiv_messages":
+                $("Sorry not a valid input. Would they like to receive additional messages about HIV?"),
+            "state_end_thank_you":
+                $("Sorry not a valid input. Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly."),
+
+            "state_end_general":
+                $("Sorry not a valid input. Thank you for using the FamilyConnect service")
+        };
 
 
     // TIMEOUT HANDLING
@@ -1099,7 +1148,7 @@ go.app = function() {
         // timeout 01
         self.states.add('state_timed_out', function(name, creator_opts) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 choices: [
                     new Choice('continue', $("Yes")),
                     new Choice('restart', $("No, start from the beginning"))
@@ -1160,14 +1209,14 @@ go.app = function() {
         // ChoiceState st-D
         self.add('state_language', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 choices: [
                     new Choice('eng_UG', $('English')),
                     new Choice('cgg_UG', $('Rukiga')),
                     new Choice('xog_UG', $('Lusoga')),
                     new Choice('lug_UG', $('Luganda'))
                 ],
-                error: $(get_error_text(name)),
+                error: errors[name],
                 next: 'state_permission'
             });
         });
@@ -1175,13 +1224,13 @@ go.app = function() {
         // ChoiceState st-C
         self.add('state_permission', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]).context({'msisdn': self.im.user.addr}),
+                question: questions[name].context({'msisdn': self.im.user.addr}),
                 choices: [
                     new Choice('has_permission', $('Yes')),
                     new Choice('no_permission', $('No')),
                     new Choice('other_number', $("Change the number I'd like to manage"))
                 ],
-                error: $(get_error_text(name)),
+                error: errors[name],
                 next: function(choice) {
                     if (choice.value === 'has_permission') {
                         self.im.user.set_answer('contact_id', self.im.user.answers.user_id);
@@ -1204,7 +1253,7 @@ go.app = function() {
         // EndState permission required
         self.add('state_permission_required', function(name) {
             return new EndState(name, {
-                text: $(questions[name]),
+                text: questions[name],
                 next: 'state_start'
             });
         });
@@ -1212,12 +1261,12 @@ go.app = function() {
         // FreeText st-B
         self.add('state_manage_msisdn', function(name) {
             return new FreeText(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 check: function(content) {
                     if (go.utils.is_valid_msisdn(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return $(get_error_text(name));
+                        return errors[name];
                     }
                 },
                 next: function(content) {
@@ -1254,8 +1303,8 @@ go.app = function() {
         // ChoiceState st-A1
         self.add('state_change_menu', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
-                error: $(get_error_text(name)),
+                question: questions[name],
+                error: errors[name],
                 choices: [
                     new Choice('state_check_baby_subscription', $('Start baby SMSs')),
                     new Choice('state_change_language', $('Update language')),
@@ -1271,8 +1320,8 @@ go.app = function() {
         // ChoiceState st-A2
         self.add('state_registration_menu', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
-                error: $(get_error_text(name)),
+                question: questions[name],
+                error: errors[name],
                 choices: [
                     new Choice('state_msg_receiver', $('Register to receive SMSs about you & your baby'))
                 ],
@@ -1302,12 +1351,12 @@ go.app = function() {
         // ChoiceState st-01
         self.add('state_already_baby', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 choices: [
                     new Choice('state_change_menu', $("Back to main menu")),
                     new Choice('state_end_general', $("Exit"))
                 ],
-                error: $(get_error_text(name)),
+                error: errors[name],
                 next: function(choice) {
                     return choice.value;
                 }
@@ -1325,7 +1374,7 @@ go.app = function() {
         // EndState st-02
         self.add('state_end_baby', function(name) {
             return new EndState(name, {
-                text: $(questions[name]),
+                text: questions[name],
                 next: 'state_start'
             });
         });
@@ -1333,7 +1382,7 @@ go.app = function() {
         // EndState st-18
         self.add('state_end_general', function(name) {
             return new EndState(name, {
-                text: $(questions[name]),
+                text: questions[name],
                 next: 'state_start'
             });
         });
@@ -1342,14 +1391,14 @@ go.app = function() {
         // ChoiceState st-03
         self.add('state_change_language', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 choices: [
                     new Choice('eng_UG', $('English')),
                     new Choice('cgg_UG', $('Rukiga')),
                     new Choice('xog_UG', $('Lusoga')),
                     new Choice('lug_UG', $('Luganda'))
                 ],
-                error: $(get_error_text(name)),
+                error: errors[name],
                 next: 'state_switch_language'
             });
         });
@@ -1369,7 +1418,7 @@ go.app = function() {
         // EndState st-04
         self.add('state_end_language', function(name) {
             return new EndState(name, {
-                text: $(questions[name]),
+                text: questions[name],
                 next: 'state_start'
             });
         });
@@ -1378,12 +1427,12 @@ go.app = function() {
         // FreeText st-05
         self.add('state_change_number', function(name) {
             return new FreeText(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 check: function(content) {
                     if (go.utils.is_valid_msisdn(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return $(get_error_text(name));
+                        return errors[name];
                     }
                 },
                 next: function(content) {
@@ -1408,8 +1457,8 @@ go.app = function() {
         // ChoiceState
         self.add('state_number_in_use', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
-                error: $(get_error_text(name)),
+                question: questions[name],
+                error: errors[name],
                 choices: [
                     new Choice('state_change_number', $("Try a different number")),
                     new Choice('state_end_general', $("Exit"))
@@ -1438,14 +1487,14 @@ go.app = function() {
         // ChoiceState st-06
         self.add('state_change_recipient', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 choices: [
                     new Choice('head_of_household', $("Head of the Household")),
                     new Choice('mother_to_be', $("Mother to be")),
                     new Choice('family_member', $("Family member")),
                     new Choice('trusted_friend', $("Trusted friend"))
                 ],
-                error: $(get_error_text(name)),
+                error: errors[name],
                 next: 'state_end_recipient'
             });
         });
@@ -1453,7 +1502,7 @@ go.app = function() {
         // EndState st-07
         self.add('state_end_recipient', function(name) {
             return new EndState(name, {
-                text: $(questions[name]),
+                text: questions[name],
                 next: 'state_start'
             });
         });
@@ -1463,7 +1512,7 @@ go.app = function() {
         self.add('state_optout_reason', function(name) {
             var loss_reasons = ['miscarriage', 'stillborn', 'baby_death'];
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 choices: [
                     new Choice('miscarriage', $("Mother miscarried")),
                     new Choice('stillborn', $("Baby stillborn")),
@@ -1471,7 +1520,7 @@ go.app = function() {
                     new Choice('not_useful', $("Messages not useful")),
                     new Choice('other', $("Other"))
                 ],
-                error: $(get_error_text(name)),
+                error: errors[name],
                 next: function(choice) {
                     return loss_reasons.indexOf(choice.value) !== -1
                         ? 'state_loss_subscription'
@@ -1483,12 +1532,12 @@ go.app = function() {
         // ChoiceState st-09
         self.add('state_loss_subscription', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 choices: [
                     new Choice('state_switch_loss', $("Yes")),
                     new Choice('state_optout', $("No"))
                 ],
-                error: $(get_error_text(name)),
+                error: errors[name],
                 next: function(choice) {
                     return choice.value;
                 }
@@ -1507,7 +1556,7 @@ go.app = function() {
         // EndState st-10
         self.add('state_end_loss_subscription', function(name) {
             return new EndState(name, {
-                text: $(questions[name]),
+                text: questions[name],
                 next: 'state_start'
             });
         });
@@ -1529,7 +1578,7 @@ go.app = function() {
         // EndState st-11
         self.add('state_end_optout', function(name) {
             return new EndState(name, {
-                text: $(questions[name]),
+                text: questions[name],
                 next: 'state_start'
             });
         });
@@ -1539,14 +1588,14 @@ go.app = function() {
         // ChoiceState st-01
         self.add('state_msg_receiver', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 choices: [
                     new Choice('head_of_household', $("Head of the Household")),
                     new Choice('mother_to_be', $("Mother to be")),
                     new Choice('family_member', $("Family member")),
                     new Choice('trusted_friend', $("Trusted friend"))
                 ],
-                error: $(get_error_text(name)),
+                error: errors[name],
                 next: function() {
                     self.im.user.set_answer('receiver_id', self.im.user.answers.contact_id);
                     return self.states.create('state_save_identities');
@@ -1572,9 +1621,9 @@ go.app = function() {
         self.add('state_last_period_month', function(name) {
             var today = go.utils.get_today(self.im.config);
             return new ChoiceState(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
-                error: $(get_error_text(name)),
+                error: errors[name],
                 next: 'state_last_period_day'
             });
         });
@@ -1582,12 +1631,12 @@ go.app = function() {
         // FreeText st-06
         self.add('state_last_period_day', function(name) {
             return new FreeText(name, {
-                question: $(questions[name]),
+                question: questions[name],
                 check: function(content) {
                     if (go.utils.is_valid_day_of_month(content)) {
                         return null;  // vumi expects null or undefined if check passes
                     } else {
-                        return $(get_error_text(name));
+                        return errors[name];
                     }
                 },
                 next: function(content) {
@@ -1616,8 +1665,8 @@ go.app = function() {
         // ChoiceState st-12
         self.add('state_hiv_messages', function(name) {
             return new ChoiceState(name, {
-                question: $(questions[name]),
-                error: $(get_error_text(name)),
+                question: questions[name],
+                error: errors[name],
                 choices: [
                     new Choice('yes_hiv_msgs', $('Yes')),
                     new Choice('no_hiv_msgs', $('No'))
@@ -1637,7 +1686,7 @@ go.app = function() {
             var text =
                 self.im.user.answers.health_id === 'no_health_id_found'
                 ? $("Thank you. Your FamilyConnect ID will be sent to you in an SMS shortly.")
-                : $(questions[name]).context({health_id: self.im.user.answers.health_id});
+                : questions[name].context({health_id: self.im.user.answers.health_id});
             return new EndState(name, {
                 text: text,
                 next: 'state_start'
