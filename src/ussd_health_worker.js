@@ -196,7 +196,6 @@ go.app = function() {
                     new Choice('family_member', $("Family member")),
                     new Choice('trusted_friend', $("Trusted friend"))
                 ],
-                // error: question,
                 error: errors[name],
                 next: 'state_msisdn'
             });
