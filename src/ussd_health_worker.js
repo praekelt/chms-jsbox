@@ -23,8 +23,6 @@ go.app = function() {
                 $("You have an incomplete registration. Would you like to continue with this registration?"),
             "state_auth_code":
                 $("Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345"),
-            "state_msg_receiver":
-                $("Please select who will receive the messages on their phone:"),
             "state_msisdn":
                 $("Please enter the mobile number which the messages will be sent to. For example, 0803304899"),
             "state_msisdn_already_registered":
@@ -64,8 +62,6 @@ go.app = function() {
                 $("Sorry not a valid input. You have an incomplete registration. Would you like to continue with this registration?"),
             "state_auth_code":
                 $("That code is not recognised. Please enter your 5 digit personnel code."),
-            "state_msg_receiver":
-                $("Sorry not a valid input. Please select who will receive the messages on their phone:"),
             "state_msisdn":
                 $("Sorry not a valid input. Please enter the mobile number which the messages will be sent to. For example, 0803304899"),
             "state_msisdn_already_registered":
@@ -149,7 +145,7 @@ go.app = function() {
                 .then(function(user) {
                     if (user.details.personnel_code) {
                         self.im.user.set_answer('operator_id', user.id);
-                        return self.states.create('state_msg_receiver');
+                        return self.states.create('state_msisdn');
                     } else {
                         return self.states.create('state_auth_code');
                     }
@@ -175,21 +171,6 @@ go.app = function() {
                             }
                         });
                 },
-                next: 'state_msg_receiver'
-            });
-        });
-
-        // ChoiceState st-01
-        self.add('state_msg_receiver', function(name) {
-            return new ChoiceState(name, {
-                question: questions[name],
-                choices: [
-                    new Choice('head_of_household', $("Head of the Household")),
-                    new Choice('mother_to_be', $("Mother to be")),
-                    new Choice('family_member', $("Family member")),
-                    new Choice('trusted_friend', $("Trusted friend"))
-                ],
-                error: errors[name],
                 next: 'state_msisdn'
             });
         });
@@ -277,7 +258,7 @@ go.app = function() {
             return go.utils_project
                 .save_identities(
                     self.im,
-                    self.im.user.answers.state_msg_receiver,
+                    'mother_to_be',
                     self.im.user.answers.receiver_id,
                     self.im.user.answers.operator_id
                 )
