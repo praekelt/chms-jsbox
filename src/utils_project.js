@@ -156,7 +156,6 @@ go.utils_project = {
     update_identities: function(im, is_public_registration) {
       // Saves useful data collected during registration to the relevant identities
         var msg_receiver = im.user.answers.state_msg_receiver;
-        msg_receiver = msg_receiver !== undefined ? msg_receiver : 'mother_to_be';
         if (msg_receiver === 'mother_to_be' || (msg_receiver === 'head_of_household')) {
             return Q
                 .all([
