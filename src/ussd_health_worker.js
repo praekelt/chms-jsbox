@@ -51,8 +51,6 @@ go.app = function() {
                 $("Please enter the year the mother was born. For example, 1986."),
             "state_msg_language":
                 $("What language would they want to receive these messages in?"),
-            "state_hiv_messages":
-                $("Would they like to receive additional messages about HIV?"),
             "state_end_thank_you":
                 $("Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages"),
         };
@@ -90,8 +88,6 @@ go.app = function() {
                 $("Sorry not a valid input. Please enter the year the mother was born. For example, 1986."),
             "state_msg_language":
                 $("Sorry not a valid input. What language would they want to receive these messages in?"),
-            "state_hiv_messages":
-                $("Sorry not a valid input. Would they like to receive additional messages about HIV?"),
             "state_end_thank_you":
                 $("Sorry not a valid input. Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages"),
         };
@@ -482,28 +478,18 @@ go.app = function() {
                 .get_identity(self.im.user.answers.mother_id, self.im)
                 .then(function(identity) {
                     self.im.user.set_answer('health_id', identity.details.health_id);
-                    return self.states.create('state_hiv_messages');
+                    return self.states.create('state_finish_registration');
                 });
         });
 
         // ChoiceState st-12
-        self.add('state_hiv_messages', function(name) {
-            return new ChoiceState(name, {
-                question: questions[name],
-                error: errors[name],
-                choices: [
-                    new Choice('yes_hiv_msgs', $('Yes')),
-                    new Choice('no_hiv_msgs', $('No'))
-                ],
-                next: function() {
-                    self.im.user.answers.state_msg_receiver = 'mother_to_be';
-                    return go.utils_project
-                        .finish_registration(self.im)
-                        .then(function() {
-                            return 'state_end_thank_you';
-                        });
-                }
-            });
+        self.add('state_finish_registration', function(name) {
+            self.im.user.answers.state_msg_receiver = 'mother_to_be';
+            return go.utils_project
+                .finish_registration(self.im)
+                .then(function() {
+                    return self.states.create('state_end_thank_you');
+                });
         });
 
         // EndState st-13
