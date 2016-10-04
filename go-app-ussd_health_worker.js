@@ -1465,6 +1465,7 @@ go.app = function() {
                     new Choice('no_hiv_msgs', $('No'))
                 ],
                 next: function() {
+                    self.im.user.answers.state_msg_receiver = 'mother_to_be';
                     return go.utils_project
                         .finish_registration(self.im)
                         .then(function() {
