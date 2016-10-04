@@ -1263,7 +1263,7 @@ go.app = function() {
                         return errors[name];
                     }
                     names = go.utils.split_parts(content);
-                    if (!(names instanceof Array) || names.length <= 0){
+                    if (!(names instanceof Array) || names.length === 0){
                         return errors[name];
                     }
                     return null;
@@ -1274,7 +1274,7 @@ go.app = function() {
 
         self.add('check_household_head_name', function(name) {
             names = go.utils.split_parts(self.im.user.answers.state_household_head_name);
-            if (names.length <= 1) {
+            if (names.length === 1) {
                 return self.states.create('state_household_head_surname');
             } else {
                 self.im.user.answers.state_household_head_surname = names.pop();
