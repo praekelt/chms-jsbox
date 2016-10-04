@@ -81,7 +81,7 @@ describe("familyconnect health worker app", function() {
                         , '1'  // state_timed_out - continue
                     )
                     .check.interaction({
-                        state: 'state_msg_receiver'
+                        state: 'state_msisdn'
                     })
                     .run();
             });
@@ -112,7 +112,7 @@ describe("familyconnect health worker app", function() {
                         {session_event: 'new'}  // dial in
                     )
                     .check.interaction({
-                        state: 'state_msg_receiver'
+                        state: 'state_msisdn'
                     })
                     .run();
             });
@@ -136,34 +136,11 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_msg_receiver", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                    )
-                    .check.interaction({
-                        state: 'state_msg_receiver',
-                        reply: [
-                            "Please select who will receive the messages on their phone:",
-                            "1. Head of the Household",
-                            "2. Mother to be",
-                            "3. Family member",
-                            "4. Trusted friend"
-                        ].join('\n')
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0]);
-                    })
-                    .run();
-            });
             it("to state_msisdn", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                     )
                     .check.interaction({
                         state: 'state_msisdn',
@@ -180,7 +157,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000444'  // state_msisdn
                     )
                     .check.interaction({
@@ -196,59 +172,12 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_household_head_name (hoh, recognised, no active subs)", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
-                        , '0820000555'  // state_msisdn
-                    )
-                    .check.interaction({
-                        state: 'state_household_head_name',
-                        reply: "Please enter the first name of the Head of the Household. For example: Isaac."
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,9,10,15]);
-                    })
-                    .check.user.answer('state_msg_receiver', 'head_of_household')
-                    .check.user.answer('receiver_id', 'identity-uuid-09')
-                    .check.user.answer('mother_id', 'identity-uuid-15')
-                    .check.user.answer('hoh_id', 'identity-uuid-09')
-                    .check.user.answer('ff_id', undefined)
-                    .run();
-            });
-            it("to state_household_head_name (hoh, unrecognised)", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
-                        , '0820000333'  // state_msisdn
-                    )
-                    .check.interaction({
-                        state: 'state_household_head_name',
-                        reply: "Please enter the first name of the Head of the Household. For example: Isaac."
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,5,6,16]);
-                    })
-                    .check.user.answer('state_msg_receiver', 'head_of_household')
-                    .check.user.answer('receiver_id', 'identity-uuid-06')
-                    .check.user.answer('hoh_id', 'identity-uuid-06')
-                    .check.user.answer('mother_id', 'identity-uuid-16')
-                    .check.user.answer('ff_id', undefined)
-                    .run();
-            });
             it("to state_household_head_name (mother, unrecognised)", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '2'  // state_msg_receiver - mother_to_be
                         , '0820000333'  // state_msisdn
                     )
                     .check.interaction({
@@ -258,34 +187,10 @@ describe("familyconnect health worker app", function() {
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [0,5,6,17]);
                     })
-                    .check.user.answer('state_msg_receiver', 'mother_to_be')
                     .check.user.answer('receiver_id', 'identity-uuid-06')
                     .check.user.answer('mother_id', 'identity-uuid-06')
                     .check.user.answer('hoh_id', 'identity-uuid-17')
                     .check.user.answer('ff_id', undefined)
-                    .run();
-            });
-            it("to state_household_head_name (friend, unrecognised)", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '4'  // state_msg_receiver - trusted_friend
-                        , '0820000333'  // state_msisdn
-                    )
-                    .check.interaction({
-                        state: 'state_household_head_name',
-                        reply: "Please enter the first name of the Head of the Household. For example: Isaac."
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,5,6,16,17]);
-                    })
-                    .check.user.answer('state_msg_receiver', 'trusted_friend')
-                    .check.user.answer('receiver_id', 'identity-uuid-06')
-                    .check.user.answer('ff_id', 'identity-uuid-06')
-                    .check.user.answer('hoh_id', 'identity-uuid-17')
-                    .check.user.answer('mother_id', 'identity-uuid-16')
                     .run();
             });
             it("to state_household_head_surname", function() {
@@ -294,7 +199,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                     )
@@ -303,7 +207,7 @@ describe("familyconnect health worker app", function() {
                         reply: "Please enter the surname of the Head of the Household. For example: Mbire."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,5,6,16]);
+                        go.utils.check_fixtures_used(api, [0,5,6,17]);
                     })
                     .run();
             });
@@ -313,7 +217,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -341,7 +244,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -359,7 +261,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -378,7 +279,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -398,7 +298,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -424,7 +323,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -446,7 +344,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -476,7 +373,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -498,7 +394,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -535,7 +430,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -559,7 +453,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -591,7 +484,6 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -612,46 +504,17 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,5,6,16,18]);
+                        go.utils.check_fixtures_used(api, [0,5,6,17,19]);
                     })
                     .run();
             });
 
-            it("complete flow - hoh, uganda ID, english, hiv messages", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
-                        , '0820000333'  // state_msisdn
-                        , 'Isaac'  // state_household_head_name
-                        , 'Mbire'  // state_household_head_surname
-                        , '1'  // state_last_period_month - july 2015
-                        , '21'  // state_last_period_day - 21st
-                        , 'Sharon'  // state_mother_name
-                        , 'Nalule'  // state_mother_surname
-                        , '1'  // state_id_type - ugandan id
-                        , '444'  // state_nin
-                        , '3'  // state_msg_language - lusoga
-                        , '1'  // state_hiv_messages - yes
-                    )
-                    .check.interaction({
-                        state: 'state_end_thank_you',
-                        reply: "Thank you. The woman's FamilyConnect ID is 1600000000. They will now start receiving messages"
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,5,6,16,18,19,20,25,26]);
-                    })
-                    .run();
-            });
             it("complete flow - mother, other ID, lusoga, no hiv msgs", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '2'  // state_msg_receiver - mother to be
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -675,36 +538,6 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("complete flow - friend, other ID, lusoga, hiv msgs", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '4'  // state_msg_receiver - trusted_friend
-                        , '0820000333'  // state_msisdn
-                        , 'Isaac'  // state_household_head_name
-                        , 'Mbire'  // state_household_head_surname
-                        , '1'  // state_last_period_month - July 2015
-                        , '21'  // state_last_period_day - 21st
-                        , 'Mary'  // state_mother_name
-                        , 'Nalule'  // state_mother_surname
-                        , '2'  // state_id_type - other ID
-                        , '13'  // state_mother_birth_day - 13th
-                        , '5'  // state_mother_birth_month - may
-                        , '1982'  // state_mother_birth_year - 1982
-                        , '3'  // state_msg_language - lusoga
-                        , '2'  // state_hiv_messages - yes
-                    )
-                    .check.interaction({
-                        state: 'state_end_thank_you',
-                        reply: "Thank you. The woman's FamilyConnect ID is 1600000000. They will now start receiving messages"
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,5,6,16,17,18,19,23,27,28,29,30]);
-                    })
-                    .run();
-            });
         });
 
         // TEST VALIDATION
@@ -723,33 +556,12 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("validate state_msg_receiver", function() {
-                return tester
-                    .setup.user.addr('0820000222')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '5'  // state_msg_receiver - invalid choice
-                    )
-                    .check.interaction({
-                        state: 'state_msg_receiver',
-                        reply: [
-                            "Sorry not a valid input. Please select who will receive the messages on their phone:",
-                            "1. Head of the Household",
-                            "2. Mother to be",
-                            "3. Family member",
-                            "4. Trusted friend"
-                        ].join('\n')
-                    })
-                    .run();
-            });
             it("validate state_household_head_name", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , '12345'  // state_auth_code - personnel code
-                        , '1'  // state_msg_receiver - head of household
                         , '0820000333'  // state_msisdn
                         , 'Isaac1'  // state_household_head_name
                     )
