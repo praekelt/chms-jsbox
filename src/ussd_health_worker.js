@@ -267,31 +267,19 @@ go.app = function() {
                 });
         });
 
-        // FreeText st-03
+        // FreeText st-04
         self.add('state_household_head_name', function(name) {
             return new FreeText(name, {
                 question: questions[name],
                 check: function(content) {
-                    if (go.utils.is_valid_name(content, 1, 150)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
+                    if (!go.utils.is_valid_name(content, 1, 150)) {
                         return errors[name];
                     }
-                },
-                next: 'state_household_head_surname'
-            });
-        });
-
-        // FreeText st-04
-        self.add('state_household_head_surname', function(name) {
-            return new FreeText(name, {
-                question: questions[name],
-                check: function(content) {
-                    if (go.utils.is_valid_name(content, 1, 150)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
+                    names = go.utils.split_parts(content);
+                    if (!(names instanceof Array) || names.length <= 1) {
                         return errors[name];
                     }
+                    return null;
                 },
                 next: 'state_last_period_month'
             });
@@ -483,6 +471,9 @@ go.app = function() {
                 ],
                 next: function() {
                     self.im.user.answers.state_msg_receiver = 'mother_to_be';
+                    var names = go.utils.split_parts(self.im.user.answers.state_household_head_name);
+                    self.im.user.answers.state_household_head_surname = names.pop();
+                    self.im.user.answers.state_household_head_name = names.join(' ');
                     return go.utils_project
                         .finish_registration(self.im)
                         .then(function() {

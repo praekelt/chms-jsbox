@@ -195,6 +195,11 @@ go.utils = {
         return input !== '' && name_check.test(input);
     },
 
+    split_parts: function(input) {
+        // returns an array of an input split by whitespace, or null
+        return input.match(/\S+/g);
+    },
+
     get_clean_first_word: function(user_message) {
         return user_message
             .split(" ")[0]          // split off first word
