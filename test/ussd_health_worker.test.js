@@ -501,36 +501,6 @@ describe("familyconnect health worker app", function() {
                     .run();
             });
 
-            it("to state_hiv_messages", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '0820000333'  // state_msisdn
-                        , 'Isaac Mbire'  // state_household_head_name
-                        , '1'  // state_last_period_month - july 2015
-                        , '21'  // state_last_period_day - 21st
-                        , 'Sharon'  // state_mother_name
-                        , 'Nalule'  // state_mother_surname
-                        , '1'  // state_id_type - ugandan id
-                        , '444'  // state_nin
-                        , '3'  // state_msg_language - lusoga
-                    )
-                    .check.interaction({
-                        state: 'state_hiv_messages',
-                        reply: [
-                            "Would they like to receive additional messages about HIV?",
-                            "1. Yes",
-                            "2. No"
-                        ].join('\n')
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,5,6,17,19]);
-                    })
-                    .run();
-            });
-
             it("complete flow - mother, other ID, lusoga, no hiv msgs", function() {
                 return tester
                     .setup.user.addr('0820000111')
@@ -548,7 +518,6 @@ describe("familyconnect health worker app", function() {
                         , '5'  // state_mother_birth_month - may
                         , '1982'  // state_mother_birth_year - 1982
                         , '3'  // state_msg_language - lusoga
-                        , '2'  // state_hiv_messages - no
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
