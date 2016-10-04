@@ -28,9 +28,9 @@ go.app = function() {
             "state_msisdn_already_registered":
                 $("{{msisdn}} is already registered for messages."),
             "state_household_head_name":
-                $("Please enter the first name of the Head of the Household. For example: Isaac."),
+                $("Please enter the name and surname of the Head of the Household. For example: Isaac Mbire"),
             "state_household_head_surname":
-                $("Please enter the surname of the Head of the Household. For example: Mbire."),
+                $("You only entered the first name, please enter the surname of the household. For example: Mbire"),
             "state_last_period_month":
                 $("When did the woman have her last period:"),
             "state_last_period_day":
@@ -67,9 +67,9 @@ go.app = function() {
             "state_msisdn_already_registered":
                 $("Sorry not a valid input. {{msisdn}} is already registered for messages."),
             "state_household_head_name":
-                $("Sorry not a valid input. Please enter the first name of the Head of the Household. For example: Isaac."),
+                $("Sorry not a valid input. Please enter the name and surname of the Head of the Household. For example: Isaac Mbire"),
             "state_household_head_surname":
-                $("Sorry not a valid input. Please enter the surname of the Head of the Household. For example: Mbire."),
+                $("Sorry not a valid input. Please enter the surname of the Head of the Household. For example: Mbire"),
             "state_last_period_month":
                 $("Sorry not a valid input. When did the woman have her last period:"),
             "state_last_period_day":
@@ -276,7 +276,32 @@ go.app = function() {
                         return errors[name];
                     }
                     names = go.utils.split_parts(content);
-                    if (!(names instanceof Array) || names.length <= 1) {
+                    if (!(names instanceof Array) || names.length <= 0){
+                        return errors[name];
+                    }
+                    return null;
+                },
+                next: 'check_household_head_name'
+            });
+        });
+
+        self.add('check_household_head_name', function(name) {
+            names = go.utils.split_parts(self.im.user.answers.state_household_head_name);
+            if (names.length <= 1) {
+                return self.states.create('state_household_head_surname');
+            } else {
+                self.im.user.answers.state_household_head_surname = names.pop();
+                self.im.user.answers.state_household_head_name = names.join(' ');
+                return self.states.create('state_last_period_month');
+            }
+        });
+
+        // FreeText st-13
+        self.add('state_household_head_surname', function(name) {
+            return new FreeText(name, {
+                question: questions[name],
+                check: function(content) {
+                    if (!go.utils.is_valid_name(content, 1, 150)) {
                         return errors[name];
                     }
                     return null;
@@ -284,6 +309,7 @@ go.app = function() {
                 next: 'state_last_period_month'
             });
         });
+
 
         // ChoiceState st-05
         self.add('state_last_period_month', function(name) {
@@ -471,9 +497,6 @@ go.app = function() {
                 ],
                 next: function() {
                     self.im.user.answers.state_msg_receiver = 'mother_to_be';
-                    var names = go.utils.split_parts(self.im.user.answers.state_household_head_name);
-                    self.im.user.answers.state_household_head_surname = names.pop();
-                    self.im.user.answers.state_household_head_name = names.join(' ');
                     return go.utils_project
                         .finish_registration(self.im)
                         .then(function() {

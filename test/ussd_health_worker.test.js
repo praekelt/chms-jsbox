@@ -182,7 +182,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_household_head_name',
-                        reply: "Please enter the first name of the Head of the Household. For example: Isaac."
+                        reply: "Please enter the name and surname of the Head of the Household. For example: Isaac Mbire"
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [0,5,6,17]);
@@ -536,7 +536,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_household_head_name',
-                        reply: "Sorry not a valid input. Please enter the first name of the Head of the Household. For example: Isaac."
+                        reply: "Sorry not a valid input. Please enter the name and surname of the Head of the Household. For example: Isaac Mbire"
                     })
                     .run();
             });
