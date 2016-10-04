@@ -193,7 +193,44 @@ describe("familyconnect health worker app", function() {
                     .check.user.answer('ff_id', undefined)
                     .run();
             });
-            it("to state_last_period_month", function() {
+            it("to state_household_head_surname (mother, unrecognised)", function() {
+                return tester
+                    .setup.user.addr('0820000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '0820000333'  // state_msisdn
+                        , 'Isaac' // state_household_head_name
+                    )
+                    .check.interaction({
+                        state: 'state_household_head_surname',
+                        reply: "You only entered the first name, please enter the surname of the household. For example: Mbire"
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [0,5,6,17]);
+                    })
+                    .check.user.answer('receiver_id', 'identity-uuid-06')
+                    .check.user.answer('mother_id', 'identity-uuid-06')
+                    .check.user.answer('hoh_id', 'identity-uuid-17')
+                    .check.user.answer('ff_id', undefined)
+                    .check.user.answer('state_household_head_name', 'Isaac')
+                    .run();
+            });
+            it("to state_last_period_month (one name)", function() {
+                return tester
+                    .setup.user.addr('0820000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '0820000333'  // state_msisdn
+                        , 'Isaac'  // state_household_head_name
+                        , 'Mbire'  // state_household_head_surname
+                    )
+                    .check.user.answer('state_household_head_name', 'Isaac')
+                    .check.user.answer('state_household_head_surname', 'Mbire')
+                    .run();
+            });
+            it("to state_last_period_month (two names)", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
@@ -217,6 +254,21 @@ describe("familyconnect health worker app", function() {
                             "9. Aug 14"
                         ].join('\n')
                     })
+                    .check.user.answer('state_household_head_name', 'Isaac')
+                    .check.user.answer('state_household_head_surname', 'Mbire')
+                    .run();
+            });
+            it("to state_last_period_month (three names)", function() {
+                return tester
+                    .setup.user.addr('0820000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , '12345'  // state_auth_code - personnel code
+                        , '0820000333'  // state_msisdn
+                        , 'Isaac Birungi Mbire'  // state_household_head_name
+                    )
+                    .check.user.answer('state_household_head_name', 'Isaac Birungi')
+                    .check.user.answer('state_household_head_surname', 'Mbire')
                     .run();
             });
             it("to state_last_period_day", function() {
