@@ -804,7 +804,6 @@ return [
                         "surname": "Nalule",
                         "name": "Mary Nalule",
                         "id_type": "other",
-                        "hiv_interest": "no_hiv_msgs",
                         "dob": "19820513"
                     },
                 }
@@ -912,7 +911,6 @@ return [
                         "surname": "Nalule",
                         "name": "Sharon Nalule",
                         "id_type": "ugandan_id",
-                        "hiv_interest": "yes_hiv_msgs",
                         "nin": "444",
                         "msg_receiver": "head_of_household"
                     },
@@ -1024,7 +1022,6 @@ return [
                         "surname": "Nalule",
                         "name": "Mary Nalule",
                         "id_type": "other",
-                        "hiv_interest": "no_hiv_msgs",
                         "dob": "19820513"
                     },
                 }
