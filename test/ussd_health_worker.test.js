@@ -156,7 +156,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000444'  // state_msisdn
                     )
                     .check.interaction({
@@ -177,7 +176,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                     )
                     .check.interaction({
@@ -198,7 +196,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                         , 'Isaac' // state_household_head_name
                     )
@@ -221,7 +218,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                         , 'Isaac'  // state_household_head_name
                         , 'Mbire'  // state_household_head_surname
@@ -235,7 +231,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                         , 'Isaac Mbire'  // state_household_head_name
                     )
@@ -263,7 +258,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                         , 'Isaac Birungi Mbire'  // state_household_head_name
                     )
@@ -276,7 +270,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                         , 'Isaac Mbire'  // state_household_head_name
                         , '1'  // state_last_period_month - july 2015
@@ -292,7 +285,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                         , 'Isaac Mbire'  // state_household_head_name
                         , '1'  // state_last_period_month - july 2015
@@ -309,7 +301,6 @@ describe("familyconnect health worker app", function() {
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                         , 'Isaac Mbire'  // state_household_head_name
                         , '1'  // state_last_period_month - july 2015
@@ -322,64 +313,17 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_id_type", function() {
+            it("to state_msg_language", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                         , 'Isaac Mbire'  // state_household_head_name
                         , '1'  // state_last_period_month - july 2015
                         , '21'  // state_last_period_day - 21st
                         , 'Sharon'  // state_mother_name
                         , 'Nalule'  // state_mother_surname
-                    )
-                    .check.interaction({
-                        state: 'state_id_type',
-                        reply: [
-                            "What kind of identification does the woman have?",
-                            "1. Ugandan National Identity Number",
-                            "2. Other"
-                        ].join('\n')
-                    })
-                    .run();
-            });
-
-            it("to state_nin", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '0820000333'  // state_msisdn
-                        , 'Isaac Mbire'  // state_household_head_name
-                        , '1'  // state_last_period_month - july 2015
-                        , '21'  // state_last_period_day - 21st
-                        , 'Sharon'  // state_mother_name
-                        , 'Nalule'  // state_mother_surname
-                        , '1'  // state_id_type - ugandan id
-                    )
-                    .check.interaction({
-                        state: 'state_nin',
-                        reply: "Please enter the woman's National Identity Number:"
-                    })
-                    .run();
-            });
-            it("to state_msg_language (NIN)", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '0820000333'  // state_msisdn
-                        , 'Isaac Mbire'  // state_household_head_name
-                        , '1'  // state_last_period_month - july 2015
-                        , '21'  // state_last_period_day - 21st
-                        , 'Sharon'  // state_mother_name
-                        , 'Nalule'  // state_mother_surname
-                        , '1'  // state_id_type - ugandan id
-                        , '444'  // state_nin
                     )
                     .check.interaction({
                         state: 'state_msg_language',
@@ -394,129 +338,17 @@ describe("familyconnect health worker app", function() {
                     .run();
             });
 
-            it("to state_mother_birth_day", function() {
+            it("complete flow - mother, lusoga, no hiv msgs", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '0820000333'  // state_msisdn
-                        , 'Isaac Mbire'  // state_household_head_name
-                        , '1'  // state_last_period_month - july 2015
-                        , '21'  // state_last_period_day - 21st
-                        , 'Sharon'  // state_mother_name
-                        , 'Nalule'  // state_mother_surname
-                        , '2'  // state_id_type - other
-                    )
-                    .check.interaction({
-                        state: 'state_mother_birth_day',
-                        reply: "Please enter the day the woman was born. For example, 12."
-                    })
-                    .run();
-            });
-            it("to state_mother_birth_month", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '0820000333'  // state_msisdn
-                        , 'Isaac Mbire'  // state_household_head_name
-                        , '1'  // state_last_period_month - july 2015
-                        , '21'  // state_last_period_day - 21st
-                        , 'Sharon'  // state_mother_name
-                        , 'Nalule'  // state_mother_surname
-                        , '2'  // state_id_type - other
-                        , '13'  // state_mother_birth_day - 13th
-                    )
-                    .check.interaction({
-                        state: 'state_mother_birth_month',
-                        reply: [
-                            "Please select the month of birth:",
-                            "1. January",
-                            "2. February",
-                            "3. March",
-                            "4. April",
-                            "5. May",
-                            "6. June",
-                            "7. July",
-                            "8. August",
-                            "9. September",
-                            "10. October",
-                            "11. November",
-                            "12. December"
-                        ].join('\n')
-                    })
-                    .run();
-            });
-            it("to state_mother_birth_year", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '0820000333'  // state_msisdn
-                        , 'Isaac Mbire'  // state_household_head_name
-                        , '1'  // state_last_period_month - july 2015
-                        , '21'  // state_last_period_day - 21st
-                        , 'Sharon'  // state_mother_name
-                        , 'Nalule'  // state_mother_surname
-                        , '2'  // state_id_type - other
-                        , '13'  // state_mother_birth_day - 13th
-                        , '5'  // state_mother_birth_month - may
-                    )
-                    .check.interaction({
-                        state: 'state_mother_birth_year',
-                        reply: "Please enter the year the mother was born. For example, 1986."
-                    })
-                    .run();
-            });
-            it("to state_msg_language (Other)", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
-                        , '0820000333'  // state_msisdn
-                        , 'Isaac Mbire'  // state_household_head_name
-                        , '1'  // state_last_period_month - july 2015
-                        , '21'  // state_last_period_day - 21st
-                        , 'Sharon'  // state_mother_name
-                        , 'Nalule'  // state_mother_surname
-                        , '2'  // state_id_type - other
-                        , '13'  // state_mother_birth_day - 13th
-                        , '5'  // state_mother_birth_month - may
-                        , '1982'  // state_mother_birth_year - 1982
-                    )
-                    .check.interaction({
-                        state: 'state_msg_language',
-                        reply: [
-                            "What language would they want to receive these messages in?",
-                            "1. English",
-                            "2. Rukiga",
-                            "3. Lusoga",
-                            "4. Luganda"
-                        ].join('\n')
-                    })
-                    .run();
-            });
-
-            it("complete flow - mother, other ID, lusoga, no hiv msgs", function() {
-                return tester
-                    .setup.user.addr('0820000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , '12345'  // state_auth_code - personnel code
                         , '0820000333'  // state_msisdn
                         , 'Isaac Mbire'  // state_household_head_name
                         , '1'  // state_last_period_month - July 2015
                         , '21'  // state_last_period_day - 21st
                         , 'Mary'  // state_mother_name
                         , 'Nalule'  // state_mother_surname
-                        , '2'  // state_id_type - other ID
-                        , '13'  // state_mother_birth_day - 13th
-                        , '5'  // state_mother_birth_month - may
-                        , '1982'  // state_mother_birth_year - 1982
                         , '3'  // state_msg_language - lusoga
                     )
                     .check.interaction({

@@ -764,8 +764,6 @@ return [
                         "hoh_surname": "Mbire",
                         "mama_name": "Mary",
                         "mama_surname": "Nalule",
-                        "mama_id_type": "other",
-                        "mama_dob": "19820513"
                     }
                 }
             },
@@ -803,8 +801,6 @@ return [
                         "first_name": "Mary",
                         "surname": "Nalule",
                         "name": "Mary Nalule",
-                        "id_type": "other",
-                        "dob": "19820513"
                     },
                 }
             },
