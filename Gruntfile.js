@@ -63,6 +63,11 @@ module.exports = function (grunt) {
                     'src/utils_project.js',
                     '<%= paths.src.app.sms_inbound %>',
                     'test/sms_inbound.test.js'
+                ],
+                utils: [
+                    'test/setup.js',
+                    'src/utils',
+                    'test/utils.js'
                 ]
             }
         },
@@ -123,6 +128,9 @@ module.exports = function (grunt) {
             },
             test_sms_inbound: {
                 src: ['<%= paths.test.sms_inbound %>']
+            },
+            test_utils: {
+                src: ['<%= paths.test.utils %>']
             }
         }
     });
