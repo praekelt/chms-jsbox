@@ -990,7 +990,6 @@ go.app = function() {
     var App = vumigo.App;
     var Choice = vumigo.states.Choice;
     var ChoiceState = vumigo.states.ChoiceState;
-    var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
     var EndState = vumigo.states.EndState;
     var FreeText = vumigo.states.FreeText;
 
@@ -1026,16 +1025,6 @@ go.app = function() {
                 $("Please enter the name of the woman. For example: Sharon"),
             "state_mother_surname":
                 $("Please enter the surname of the woman. For example: Nalule"),
-            "state_id_type":
-                $("What kind of identification does the woman have?"),
-            "state_nin":
-                $("Please enter the woman's National Identity Number:"),
-            "state_mother_birth_day":
-                $("Please enter the day the woman was born. For example, 12."),
-            "state_mother_birth_month":
-                $("Please select the month of birth:"),
-            "state_mother_birth_year":
-                $("Please enter the year the mother was born. For example, 1986."),
             "state_msg_language":
                 $("What language would they want to receive these messages in?"),
             "state_end_thank_you":
@@ -1063,16 +1052,6 @@ go.app = function() {
                 $("Sorry not a valid input. Please enter the name of the woman. For example: Sharon"),
             "state_mother_surname":
                 $("Sorry not a valid input. Please enter the surname of the woman. For example: Nalule"),
-            "state_id_type":
-                $("Sorry not a valid input. What kind of identification does the woman have?"),
-            "state_nin":
-                $("Sorry not a valid input. Please enter the woman's National Identity Number:"),
-            "state_mother_birth_day":
-                $("Sorry not a valid input. Please enter the day the woman was born. For example, 12."),
-            "state_mother_birth_month":
-                $("Sorry not a valid input. Please select the month of birth:"),
-            "state_mother_birth_year":
-                $("Sorry not a valid input. Please enter the year the mother was born. For example, 1986."),
             "state_msg_language":
                 $("Sorry not a valid input. What language would they want to receive these messages in?"),
             "state_end_thank_you":
@@ -1352,96 +1331,7 @@ go.app = function() {
                         return errors[name];
                     }
                 },
-                next: 'state_id_type'
-            });
-        });
-
-        // ChoiceState st-09
-        self.add('state_id_type', function(name) {
-            return new ChoiceState(name, {
-                question: questions[name],
-                error: errors[name],
-                choices: [
-                    new Choice('ugandan_id', $("Ugandan National Identity Number")),
-                    new Choice('other', $("Other"))
-                ],
-                next: function(choice) {
-                    return choice.value === 'ugandan_id'
-                        ? 'state_nin'
-                        : 'state_mother_birth_day';
-                }
-            });
-        });
-
-        // FreeText st-10
-        self.add('state_nin', function(name) {
-            return new FreeText(name, {
-                question: questions[name],
                 next: 'state_msg_language'
-            });
-        });
-
-        // FreeText st-17
-        self.add('state_mother_birth_day', function(name) {
-            return new FreeText(name, {
-                question: questions[name],
-                check: function(content) {
-                    if (go.utils.is_valid_day_of_month(content)) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
-                        return errors[name];
-                    }
-                },
-                next: 'state_mother_birth_month'
-            });
-        });
-
-        // PaginatedChoiceState st-18 / st-19
-        self.add('state_mother_birth_month', function(name) {
-            return new PaginatedChoiceState(name, {
-                question: questions[name],
-                error: errors[name],
-                characters_per_page: 160,
-                options_per_page: null,
-                more: $('More'),
-                back: $('Back'),
-                choices: [
-                    new Choice('01', $('January')),
-                    new Choice('02', $('February')),
-                    new Choice('03', $('March')),
-                    new Choice('04', $('April')),
-                    new Choice('05', $('May')),
-                    new Choice('06', $('June')),
-                    new Choice('07', $('July')),
-                    new Choice('08', $('August')),
-                    new Choice('09', $('September')),
-                    new Choice('10', $('October')),
-                    new Choice('11', $('November')),
-                    new Choice('12', $('December'))
-                ],
-                next: 'state_mother_birth_year'
-            });
-        });
-
-        // FreeText st-20
-        self.add('state_mother_birth_year', function(name) {
-            return new FreeText(name, {
-                question: questions[name],
-                check: function(content) {
-                    if (go.utils.is_valid_year(content, '1900', go.utils.get_today(self.im.config).format('YYYY'))) {
-                        return null;  // vumi expects null or undefined if check passes
-                    } else {
-                        return errors[name];
-                    }
-                },
-                next: function(content) {
-                    var year = content;
-                    var month = self.im.user.answers.state_mother_birth_month;
-                    var day = go.utils.double_digit_number(
-                        self.im.user.answers.state_mother_birth_day);
-                    self.im.user.set_answer('mother_dob', year+month+day);
-                    return 'state_msg_language';
-                }
             });
         });
 
