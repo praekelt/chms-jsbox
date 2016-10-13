@@ -22,12 +22,10 @@ go.app = function() {
                 $("You have an incomplete registration. Would you like to continue with this registration?"),
             "state_language":
                 $("Welcome to FamilyConnect. Please choose your language"),
-            "state_permission":
-                $("Welcome to FamilyConnect. Do you have permission to manage the number {{msisdn}}?"),
-            "state_permission_required":
-                $("Sorry, you need permission."),
+            "state_choose_number":
+                $("Choose from:"),
             "state_manage_msisdn":
-                $("Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number."),
+                $("Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899"),
             "state_change_menu":
                 $("Choose:"),
             "state_registration_menu":
@@ -81,12 +79,10 @@ go.app = function() {
                 $("Sorry not a valid input. You have an incomplete registration. Would you like to continue with this registration?"),
             "state_language":
                 $("Sorry not a valid input. Welcome to FamilyConnect. Please choose your language"),
-            "state_permission":
-                $("Sorry not a valid input. Welcome to FamilyConnect. Do you have permission to manage the number {{msisdn}}?"),
-            "state_permission_required":
-                $("Sorry not a valid input. Sorry, you need permission."),
+            "state_choose_number":
+                $("Sorry not a valid input. Choose from:"),
             "state_manage_msisdn":
-                $("Sorry not a valid input. Please enter the number you would like to manage. For example 0803304899.  Note: You should permission from the owner to manage this number."),
+                $("Sorry not a valid input. Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899"),
             "state_change_menu":
                 $("Sorry not a valid input. Choose:"),
             "state_registration_menu":
@@ -214,7 +210,9 @@ go.app = function() {
                                     return self.states.create('state_servicerating_question1');
                                 }
                                 else {
-                                    return self.states.create('state_permission');
+                                    return self.states.create('state_check_registered_user', {
+                                        msisdn: go.utils.normalize_msisdn(self.im.user.addr, self.im.config.country_code)
+                                    });
                                 }
                             });
                     } else {
@@ -235,22 +233,21 @@ go.app = function() {
                     new Choice('lug_UG', $('Luganda'))
                 ],
                 error: errors[name],
-                next: 'state_permission'
+                next: 'state_choose_number'
             });
         });
 
         // ChoiceState st-C
-        self.add('state_permission', function(name) {
+        self.add('state_choose_number', function(name) {
             return new ChoiceState(name, {
                 question: questions[name].context({'msisdn': self.im.user.addr}),
                 choices: [
-                    new Choice('has_permission', $('Yes')),
-                    new Choice('no_permission', $('No')),
-                    new Choice('other_number', $("Change the number I'd like to manage"))
+                    new Choice('this_number', $("Register this number to receive SMSs about you & your baby")),
+                    new Choice('other_number', $("Manage a different phone number"))
                 ],
                 error: errors[name],
                 next: function(choice) {
-                    if (choice.value === 'has_permission') {
+                    if (choice.value === 'this_number') {
                         self.im.user.set_answer('contact_id', self.im.user.answers.user_id);
                         self.im.user.set_answer('contact_msisdn', go.utils
                             .normalize_msisdn(self.im.user.addr, self.im.config.country_code));
@@ -258,21 +255,10 @@ go.app = function() {
                             ? 'state_msg_receiver'
                             : 'state_change_menu';
                     }
-                    else if (choice.value === 'no_permission') {
-                        return 'state_permission_required';
-                    }
                     else if (choice.value === 'other_number') {
                         return 'state_manage_msisdn';
                     }
                 }
-            });
-        });
-
-        // EndState permission required
-        self.add('state_permission_required', function(name) {
-            return new EndState(name, {
-                text: questions[name],
-                next: 'state_start'
             });
         });
 
