@@ -916,7 +916,8 @@ return [
                         }
                     ]
                 }
-            }
+            },
+        'repeatable': true
     },
 
     // 27: get messageset 1
@@ -942,7 +943,8 @@ return [
                 'created_at': "2015-07-10T06:13:29.693272Z",
                 'updated_at': "2015-07-10T06:13:29.693272Z"
             }
-        }
+        },
+        'repeatable': true
     },
 
     // 28: Change to baby - 2222
@@ -965,7 +967,8 @@ return [
             'data': {
                 'id': 1
             }
-        }
+        },
+        'repeatable': true
     },
 
     // 29: get identity 0720000555 by msisdn
