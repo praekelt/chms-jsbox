@@ -1045,9 +1045,6 @@ go.app = function() {
                 $("Thank you. You will now receive messages to support you during this difficult time."),
             "state_end_optout":
                 $("Thank you. You will no longer receive messages"),
-
-            "state_msg_receiver":
-                $("Who will receive these messages?"),
             "state_last_period_month":
                 $("When did the woman have her last period"),
             "state_last_period_day":
@@ -1102,9 +1099,6 @@ go.app = function() {
                 $("Sorry not a valid input. Thank you. You will now receive messages to support you during this difficult time."),
             "state_end_optout":
                 $("Sorry not a valid input. Thank you. You will no longer receive messages"),
-
-            "state_msg_receiver":
-                $("Sorry not a valid input. Who will receive these messages?"),
             "state_last_period_month":
                 $("Sorry not a valid input. When did the woman have her last period"),
             "state_last_period_day":
@@ -1239,7 +1233,7 @@ go.app = function() {
                         self.im.user.set_answer('contact_msisdn', go.utils
                             .normalize_msisdn(self.im.user.addr, self.im.config.country_code));
                         return self.im.user.answers.role === 'guest'
-                            ? 'state_msg_receiver'
+                            ? 'state_save_identities'
                             : 'state_change_menu';
                     }
                     else if (choice.value === 'other_number') {
@@ -1286,7 +1280,7 @@ go.app = function() {
                         return self.states.create('state_change_menu');
                     } else {
                         self.im.user.set_answer('contact_id', contact.id);
-                        return self.states.create('state_msg_receiver');
+                        return self.states.create('state_save_identities');
                     }
                 });
         });
@@ -1307,21 +1301,6 @@ go.app = function() {
                 }
             });
         });
-
-        // ChoiceState st-A2
-        self.add('state_registration_menu', function(name) {
-            return new ChoiceState(name, {
-                question: questions[name],
-                error: errors[name],
-                choices: [
-                    new Choice('state_msg_receiver', $('Register to receive SMSs about you & your baby'))
-                ],
-                next: function(choice) {
-                    return choice.value;
-                }
-            });
-        });
-
 
     // CHANGE STATES
 
@@ -1575,27 +1554,10 @@ go.app = function() {
         });
 
     // REGISTRATION STATES
-
-        // ChoiceState st-01
-        self.add('state_msg_receiver', function(name) {
-            return new ChoiceState(name, {
-                question: questions[name],
-                choices: [
-                    new Choice('head_of_household', $("Head of the Household")),
-                    new Choice('mother_to_be', $("Mother to be")),
-                    new Choice('family_member', $("Family member")),
-                    new Choice('trusted_friend', $("Trusted friend"))
-                ],
-                error: errors[name],
-                next: function() {
-                    self.im.user.set_answer('receiver_id', self.im.user.answers.contact_id);
-                    return self.states.create('state_save_identities');
-                }
-            });
-        });
-
         // Get or create identities and save their IDs
         self.add('state_save_identities', function(name) {
+            self.im.user.set_answer('receiver_id', self.im.user.answers.contact_id);
+            self.im.user.set_answer('state_msg_receiver', 'mother_to_be');
             return go.utils_project
                 .save_identities(
                     self.im,
