@@ -51,7 +51,6 @@ describe("familyconnect health worker app", function() {
                         // registration states
                         'state_last_period_month',
                         'state_last_period_day',
-                        'state_hiv_messages',
                     ],
                 })
                 .setup(function(api) {
@@ -329,34 +328,6 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_hiv_messages", function() {
-                return tester
-                    .setup.user.addr('0720000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , "1"  // state_language - English
-                        , "2"  // state_choose_number - change number to manage
-                        , "0720000333"  // state_manage_msisdn - unregistered user
-                        , "3"  // state_last_period_month - may
-                        , "22"  // state_last_period_day
-                    )
-                    .check.interaction({
-                        state: 'state_hiv_messages',
-                        reply: [
-                            "Would they like to receive additional messages about HIV?",
-                            "1. Yes",
-                            "2. No"
-                        ].join('\n')
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,1,3,4,5,6]);
-                    })
-                    .check.user.answer('state_msg_receiver', 'mother_to_be')
-                    .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000333')
-                    .check.user.answer('mother_id', 'cb245673-aa41-4302-ac47-0000000333')
-                    .check.user.answer('hoh_id', 'identity-uuid-06')
-                    .run();
-            });
 
             it("complete flow - mother_to_be", function() {
                 return tester
@@ -368,7 +339,6 @@ describe("familyconnect health worker app", function() {
                         , "0720000555"  // state_manage_msisdn - unregistered user
                         , "3"  // state_last_period_month - feb 15
                         , "22"  // state_last_period_day - 22
-                        , "1"  // state_hiv_messages - yes
                     )
                     .check.user.answer('state_msg_receiver', 'mother_to_be')
                     .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000555')
