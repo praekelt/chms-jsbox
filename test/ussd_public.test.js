@@ -49,7 +49,6 @@ describe("familyconnect health worker app", function() {
                     ],
                     timeout_redirects: [
                         // registration states
-                        'state_msg_receiver',
                         'state_last_period_month',
                         'state_last_period_day',
                         'state_hiv_messages',
@@ -115,7 +114,6 @@ describe("familyconnect health worker app", function() {
                             {session_event: 'new'}  // dial in
                             , '1'  // state_language - english
                             , '1'  // state_choose_number - this number
-                            , '1'  // state_msg_receiver - head of household
                             , {session_event: 'close'}
                             , {session_event: 'new'}
                         )
@@ -128,7 +126,7 @@ describe("familyconnect health worker app", function() {
                             ].join('\n')
                         })
                         .check(function(api) {
-                            go.utils.check_fixtures_used(api, [0,1,11]);
+                            go.utils.check_fixtures_used(api, [0,1,6]);
                         })
                         .run();
                 });
@@ -139,7 +137,6 @@ describe("familyconnect health worker app", function() {
                             {session_event: 'new'}  // dial in
                             , '1'  // state_language - english
                             , '1'  // state_choose_number - this number
-                            , '1'  // state_msg_receiver - head of household
                             , {session_event: 'close'}
                             , {session_event: 'new'}
                             , '1'  // state_timed_out - continue
@@ -156,7 +153,6 @@ describe("familyconnect health worker app", function() {
                             {session_event: 'new'}  // dial in
                             , '1'  // state_language - english
                             , '1'  // state_choose_number - this number
-                            , '1'  // state_msg_receiver - head of household
                             , '3'  // state_last_period_month
                             , {session_event: 'close'}
                             , {session_event: 'new'}
@@ -259,30 +255,6 @@ describe("familyconnect health worker app", function() {
                     })
                     .run();
             });
-            it("to state_msg_receiver", function() {
-                return tester
-                    .setup.user.addr('0720000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , "1"  // state_language - English
-                        , "2"  // state_choose_number - change number to manage
-                        , "0720000333"  // state_manage_msisdn - unregistered user
-                    )
-                    .check.interaction({
-                        state: 'state_msg_receiver',
-                        reply: [
-                            "Who will receive these messages?",
-                            "1. Head of the Household",
-                            "2. Mother to be",
-                            "3. Family member",
-                            "4. Trusted friend"
-                        ].join('\n')
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,1,3,4]);
-                    })
-                    .run();
-            });
             it("to state_change_menu", function() {
                 return tester
                     .setup.user.addr('0720000222')
@@ -317,7 +289,6 @@ describe("familyconnect health worker app", function() {
                         , "1"  // state_language - English
                         , "2"  // state_choose_number - change number to manage
                         , "0720000333"  // state_manage_msisdn - unregistered user
-                        , "4"  // state_msg_receiver - trusted friend
                     )
                     .check.interaction({
                         state: 'state_last_period_month',
@@ -335,7 +306,7 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,1,3,4,6,9]);
+                        go.utils.check_fixtures_used(api, [0,1,3,4,6]);
                     })
                     .run();
             });
@@ -347,7 +318,6 @@ describe("familyconnect health worker app", function() {
                         , "1"  // state_language - English
                         , "2"  // state_choose_number - change number to manage
                         , "0720000333"  // state_manage_msisdn - unregistered user
-                        , "4"  // state_msg_receiver - trusted friend
                         , "3"  // state_last_period_month - may
                     )
                     .check.interaction({
@@ -355,7 +325,7 @@ describe("familyconnect health worker app", function() {
                         reply: "What day of the month did the woman start her last period? For example, 12."
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,1,3,4,6,9]);
+                        go.utils.check_fixtures_used(api, [0,1,3,4,6]);
                     })
                     .run();
             });
@@ -367,7 +337,6 @@ describe("familyconnect health worker app", function() {
                         , "1"  // state_language - English
                         , "2"  // state_choose_number - change number to manage
                         , "0720000333"  // state_manage_msisdn - unregistered user
-                        , "4"  // state_msg_receiver - trusted friend
                         , "3"  // state_last_period_month - may
                         , "22"  // state_last_period_day
                     )
@@ -380,43 +349,15 @@ describe("familyconnect health worker app", function() {
                         ].join('\n')
                     })
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,1,3,4,6,9,10]);
+                        go.utils.check_fixtures_used(api, [0,1,3,4,5,6]);
                     })
-                    .check.user.answer('state_msg_receiver', 'trusted_friend')
+                    .check.user.answer('state_msg_receiver', 'mother_to_be')
                     .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000333')
-                    .check.user.answer('mother_id', 'identity-uuid-09')
+                    .check.user.answer('mother_id', 'cb245673-aa41-4302-ac47-0000000333')
                     .check.user.answer('hoh_id', 'identity-uuid-06')
-                    .check.user.answer('ff_id', 'cb245673-aa41-4302-ac47-0000000333')
                     .run();
             });
 
-            it("complete flow - trusted_friend", function() {
-                return tester
-                    .setup.user.addr('0720000111')
-                    .inputs(
-                        {session_event: 'new'}  // dial in
-                        , "1"  // state_language - English
-                        , "2"  // state_choose_number - change number to manage
-                        , "0720000333"  // state_manage_msisdn - unregistered user
-                        , "4"  // state_msg_receiver - trusted friend
-                        , "3"  // state_last_period_month - feb 15
-                        , "22"  // state_last_period_day - 22
-                        , "1"  // state_hiv_messages - yes
-                    )
-                    .check.user.answer('state_msg_receiver', 'trusted_friend')
-                    .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000333')
-                    .check.user.answer('mother_id', 'identity-uuid-09')
-                    .check.user.answer('hoh_id', 'identity-uuid-06')
-                    .check.user.answer('ff_id', 'cb245673-aa41-4302-ac47-0000000333')
-                    .check.interaction({
-                        state: 'state_end_thank_you',
-                        reply: "Thank you. Your FamilyConnect ID is 9999999999. You will receive an SMS with it shortly."
-                    })
-                    .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,1,3,4,5,6,8,9,10,12,13,14,15]);
-                    })
-                    .run();
-            });
             it("complete flow - mother_to_be", function() {
                 return tester
                     .setup.user.addr('0720000111')
@@ -425,7 +366,6 @@ describe("familyconnect health worker app", function() {
                         , "1"  // state_language - English
                         , "2"  // state_choose_number - change number to manage
                         , "0720000555"  // state_manage_msisdn - unregistered user
-                        , "2"  // state_msg_receiver - mother_to_be
                         , "3"  // state_last_period_month - feb 15
                         , "22"  // state_last_period_day - 22
                         , "1"  // state_hiv_messages - yes
