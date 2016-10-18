@@ -1049,8 +1049,6 @@ go.app = function() {
                 $("When did the woman have her last period"),
             "state_last_period_day":
                 $("What day of the month did the woman start her last period? For example, 12."),
-            "state_hiv_messages":
-                $("Would they like to receive additional messages about HIV?"),
             "state_end_thank_you":
                 $("Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly."),
 
@@ -1103,8 +1101,6 @@ go.app = function() {
                 $("Sorry not a valid input. When did the woman have her last period"),
             "state_last_period_day":
                 $("Sorry not a valid input. What day of the month did the woman start her last period? For example, 12."),
-            "state_hiv_messages":
-                $("Sorry not a valid input. Would they like to receive additional messages about HIV?"),
             "state_end_thank_you":
                 $("Sorry not a valid input. Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly."),
 
@@ -1611,27 +1607,17 @@ go.app = function() {
                     } else {
                         self.im.user.set_answer('health_id', 'no_health_id_found');
                     }
-                    return self.states.create('state_hiv_messages');
+                    return self.states.create('state_finish_registration');
                 });
         });
 
-        // ChoiceState st-12
-        self.add('state_hiv_messages', function(name) {
-            return new ChoiceState(name, {
-                question: questions[name],
-                error: errors[name],
-                choices: [
-                    new Choice('yes_hiv_msgs', $('Yes')),
-                    new Choice('no_hiv_msgs', $('No'))
-                ],
-                next: function() {
-                    return go.utils_project
-                        .finish_public_registration(self.im)
-                        .then(function() {
-                            return 'state_end_thank_you';
-                        });
-                }
-            });
+        // Delegation state to finish registration
+        self.add('state_finish_registration', function(name) {
+            return go.utils_project
+                .finish_public_registration(self.im)
+                .then(function() {
+                    return self.states.create('state_end_thank_you');
+                });
         });
 
         // EndState st-13

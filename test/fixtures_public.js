@@ -673,8 +673,7 @@ return [
                     "msg_receiver": "mother_to_be",
                     "role": "mother",
                     "hoh_id": "identity-uuid-06",
-                    "preferred_msg_type": "text",
-                    "hiv_interest": "yes_hiv_msgs"
+                    "preferred_msg_type": "text"
                 }
             }
         },
