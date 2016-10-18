@@ -6,6 +6,7 @@ go.app = function() {
     var ChoiceState = vumigo.states.ChoiceState;
     var EndState = vumigo.states.EndState;
     var FreeText = vumigo.states.FreeText;
+    var MenuState = vumigo.states.MenuState;
 
 
     var GoFC = App.extend(function(self) {
@@ -58,10 +59,17 @@ go.app = function() {
                 $("Thank you. You will now receive messages to support you during this difficult time."),
             "state_end_optout":
                 $("Thank you. You will no longer receive messages"),
+
             "state_last_period_month":
                 $("When did the woman have her last period"),
             "state_last_period_day":
                 $("What day of the month did the woman start her last period? For example, 12."),
+            "state_cellphone_or_search":
+                $("Do you know your local village health team (VHT)?"),
+            "state_vht_cellphone_number":
+                $("Please enter their cellphone number. For example, 0803304899"),
+            "state_check_vht_exists":
+                $("We did not recognise the VHTs number."),
             "state_end_thank_you":
                 $("Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly."),
 
@@ -114,6 +122,12 @@ go.app = function() {
                 $("Sorry not a valid input. When did the woman have her last period"),
             "state_last_period_day":
                 $("Sorry not a valid input. What day of the month did the woman start her last period? For example, 12."),
+            "state_cellphone_or_search":
+                $("Sorry not a valid input. Do you know your local village health team (VHT)?"),
+            "state_vht_cellphone_number":
+                $("Sorry not a valid input. Please enter their cellphone number. For example, 0803304899"),
+            "state_check_vht_exists":
+                $("Sorry not a valid input. We did not recognise the VHTs number."),
             "state_end_thank_you":
                 $("Sorry not a valid input. Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly."),
 
@@ -579,7 +593,7 @@ go.app = function() {
                 });
         });
 
-        // ChoiceState st-05
+        // ChoiceState reg-02
         self.add('state_last_period_month', function(name) {
             var today = go.utils.get_today(self.im.config);
             return new ChoiceState(name, {
@@ -590,7 +604,7 @@ go.app = function() {
             });
         });
 
-        // FreeText st-06
+        // FreeText reg-03
         self.add('state_last_period_day', function(name) {
             return new FreeText(name, {
                 question: questions[name],
@@ -620,8 +634,48 @@ go.app = function() {
                     } else {
                         self.im.user.set_answer('health_id', 'no_health_id_found');
                     }
-                    return self.states.create('state_finish_registration');
+                    return self.states.create('state_cellphone_or_search');
                 });
+        });
+
+        // ChoiceState reg-04
+        self.add('state_cellphone_or_search', function(name) {
+            return new MenuState(name, {
+                question: questions[name],
+                choices: [
+                    new Choice('state_vht_cellphone_number', $("Yes"))
+                ]
+            });
+        });
+
+        // FreeText reg-10
+        self.add('state_vht_cellphone_number', function(name) {
+            return new FreeText(name, {
+                question: questions[name],
+                next: 'state_check_vht_exists'
+            });
+        });
+
+        // ChoiceState reg-11
+        self.add('state_check_vht_exists', function(name) {
+            var number = go.utils.normalize_msisdn(
+                self.im.user.answers.state_vht_cellphone_number, self.im.config.country_code);
+            return go.utils.get_identity_by_address({'msisdn': number}, self.im).then(function(identity) {
+                if (
+                        identity === null || identity.details === undefined ||
+                        identity.details.parish === undefined || identity.details.personnel_code === undefined) {
+                    return new MenuState(name, {
+                        question: questions[name],
+                        choices: [
+                            new Choice('state_vht_cellphone_number', $("Try again"))
+                        ]
+                    });
+                } else {
+                    self.im.user.set_answer('vht_personnel_code', identity.details.personnel_code);
+                    self.im.user.set_answer('parish', identity.details.parish);
+                    return self.states.create('state_finish_registration');
+                }
+            });
         });
 
         // Delegation state to finish registration
@@ -633,7 +687,7 @@ go.app = function() {
                 });
         });
 
-        // EndState st-13
+        // EndState reg-07
         self.add('state_end_thank_you', function(name) {
             var text =
                 self.im.user.answers.health_id === 'no_health_id_found'

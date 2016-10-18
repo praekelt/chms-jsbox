@@ -6,6 +6,7 @@
 // 0720000555: unregistered user - number entered manually - mother_to_be registration
 // 0720000666: registered user - has baby(postbirth) subscription
 // 0720000777: registered user - servicerating_unanswered flag set to true
+// 0720000999: registered VHT with personnel code and parish
 
 module.exports = function() {
 return [
@@ -640,7 +641,9 @@ return [
                     "language": "eng_UG",
                     "msg_type": "text",
                     "last_period_date": "20150222",
-                    "msg_receiver": "mother_to_be"
+                    "msg_receiver": "mother_to_be",
+                    "parish": "Kawaaga",
+                    "vht_personnel_code": "888"
                 }
             }
         },
@@ -1518,6 +1521,50 @@ return [
             "code": 200,
             "data": {
                 "success": "true"
+            }
+        }
+    },
+
+    // 48: get identity 0720000999 by msisdn
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'params': {
+                'details__addresses__msisdn': '+256720000999'
+            },
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/search/',
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "count": 1,
+                "next": null,
+                "previous": null,
+                "results": [{
+                    "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000999/",
+                    "id": "3f7c8851-5204-43f7-af7f-000000000999",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+256720000222": {}
+                            }
+                        },
+                        "role": "vht",
+                        "preferred_msg_type": "sms",
+                        "preferred_language": "eng_UG",
+                        "parish": "Kawaaga",
+                        "personnel_code": "888",
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }]
             }
         }
     },

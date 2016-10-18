@@ -85,6 +85,8 @@ go.utils_project = {
                 msg_type: "text",
                 last_period_date: im.user.answers.last_period_date,
                 msg_receiver: im.user.answers.state_msg_receiver,
+                parish: im.user.answers.parish,
+                vht_personnel_code: im.user.answers.vht_personnel_code,
             }
         };
 
