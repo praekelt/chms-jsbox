@@ -559,6 +559,9 @@ go.utils = {
 
 /*jshint -W083 */
 var Q = require('q');
+var vumigo = require('vumigo_v02');
+var Choice = vumigo.states.Choice;
+var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
 
 
 // Project utils libraty
@@ -984,6 +987,43 @@ go.utils_project = {
     },
 
 
+    // PARISH SEACH HELPERS
+
+    // searches for parish by name
+    parish_search: function(name, im) {
+        return go.utils
+            .service_api_call("registrations", "get", {'name': name}, null, "parish/", im)
+            .then(function(response) {
+                // The results are paginated, but the default pagination limit is 1000,
+                // and we don't want the user to have to go through more than that.
+                return response.data.results;
+            });
+    },
+
+    ParishPaginatedChoiceState: PaginatedChoiceState.extend(function(self, name, opts) {
+        // A choice state for displaying the list of parishes. Adds the __retry__ and __exit__ choices, which
+        // must be handled in the state's next function.
+        PaginatedChoiceState.call(self, name, opts);
+
+        self.retry = new Choice("__retry__", opts.retry);
+        self.exit = new Choice("__exit__", opts.exit);
+
+        var super_translate = self.translate;
+        self.translate = function(i18n) {
+            super_translate.call(self, i18n);
+            self.retry.label = i18n(self.retry.label);
+            self.exit.label = i18n(self.exit.label);
+        };
+
+        var super_current_choices = self.current_choices;
+        self.current_choices = function() {
+            var choices = super_current_choices();
+            choices.push(self.retry);
+            choices.push(self.exit);
+            return choices;
+        };
+    }),
+
     "commas": "commas"
 };
 
@@ -1059,6 +1099,14 @@ go.app = function() {
                 $("Please enter their cellphone number. For example, 0803304899"),
             "state_check_vht_exists":
                 $("We did not recognise the VHTs number."),
+            "state_parish_search":
+                $("What is the name of your parish?"),
+            "state_select_parish":
+                $("Results for {{search}}:"),
+            "state_no_parish_results":
+                $("Sorry, there are no results for your parish name."),
+            "state_retry_parish_search":
+                $("Please re-enter your parish name carefully and make sure you use the correct spelling."),
             "state_end_thank_you":
                 $("Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly."),
 
@@ -1117,6 +1165,14 @@ go.app = function() {
                 $("Sorry not a valid input. Please enter their cellphone number. For example, 0803304899"),
             "state_check_vht_exists":
                 $("Sorry not a valid input. We did not recognise the VHTs number."),
+            "state_parish_search":
+                $("Sorry not a valid input. What is the name of your parish?"),
+            "state_select_parish":
+                $("Sorry not a valid input. Results for {{search}}"),
+            "state_no_parish_results":
+                $("Sorry, not a valid input. Sorry, there are no results for your parish name."),
+            "state_retry_parish_search":
+                $("Sorry, not a valid input. Please re-enter your parish name carefully and make sure you use the correct spelling."),
             "state_end_thank_you":
                 $("Sorry not a valid input. Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly."),
 
@@ -1632,7 +1688,70 @@ go.app = function() {
             return new MenuState(name, {
                 question: questions[name],
                 choices: [
-                    new Choice('state_vht_cellphone_number', $("Yes"))
+                    new Choice('state_vht_cellphone_number', $("Yes")),
+                    new Choice('state_parish_search', $("No"))
+                ]
+            });
+        });
+
+        // FreeText reg-05
+        self.add('state_parish_search', function(name) {
+            return new FreeText(name, {
+                question: questions[name],
+                next: 'state_select_parish'
+            });
+        });
+
+        // ChoiceState reg-06
+        self.add('state_select_parish', function(name) {
+            return go.utils_project
+                .parish_search(self.im.user.answers.state_parish_search, self.im)
+                .then(function(parishes) {
+                    if (parishes.length === 0) {
+                        return self.states.create('state_no_parish_results');
+                    }
+                    return new go.utils_project.ParishPaginatedChoiceState(name, {
+                        question: questions[name].context({search: self.im.user.answers.state_parish_search}),
+                        choices: parishes.map(function(p) { return new Choice(p.name, p.name); }),
+                        error: errors[name],
+                        back: $("Back"),
+                        more: $("More"),
+                        retry: $("Try again"),
+                        exit: $("Exit"),
+                        options_per_page: 4,
+                        next: function(choice) {
+                            switch (choice.label) {
+                                case '__retry__':
+                                    return 'state_retry_parish_search';
+                                case '__exit__':
+                                    return 'state_finish_registration';
+                                default:
+                                    self.im.user.set_answer('parish', choice.label);
+                                    return 'state_finish_registration';
+                            }
+                        }
+                    });
+                });
+        });
+
+        // Freetext reg-08
+        self.add('state_retry_parish_search', function(name) {
+            return new FreeText(name, {
+                question: questions[name],
+                next: function(text) {
+                    self.im.user.set_answer('state_parish_search', text);
+                    return 'state_select_parish';
+                }
+            });
+        });
+
+        // ChoiceState reg-09
+        self.add('state_no_parish_results', function(name) {
+            return new MenuState(name, {
+                question: questions[name],
+                choices: [
+                    new Choice('state_retry_parish_search', $("Try again")),
+                    new Choice('state_finish_registration', $("Exit"))
                 ]
             });
         });
@@ -1656,7 +1775,8 @@ go.app = function() {
                     return new MenuState(name, {
                         question: questions[name],
                         choices: [
-                            new Choice('state_vht_cellphone_number', $("Try again"))
+                            new Choice('state_vht_cellphone_number', $("Try again")),
+                            new Choice('state_parish_search', $("Enter your location instead"))
                         ]
                     });
                 } else {
@@ -1666,6 +1786,7 @@ go.app = function() {
                 }
             });
         });
+
 
         // Delegation state to finish registration
         self.add('state_finish_registration', function(name) {
