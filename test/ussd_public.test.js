@@ -344,7 +344,8 @@ describe("familyconnect health worker app", function() {
                         state: 'state_cellphone_or_search',
                         reply: [
                             "Do you know your local village health team (VHT)?",
-                            "1. Yes"
+                            "1. Yes",
+                            "2. No"
                         ].join('\n')
                     })
                     .check(function(api) {
@@ -392,7 +393,8 @@ describe("familyconnect health worker app", function() {
                         state: 'state_check_vht_exists',
                         reply: [
                             "We did not recognise the VHTs number.",
-                            "1. Try again"
+                            "1. Try again",
+                            "2. Enter your location instead"
                         ].join('\n')
                     })
                     .check(function(api) {
@@ -401,7 +403,114 @@ describe("familyconnect health worker app", function() {
                     .run();
             });
 
-            it("complete flow - mother_to_be", function() {
+            it("to state_parish_search", function() {
+                return tester
+                    .setup.user.addr('0720000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_language - English
+                        , "2"  // state_choose_number - change number to manage
+                        , "0720000333"  // state_manage_msisdn - unregistered user
+                        , "3"  // state_last_period_month - may
+                        , "22"  // state_last_period_day - 22
+                        , "2"  // state_cellphone_or_search - search
+                    )
+                    .check.interaction({
+                        state: 'state_parish_search',
+                        reply: "What is the name of your parish?"
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [0,1,3,4,5,6]);
+                    })
+                    .run()
+            });
+
+            it("to state_select_parish", function() {
+                return tester
+                    .setup.user.addr('0720000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_language - English
+                        , "2"  // state_choose_number - change number to manage
+                        , "0720000333"  // state_manage_msisdn - unregistered user
+                        , "3"  // state_last_period_month - may
+                        , "22"  // state_last_period_day - 22
+                        , "2"  // state_cellphone_or_search - search
+                        , "kawa" // state_parish_search - search for "kawa", 5 results
+                    )
+                    .check.interaction({
+                        state: 'state_select_parish',
+                        reply: [
+                            "Results for kawa:",
+                            "1. Kawaaga",
+                            "2. Balawoli",
+                            "3. Kagumba",
+                            "4. Kasolwe",
+                            "5. More",
+                            "6. Try again",
+                            "7. Exit"
+                        ].join('\n')
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [0,1,3,4,5,6,49]);
+                    })
+                    .run()
+            });
+
+            it("to state_no_parish_results", function() {
+                return tester
+                    .setup.user.addr('0720000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_language - English
+                        , "2"  // state_choose_number - change number to manage
+                        , "0720000333"  // state_manage_msisdn - unregistered user
+                        , "3"  // state_last_period_month - may
+                        , "22"  // state_last_period_day - 22
+                        , "2"  // state_cellphone_or_search - search
+                        , "foo" // state_parish_search - search for "foo", no results
+                    )
+                    .check.interaction({
+                        state: 'state_no_parish_results',
+                        reply: [
+                            "Sorry, there are no results for your parish name.",
+                            "1. Try again",
+                            "2. Exit"
+                        ].join('\n')
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [0,1,3,4,5,6,50]);
+                    })
+                    .run()
+            });
+
+            it("to state_retry_parish_search", function() {
+                return tester
+                    .setup.user.addr('0720000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_language - English
+                        , "2"  // state_choose_number - change number to manage
+                        , "0720000333"  // state_manage_msisdn - unregistered user
+                        , "3"  // state_last_period_month - may
+                        , "22"  // state_last_period_day - 22
+                        , "2"  // state_cellphone_or_search - search
+                        , "foo" // state_parish_search - search for "foo", no results
+                        , "1" // state_no_parish_results - try again
+                    )
+                    .check.interaction({
+                        state: 'state_retry_parish_search',
+                        reply: [
+                            "Please re-enter your parish name carefully and make sure you use the correct spelling."
+                        ].join('\n')
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [0,1,3,4,5,6,50]);
+                    })
+                    .run()
+            });
+
+            it("complete flow - vht cellphone", function() {
                 return tester
                     .setup.user.addr('0720000111')
                     .inputs(
@@ -427,6 +536,37 @@ describe("familyconnect health worker app", function() {
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [0,1,6,8,16,17,18,19,20,21,48]);
+                    })
+                    .run();
+            });
+
+            it("complete flow - location search", function() {
+                return tester
+                    .setup.user.addr('0720000111')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "1"  // state_language - English
+                        , "2"  // state_choose_number - change number to manage
+                        , "0720000555"  // state_manage_msisdn - unregistered user
+                        , "3"  // state_last_period_month - feb 15
+                        , "22"  // state_last_period_day - 22
+                        , "2"  // state_cellphone_or_search - search
+                        , "kawa" // state_parish_search - search "kawa", 5 results
+                        , "1" // state_select_parish - select "Kawaaga"
+                    )
+                    .check.user.answer('state_msg_receiver', 'mother_to_be')
+                    .check.user.answer('receiver_id', 'cb245673-aa41-4302-ac47-0000000555')
+                    .check.user.answer('mother_id', 'cb245673-aa41-4302-ac47-0000000555')
+                    .check.user.answer('hoh_id', 'identity-uuid-06')
+                    .check.user.answer('ff_id', undefined)
+                    .check.user.answer('state_select_parish', 'Kawaaga')
+                    .check.user.answer('vht_personnel_code', undefined)
+                    .check.interaction({
+                        state: 'state_end_thank_you',
+                        reply: "Thank you. Your FamilyConnect ID is 5555555555. You will receive an SMS with it shortly."
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [0,1,6,8,16,17,18,20,21,49,51]);
                     })
                     .run();
             });
