@@ -495,8 +495,8 @@ describe("familyconnect health worker app", function() {
                         , "3"  // state_last_period_month - may
                         , "22"  // state_last_period_day - 22
                         , "2"  // state_cellphone_or_search - search
-                        , "foo" // state_parish_search - search for "foo", no results
-                        , "1" // state_no_parish_results - try again
+                        , "kawa" // state_parish_search - search for "foo", 5 results
+                        , "6" // state_no_parish_results - try again
                     )
                     .check.interaction({
                         state: 'state_retry_parish_search',
@@ -504,8 +504,9 @@ describe("familyconnect health worker app", function() {
                             "Please re-enter your parish name carefully and make sure you use the correct spelling."
                         ].join('\n')
                     })
+                    .check.user.answer('parish', undefined)
                     .check(function(api) {
-                        go.utils.check_fixtures_used(api, [0,1,3,4,5,6,50]);
+                        go.utils.check_fixtures_used(api, [0,1,3,4,5,6,49]);
                     })
                     .run()
             });
@@ -559,7 +560,7 @@ describe("familyconnect health worker app", function() {
                     .check.user.answer('mother_id', 'cb245673-aa41-4302-ac47-0000000555')
                     .check.user.answer('hoh_id', 'identity-uuid-06')
                     .check.user.answer('ff_id', undefined)
-                    .check.user.answer('state_select_parish', 'Kawaaga')
+                    .check.user.answer('parish', 'Kawaaga')
                     .check.user.answer('vht_personnel_code', undefined)
                     .check.interaction({
                         state: 'state_end_thank_you',

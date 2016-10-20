@@ -691,7 +691,7 @@ go.app = function() {
                         exit: $("Exit"),
                         options_per_page: 4,
                         next: function(choice) {
-                            switch (choice.label) {
+                            switch (choice.value) {
                                 case '__retry__':
                                     return 'state_retry_parish_search';
                                 case '__exit__':
