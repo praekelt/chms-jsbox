@@ -648,7 +648,7 @@ go.utils_project = {
                 last_period_date: im.user.answers.last_period_date,
                 msg_receiver: im.user.answers.state_msg_receiver,
                 parish: im.user.answers.parish,
-                vht_personnel_code: im.user.answers.vht_personnel_code,
+                vht_id: im.user.answers.vht_id,
             }
         };
 
@@ -1780,7 +1780,7 @@ go.app = function() {
                         ]
                     });
                 } else {
-                    self.im.user.set_answer('vht_personnel_code', identity.details.personnel_code);
+                    self.im.user.set_answer('vht_id', identity.id);
                     self.im.user.set_answer('parish', identity.details.parish);
                     return self.states.create('state_finish_registration');
                 }

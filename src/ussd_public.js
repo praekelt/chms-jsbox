@@ -751,7 +751,7 @@ go.app = function() {
                         ]
                     });
                 } else {
-                    self.im.user.set_answer('vht_personnel_code', identity.details.personnel_code);
+                    self.im.user.set_answer('vht_id', identity.id);
                     self.im.user.set_answer('parish', identity.details.parish);
                     return self.states.create('state_finish_registration');
                 }

@@ -643,7 +643,7 @@ return [
                     "last_period_date": "20150222",
                     "msg_receiver": "mother_to_be",
                     "parish": "Kawaaga",
-                    "vht_personnel_code": "888"
+                    "vht_id": "3f7c8851-5204-43f7-af7f-000000000999"
                 }
             }
         },
