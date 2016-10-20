@@ -559,6 +559,9 @@ go.utils = {
 
 /*jshint -W083 */
 var Q = require('q');
+var vumigo = require('vumigo_v02');
+var Choice = vumigo.states.Choice;
+var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
 
 
 // Project utils libraty
@@ -983,6 +986,43 @@ go.utils_project = {
             });
     },
 
+
+    // PARISH SEACH HELPERS
+
+    // searches for parish by name
+    parish_search: function(name, im) {
+        return go.utils
+            .service_api_call("registrations", "get", {'name': name}, null, "parish/", im)
+            .then(function(response) {
+                // The results are paginated, but the default pagination limit is 1000,
+                // and we don't want the user to have to go through more than that.
+                return response.data.results;
+            });
+    },
+
+    ParishPaginatedChoiceState: PaginatedChoiceState.extend(function(self, name, opts) {
+        // A choice state for displaying the list of parishes. Adds the __retry__ and __exit__ choices, which
+        // must be handled in the state's next function.
+        PaginatedChoiceState.call(self, name, opts);
+
+        self.retry = new Choice("__retry__", opts.retry);
+        self.exit = new Choice("__exit__", opts.exit);
+
+        var super_translate = self.translate;
+        self.translate = function(i18n) {
+            super_translate.call(self, i18n);
+            self.retry.label = i18n(self.retry.label);
+            self.exit.label = i18n(self.exit.label);
+        };
+
+        var super_current_choices = self.current_choices;
+        self.current_choices = function() {
+            var choices = super_current_choices();
+            choices.push(self.retry);
+            choices.push(self.exit);
+            return choices;
+        };
+    }),
 
     "commas": "commas"
 };

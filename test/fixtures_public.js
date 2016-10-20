@@ -1569,5 +1569,89 @@ return [
         }
     },
 
+    // 49: search for parish "kawa" 5 results
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'params': {
+                'name': 'kawa'
+            },
+            'headers': {
+                'Authorization': ['Token test_token_registrations'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/parish/',
+        },
+        'response': {
+            'code': 200,
+            'data': {
+                'count': 5,
+                'next': null,
+                'previous': null,
+                'results': [
+                    { 'name': 'Kawaaga' },
+                    { 'name': 'Balawoli' },
+                    { 'name': 'Kagumba' },
+                    { 'name': 'Kasolwe' },
+                    { 'name': 'Kibuye' },
+                ]
+            }
+        }
+    },
+
+    // 50: search for parish "foo" no results
+    {
+        'request': {
+            'method': 'GET',
+            'params': {
+                'name': 'foo'
+            },
+            'headers': {
+                'Authorization': ['Token test_token_registrations'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/parish/',
+        },
+        'response': {
+            'code': 200,
+            'data': {
+                'count': 5,
+                'next': null,
+                'previous': null,
+                'results': []
+            }
+        }
+    },
+
+    // 51: create registration 3
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/registration/',
+            'data':  {
+                "stage": "prebirth",
+                "mother_id": "cb245673-aa41-4302-ac47-0000000555",
+                "data": {
+                    "hoh_id": "identity-uuid-06",
+                    "receiver_id": "cb245673-aa41-4302-ac47-0000000555",
+                    "operator_id": null,
+                    "language": "eng_UG",
+                    "msg_type": "text",
+                    "last_period_date": "20150222",
+                    "msg_receiver": "mother_to_be",
+                    "parish": "Kawaaga",
+                }
+            }
+        },
+        'response': {
+            "code": 201,
+            "data": {}
+        }
+    },
 ];
 };
