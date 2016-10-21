@@ -530,7 +530,7 @@ describe("familyconnect health worker app", function() {
                     .check.user.answer('hoh_id', 'identity-uuid-06')
                     .check.user.answer('ff_id', undefined)
                     .check.user.answer('parish', 'Kawaaga')
-                    .check.user.answer('vht_personnel_code', '888')
+                    .check.user.answer('vht_id', '3f7c8851-5204-43f7-af7f-000000000999')
                     .check.interaction({
                         state: 'state_end_thank_you',
                         reply: "Thank you. Your FamilyConnect ID is 5555555555. You will receive an SMS with it shortly."
