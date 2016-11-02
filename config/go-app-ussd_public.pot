@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-04-07 02:08:+0000\n"
+"POT-Creation-Date: 2016-11-02 05:25:+0000\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -9,494 +9,541 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 
-#: go-app-ussd_public.js:232
+#: go-app-ussd_public.js:237
 msgid "{{pre}}January{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:233
+#: go-app-ussd_public.js:238
 msgid "{{pre}}February{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:234
+#: go-app-ussd_public.js:239
 msgid "{{pre}}March{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:235
+#: go-app-ussd_public.js:240
 msgid "{{pre}}April{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:236 go-app-ussd_public.js:258
+#: go-app-ussd_public.js:241 go-app-ussd_public.js:263
 msgid "{{pre}}May{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:237
+#: go-app-ussd_public.js:242
 msgid "{{pre}}June{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:238
+#: go-app-ussd_public.js:243
 msgid "{{pre}}July{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:239
+#: go-app-ussd_public.js:244
 msgid "{{pre}}August{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:240
+#: go-app-ussd_public.js:245
 msgid "{{pre}}September{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:241
+#: go-app-ussd_public.js:246
 msgid "{{pre}}October{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:242
+#: go-app-ussd_public.js:247
 msgid "{{pre}}November{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:243
+#: go-app-ussd_public.js:248
 msgid "{{pre}}December{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:254
+#: go-app-ussd_public.js:259
 msgid "{{pre}}Jan{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:255
+#: go-app-ussd_public.js:260
 msgid "{{pre}}Feb{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:256
+#: go-app-ussd_public.js:261
 msgid "{{pre}}Mar{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:257
+#: go-app-ussd_public.js:262
 msgid "{{pre}}Apr{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:259
+#: go-app-ussd_public.js:264
 msgid "{{pre}}Jun{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:260
+#: go-app-ussd_public.js:265
 msgid "{{pre}}Jul{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:261
+#: go-app-ussd_public.js:266
 msgid "{{pre}}Aug{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:262
+#: go-app-ussd_public.js:267
 msgid "{{pre}}Sep{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:263
+#: go-app-ussd_public.js:268
 msgid "{{pre}}Oct{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:264
+#: go-app-ussd_public.js:269
 msgid "{{pre}}Nov{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:265
+#: go-app-ussd_public.js:270
 msgid "{{pre}}Dec{{post}}"
 msgstr ""
 
-#: go-app-ussd_public.js:1004
+#: go-app-ussd_public.js:1052
 msgid ""
 "You have an incomplete registration. Would you like to continue with this "
 "registration?"
 msgstr ""
 
-#: go-app-ussd_public.js:1006
+#: go-app-ussd_public.js:1054
 msgid "Welcome to FamilyConnect. Please choose your language"
 msgstr ""
 
-#: go-app-ussd_public.js:1008
-msgid ""
-"Welcome to FamilyConnect. Do you have permission to manage the number "
-"{{msisdn}}?"
-msgstr ""
-
-#: go-app-ussd_public.js:1010
-msgid "Sorry, you need permission."
-msgstr ""
-
-#: go-app-ussd_public.js:1012
-msgid ""
-"Please enter the number you would like to manage. For example 0803304899.  "
-"Note: You should permission from the owner to manage this number."
-msgstr ""
-
-#: go-app-ussd_public.js:1014
-msgid "Choose:"
-msgstr ""
-
-#: go-app-ussd_public.js:1016
+#: go-app-ussd_public.js:1056 go-app-ussd_public.js:1062
 msgid "Choose from:"
 msgstr ""
 
-#: go-app-ussd_public.js:1019
+#: go-app-ussd_public.js:1058
+msgid ""
+"Please enter the mobile number of the person who will receive the weekly "
+"messages. For example 0803304899"
+msgstr ""
+
+#: go-app-ussd_public.js:1060
+msgid "Choose:"
+msgstr ""
+
+#: go-app-ussd_public.js:1065
 msgid "You are already registered for baby messages."
 msgstr ""
 
-#: go-app-ussd_public.js:1021
+#: go-app-ussd_public.js:1067
 msgid "You will receive baby messages."
 msgstr ""
 
-#: go-app-ussd_public.js:1024
+#: go-app-ussd_public.js:1070
 msgid "What language would this person like to receive these messages in?"
 msgstr ""
 
-#: go-app-ussd_public.js:1026
+#: go-app-ussd_public.js:1072
 msgid ""
 "Thank you. Your language preference has been updated and you will start to "
 "receive SMSs in this language."
 msgstr ""
 
-#: go-app-ussd_public.js:1029
+#: go-app-ussd_public.js:1075
 msgid ""
 "Please enter the new mobile number you would like to receive weekly "
 "messages on. For example 0803304899"
 msgstr ""
 
-#: go-app-ussd_public.js:1031
+#: go-app-ussd_public.js:1077
 msgid "Sorry, this number is already registered."
 msgstr ""
 
-#: go-app-ussd_public.js:1033 go-app-ussd_public.js:1047
+#: go-app-ussd_public.js:1079
 msgid "Who will receive these messages?"
 msgstr ""
 
-#: go-app-ussd_public.js:1035
+#: go-app-ussd_public.js:1081
 msgid "Thank you. The number which receives messages has been updated."
 msgstr ""
 
-#: go-app-ussd_public.js:1038
+#: go-app-ussd_public.js:1084
 msgid ""
 "Please tell us why you no longer want to receive messages so we can help "
 "you further."
 msgstr ""
 
-#: go-app-ussd_public.js:1040
+#: go-app-ussd_public.js:1086
 msgid ""
 "We are sorry for your loss. Would you like to receive a small set of free "
 "messages from FamilyConnect that could help you in this difficult time?"
 msgstr ""
 
-#: go-app-ussd_public.js:1042
+#: go-app-ussd_public.js:1088
 msgid ""
 "Thank you. You will now receive messages to support you during this "
 "difficult time."
 msgstr ""
 
-#: go-app-ussd_public.js:1044
+#: go-app-ussd_public.js:1090
 msgid "Thank you. You will no longer receive messages"
 msgstr ""
 
-#: go-app-ussd_public.js:1049
+#: go-app-ussd_public.js:1093
 msgid "When did the woman have her last period"
 msgstr ""
 
-#: go-app-ussd_public.js:1051
+#: go-app-ussd_public.js:1095
 msgid "What day of the month did the woman start her last period? For example, 12."
 msgstr ""
 
-#: go-app-ussd_public.js:1053
-msgid "Would they like to receive additional messages about HIV?"
+#: go-app-ussd_public.js:1097
+msgid "Do you know your local village health team (VHT)?"
 msgstr ""
 
-#: go-app-ussd_public.js:1055
+#: go-app-ussd_public.js:1099
+msgid "Please enter their cellphone number. For example, 0803304899"
+msgstr ""
+
+#: go-app-ussd_public.js:1101
+msgid "We did not recognise the VHTs number."
+msgstr ""
+
+#: go-app-ussd_public.js:1103
+msgid "What is the name of your parish?"
+msgstr ""
+
+#: go-app-ussd_public.js:1105
+msgid "Results for {{search}}:"
+msgstr ""
+
+#: go-app-ussd_public.js:1107
+msgid "Sorry, there are no results for your parish name."
+msgstr ""
+
+#: go-app-ussd_public.js:1109
+msgid ""
+"Please re-enter your parish name carefully and make sure you use the "
+"correct spelling."
+msgstr ""
+
+#: go-app-ussd_public.js:1111
 msgid ""
 "Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS "
 "with it shortly."
 msgstr ""
 
-#: go-app-ussd_public.js:1058
+#: go-app-ussd_public.js:1114
 msgid "Thank you for using the FamilyConnect service"
 msgstr ""
 
-#: go-app-ussd_public.js:1063
+#: go-app-ussd_public.js:1119
 msgid ""
 "Sorry not a valid input. You have an incomplete registration. Would you "
 "like to continue with this registration?"
 msgstr ""
 
-#: go-app-ussd_public.js:1065
+#: go-app-ussd_public.js:1121
 msgid ""
 "Sorry not a valid input. Welcome to FamilyConnect. Please choose your "
 "language"
 msgstr ""
 
-#: go-app-ussd_public.js:1067
-msgid ""
-"Sorry not a valid input. Welcome to FamilyConnect. Do you have permission "
-"to manage the number {{msisdn}}?"
-msgstr ""
-
-#: go-app-ussd_public.js:1069
-msgid "Sorry not a valid input. Sorry, you need permission."
-msgstr ""
-
-#: go-app-ussd_public.js:1071
-msgid ""
-"Sorry not a valid input. Please enter the number you would like to manage. "
-"For example 0803304899.  Note: You should permission from the owner to "
-"manage this number."
-msgstr ""
-
-#: go-app-ussd_public.js:1073
-msgid "Sorry not a valid input. Choose:"
-msgstr ""
-
-#: go-app-ussd_public.js:1075
+#: go-app-ussd_public.js:1123 go-app-ussd_public.js:1129
 msgid "Sorry not a valid input. Choose from:"
 msgstr ""
 
-#: go-app-ussd_public.js:1078
+#: go-app-ussd_public.js:1125
+msgid ""
+"Sorry not a valid input. Please enter the mobile number of the person who "
+"will receive the weekly messages. For example 0803304899"
+msgstr ""
+
+#: go-app-ussd_public.js:1127
+msgid "Sorry not a valid input. Choose:"
+msgstr ""
+
+#: go-app-ussd_public.js:1132
 msgid "Sorry not a valid input. You are already registered for baby messages."
 msgstr ""
 
-#: go-app-ussd_public.js:1080
+#: go-app-ussd_public.js:1134
 msgid "Sorry not a valid input. You will receive baby messages."
 msgstr ""
 
-#: go-app-ussd_public.js:1083
+#: go-app-ussd_public.js:1137
 msgid ""
 "Sorry not a valid input. What language would this person like to receive "
 "these messages in?"
 msgstr ""
 
-#: go-app-ussd_public.js:1085
+#: go-app-ussd_public.js:1139
 msgid ""
 "Sorry not a valid input. Thank you. Your language preference has been "
 "updated and you will start to receive SMSs in this language."
 msgstr ""
 
-#: go-app-ussd_public.js:1088
+#: go-app-ussd_public.js:1142
 msgid ""
 "Sorry not a valid input. Please enter the new mobile number you would like "
 "to receive weekly messages on. For example 0803304899"
 msgstr ""
 
-#: go-app-ussd_public.js:1090
+#: go-app-ussd_public.js:1144
 msgid "Sorry not a valid input. Sorry, this number is already registered."
 msgstr ""
 
-#: go-app-ussd_public.js:1092 go-app-ussd_public.js:1106
+#: go-app-ussd_public.js:1146
 msgid "Sorry not a valid input. Who will receive these messages?"
 msgstr ""
 
-#: go-app-ussd_public.js:1094
+#: go-app-ussd_public.js:1148
 msgid ""
 "Sorry not a valid input. Thank you. The number which receives messages has "
 "been updated."
 msgstr ""
 
-#: go-app-ussd_public.js:1097
+#: go-app-ussd_public.js:1151
 msgid ""
 "Sorry not a valid input. Please tell us why you no longer want to receive "
 "messages so we can help you further."
 msgstr ""
 
-#: go-app-ussd_public.js:1099
+#: go-app-ussd_public.js:1153
 msgid ""
 "Sorry not a valid input. We are sorry for your loss. Would you like to "
 "receive a small set of free messages from FamilyConnect that could help you "
 "in this difficult time?"
 msgstr ""
 
-#: go-app-ussd_public.js:1101
+#: go-app-ussd_public.js:1155
 msgid ""
 "Sorry not a valid input. Thank you. You will now receive messages to "
 "support you during this difficult time."
 msgstr ""
 
-#: go-app-ussd_public.js:1103
+#: go-app-ussd_public.js:1157
 msgid "Sorry not a valid input. Thank you. You will no longer receive messages"
 msgstr ""
 
-#: go-app-ussd_public.js:1108
+#: go-app-ussd_public.js:1159
 msgid "Sorry not a valid input. When did the woman have her last period"
 msgstr ""
 
-#: go-app-ussd_public.js:1110
+#: go-app-ussd_public.js:1161
 msgid ""
 "Sorry not a valid input. What day of the month did the woman start her last "
 "period? For example, 12."
 msgstr ""
 
-#: go-app-ussd_public.js:1112
-msgid ""
-"Sorry not a valid input. Would they like to receive additional messages "
-"about HIV?"
+#: go-app-ussd_public.js:1163
+msgid "Sorry not a valid input. Do you know your local village health team (VHT)?"
 msgstr ""
 
-#: go-app-ussd_public.js:1114
+#: go-app-ussd_public.js:1165
+msgid ""
+"Sorry not a valid input. Please enter their cellphone number. For example, "
+"0803304899"
+msgstr ""
+
+#: go-app-ussd_public.js:1167
+msgid "Sorry not a valid input. We did not recognise the VHTs number."
+msgstr ""
+
+#: go-app-ussd_public.js:1169
+msgid "Sorry not a valid input. What is the name of your parish?"
+msgstr ""
+
+#: go-app-ussd_public.js:1171
+msgid "Sorry not a valid input. Results for {{search}}"
+msgstr ""
+
+#: go-app-ussd_public.js:1173
+msgid "Sorry, not a valid input. Sorry, there are no results for your parish name."
+msgstr ""
+
+#: go-app-ussd_public.js:1175
+msgid ""
+"Sorry, not a valid input. Please re-enter your parish name carefully and "
+"make sure you use the correct spelling."
+msgstr ""
+
+#: go-app-ussd_public.js:1177
 msgid ""
 "Sorry not a valid input. Thank you. Your FamilyConnect ID is {{health_id}}. "
 "You will receive an SMS with it shortly."
 msgstr ""
 
-#: go-app-ussd_public.js:1117
+#: go-app-ussd_public.js:1180
 msgid "Sorry not a valid input. Thank you for using the FamilyConnect service"
 msgstr ""
 
-#: go-app-ussd_public.js:1153 go-app-ussd_public.js:1229 go-app-ussd_public.js:1537 go-app-ussd_public.js:1671
+#: go-app-ussd_public.js:1216 go-app-ussd_public.js:1575 go-app-ussd_public.js:1691
 msgid "Yes"
 msgstr ""
 
-#: go-app-ussd_public.js:1154
+#: go-app-ussd_public.js:1217
 msgid "No, start from the beginning"
 msgstr ""
 
-#: go-app-ussd_public.js:1214 go-app-ussd_public.js:1396
+#: go-app-ussd_public.js:1279 go-app-ussd_public.js:1434
 msgid "English"
 msgstr ""
 
-#: go-app-ussd_public.js:1215 go-app-ussd_public.js:1397
+#: go-app-ussd_public.js:1280 go-app-ussd_public.js:1435
 msgid "Rukiga"
 msgstr ""
 
-#: go-app-ussd_public.js:1216 go-app-ussd_public.js:1398
+#: go-app-ussd_public.js:1281 go-app-ussd_public.js:1436
 msgid "Lusoga"
 msgstr ""
 
-#: go-app-ussd_public.js:1217 go-app-ussd_public.js:1399
+#: go-app-ussd_public.js:1282 go-app-ussd_public.js:1437
 msgid "Luganda"
 msgstr ""
 
-#: go-app-ussd_public.js:1230 go-app-ussd_public.js:1538 go-app-ussd_public.js:1672
-msgid "No"
+#: go-app-ussd_public.js:1294
+msgid "Register this number to receive SMSs about you & your baby"
 msgstr ""
 
-#: go-app-ussd_public.js:1231
-msgid "Change the number I'd like to manage"
+#: go-app-ussd_public.js:1295
+msgid "Manage a different phone number"
 msgstr ""
 
-#: go-app-ussd_public.js:1309
+#: go-app-ussd_public.js:1362
 msgid "Start baby SMSs"
 msgstr ""
 
-#: go-app-ussd_public.js:1310
+#: go-app-ussd_public.js:1363
 msgid "Update language"
 msgstr ""
 
-#: go-app-ussd_public.js:1311
+#: go-app-ussd_public.js:1364
 msgid "Change the number which gets SMSs"
 msgstr ""
 
-#: go-app-ussd_public.js:1312
+#: go-app-ussd_public.js:1365
 msgid "Stop SMSs"
 msgstr ""
 
-#: go-app-ussd_public.js:1326
-msgid "Register to receive SMSs about you & your baby"
-msgstr ""
-
-#: go-app-ussd_public.js:1356
+#: go-app-ussd_public.js:1394
 msgid "Back to main menu"
 msgstr ""
 
-#: go-app-ussd_public.js:1357 go-app-ussd_public.js:1464
+#: go-app-ussd_public.js:1395 go-app-ussd_public.js:1502 go-app-ussd_public.js:1720 go-app-ussd_public.js:1754
 msgid "Exit"
 msgstr ""
 
-#: go-app-ussd_public.js:1463
+#: go-app-ussd_public.js:1501
 msgid "Try a different number"
 msgstr ""
 
-#: go-app-ussd_public.js:1492 go-app-ussd_public.js:1593
+#: go-app-ussd_public.js:1530
 msgid "Head of the Household"
 msgstr ""
 
-#: go-app-ussd_public.js:1493 go-app-ussd_public.js:1594
+#: go-app-ussd_public.js:1531
 msgid "Mother to be"
 msgstr ""
 
-#: go-app-ussd_public.js:1494 go-app-ussd_public.js:1595
+#: go-app-ussd_public.js:1532
 msgid "Family member"
 msgstr ""
 
-#: go-app-ussd_public.js:1495 go-app-ussd_public.js:1596
+#: go-app-ussd_public.js:1533
 msgid "Trusted friend"
 msgstr ""
 
-#: go-app-ussd_public.js:1517
+#: go-app-ussd_public.js:1555
 msgid "Mother miscarried"
 msgstr ""
 
-#: go-app-ussd_public.js:1518
+#: go-app-ussd_public.js:1556
 msgid "Baby stillborn"
 msgstr ""
 
-#: go-app-ussd_public.js:1519
+#: go-app-ussd_public.js:1557
 msgid "Baby passed away"
 msgstr ""
 
-#: go-app-ussd_public.js:1520
+#: go-app-ussd_public.js:1558
 msgid "Messages not useful"
 msgstr ""
 
-#: go-app-ussd_public.js:1521
+#: go-app-ussd_public.js:1559
 msgid "Other"
 msgstr ""
 
-#: go-app-ussd_public.js:1688
+#: go-app-ussd_public.js:1576 go-app-ussd_public.js:1692
+msgid "No"
+msgstr ""
+
+#: go-app-ussd_public.js:1717
+msgid "Back"
+msgstr ""
+
+#: go-app-ussd_public.js:1718
+msgid "More"
+msgstr ""
+
+#: go-app-ussd_public.js:1719 go-app-ussd_public.js:1753 go-app-ussd_public.js:1778
+msgid "Try again"
+msgstr ""
+
+#: go-app-ussd_public.js:1779
+msgid "Enter your location instead"
+msgstr ""
+
+#: go-app-ussd_public.js:1804
 msgid "Thank you. Your FamilyConnect ID will be sent to you in an SMS shortly."
 msgstr ""
 
-#: go-app-ussd_public.js:1701
+#: go-app-ussd_public.js:1817
 msgid "Welcome. When you signed up, were staff at the facility friendly & helpful?"
 msgstr ""
 
-#: go-app-ussd_public.js:1706 go-app-ussd_public.js:1729 go-app-ussd_public.js:1775 go-app-ussd_public.js:1798
+#: go-app-ussd_public.js:1822 go-app-ussd_public.js:1845 go-app-ussd_public.js:1891 go-app-ussd_public.js:1914
 msgid "Very Satisfied"
 msgstr ""
 
-#: go-app-ussd_public.js:1707 go-app-ussd_public.js:1730 go-app-ussd_public.js:1776 go-app-ussd_public.js:1799
+#: go-app-ussd_public.js:1823 go-app-ussd_public.js:1846 go-app-ussd_public.js:1892 go-app-ussd_public.js:1915
 msgid "Satisfied"
 msgstr ""
 
-#: go-app-ussd_public.js:1708 go-app-ussd_public.js:1731 go-app-ussd_public.js:1777 go-app-ussd_public.js:1800
+#: go-app-ussd_public.js:1824 go-app-ussd_public.js:1847 go-app-ussd_public.js:1893 go-app-ussd_public.js:1916
 msgid "Not Satisfied"
 msgstr ""
 
-#: go-app-ussd_public.js:1709 go-app-ussd_public.js:1732 go-app-ussd_public.js:1778 go-app-ussd_public.js:1801
+#: go-app-ussd_public.js:1825 go-app-ussd_public.js:1848 go-app-ussd_public.js:1894 go-app-ussd_public.js:1917
 msgid "Very unsatisfied"
 msgstr ""
 
-#: go-app-ussd_public.js:1724
+#: go-app-ussd_public.js:1840
 msgid "How do you feel about the time you had to wait at the facility?"
 msgstr ""
 
-#: go-app-ussd_public.js:1747
+#: go-app-ussd_public.js:1863
 msgid "How long did you wait to be helped at the clinic?"
 msgstr ""
 
-#: go-app-ussd_public.js:1752
+#: go-app-ussd_public.js:1868
 msgid "Less than an hour"
 msgstr ""
 
-#: go-app-ussd_public.js:1753
+#: go-app-ussd_public.js:1869
 msgid "Between 1 and 3 hours"
 msgstr ""
 
-#: go-app-ussd_public.js:1754
+#: go-app-ussd_public.js:1870
 msgid "More than 4 hours"
 msgstr ""
 
-#: go-app-ussd_public.js:1755
+#: go-app-ussd_public.js:1871
 msgid "All day"
 msgstr ""
 
-#: go-app-ussd_public.js:1770
+#: go-app-ussd_public.js:1886
 msgid "Was the facility clean?"
 msgstr ""
 
-#: go-app-ussd_public.js:1793
+#: go-app-ussd_public.js:1909
 msgid "Did you feel that your privacy was respected by the staff?"
 msgstr ""
 
-#: go-app-ussd_public.js:1826
+#: go-app-ussd_public.js:1942
 msgid "Thank you for rating the FamilyConnect service."
 msgstr ""
