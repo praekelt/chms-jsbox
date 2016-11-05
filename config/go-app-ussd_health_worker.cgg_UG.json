@@ -1,0 +1,234 @@
+{
+    "": {
+        "pot-creation-date": "2016-11-02 19:01+0000",
+        "project-id-version": "",
+        "language-team": "",
+        "mime-version": "1.0",
+        "content-type": "text/plain; charset=UTF-8",
+        "content-transfer-encoding": "8bit",
+        "po-revision-date": "2016-11-02 19:28+0000",
+        "x-generator": "Poedit 1.8.11",
+        "last-translator": "",
+        "language": "ccg_UG"
+    },
+    "{{pre}}January{{post}}": [
+        null,
+        "{{pre}}Okwokubanza{{post}}"
+    ],
+    "{{pre}}February{{post}}": [
+        null,
+        "{{pre}}Okwakabiri{{post}}"
+    ],
+    "{{pre}}March{{post}}": [
+        null,
+        "{{pre}}Okwakashatu{{post}}"
+    ],
+    "{{pre}}April{{post}}": [
+        null,
+        "{{pre}}Okwakana{{post}}"
+    ],
+    "{{pre}}May{{post}}": [
+        null,
+        "{{pre}}Okwakatano{{post}}"
+    ],
+    "{{pre}}June{{post}}": [
+        null,
+        "{{pre}}Okwamukaga{{post}}"
+    ],
+    "{{pre}}July{{post}}": [
+        null,
+        "{{pre}}Okwamushanju{{post}}"
+    ],
+    "{{pre}}August{{post}}": [
+        null,
+        "{{pre}}Okwamunana{{post}}"
+    ],
+    "{{pre}}September{{post}}": [
+        null,
+        "{{pre}}Okwamwenda{{post}}"
+    ],
+    "{{pre}}October{{post}}": [
+        null,
+        "{{pre}}Okwikumi{{post}}"
+    ],
+    "{{pre}}November{{post}}": [
+        null,
+        "{{pre}}Okwikuminakume{{post}}"
+    ],
+    "{{pre}}December{{post}}": [
+        null,
+        "{{pre}}Okwikumunebiri{{post}}"
+    ],
+    "{{pre}}Jan{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Feb{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Mar{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Apr{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Jun{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Jul{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Aug{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Sep{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Oct{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Nov{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Dec{{post}}": [
+        null,
+        ""
+    ],
+    "You have an incomplete registration. Would you like to continue with this registration?": [
+        null,
+        "Okayeenzire kugumizamu nokwehandikyisa oku?"
+    ],
+    "Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345": [
+        null,
+        "FamilyConnect nekwakira. Enamba eyenaama, ekyokureeberaho  12345."
+    ],
+    "Please enter the mobile number which the messages will be sent to. For example, 0803304899": [
+        null,
+        ""
+    ],
+    "{{msisdn}} is already registered for messages.": [
+        null,
+        "[MSISDN] yahandikirwe aha'bwobutumwa."
+    ],
+    "Please enter the name and surname of the Head of the Household. For example: Isaac Mbire": [
+        null,
+        ""
+    ],
+    "You only entered the first name, please enter the surname of the household. For example: Mbire": [
+        null,
+        "Watiremu eiziina ryediini ryonka, tasyamu nerya mukuru weeka eryobuzarwa. Ekyokureberaho, Mbire"
+    ],
+    "When did the woman have her last period:": [
+        null,
+        ""
+    ],
+    "What day of the month did the woman start her last period? For example, 12.": [
+        null,
+        "Nikiroki  kyowezi obu omukazi yatandika kujwa? Ekyokureberaho 12."
+    ],
+    "Please enter the name of the woman. For example: Sharon": [
+        null,
+        "Handika eizina ryomukazi eryediini. Ekyokureberaho: Sharon"
+    ],
+    "Please enter the surname of the woman. For example: Nalule": [
+        null,
+        "Handika eizina ryomukazi eryobuzarwa. Ekyokureberaho: Busingye"
+    ],
+    "What language would they want to receive these messages in?": [
+        null,
+        "Nirurimiki orurabanguhire kutunga obutumwa obu?"
+    ],
+    "Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages": [
+        null,
+        "Webare . Enamba yomukazi omu FamilyConnect [XXX XXX XXXX]. Hati baraza kutandika kutunga obutumwa."
+    ],
+    "Sorry not a valid input. You have an incomplete registration. Would you like to continue with this registration?": [
+        null,
+        ""
+    ],
+    "That code is not recognised. Please enter your 5 digit personnel code.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Please enter the mobile number which the messages will be sent to. For example, 0803304899": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. {{msisdn}} is already registered for messages.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Please enter the name and surname of the Head of the Household. For example: Isaac Mbire": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Please enter the surname of the Head of the Household. For example: Mbire": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. When did the woman have her last period:": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. What day of the month did the woman start her last period? For example, 12.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Please enter the name of the woman. For example: Sharon": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Please enter the surname of the woman. For example: Nalule": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. What language would they want to receive these messages in?": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages": [
+        null,
+        ""
+    ],
+    "Yes": [
+        null,
+        "Eego"
+    ],
+    "No, start new registration": [
+        null,
+        "Eingaaha, tandika kuhandika busya."
+    ],
+    "Continue registration": [
+        null,
+        "Ngumizamu orahandikisa."
+    ],
+    "Register a different number": [
+        null,
+        "Handikisa enamba eyindi."
+    ],
+    "English": [
+        null,
+        "Orungyereza/ orujungu"
+    ],
+    "Rukiga": [
+        null,
+        "Orukiga"
+    ],
+    "Lusoga": [
+        null,
+        ""
+    ],
+    "Luganda": [
+        null,
+        ""
+    ]
+}
