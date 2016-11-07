@@ -144,7 +144,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_msisdn',
-                        reply: "Please enter the mobile number which the messages will be sent to. For example, 0803304899"
+                        reply: "Please enter the mobile number of the person who will receive the weekly messages. For example: 0803304899."
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [0]);
@@ -180,7 +180,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_household_head_name',
-                        reply: "Please enter the name and surname of the Head of the Household. For example: Isaac Mbire"
+                        reply: "Please enter both the first name and last name of the Head of Household. For example: Isaac Mbire"
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [0,5,6,17]);
@@ -201,7 +201,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_household_head_surname',
-                        reply: "You only entered the first name, please enter the surname of the household. For example: Mbire"
+                        reply: "You only entered the first name. Please enter the last name of the head of the household? For example, Mbire"
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [0,5,6,17]);
@@ -237,7 +237,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_last_period_month',
                         reply: [
-                            "When did the woman have her last period:",
+                            "Please select the month the woman started her last period:",
                             "1. Apr 15",
                             "2. Mar 15",
                             "3. Feb 15",
@@ -276,7 +276,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_last_period_day',
-                        reply: "What day of the month did the woman start her last period? For example, 12."
+                        reply: "What date of the month did the woman start her last period? For example, 12."
                     })
                     .run();
             });
@@ -292,7 +292,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_mother_name',
-                        reply: "Please enter the name of the woman. For example: Sharon"
+                        reply: "Please enter the first name of the woman. For example: Sharon"
                     })
                     .run();
             });
@@ -331,14 +331,12 @@ describe("familyconnect health worker app", function() {
                             "What language would they want to receive these messages in?",
                             "1. English",
                             "2. Rukiga",
-                            "3. Lusoga",
-                            "4. Luganda"
                         ].join('\n')
                     })
                     .run();
             });
 
-            it("complete flow - mother, lusoga, no hiv msgs", function() {
+            it("complete flow - mother, rukiga, no hiv msgs", function() {
                 return tester
                     .setup.user.addr('0820000111')
                     .inputs(
@@ -349,7 +347,7 @@ describe("familyconnect health worker app", function() {
                         , '21'  // state_last_period_day - 21st
                         , 'Mary'  // state_mother_name
                         , 'Nalule'  // state_mother_surname
-                        , '3'  // state_msg_language - lusoga
+                        , '2'  // state_msg_language - rukiga
                     )
                     .check.interaction({
                         state: 'state_end_thank_you',
@@ -374,7 +372,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_auth_code',
-                        reply: "That code is not recognised. Please enter your 5 digit personnel code."
+                        reply: "Sorry, invalid number."
                     })
                     .run();
             });
@@ -389,7 +387,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_household_head_name',
-                        reply: "Sorry not a valid input. Please enter the name and surname of the Head of the Household. For example: Isaac Mbire"
+                        reply: "Sorry, invalid name."
                     })
                     .run();
             });
