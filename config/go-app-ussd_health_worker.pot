@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-11-02 05:25:+0000\n"
+"POT-Creation-Date: 2016-11-07 09:57:+0000\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -115,8 +115,8 @@ msgstr ""
 
 #: go-app-ussd_health_worker.js:1055
 msgid ""
-"Please enter the mobile number which the messages will be sent to. For "
-"example, 0803304899"
+"Please enter the mobile number of the person who will receive the weekly "
+"messages. For example: 0803304899."
 msgstr ""
 
 #: go-app-ussd_health_worker.js:1057
@@ -125,26 +125,26 @@ msgstr ""
 
 #: go-app-ussd_health_worker.js:1059
 msgid ""
-"Please enter the name and surname of the Head of the Household. For "
-"example: Isaac Mbire"
+"Please enter both the first name and last name of the Head of Household. "
+"For example: Isaac Mbire"
 msgstr ""
 
 #: go-app-ussd_health_worker.js:1061
 msgid ""
-"You only entered the first name, please enter the surname of the household. "
-"For example: Mbire"
+"You only entered the first name. Please enter the last name of the head of "
+"the household? For example, Mbire"
 msgstr ""
 
 #: go-app-ussd_health_worker.js:1063
-msgid "When did the woman have her last period:"
+msgid "Please select the month the woman started her last period:"
 msgstr ""
 
 #: go-app-ussd_health_worker.js:1065
-msgid "What day of the month did the woman start her last period? For example, 12."
+msgid "What date of the month did the woman start her last period? For example, 12."
 msgstr ""
 
 #: go-app-ussd_health_worker.js:1067
-msgid "Please enter the name of the woman. For example: Sharon"
+msgid "Please enter the first name of the woman. For example: Sharon"
 msgstr ""
 
 #: go-app-ussd_health_worker.js:1069
@@ -161,100 +161,42 @@ msgid ""
 "start receiving messages"
 msgstr ""
 
-#: go-app-ussd_health_worker.js:1078
-msgid ""
-"Sorry not a valid input. You have an incomplete registration. Would you "
-"like to continue with this registration?"
+#: go-app-ussd_health_worker.js:1078 go-app-ussd_health_worker.js:1084 go-app-ussd_health_worker.js:1098
+msgid "Sorry, invalid option."
 msgstr ""
 
-#: go-app-ussd_health_worker.js:1080
-msgid "That code is not recognised. Please enter your 5 digit personnel code."
+#: go-app-ussd_health_worker.js:1080 go-app-ussd_health_worker.js:1082 go-app-ussd_health_worker.js:1092
+msgid "Sorry, invalid number."
 msgstr ""
 
-#: go-app-ussd_health_worker.js:1082
-msgid ""
-"Sorry not a valid input. Please enter the mobile number which the messages "
-"will be sent to. For example, 0803304899"
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1084
-msgid "Sorry not a valid input. {{msisdn}} is already registered for messages."
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1086
-msgid ""
-"Sorry not a valid input. Please enter the name and surname of the Head of "
-"the Household. For example: Isaac Mbire"
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1088
-msgid ""
-"Sorry not a valid input. Please enter the surname of the Head of the "
-"Household. For example: Mbire"
+#: go-app-ussd_health_worker.js:1086 go-app-ussd_health_worker.js:1088 go-app-ussd_health_worker.js:1094 go-app-ussd_health_worker.js:1096
+msgid "Sorry, invalid name."
 msgstr ""
 
 #: go-app-ussd_health_worker.js:1090
-msgid "Sorry not a valid input. When did the woman have her last period:"
+msgid "Sorry, invalid date."
 msgstr ""
 
-#: go-app-ussd_health_worker.js:1092
-msgid ""
-"Sorry not a valid input. What day of the month did the woman start her last "
-"period? For example, 12."
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1094
-msgid ""
-"Sorry not a valid input. Please enter the name of the woman. For example: "
-"Sharon"
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1096
-msgid ""
-"Sorry not a valid input. Please enter the surname of the woman. For "
-"example: Nalule"
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1098
-msgid ""
-"Sorry not a valid input. What language would they want to receive these "
-"messages in?"
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1100
-msgid ""
-"Sorry not a valid input. Thank you. The woman's FamilyConnect ID is "
-"{{health_id}}. They will now start receiving messages"
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1124
+#: go-app-ussd_health_worker.js:1122
 msgid "Yes"
 msgstr ""
 
-#: go-app-ussd_health_worker.js:1125
+#: go-app-ussd_health_worker.js:1123
 msgid "No, start new registration"
 msgstr ""
 
-#: go-app-ussd_health_worker.js:1249
+#: go-app-ussd_health_worker.js:1247
 msgid "Continue registration"
 msgstr ""
 
-#: go-app-ussd_health_worker.js:1250
+#: go-app-ussd_health_worker.js:1248
 msgid "Register a different number"
 msgstr ""
 
-#: go-app-ussd_health_worker.js:1386
+#: go-app-ussd_health_worker.js:1384
 msgid "English"
 msgstr ""
 
-#: go-app-ussd_health_worker.js:1387
+#: go-app-ussd_health_worker.js:1385
 msgid "Rukiga"
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1388
-msgid "Lusoga"
-msgstr ""
-
-#: go-app-ussd_health_worker.js:1389
-msgid "Luganda"
 msgstr ""
