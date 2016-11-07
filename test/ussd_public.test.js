@@ -12,7 +12,7 @@ describe("familyconnect health worker app", function() {
             tester = new AppTester(app);
 
             tester
-                .setup.char_limit(182)
+                .setup.char_limit(150)
                 .setup.config.app({
                     name: 'familyconnect',
                     channel: '*120*8864*0000#',
@@ -289,15 +289,13 @@ describe("familyconnect health worker app", function() {
                         state: 'state_last_period_month',
                         reply: [
                             "What month did you start your last period?",
-                            "1. Apr 15",
-                            "2. Mar 15",
-                            "3. Feb 15",
-                            "4. Jan 15",
-                            "5. Dec 14",
-                            "6. Nov 14",
-                            "7. Oct 14",
-                            "8. Sep 14",
-                            "9. Aug 14"
+                            "1. April 2015",
+                            "2. March 2015",
+                            "3. February 2015",
+                            "4. January 2015",
+                            "5. December 2014",
+                            "6. November 2014",
+                            "7. More",
                         ].join('\n')
                     })
                     .check(function(api) {
@@ -836,7 +834,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_loss_subscription',
                         reply: [
-                            "We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?",
+                            "We are sorry for your loss. Would you like to receive free messages that could help you in this difficult time?",
                             "1. Yes",
                             "2. No"
                         ].join('\n')

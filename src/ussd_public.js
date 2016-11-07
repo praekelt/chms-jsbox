@@ -7,6 +7,7 @@ go.app = function() {
     var EndState = vumigo.states.EndState;
     var FreeText = vumigo.states.FreeText;
     var MenuState = vumigo.states.MenuState;
+    var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
 
 
     var GoFC = App.extend(function(self) {
@@ -29,8 +30,6 @@ go.app = function() {
                 $("Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899"),
             "state_change_menu":
                 $("Choose:"),
-            "state_registration_menu":
-                $("Choose from:"),
 
             "state_already_baby":
                 $("You are already registered for baby messages."),
@@ -54,7 +53,7 @@ go.app = function() {
             "state_optout_reason":
                 $("Why do you no longer want to receive messages?"),
             "state_loss_subscription":
-                $("We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?"),
+                $("We are sorry for your loss. Would you like to receive free messages that could help you in this difficult time?"),
             "state_end_loss_subscription":
                 $("Thank you. You will now receive messages to support you during this difficult time."),
             "state_end_optout":
@@ -95,8 +94,6 @@ go.app = function() {
             "state_manage_msisdn":
                 $("Sorry, invalid number."),
             "state_change_menu":
-                $("Sorry, invalid option."),
-            "state_registration_menu":
                 $("Sorry, invalid option."),
 
             "state_already_baby":
@@ -593,10 +590,12 @@ go.app = function() {
         // ChoiceState reg-02
         self.add('state_last_period_month', function(name) {
             var today = go.utils.get_today(self.im.config);
-            return new ChoiceState(name, {
+            return new PaginatedChoiceState(name, {
                 question: questions[name],
-                choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
+                choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMMM YYYY"),
                 error: errors[name],
+                options_per_page: null,
+                characters_per_page: 150,
                 next: 'state_last_period_day'
             });
         });
