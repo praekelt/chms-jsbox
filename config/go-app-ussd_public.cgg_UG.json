@@ -1,15 +1,15 @@
 {
     "": {
-        "pot-creation-date": "2016-11-02 18:07+0000",
+        "pot-creation-date": "2016-11-07 11:58+0200",
         "project-id-version": "",
         "language-team": "",
         "mime-version": "1.0",
         "content-type": "text/plain; charset=UTF-8",
         "content-transfer-encoding": "8bit",
-        "po-revision-date": "2016-11-02 18:57+0000",
+        "po-revision-date": "2016-11-07 14:18+0200",
         "x-generator": "Poedit 1.8.11",
         "last-translator": "",
-        "language": "cc_UG"
+        "language": "cgg_UG"
     },
     "{{pre}}January{{post}}": [
         null,
@@ -61,47 +61,47 @@
     ],
     "{{pre}}Jan{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Feb{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Mar{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Apr{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Jun{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Jul{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Aug{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Sep{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Oct{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Nov{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Dec{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "You have an incomplete registration. Would you like to continue with this registration?": [
         null,
@@ -113,7 +113,7 @@
     ],
     "Choose from:": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899": [
         null,
@@ -121,19 +121,19 @@
     ],
     "Choose:": [
         null,
-        "Torana"
+        "Torana:"
     ],
     "You are already registered for baby messages.": [
         null,
-        " Waherize kwehandikisa ahabwobutumwa bwo'mwaana."
+        "Waherize kwehandikisa ahabwobutumwa bwo'mwaana."
     ],
-    "You will receive baby messages.": [
+    "Thank you. You will now receive messages about caring for the baby": [
         null,
         ""
     ],
-    "What language would this person like to receive these messages in?": [
+    "What language would you like to receive messages in?": [
         null,
-        ""
+        "Nirurimiki oruwokwenzire kutungamu obutumwa?"
     ],
     "Thank you. Your language preference has been updated and you will start to receive SMSs in this language.": [
         null,
@@ -145,23 +145,23 @@
     ],
     "Sorry, this number is already registered.": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Who will receive these messages?": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Thank you. The number which receives messages has been updated.": [
         null,
         "Yebaare, enamba yokwakiira obutumwa yayerezibwa."
     ],
-    "Please tell us why you no longer want to receive messages so we can help you further.": [
+    "Why do you no longer want to receive messages?": [
         null,
-        ""
+        "Ahabwenki otakyayeenda kutunga obutumwa?"
     ],
     "We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Thank you. You will now receive messages to support you during this difficult time.": [
         null,
@@ -169,13 +169,13 @@
     ],
     "Thank you. You will no longer receive messages": [
         null,
-        "Yebare. Toragaruke kutunga obutumwa. "
+        "Yebare. Toragaruke kutunga obutumwa"
     ],
-    "When did the woman have her last period": [
+    "What month did you start your last period?": [
         null,
-        ""
+        "Nikweezi kyi okuwatandikyire Kuza omukwezi?"
     ],
-    "What day of the month did the woman start her last period? For example, 12.": [
+    "What date of the month did you start your last period? For example, 12.": [
         null,
         "Ni biro kyi bwokwezi ebiwatandikireho emicwe obweire obuhweire? Ekyokureberaho Okwikumunebiri"
     ],
@@ -195,9 +195,9 @@
         null,
         "Omuruka gwawe niguuha?"
     ],
-    "Results for {{search}}:": [
+    "Select your parish": [
         null,
-        ""
+        "Torana omuruka"
     ],
     "Sorry, there are no results for your parish name.": [
         null,
@@ -209,123 +209,27 @@
     ],
     "Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly.": [
         null,
-        "Yebare. Enambaya FamilyConnect ni [XXX-XXX-XXXX]. Nooza kutunga obutumwa juba juba."
+        "NOT IN SPREADSHEET"
     ],
     "Thank you for using the FamilyConnect service": [
         null,
-        "Webaare kukwozesa obuhereeza oburikugeita/ oburikushuganisa eka ."
+        "Webaare kukwozesa obuhereeza oburikugeita/ oburikushuganisa eka"
     ],
-    "Sorry not a valid input. You have an incomplete registration. Would you like to continue with this registration?": [
+    "Sorry, invalid option.": [
         null,
-        ""
+        "Bambi watorana kubi."
     ],
-    "Sorry not a valid input. Welcome to FamilyConnect. Please choose your language": [
+    "Sorry, invalid number.": [
         null,
-        ""
+        "Enamba egweire."
     ],
-    "Sorry not a valid input. Choose from:": [
+    "Sorry, invalid date.": [
         null,
-        ""
+        "Bambe Ebiro bigweire."
     ],
-    "Sorry not a valid input. Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899": [
+    "Sorry, invalid name.": [
         null,
-        ""
-    ],
-    "Sorry not a valid input. Choose:": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. You are already registered for baby messages.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. You will receive baby messages.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. What language would this person like to receive these messages in?": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Thank you. Your language preference has been updated and you will start to receive SMSs in this language.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Sorry, this number is already registered.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Who will receive these messages?": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Thank you. The number which receives messages has been updated.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Please tell us why you no longer want to receive messages so we can help you further.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Thank you. You will now receive messages to support you during this difficult time.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Thank you. You will no longer receive messages": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. When did the woman have her last period": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. What day of the month did the woman start her last period? For example, 12.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Do you know your local village health team (VHT)?": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Please enter their cellphone number. For example, 0803304899": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. We did not recognise the VHTs number.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. What is the name of your parish?": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Results for {{search}}": [
-        null,
-        ""
-    ],
-    "Sorry, not a valid input. Sorry, there are no results for your parish name.": [
-        null,
-        ""
-    ],
-    "Sorry, not a valid input. Please re-enter your parish name carefully and make sure you use the correct spelling.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Thank you for using the FamilyConnect service": [
-        null,
-        ""
+        "Bambe Enamba egweire."
     ],
     "Yes": [
         null,
@@ -333,7 +237,7 @@
     ],
     "No, start from the beginning": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "English": [
         null,
@@ -343,21 +247,13 @@
         null,
         "Orukiga"
     ],
-    "Lusoga": [
-        null,
-        ""
-    ],
-    "Luganda": [
-        null,
-        ""
-    ],
     "Register this number to receive SMSs about you & your baby": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Manage a different phone number": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Start baby SMSs": [
         null,
@@ -385,27 +281,27 @@
     ],
     "Try a different number": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Head of the Household": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Mother to be": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Family member": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Trusted friend": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Mother miscarried": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Baby stillborn": [
         null,
@@ -425,11 +321,11 @@
     ],
     "No": [
         null,
-        "Eeingaha"
+        "Eingaha"
     ],
     "Back": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "More": [
         null,
@@ -437,7 +333,7 @@
     ],
     "Try again": [
         null,
-        "Gyezaho ogundi (omurundi)"
+        "Gyezaho ogundi"
     ],
     "Enter your location instead": [
         null,
@@ -445,62 +341,62 @@
     ],
     "Thank you. Your FamilyConnect ID will be sent to you in an SMS shortly.": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Welcome. When you signed up, were staff at the facility friendly & helpful?": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Very Satisfied": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Satisfied": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Not Satisfied": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Very unsatisfied": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "How do you feel about the time you had to wait at the facility?": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "How long did you wait to be helped at the clinic?": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Less than an hour": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Between 1 and 3 hours": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "More than 4 hours": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "All day": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Was the facility clean?": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Did you feel that your privacy was respected by the staff?": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "Thank you for rating the FamilyConnect service.": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ]
 }
