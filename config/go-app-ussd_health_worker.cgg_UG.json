@@ -1,15 +1,15 @@
 {
     "": {
-        "pot-creation-date": "2016-11-02 19:01+0000",
+        "pot-creation-date": "2016-11-07 14:30+0200",
         "project-id-version": "",
         "language-team": "",
         "mime-version": "1.0",
         "content-type": "text/plain; charset=UTF-8",
         "content-transfer-encoding": "8bit",
-        "po-revision-date": "2016-11-02 19:28+0000",
+        "po-revision-date": "2016-11-07 14:44+0200",
         "x-generator": "Poedit 1.8.11",
         "last-translator": "",
-        "language": "ccg_UG"
+        "language": "cgg_UG"
     },
     "{{pre}}January{{post}}": [
         null,
@@ -61,47 +61,47 @@
     ],
     "{{pre}}Jan{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Feb{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Mar{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Apr{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Jun{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Jul{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Aug{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Sep{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Oct{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Nov{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "{{pre}}Dec{{post}}": [
         null,
-        ""
+        "NOT IN SPREADSHEET"
     ],
     "You have an incomplete registration. Would you like to continue with this registration?": [
         null,
@@ -109,33 +109,33 @@
     ],
     "Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345": [
         null,
-        "FamilyConnect nekwakira. Enamba eyenaama, ekyokureeberaho  12345."
+        "Nikiroki  kyowezi obu omukazi yatandika kujwa? Ekyokureberaho 12"
     ],
-    "Please enter the mobile number which the messages will be sent to. For example, 0803304899": [
+    "Please enter the mobile number of the person who will receive the weekly messages. For example: 0803304899.": [
         null,
-        ""
+        "Tasyamu enamba yesiimu eyomuntu orayaakyire obutumwa bwa buri sande. Ekyokureberaho : 0803304899."
     ],
     "{{msisdn}} is already registered for messages.": [
         null,
-        "[MSISDN] yahandikirwe aha'bwobutumwa."
+        "NOT IN SPREADSHEET"
     ],
-    "Please enter the name and surname of the Head of the Household. For example: Isaac Mbire": [
+    "Please enter both the first name and last name of the Head of Household. For example: Isaac Mbire": [
         null,
-        ""
+        "Handika amazina goona agamukuru weka. Ekyokureberaho: Isaac Mbire"
     ],
-    "You only entered the first name, please enter the surname of the household. For example: Mbire": [
+    "You only entered the first name. Please enter the last name of the head of the household? For example, Mbire": [
         null,
-        "Watiremu eiziina ryediini ryonka, tasyamu nerya mukuru weeka eryobuzarwa. Ekyokureberaho, Mbire"
+        "You only entered the first name. Please enter the last name of the head of the household? For example, Mbire"
     ],
-    "When did the woman have her last period:": [
+    "Please select the month the woman started her last period:": [
         null,
-        ""
+        "Torana okwezi oku omukazi yahererukire kujwa:"
     ],
-    "What day of the month did the woman start her last period? For example, 12.": [
+    "What date of the month did the woman start her last period? For example, 12.": [
         null,
-        "Nikiroki  kyowezi obu omukazi yatandika kujwa? Ekyokureberaho 12."
+        "Nikiroki kyowezi obu omukazi yatandika kujwa? Ekyokureberaho 12."
     ],
-    "Please enter the name of the woman. For example: Sharon": [
+    "Please enter the first name of the woman. For example: Sharon": [
         null,
         "Handika eizina ryomukazi eryediini. Ekyokureberaho: Sharon"
     ],
@@ -145,59 +145,27 @@
     ],
     "What language would they want to receive these messages in?": [
         null,
-        "Nirurimiki orurabanguhire kutunga obutumwa obu?"
+        "NOT IN SPREADSHEET"
     ],
     "Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages": [
         null,
-        "Webare . Enamba yomukazi omu FamilyConnect [XXX XXX XXXX]. Hati baraza kutandika kutunga obutumwa."
+        "NOT IN SPREADSHEET"
     ],
-    "Sorry not a valid input. You have an incomplete registration. Would you like to continue with this registration?": [
+    "Sorry, invalid option.": [
         null,
-        ""
+        "Bambe_watoorana_kubi."
     ],
-    "That code is not recognised. Please enter your 5 digit personnel code.": [
+    "Sorry, invalid number.": [
         null,
-        ""
+        "Bambe_enamba_egweire."
     ],
-    "Sorry not a valid input. Please enter the mobile number which the messages will be sent to. For example, 0803304899": [
+    "Sorry, invalid name.": [
         null,
-        ""
+        "Bambe_eiziina_rigweire."
     ],
-    "Sorry not a valid input. {{msisdn}} is already registered for messages.": [
+    "Sorry, invalid date.": [
         null,
-        ""
-    ],
-    "Sorry not a valid input. Please enter the name and surname of the Head of the Household. For example: Isaac Mbire": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Please enter the surname of the Head of the Household. For example: Mbire": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. When did the woman have her last period:": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. What day of the month did the woman start her last period? For example, 12.": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Please enter the name of the woman. For example: Sharon": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Please enter the surname of the woman. For example: Nalule": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. What language would they want to receive these messages in?": [
-        null,
-        ""
-    ],
-    "Sorry not a valid input. Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages": [
-        null,
-        ""
+        "Bambe_ebiro_bigweire."
     ],
     "Yes": [
         null,
@@ -213,22 +181,14 @@
     ],
     "Register a different number": [
         null,
-        "Handikisa enamba eyindi."
+        "Handikisa enamba eyindi"
     ],
     "English": [
         null,
-        "Orungyereza/ orujungu"
+        "English"
     ],
     "Rukiga": [
         null,
-        "Orukiga"
-    ],
-    "Lusoga": [
-        null,
-        ""
-    ],
-    "Luganda": [
-        null,
-        ""
+        "Rukiga"
     ]
 }
