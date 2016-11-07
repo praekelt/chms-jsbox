@@ -1,1 +1,506 @@
-{}
+{
+    "": {
+        "pot-creation-date": "2016-11-02 18:07+0000",
+        "project-id-version": "",
+        "language-team": "",
+        "mime-version": "1.0",
+        "content-type": "text/plain; charset=UTF-8",
+        "content-transfer-encoding": "8bit",
+        "po-revision-date": "2016-11-02 18:57+0000",
+        "x-generator": "Poedit 1.8.11",
+        "last-translator": "",
+        "language": "cc_UG"
+    },
+    "{{pre}}January{{post}}": [
+        null,
+        "{{pre}}Okwokubanza{{post}}"
+    ],
+    "{{pre}}February{{post}}": [
+        null,
+        "{{pre}}Okwakabiri{{post}}"
+    ],
+    "{{pre}}March{{post}}": [
+        null,
+        "{{pre}}Okwakashatu{{post}}"
+    ],
+    "{{pre}}April{{post}}": [
+        null,
+        "{{pre}}Okwakana{{post}}"
+    ],
+    "{{pre}}May{{post}}": [
+        null,
+        "{{pre}}Okwakatano{{post}}"
+    ],
+    "{{pre}}June{{post}}": [
+        null,
+        "{{pre}}Okwamukaga{{post}}"
+    ],
+    "{{pre}}July{{post}}": [
+        null,
+        "{{pre}}Okwamushanju{{post}}"
+    ],
+    "{{pre}}August{{post}}": [
+        null,
+        "{{pre}}Okwamunana{{post}}"
+    ],
+    "{{pre}}September{{post}}": [
+        null,
+        "{{pre}}Okwamwenda{{post}}"
+    ],
+    "{{pre}}October{{post}}": [
+        null,
+        "{{pre}}Okwikumi{{post}}"
+    ],
+    "{{pre}}November{{post}}": [
+        null,
+        "{{pre}}Okwikuminakume{{post}}"
+    ],
+    "{{pre}}December{{post}}": [
+        null,
+        "{{pre}}Okwikumunebiri{{post}}"
+    ],
+    "{{pre}}Jan{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Feb{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Mar{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Apr{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Jun{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Jul{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Aug{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Sep{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Oct{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Nov{{post}}": [
+        null,
+        ""
+    ],
+    "{{pre}}Dec{{post}}": [
+        null,
+        ""
+    ],
+    "You have an incomplete registration. Would you like to continue with this registration?": [
+        null,
+        "Okwehandikisa kwawe tikuhweire. Okayenzire kugumizamu nokwehandikisa oku?"
+    ],
+    "Welcome to FamilyConnect. Please choose your language": [
+        null,
+        "FamilyConnect nekwakira. Toorana orurimi"
+    ],
+    "Choose from:": [
+        null,
+        ""
+    ],
+    "Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899": [
+        null,
+        "Taasamu enamba yesimu yomuntu oraagume kwakiira obutumwa bwa buri sande. Okyokureberaho 08003304899"
+    ],
+    "Choose:": [
+        null,
+        "Torana"
+    ],
+    "You are already registered for baby messages.": [
+        null,
+        " Waherize kwehandikisa ahabwobutumwa bwo'mwaana."
+    ],
+    "You will receive baby messages.": [
+        null,
+        ""
+    ],
+    "What language would this person like to receive these messages in?": [
+        null,
+        ""
+    ],
+    "Thank you. Your language preference has been updated and you will start to receive SMSs in this language.": [
+        null,
+        "Yebare, orurimi orworikwenda rwayerezibwa kandi nooza kutandika kutunga obutumwa omururimi rwaawe oru."
+    ],
+    "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899": [
+        null,
+        " Bambe taasamu enamba yesimu yomuntu oraguume kwakiira obutumwa bwa buri sande. Ekyokureberaho 0803304899"
+    ],
+    "Sorry, this number is already registered.": [
+        null,
+        ""
+    ],
+    "Who will receive these messages?": [
+        null,
+        ""
+    ],
+    "Thank you. The number which receives messages has been updated.": [
+        null,
+        "Yebaare, enamba yokwakiira obutumwa yayerezibwa."
+    ],
+    "Please tell us why you no longer want to receive messages so we can help you further.": [
+        null,
+        ""
+    ],
+    "We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?": [
+        null,
+        ""
+    ],
+    "Thank you. You will now receive messages to support you during this difficult time.": [
+        null,
+        "Yebare Noza kutunga obutumwa burakuyambe omuri obubweire bugumire."
+    ],
+    "Thank you. You will no longer receive messages": [
+        null,
+        "Yebare. Toragaruke kutunga obutumwa. "
+    ],
+    "When did the woman have her last period": [
+        null,
+        ""
+    ],
+    "What day of the month did the woman start her last period? For example, 12.": [
+        null,
+        "Ni biro kyi bwokwezi ebiwatandikireho emicwe obweire obuhweire? Ekyokureberaho Okwikumunebiri"
+    ],
+    "Do you know your local village health team (VHT)?": [
+        null,
+        "Nomanya omushaho waawe wekyaro otendekyirwe omubyamagara?"
+    ],
+    "Please enter their cellphone number. For example, 0803304899": [
+        null,
+        "Bambe taasamu enamba yaabo yomuhagatiro. Ekyokureberaho 0803304899"
+    ],
+    "We did not recognise the VHTs number.": [
+        null,
+        "Titwetegyerize enamba yomushaho waawe wahakyaro."
+    ],
+    "What is the name of your parish?": [
+        null,
+        "Omuruka gwawe niguuha?"
+    ],
+    "Results for {{search}}:": [
+        null,
+        ""
+    ],
+    "Sorry, there are no results for your parish name.": [
+        null,
+        "Bambe, tihaine birikwooreka ahabyomuruka gwaawe."
+    ],
+    "Please re-enter your parish name carefully and make sure you use the correct spelling.": [
+        null,
+        "Bambe garuka otaasemu eizina ryomuruka kurungi kandi ogyezeho kurihandika gye"
+    ],
+    "Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly.": [
+        null,
+        "Yebare. Enambaya FamilyConnect ni [XXX-XXX-XXXX]. Nooza kutunga obutumwa juba juba."
+    ],
+    "Thank you for using the FamilyConnect service": [
+        null,
+        "Webaare kukwozesa obuhereeza oburikugeita/ oburikushuganisa eka ."
+    ],
+    "Sorry not a valid input. You have an incomplete registration. Would you like to continue with this registration?": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Welcome to FamilyConnect. Please choose your language": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Choose from:": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Choose:": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. You are already registered for baby messages.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. You will receive baby messages.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. What language would this person like to receive these messages in?": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Thank you. Your language preference has been updated and you will start to receive SMSs in this language.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Sorry, this number is already registered.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Who will receive these messages?": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Thank you. The number which receives messages has been updated.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Please tell us why you no longer want to receive messages so we can help you further.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Thank you. You will now receive messages to support you during this difficult time.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Thank you. You will no longer receive messages": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. When did the woman have her last period": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. What day of the month did the woman start her last period? For example, 12.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Do you know your local village health team (VHT)?": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Please enter their cellphone number. For example, 0803304899": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. We did not recognise the VHTs number.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. What is the name of your parish?": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Results for {{search}}": [
+        null,
+        ""
+    ],
+    "Sorry, not a valid input. Sorry, there are no results for your parish name.": [
+        null,
+        ""
+    ],
+    "Sorry, not a valid input. Please re-enter your parish name carefully and make sure you use the correct spelling.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly.": [
+        null,
+        ""
+    ],
+    "Sorry not a valid input. Thank you for using the FamilyConnect service": [
+        null,
+        ""
+    ],
+    "Yes": [
+        null,
+        "Eego"
+    ],
+    "No, start from the beginning": [
+        null,
+        ""
+    ],
+    "English": [
+        null,
+        "Orujungu"
+    ],
+    "Rukiga": [
+        null,
+        "Orukiga"
+    ],
+    "Lusoga": [
+        null,
+        ""
+    ],
+    "Luganda": [
+        null,
+        ""
+    ],
+    "Register this number to receive SMSs about you & your baby": [
+        null,
+        ""
+    ],
+    "Manage a different phone number": [
+        null,
+        ""
+    ],
+    "Start baby SMSs": [
+        null,
+        "Tandika obutumwa bwomwaana"
+    ],
+    "Update language": [
+        null,
+        "Tereza ita ahamutindo orurimi"
+    ],
+    "Change the number which gets SMSs": [
+        null,
+        "Hindura enamba erikutunga obutumwa"
+    ],
+    "Stop SMSs": [
+        null,
+        "Rekyeeraho obutumwa"
+    ],
+    "Back to main menu": [
+        null,
+        "Garuka ahakubanza"
+    ],
+    "Exit": [
+        null,
+        "Rugaho"
+    ],
+    "Try a different number": [
+        null,
+        ""
+    ],
+    "Head of the Household": [
+        null,
+        ""
+    ],
+    "Mother to be": [
+        null,
+        ""
+    ],
+    "Family member": [
+        null,
+        ""
+    ],
+    "Trusted friend": [
+        null,
+        ""
+    ],
+    "Mother miscarried": [
+        null,
+        ""
+    ],
+    "Baby stillborn": [
+        null,
+        "Omwaana azairwa atahikyire"
+    ],
+    "Baby passed away": [
+        null,
+        "Omwaana atweirwe/afiire"
+    ],
+    "Messages not useful": [
+        null,
+        "Obutumwa tibwiine mugaasho"
+    ],
+    "Other": [
+        null,
+        "Ebiindi"
+    ],
+    "No": [
+        null,
+        "Eeingaha"
+    ],
+    "Back": [
+        null,
+        ""
+    ],
+    "More": [
+        null,
+        "Ebindi"
+    ],
+    "Try again": [
+        null,
+        "Gyezaho ogundi (omurundi)"
+    ],
+    "Enter your location instead": [
+        null,
+        "Hakyiri taasamu ahorikutuura"
+    ],
+    "Thank you. Your FamilyConnect ID will be sent to you in an SMS shortly.": [
+        null,
+        ""
+    ],
+    "Welcome. When you signed up, were staff at the facility friendly & helpful?": [
+        null,
+        ""
+    ],
+    "Very Satisfied": [
+        null,
+        ""
+    ],
+    "Satisfied": [
+        null,
+        ""
+    ],
+    "Not Satisfied": [
+        null,
+        ""
+    ],
+    "Very unsatisfied": [
+        null,
+        ""
+    ],
+    "How do you feel about the time you had to wait at the facility?": [
+        null,
+        ""
+    ],
+    "How long did you wait to be helped at the clinic?": [
+        null,
+        ""
+    ],
+    "Less than an hour": [
+        null,
+        ""
+    ],
+    "Between 1 and 3 hours": [
+        null,
+        ""
+    ],
+    "More than 4 hours": [
+        null,
+        ""
+    ],
+    "All day": [
+        null,
+        ""
+    ],
+    "Was the facility clean?": [
+        null,
+        ""
+    ],
+    "Did you feel that your privacy was respected by the staff?": [
+        null,
+        ""
+    ],
+    "Thank you for rating the FamilyConnect service.": [
+        null,
+        ""
+    ]
+}
