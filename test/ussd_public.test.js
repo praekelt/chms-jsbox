@@ -811,7 +811,7 @@ describe("familyconnect health worker app", function() {
                         state: 'state_optout_reason',
                         reply: [
                             "Why do you no longer want to receive messages?",
-                            "1. Mother miscarried",
+                            "1. Miscarriage",
                             "2. Baby stillborn",
                             "3. Baby passed away",
                             "4. Messages not useful",

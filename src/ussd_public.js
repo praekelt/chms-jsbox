@@ -501,7 +501,7 @@ go.app = function() {
             return new ChoiceState(name, {
                 question: questions[name],
                 choices: [
-                    new Choice('miscarriage', $("Mother miscarried")),
+                    new Choice('miscarriage', $("Miscarriage")),
                     new Choice('stillborn', $("Baby stillborn")),
                     new Choice('baby_death', $("Baby passed away")),
                     new Choice('not_useful', $("Messages not useful")),
