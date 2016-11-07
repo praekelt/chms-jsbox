@@ -1052,19 +1052,19 @@ go.app = function() {
             "state_auth_code":
                 $("Welcome to FamilyConnect. Please enter your unique personnel code. For example, 12345"),
             "state_msisdn":
-                $("Please enter the mobile number which the messages will be sent to. For example, 0803304899"),
+                $("Please enter the mobile number of the person who will receive the weekly messages. For example: 0803304899."),
             "state_msisdn_already_registered":
                 $("{{msisdn}} is already registered for messages."),
             "state_household_head_name":
-                $("Please enter the name and surname of the Head of the Household. For example: Isaac Mbire"),
+                $("Please enter both the first name and last name of the Head of Household. For example: Isaac Mbire"),
             "state_household_head_surname":
-                $("You only entered the first name, please enter the surname of the household. For example: Mbire"),
+                $("You only entered the first name. Please enter the last name of the head of the household? For example, Mbire"),
             "state_last_period_month":
-                $("When did the woman have her last period:"),
+                $("Please select the month the woman started her last period:"),
             "state_last_period_day":
-                $("What day of the month did the woman start her last period? For example, 12."),
+                $("What date of the month did the woman start her last period? For example, 12."),
             "state_mother_name":
-                $("Please enter the name of the woman. For example: Sharon"),
+                $("Please enter the first name of the woman. For example: Sharon"),
             "state_mother_surname":
                 $("Please enter the surname of the woman. For example: Nalule"),
             "state_msg_language":
@@ -1075,29 +1075,27 @@ go.app = function() {
 
         var errors = {
             "state_timed_out":
-                $("Sorry not a valid input. You have an incomplete registration. Would you like to continue with this registration?"),
+                $("Sorry, invalid option."),
             "state_auth_code":
-                $("That code is not recognised. Please enter your 5 digit personnel code."),
+                $("Sorry, invalid number."),
             "state_msisdn":
-                $("Sorry not a valid input. Please enter the mobile number which the messages will be sent to. For example, 0803304899"),
+                $("Sorry, invalid number."),
             "state_msisdn_already_registered":
-                $("Sorry not a valid input. {{msisdn}} is already registered for messages."),
+                $("Sorry, invalid option."),
             "state_household_head_name":
-                $("Sorry not a valid input. Please enter the name and surname of the Head of the Household. For example: Isaac Mbire"),
+                $("Sorry, invalid name."),
             "state_household_head_surname":
-                $("Sorry not a valid input. Please enter the surname of the Head of the Household. For example: Mbire"),
+                $("Sorry, invalid name."),
             "state_last_period_month":
-                $("Sorry not a valid input. When did the woman have her last period:"),
+                $("Sorry, invalid date."),
             "state_last_period_day":
-                $("Sorry not a valid input. What day of the month did the woman start her last period? For example, 12."),
+                $("Sorry, invalid number."),
             "state_mother_name":
-                $("Sorry not a valid input. Please enter the name of the woman. For example: Sharon"),
+                $("Sorry, invalid name."),
             "state_mother_surname":
-                $("Sorry not a valid input. Please enter the surname of the woman. For example: Nalule"),
+                $("Sorry, invalid name."),
             "state_msg_language":
-                $("Sorry not a valid input. What language would they want to receive these messages in?"),
-            "state_end_thank_you":
-                $("Sorry not a valid input. Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages"),
+                $("Sorry, invalid option."),
         };
 
 
@@ -1385,8 +1383,6 @@ go.app = function() {
                 choices: [
                     new Choice('eng_UG', $('English')),
                     new Choice('cgg_UG', $('Rukiga')),
-                    new Choice('xog_UG', $('Lusoga')),
-                    new Choice('lug_UG', $('Luganda'))
                 ],
                 next: 'state_get_health_id'
             });

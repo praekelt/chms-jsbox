@@ -1096,7 +1096,7 @@ return [
                 "mother_id": "3f7c8851-5204-43f7-af7f-000000000222",
                 "action": "change_language",
                 "data": {
-                    "new_language": "xog_UG"
+                    "new_language": "cgg_UG"
                 }
             }
         },
@@ -1129,7 +1129,7 @@ return [
                         }
                     },
                     "health_id": 1234567890,
-                    "preferred_language": "xog_UG"
+                    "preferred_language": "cgg_UG"
                 }
             }
 

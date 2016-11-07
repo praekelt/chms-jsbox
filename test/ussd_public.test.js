@@ -163,8 +163,6 @@ describe("familyconnect health worker app", function() {
                                 "Welcome to FamilyConnect. Please choose your language",
                                 "1. English",
                                 "2. Rukiga",
-                                "3. Lusoga",
-                                "4. Luganda"
                             ].join('\n')
                         })
                         .run();
@@ -187,8 +185,6 @@ describe("familyconnect health worker app", function() {
                             "Welcome to FamilyConnect. Please choose your language",
                             "1. English",
                             "2. Rukiga",
-                            "3. Lusoga",
-                            "4. Luganda"
                         ].join('\n')
                     })
                     .check(function(api) {
@@ -292,7 +288,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_last_period_month',
                         reply: [
-                            "When did the woman have her last period",
+                            "What month did you start your last period?",
                             "1. Apr 15",
                             "2. Mar 15",
                             "3. Feb 15",
@@ -321,7 +317,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_last_period_day',
-                        reply: "What day of the month did the woman start her last period? For example, 12."
+                        reply: "What date of the month did you start your last period? For example, 12."
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [0,1,3,4,6]);
@@ -441,7 +437,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_select_parish',
                         reply: [
-                            "Results for kawa:",
+                            "Select your parish",
                             "1. Kawaaga",
                             "2. Balawoli",
                             "3. Kagumba",
@@ -583,7 +579,7 @@ describe("familyconnect health worker app", function() {
                     )
                     .check.interaction({
                         state: 'state_end_baby',
-                        reply: "You will receive baby messages."
+                        reply: "Thank you. You will now receive messages about caring for the baby"
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [2,26,27,28,45]);
@@ -663,11 +659,9 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_change_language',
                         reply: [
-                            "What language would this person like to receive these messages in?",
+                            "What language would you like to receive messages in?",
                             "1. English",
                             "2. Rukiga",
-                            "3. Lusoga",
-                            "4. Luganda"
                         ].join('\n')
                     })
                     .check(function(api) {
@@ -681,7 +675,7 @@ describe("familyconnect health worker app", function() {
                     .inputs(
                         {session_event: 'new'}  // dial in
                         , "2"  // state_change_menu - change language
-                        , "3"  // state_change_language - Lusoga
+                        , "2"  // state_change_language - Rukigo
                     )
                     .check.interaction({
                         state: 'state_end_language',
@@ -818,7 +812,7 @@ describe("familyconnect health worker app", function() {
                     .check.interaction({
                         state: 'state_optout_reason',
                         reply: [
-                            "Please tell us why you no longer want to receive messages so we can help you further.",
+                            "Why do you no longer want to receive messages?",
                             "1. Mother miscarried",
                             "2. Baby stillborn",
                             "3. Baby passed away",

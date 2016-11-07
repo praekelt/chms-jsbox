@@ -1064,10 +1064,10 @@ go.app = function() {
             "state_already_baby":
                 $("You are already registered for baby messages."),
             "state_end_baby":
-                $("You will receive baby messages."),
+                $("Thank you. You will now receive messages about caring for the baby"),
 
             "state_change_language":
-                $("What language would this person like to receive these messages in?"),
+                $("What language would you like to receive messages in?"),
             "state_end_language":
                 $("Thank you. Your language preference has been updated and you will start to receive SMSs in this language."),
 
@@ -1081,7 +1081,7 @@ go.app = function() {
                 $("Thank you. The number which receives messages has been updated."),
 
             "state_optout_reason":
-                $("Please tell us why you no longer want to receive messages so we can help you further."),
+                $("Why do you no longer want to receive messages?"),
             "state_loss_subscription":
                 $("We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?"),
             "state_end_loss_subscription":
@@ -1090,9 +1090,9 @@ go.app = function() {
                 $("Thank you. You will no longer receive messages"),
 
             "state_last_period_month":
-                $("When did the woman have her last period"),
+                $("What month did you start your last period?"),
             "state_last_period_day":
-                $("What day of the month did the woman start her last period? For example, 12."),
+                $("What date of the month did you start your last period? For example, 12."),
             "state_cellphone_or_search":
                 $("Do you know your local village health team (VHT)?"),
             "state_vht_cellphone_number":
@@ -1102,7 +1102,7 @@ go.app = function() {
             "state_parish_search":
                 $("What is the name of your parish?"),
             "state_select_parish":
-                $("Results for {{search}}:"),
+                $("Select your parish"),
             "state_no_parish_results":
                 $("Sorry, there are no results for your parish name."),
             "state_retry_parish_search":
@@ -1116,68 +1116,53 @@ go.app = function() {
 
         var errors = {
             "state_timed_out":
-                $("Sorry not a valid input. You have an incomplete registration. Would you like to continue with this registration?"),
+                $("Sorry, invalid option."),
             "state_language":
-                $("Sorry not a valid input. Welcome to FamilyConnect. Please choose your language"),
+                $("Sorry, invalid option."),
             "state_choose_number":
-                $("Sorry not a valid input. Choose from:"),
+                $("Sorry, invalid option."),
             "state_manage_msisdn":
-                $("Sorry not a valid input. Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899"),
+                $("Sorry, invalid number."),
             "state_change_menu":
-                $("Sorry not a valid input. Choose:"),
+                $("Sorry, invalid option."),
             "state_registration_menu":
-                $("Sorry not a valid input. Choose from:"),
+                $("Sorry, invalid option."),
 
             "state_already_baby":
-                $("Sorry not a valid input. You are already registered for baby messages."),
-            "state_end_baby":
-                $("Sorry not a valid input. You will receive baby messages."),
+                $("Sorry, invalid option."),
 
             "state_change_language":
-                $("Sorry not a valid input. What language would this person like to receive these messages in?"),
-            "state_end_language":
-                $("Sorry not a valid input. Thank you. Your language preference has been updated and you will start to receive SMSs in this language."),
+                $("Sorry, invalid option."),
 
             "state_change_number":
-                $("Sorry not a valid input. Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899"),
+                $("Sorry, invalid number."),
             "state_number_in_use":
-                $("Sorry not a valid input. Sorry, this number is already registered."),
+                $("Sorry, invalid option."),
             "state_change_recipient":
-                $("Sorry not a valid input. Who will receive these messages?"),
-            "state_end_recipient":
-                $("Sorry not a valid input. Thank you. The number which receives messages has been updated."),
+                $("Sorry, invalid option."),
 
             "state_optout_reason":
-                $("Sorry not a valid input. Please tell us why you no longer want to receive messages so we can help you further."),
+                $("Sorry, invalid option."),
             "state_loss_subscription":
-                $("Sorry not a valid input. We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?"),
-            "state_end_loss_subscription":
-                $("Sorry not a valid input. Thank you. You will now receive messages to support you during this difficult time."),
-            "state_end_optout":
-                $("Sorry not a valid input. Thank you. You will no longer receive messages"),
+                $("Sorry, invalid option."),
             "state_last_period_month":
-                $("Sorry not a valid input. When did the woman have her last period"),
+                $("Sorry, invalid date."),
             "state_last_period_day":
-                $("Sorry not a valid input. What day of the month did the woman start her last period? For example, 12."),
+                $("Sorry, invalid number."),
             "state_cellphone_or_search":
-                $("Sorry not a valid input. Do you know your local village health team (VHT)?"),
+                $("Sorry, invalid option."),
             "state_vht_cellphone_number":
-                $("Sorry not a valid input. Please enter their cellphone number. For example, 0803304899"),
+                $("Sorry, invalid number."),
             "state_check_vht_exists":
-                $("Sorry not a valid input. We did not recognise the VHTs number."),
+                $("Sorry, invalid option."),
             "state_parish_search":
-                $("Sorry not a valid input. What is the name of your parish?"),
+                $("Sorry, invalid name."),
             "state_select_parish":
-                $("Sorry not a valid input. Results for {{search}}"),
+                $("Sorry, invalid option."),
             "state_no_parish_results":
-                $("Sorry, not a valid input. Sorry, there are no results for your parish name."),
+                $("Sorry, invalid option."),
             "state_retry_parish_search":
-                $("Sorry, not a valid input. Please re-enter your parish name carefully and make sure you use the correct spelling."),
-            "state_end_thank_you":
-                $("Sorry not a valid input. Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly."),
-
-            "state_end_general":
-                $("Sorry not a valid input. Thank you for using the FamilyConnect service")
+                $("Sorry, invalid name."),
         };
 
 
@@ -1278,8 +1263,6 @@ go.app = function() {
                 choices: [
                     new Choice('eng_UG', $('English')),
                     new Choice('cgg_UG', $('Rukiga')),
-                    new Choice('xog_UG', $('Lusoga')),
-                    new Choice('lug_UG', $('Luganda'))
                 ],
                 error: errors[name],
                 next: 'state_choose_number'
@@ -1433,8 +1416,6 @@ go.app = function() {
                 choices: [
                     new Choice('eng_UG', $('English')),
                     new Choice('cgg_UG', $('Rukiga')),
-                    new Choice('xog_UG', $('Lusoga')),
-                    new Choice('lug_UG', $('Luganda'))
                 ],
                 error: errors[name],
                 next: 'state_switch_language'
