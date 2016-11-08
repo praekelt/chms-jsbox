@@ -1034,6 +1034,7 @@ go.app = function() {
     var ChoiceState = vumigo.states.ChoiceState;
     var EndState = vumigo.states.EndState;
     var FreeText = vumigo.states.FreeText;
+    var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
 
 
     var GoFC = App.extend(function(self) {
@@ -1316,10 +1317,12 @@ go.app = function() {
         // ChoiceState st-05
         self.add('state_last_period_month', function(name) {
             var today = go.utils.get_today(self.im.config);
-            return new ChoiceState(name, {
+            return new PaginatedChoiceState(name, {
                 question: questions[name],
-                choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMM YY"),
+                choices: go.utils.make_month_choices($, today, 9, -1, "MMYYYY", "MMMM YYYY"),
                 error: errors[name],
+                options_per_page: null,
+                characters_per_page: 150,
                 next: 'state_last_period_day'
             });
         });

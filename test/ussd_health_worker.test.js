@@ -13,7 +13,7 @@ describe("familyconnect health worker app", function() {
             tester = new AppTester(app);
 
             tester
-                .setup.char_limit(182)
+                .setup.char_limit(150)
                 .setup.config.app({
                     name: 'ussd-healthworker-test',
                     country_code: '256',  // uganda
@@ -238,15 +238,12 @@ describe("familyconnect health worker app", function() {
                         state: 'state_last_period_month',
                         reply: [
                             "Please select the month the woman started her last period:",
-                            "1. Apr 15",
-                            "2. Mar 15",
-                            "3. Feb 15",
-                            "4. Jan 15",
-                            "5. Dec 14",
-                            "6. Nov 14",
-                            "7. Oct 14",
-                            "8. Sep 14",
-                            "9. Aug 14"
+                            "1. April 2015",
+                            "2. March 2015",
+                            "3. February 2015",
+                            "4. January 2015",
+                            "5. December 2014",
+                            "6. More",
                         ].join('\n')
                     })
                     .check.user.answer('state_household_head_name', 'Isaac')
