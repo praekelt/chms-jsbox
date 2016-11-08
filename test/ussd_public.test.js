@@ -281,15 +281,13 @@ describe("familyconnect public app", function() {
                         state: 'state_last_period_month',
                         reply: [
                             "What month did you start your last period?",
-                            "1. Apr 15",
-                            "2. Mar 15",
-                            "3. Feb 15",
-                            "4. Jan 15",
-                            "5. Dec 14",
-                            "6. Nov 14",
-                            "7. Oct 14",
-                            "8. Sep 14",
-                            "9. Aug 14"
+                            "1. April 2015",
+                            "2. March 2015",
+                            "3. February 2015",
+                            "4. January 2015",
+                            "5. December 2014",
+                            "6. November 2014",
+                            "7. More",
                         ].join('\n')
                     })
                     .check(function(api) {
