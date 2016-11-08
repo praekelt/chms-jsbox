@@ -593,6 +593,34 @@ describe("familyconnect public app", function() {
                     })
                     .run();
             });
+
+            it("complete flow - optedout number", function() {
+                return tester
+                    .setup.user.addr('0720000888')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "3"  // state_last_period_month - feb 15
+                        , "22"  // state_last_period_day - 22
+                        , "2"  // state_cellphone_or_search - search
+                        , "kawa" // state_parish_search - search "kawa", 5 results
+                        , "1" // state_select_parish - select "Kawaaga"
+                    )
+                    .check.user.answer('state_msg_receiver', 'mother_to_be')
+                    .check.user.answer('receiver_id', '3f7c8851-5204-43f7-af7f-000000000888')
+                    .check.user.answer('mother_id', '3f7c8851-5204-43f7-af7f-000000000888')
+                    .check.user.answer('hoh_id', 'identity-uuid-06')
+                    .check.user.answer('ff_id', undefined)
+                    .check.user.answer('parish', 'Kawaaga')
+                    .check.user.answer('vht_personnel_code', undefined)
+                    .check.interaction({
+                        state: 'state_end_thank_you',
+                        reply: "Thank you. Your FamilyConnect ID is 8888888888. You will receive an SMS with it shortly."
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [8,49,52,53,54,55,56,57]);
+                    })
+                    .run();
+            });
         });
 
         describe("Change testing", function() {

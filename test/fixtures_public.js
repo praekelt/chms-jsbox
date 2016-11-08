@@ -1728,5 +1728,137 @@ return [
             }
         }
     },
+
+    // 54: get identity 3f7c8851-5204-43f7-af7f-000000000888
+    {
+        'repeatable': true,  // second time gets the health_id
+        'request': {
+            'method': 'GET',
+            'params': {},
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000888/",
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000888/",
+                "id": "3f7c8851-5204-43f7-af7f-000000000888",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {
+                        "msisdn": {
+                            "+256720000888": {
+                              "optedout": true
+                            }
+                        }
+                    },
+                    "role": "mother",
+                    "preferred_msg_type": "text",
+                    "msg_receiver": "mother_to_be",
+                    "hoh_id": "identity-uuid-06",
+                    "preferred_language": "eng_UG",
+                    "health_id": 8888888888
+                },
+                "created_at": "2015-07-10T06:13:29.693272Z",
+                "updated_at": "2015-07-10T06:13:29.693298Z"
+            }
+        }
+    },
+
+    // 55: create registration 4
+    {
+        'request': {
+            'method': 'POST',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8002/api/v1/registration/',
+            'data':  {
+                "stage": "prebirth",
+                "mother_id": "3f7c8851-5204-43f7-af7f-000000000888",
+                "data": {
+                    "hoh_id": "identity-uuid-06",
+                    "receiver_id": "3f7c8851-5204-43f7-af7f-000000000888",
+                    "operator_id": null,
+                    "language": "eng_UG",
+                    "msg_type": "text",
+                    "last_period_date": "20150222",
+                    "msg_receiver": "mother_to_be",
+                    "parish": "Kawaaga",
+                }
+            }
+        },
+        'response': {
+            "code": 201,
+            "data": {}
+        }
+    },
+
+    // 56: patch identity 3f7c8851-5204-43f7-af7f-000000000888
+    {
+        'request': {
+            'method': 'PATCH',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000888/',
+            'data':  {
+                "id": "3f7c8851-5204-43f7-af7f-000000000888",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {
+                        "msisdn": {
+                            "+256720000888": {
+                              "optedout": true
+                            }
+                        }
+                    },
+                    "role": "mother",
+                    "preferred_msg_type": "text",
+                    "msg_receiver": "mother_to_be",
+                    "hoh_id": "identity-uuid-06",
+                    "health_id": 8888888888
+                }
+            }
+        },
+        'response': {
+            "code": 200,
+            "data": {}
+        }
+    },
+
+    // 57: patch identity 06
+    {
+        'request': {
+            'method': 'PATCH',
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/identity-uuid-06/',
+            'data':  {
+                "id": "identity-uuid-06",
+                "version": 1,
+                "details": {
+                    "default_addr_type": "msisdn",
+                    "addresses": {},
+                    "role": "head_of_household",
+                    "mother_id": "3f7c8851-5204-43f7-af7f-000000000888",
+                    "preferred_msg_type": "text"
+                }
+            }
+        },
+        'response': {
+            "code": 200,
+            "data": {}
+        }
+    },
 ];
 };
