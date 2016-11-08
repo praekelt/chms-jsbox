@@ -6,6 +6,7 @@
 // 0720000555: unregistered user - number entered manually - mother_to_be registration
 // 0720000666: registered user - has baby(postbirth) subscription
 // 0720000777: registered user - servicerating_unanswered flag set to true
+// 0720000888: registered user - previously optedout
 // 0720000999: registered VHT with personnel code and parish
 
 module.exports = function() {
@@ -1651,6 +1652,77 @@ return [
         'response': {
             "code": 201,
             "data": {}
+        }
+    },
+    
+    // 52: get identity 0720000888 by msisdn
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'params': {
+                'details__addresses__msisdn': '+256720000888'
+            },
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8001/api/v1/identities/search/',
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "count": 1,
+                "next": null,
+                "previous": null,
+                "results": [{
+                    "url": "http://localhost:8001/api/v1/identities/3f7c8851-5204-43f7-af7f-000000000888/",
+                    "id": "3f7c8851-5204-43f7-af7f-000000000888",
+                    "version": 1,
+                    "details": {
+                        "default_addr_type": "msisdn",
+                        "addresses": {
+                            "msisdn": {
+                                "+256720000888": {
+                                  "optedout": true
+                                }
+                            }
+                        },
+                        "role": "mother",
+                        "preferred_msg_type": "sms",
+                        "preferred_language": "eng_UG",
+                    },
+                    "created_at": "2015-07-10T06:13:29.693272Z",
+                    "updated_at": "2015-07-10T06:13:29.693298Z"
+                }]
+            }
+        }
+    },
+
+    // 53: get identity 3f7c8851-5204-43f7-af7f-000000000888 service rating status
+    {
+        'repeatable': true,
+        'request': {
+            'method': 'GET',
+            'params': {
+                "identity": "3f7c8851-5204-43f7-af7f-000000000888",
+                "completed": 'False',
+                "expired": 'False'
+            },
+            'headers': {
+                'Authorization': ['Token test_key'],
+                'Content-Type': ['application/json']
+            },
+            'url': 'http://localhost:8006/api/v1/invite/',
+        },
+        'response': {
+            "code": 200,
+            "data": {
+                "count": 0,
+                "next": null,
+                "previous": null,
+                "results": []
+            }
         }
     },
 ];
