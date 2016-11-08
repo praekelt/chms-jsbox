@@ -684,6 +684,9 @@ go.utils_project = {
         details.preferred_language = im.user.answers.state_msg_language;
         details.preferred_msg_type = 'text';  // omit?
         details.hiv_interest = im.user.answers.state_hiv_messages;
+        if (details.addresses.msisdn[im.user.answers.contact_msisdn].optedout) {
+            delete details.addresses.msisdn[im.user.answers.contact_msisdn].optedout;
+        }
 
         return details;
     },
@@ -1340,6 +1343,7 @@ go.app = function() {
                         return self.states.create('state_change_menu');
                     } else {
                         self.im.user.set_answer('contact_id', contact.id);
+                        self.im.user.set_answer('contact_msisdn', msisdn);
                         return self.states.create('state_save_identities');
                     }
                 });

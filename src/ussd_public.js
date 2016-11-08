@@ -311,6 +311,7 @@ go.app = function() {
                         return self.states.create('state_change_menu');
                     } else {
                         self.im.user.set_answer('contact_id', contact.id);
+                        self.im.user.set_answer('contact_msisdn', msisdn);
                         return self.states.create('state_save_identities');
                     }
                 });

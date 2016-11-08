@@ -1815,9 +1815,7 @@ return [
                     "default_addr_type": "msisdn",
                     "addresses": {
                         "msisdn": {
-                            "+256720000888": {
-                              "optedout": true
-                            }
+                            "+256720000888": {}
                         }
                     },
                     "role": "mother",

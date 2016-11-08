@@ -125,6 +125,9 @@ go.utils_project = {
         details.preferred_language = im.user.answers.state_msg_language;
         details.preferred_msg_type = 'text';  // omit?
         details.hiv_interest = im.user.answers.state_hiv_messages;
+        if (details.addresses.msisdn[im.user.answers.contact_msisdn].optedout) {
+            delete details.addresses.msisdn[im.user.answers.contact_msisdn].optedout;
+        }
 
         return details;
     },
