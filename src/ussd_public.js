@@ -294,6 +294,9 @@ go.app = function() {
                     if (contact.details.addresses.msisdn[msisdn].optedout) {
                         self.im.user.set_answer('contact_id', contact.id);
                         self.im.user.set_answer('contact_msisdn', msisdn);
+                        self.im.user.set_answer('receiver_id', contact.id);
+                        self.im.user.set_answer('hoh_id', contact.details.hoh_id);
+                        self.im.user.set_answer('state_msg_receiver', 'mother_to_be');
                         return self.states.create('state_last_period_month');
                     }
                     if (contact.details.role) {

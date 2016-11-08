@@ -1689,8 +1689,11 @@ return [
                             }
                         },
                         "role": "mother",
-                        "preferred_msg_type": "sms",
+                        "preferred_msg_type": "text",
+                        "msg_receiver": "mother_to_be",
+                        "hoh_id": "identity-uuid-06",
                         "preferred_language": "eng_UG",
+                        "health_id": 8888888888
                     },
                     "created_at": "2015-07-10T06:13:29.693272Z",
                     "updated_at": "2015-07-10T06:13:29.693298Z"
