@@ -2,7 +2,7 @@ var vumigo = require('vumigo_v02');
 var fixtures = require('./fixtures_public');
 var AppTester = vumigo.AppTester;
 
-describe("familyconnect health worker app", function() {
+describe("familyconnect public app", function() {
     describe("for ussd use", function() {
         var app;
         var tester;
@@ -268,6 +268,32 @@ describe("familyconnect health worker app", function() {
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [2,45]);
+                    })
+                    .run();
+            });
+            it("to state_last_period_month (recognised, optedout user)", function() {
+                return tester
+                    .setup.user.addr('0720000888')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                    )
+                    .check.interaction({
+                        state: 'state_last_period_month',
+                        reply: [
+                            "What month did you start your last period?",
+                            "1. Apr 15",
+                            "2. Mar 15",
+                            "3. Feb 15",
+                            "4. Jan 15",
+                            "5. Dec 14",
+                            "6. Nov 14",
+                            "7. Oct 14",
+                            "8. Sep 14",
+                            "9. Aug 14"
+                        ].join('\n')
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [52,53]);
                     })
                     .run();
             });
