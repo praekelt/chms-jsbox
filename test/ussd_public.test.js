@@ -2,7 +2,7 @@ var vumigo = require('vumigo_v02');
 var fixtures = require('./fixtures_public');
 var AppTester = vumigo.AppTester;
 
-describe("familyconnect health worker app", function() {
+describe("familyconnect public app", function() {
     describe("for ussd use", function() {
         var app;
         var tester;
@@ -268,6 +268,30 @@ describe("familyconnect health worker app", function() {
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [2,45]);
+                    })
+                    .run();
+            });
+            it("to state_last_period_month (recognised, optedout user)", function() {
+                return tester
+                    .setup.user.addr('0720000888')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                    )
+                    .check.interaction({
+                        state: 'state_last_period_month',
+                        reply: [
+                            "What month did you start your last period?",
+                            "1. April 2015",
+                            "2. March 2015",
+                            "3. February 2015",
+                            "4. January 2015",
+                            "5. December 2014",
+                            "6. November 2014",
+                            "7. More",
+                        ].join('\n')
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [52,53]);
                     })
                     .run();
             });
@@ -562,6 +586,34 @@ describe("familyconnect health worker app", function() {
                     })
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [0,1,6,8,16,17,18,20,21,49,51]);
+                    })
+                    .run();
+            });
+
+            it("complete flow - optedout number", function() {
+                return tester
+                    .setup.user.addr('0720000888')
+                    .inputs(
+                        {session_event: 'new'}  // dial in
+                        , "3"  // state_last_period_month - feb 15
+                        , "22"  // state_last_period_day - 22
+                        , "2"  // state_cellphone_or_search - search
+                        , "kawa" // state_parish_search - search "kawa", 5 results
+                        , "1" // state_select_parish - select "Kawaaga"
+                    )
+                    .check.user.answer('state_msg_receiver', 'mother_to_be')
+                    .check.user.answer('receiver_id', '3f7c8851-5204-43f7-af7f-000000000888')
+                    .check.user.answer('mother_id', '3f7c8851-5204-43f7-af7f-000000000888')
+                    .check.user.answer('hoh_id', 'identity-uuid-06')
+                    .check.user.answer('ff_id', undefined)
+                    .check.user.answer('parish', 'Kawaaga')
+                    .check.user.answer('vht_personnel_code', undefined)
+                    .check.interaction({
+                        state: 'state_end_thank_you',
+                        reply: "Thank you. Your FamilyConnect ID is 8888888888. You will receive an SMS with it shortly."
+                    })
+                    .check(function(api) {
+                        go.utils.check_fixtures_used(api, [8,49,52,53,54,55,56,57]);
                     })
                     .run();
             });
