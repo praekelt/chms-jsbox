@@ -6,7 +6,7 @@
         "mime-version": "1.0",
         "content-type": "text/plain; charset=UTF-8",
         "content-transfer-encoding": "8bit",
-        "po-revision-date": "2016-11-07 14:18+0200",
+        "po-revision-date": "2016-11-08 07:54+0200",
         "x-generator": "Poedit 1.8.11",
         "last-translator": "",
         "language": "cgg_UG"
@@ -113,7 +113,7 @@
     ],
     "Choose from:": [
         null,
-        "NOT IN SPREADSHEET"
+        "Torana:"
     ],
     "Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899": [
         null,
@@ -129,7 +129,7 @@
     ],
     "Thank you. You will now receive messages about caring for the baby": [
         null,
-        ""
+        "Thank you. You will now receive messages about caring for the baby"
     ],
     "What language would you like to receive messages in?": [
         null,
@@ -145,11 +145,11 @@
     ],
     "Sorry, this number is already registered.": [
         null,
-        "NOT IN SPREADSHEET"
+        "Enamba egi yakozesibwe"
     ],
     "Who will receive these messages?": [
         null,
-        "NOT IN SPREADSHEET"
+        "Noha arayakire obutumwa obu"
     ],
     "Thank you. The number which receives messages has been updated.": [
         null,
@@ -161,7 +161,7 @@
     ],
     "We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?": [
         null,
-        "NOT IN SPREADSHEET"
+        "Twashaasha naiwe ahabwokufeerwa. Okaayenzire kutunga obutumwa bwabusha bwokukuyamba omuri obubweire bugumire?"
     ],
     "Thank you. You will now receive messages to support you during this difficult time.": [
         null,
@@ -209,7 +209,7 @@
     ],
     "Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly.": [
         null,
-        "NOT IN SPREADSHEET"
+        "Yebare. Enambaya FamilyConnect ni {{health_id}}. Nooza kutunga obutumwa juba juba."
     ],
     "Thank you for using the FamilyConnect service": [
         null,
@@ -237,7 +237,7 @@
     ],
     "No, start from the beginning": [
         null,
-        "NOT IN SPREADSHEET"
+        "Eingaaha, tandika kuhandika busya"
     ],
     "English": [
         null,
@@ -249,11 +249,11 @@
     ],
     "Register this number to receive SMSs about you & your baby": [
         null,
-        "NOT IN SPREADSHEET"
+        "Handikisa enamba yo kuherezaho obutumwa bwo mwana wawe"
     ],
     "Manage a different phone number": [
         null,
-        "NOT IN SPREADSHEET"
+        "Kozesa enamba endijo"
     ],
     "Start baby SMSs": [
         null,
@@ -281,27 +281,27 @@
     ],
     "Try a different number": [
         null,
-        "NOT IN SPREADSHEET"
+        "Gyezaho enamba endijo"
     ],
     "Head of the Household": [
         null,
-        "NOT IN SPREADSHEET"
+        "Nyineka"
     ],
     "Mother to be": [
         null,
-        "NOT IN SPREADSHEET"
+        "Omukazi orikuza kuzara"
     ],
     "Family member": [
         null,
-        "NOT IN SPREADSHEET"
+        "Omuntu ondijo owomuka omu"
     ],
     "Trusted friend": [
         null,
-        "NOT IN SPREADSHEET"
+        "Munywani wawe omwesigwa"
     ],
     "Mother miscarried": [
         null,
-        "NOT IN SPREADSHEET"
+        "Enda erugiremu"
     ],
     "Baby stillborn": [
         null,
@@ -325,7 +325,7 @@
     ],
     "Back": [
         null,
-        "NOT IN SPREADSHEET"
+        "garuka enyima"
     ],
     "More": [
         null,
@@ -341,7 +341,7 @@
     ],
     "Thank you. Your FamilyConnect ID will be sent to you in an SMS shortly.": [
         null,
-        "NOT IN SPREADSHEET"
+        "Webare munonga, enamba yawe yekihama eya family connect ni [familyconnect ID] noza kutunga obutumwa aha siimu yaawe."
     ],
     "Welcome. When you signed up, were staff at the facility friendly & helpful?": [
         null,

@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-11-07 14:44+0200\n"
+"PO-Revision-Date: 2016-11-08 07:58+0200\n"
 "X-Generator: Poedit 1.8.11\n"
 "Last-Translator: \n"
 "Language: cgg_UG\n"
@@ -125,7 +125,7 @@ msgstr ""
 
 #: go-app-ussd_health_worker.js:1057
 msgid "{{msisdn}} is already registered for messages."
-msgstr "NOT IN SPREADSHEET"
+msgstr "{{msisdn}} yahandikirwe aha'bwobutumwa."
 
 #: go-app-ussd_health_worker.js:1059
 msgid ""
@@ -160,13 +160,15 @@ msgstr "Handika eizina ryomukazi eryobuzarwa. Ekyokureberaho: Busingye"
 
 #: go-app-ussd_health_worker.js:1071
 msgid "What language would they want to receive these messages in?"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Nirurimiki orurabanguhire kutunga obutumwa obu?"
 
 #: go-app-ussd_health_worker.js:1073
 msgid ""
 "Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now "
 "start receiving messages"
-msgstr "NOT IN SPREADSHEET"
+msgstr ""
+"Webare. Enamba yomukazi omu FamilyConnect {{health_id}}. Hati baraza "
+"kutandika kutunga obutumwa."
 
 #: go-app-ussd_health_worker.js:1078 go-app-ussd_health_worker.js:1084
 #: go-app-ussd_health_worker.js:1098

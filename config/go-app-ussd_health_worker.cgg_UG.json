@@ -6,7 +6,7 @@
         "mime-version": "1.0",
         "content-type": "text/plain; charset=UTF-8",
         "content-transfer-encoding": "8bit",
-        "po-revision-date": "2016-11-07 14:44+0200",
+        "po-revision-date": "2016-11-08 07:58+0200",
         "x-generator": "Poedit 1.8.11",
         "last-translator": "",
         "language": "cgg_UG"
@@ -117,7 +117,7 @@
     ],
     "{{msisdn}} is already registered for messages.": [
         null,
-        "NOT IN SPREADSHEET"
+        "{{msisdn}} yahandikirwe aha'bwobutumwa."
     ],
     "Please enter both the first name and last name of the Head of Household. For example: Isaac Mbire": [
         null,
@@ -145,11 +145,11 @@
     ],
     "What language would they want to receive these messages in?": [
         null,
-        "NOT IN SPREADSHEET"
+        "Nirurimiki orurabanguhire kutunga obutumwa obu?"
     ],
     "Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now start receiving messages": [
         null,
-        "NOT IN SPREADSHEET"
+        "Webare. Enamba yomukazi omu FamilyConnect {{health_id}}. Hati baraza kutandika kutunga obutumwa."
     ],
     "Sorry, invalid option.": [
         null,
