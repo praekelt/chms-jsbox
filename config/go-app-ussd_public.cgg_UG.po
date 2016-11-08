@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-11-07 14:18+0200\n"
+"PO-Revision-Date: 2016-11-08 07:54+0200\n"
 "X-Generator: Poedit 1.8.11\n"
 "Last-Translator: \n"
 "Language: cgg_UG\n"
@@ -116,7 +116,7 @@ msgstr "FamilyConnect nekwakira. Toorana orurimi"
 
 #: go-app-ussd_public.js:1056 go-app-ussd_public.js:1062
 msgid "Choose from:"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Torana:"
 
 #: go-app-ussd_public.js:1058
 msgid ""
@@ -136,7 +136,7 @@ msgstr "Waherize kwehandikisa ahabwobutumwa bwo'mwaana."
 
 #: go-app-ussd_public.js:1067
 msgid "Thank you. You will now receive messages about caring for the baby"
-msgstr ""
+msgstr "Thank you. You will now receive messages about caring for the baby"
 
 #: go-app-ussd_public.js:1070
 msgid "What language would you like to receive messages in?"
@@ -160,11 +160,11 @@ msgstr ""
 
 #: go-app-ussd_public.js:1077
 msgid "Sorry, this number is already registered."
-msgstr "NOT IN SPREADSHEET"
+msgstr "Enamba egi yakozesibwe"
 
 #: go-app-ussd_public.js:1079
 msgid "Who will receive these messages?"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Noha arayakire obutumwa obu"
 
 #: go-app-ussd_public.js:1081
 msgid "Thank you. The number which receives messages has been updated."
@@ -178,7 +178,9 @@ msgstr "Ahabwenki otakyayeenda kutunga obutumwa?"
 msgid ""
 "We are sorry for your loss. Would you like to receive a small set of free "
 "messages from FamilyConnect that could help you in this difficult time?"
-msgstr "NOT IN SPREADSHEET"
+msgstr ""
+"Twashaasha naiwe ahabwokufeerwa. Okaayenzire kutunga obutumwa bwabusha "
+"bwokukuyamba omuri obubweire bugumire?"
 
 #: go-app-ussd_public.js:1088
 msgid ""
@@ -235,7 +237,9 @@ msgstr ""
 msgid ""
 "Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS "
 "with it shortly."
-msgstr "NOT IN SPREADSHEET"
+msgstr ""
+"Yebare. Enambaya FamilyConnect ni {{health_id}}. Nooza kutunga obutumwa juba "
+"juba."
 
 #: go-app-ussd_public.js:1114
 msgid "Thank you for using the FamilyConnect service"
@@ -272,7 +276,7 @@ msgstr "Eego"
 
 #: go-app-ussd_public.js:1202
 msgid "No, start from the beginning"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Eingaaha, tandika kuhandika busya"
 
 #: go-app-ussd_public.js:1264 go-app-ussd_public.js:1417
 msgid "English"
@@ -284,11 +288,11 @@ msgstr "Orukiga"
 
 #: go-app-ussd_public.js:1277
 msgid "Register this number to receive SMSs about you & your baby"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Handikisa enamba yo kuherezaho obutumwa bwo mwana wawe"
 
 #: go-app-ussd_public.js:1278
 msgid "Manage a different phone number"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Kozesa enamba endijo"
 
 #: go-app-ussd_public.js:1345
 msgid "Start baby SMSs"
@@ -317,27 +321,27 @@ msgstr "Rugaho"
 
 #: go-app-ussd_public.js:1482
 msgid "Try a different number"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Gyezaho enamba endijo"
 
 #: go-app-ussd_public.js:1511
 msgid "Head of the Household"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Nyineka"
 
 #: go-app-ussd_public.js:1512
 msgid "Mother to be"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Omukazi orikuza kuzara"
 
 #: go-app-ussd_public.js:1513
 msgid "Family member"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Omuntu ondijo owomuka omu"
 
 #: go-app-ussd_public.js:1514
 msgid "Trusted friend"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Munywani wawe omwesigwa"
 
 #: go-app-ussd_public.js:1536
 msgid "Mother miscarried"
-msgstr "NOT IN SPREADSHEET"
+msgstr "Enda erugiremu"
 
 #: go-app-ussd_public.js:1537
 msgid "Baby stillborn"
@@ -361,7 +365,7 @@ msgstr "Eingaha"
 
 #: go-app-ussd_public.js:1698
 msgid "Back"
-msgstr "NOT IN SPREADSHEET"
+msgstr "garuka enyima"
 
 #: go-app-ussd_public.js:1699
 msgid "More"
@@ -378,7 +382,9 @@ msgstr "Hakyiri taasamu ahorikutuura"
 
 #: go-app-ussd_public.js:1785
 msgid "Thank you. Your FamilyConnect ID will be sent to you in an SMS shortly."
-msgstr "NOT IN SPREADSHEET"
+msgstr ""
+"Webare munonga, enamba yawe yekihama eya family connect ni [familyconnect "
+"ID] noza kutunga obutumwa aha siimu yaawe."
 
 #: go-app-ussd_public.js:1798
 msgid ""
