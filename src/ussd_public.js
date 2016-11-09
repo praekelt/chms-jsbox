@@ -286,11 +286,20 @@ go.app = function() {
             return go.utils
                 .get_or_create_identity({'msisdn': opts.msisdn}, self.im, null)
                 .then(function(contact) {
+                    msisdn = go.utils
+                        .normalize_msisdn(opts.msisdn, self.im.config.country_code);
+                    if (contact.details.addresses.msisdn[msisdn].optedout) {
+                        self.im.user.set_answer('contact_id', contact.id);
+                        self.im.user.set_answer('contact_msisdn', msisdn);
+                        self.im.user.set_answer('receiver_id', contact.id);
+                        self.im.user.set_answer('hoh_id', contact.details.hoh_id);
+                        self.im.user.set_answer('state_msg_receiver', 'mother_to_be');
+                        return self.states.create('state_last_period_month');
+                    }
                     if (contact.details.role) {
                         self.im.user.set_answer('role', contact.details.role);
                         self.im.user.set_answer('contact_id', contact.id);
-                        self.im.user.set_answer('contact_msisdn', go.utils
-                            .normalize_msisdn(opts.msisdn, self.im.config.country_code));
+                        self.im.user.set_answer('contact_msisdn', msisdn);
                         if (contact.details.role === 'mother') {
                             self.im.user.set_answer('mother_id', contact.id);
                         } else {
@@ -299,6 +308,7 @@ go.app = function() {
                         return self.states.create('state_change_menu');
                     } else {
                         self.im.user.set_answer('contact_id', contact.id);
+                        self.im.user.set_answer('contact_msisdn', msisdn);
                         return self.states.create('state_save_identities');
                     }
                 });
