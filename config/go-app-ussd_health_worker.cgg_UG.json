@@ -1,15 +1,15 @@
 {
     "": {
-        "pot-creation-date": "2016-11-07 14:30+0200",
         "project-id-version": "",
+        "pot-creation-date": "2016-11-09 09:48+0200",
+        "po-revision-date": "2016-11-09 09:48+0200",
+        "last-translator": "",
         "language-team": "",
+        "language": "cgg_UG",
         "mime-version": "1.0",
         "content-type": "text/plain; charset=UTF-8",
         "content-transfer-encoding": "8bit",
-        "po-revision-date": "2016-11-08 07:58+0200",
-        "x-generator": "Poedit 1.8.11",
-        "last-translator": "",
-        "language": "cgg_UG"
+        "x-generator": "Poedit 1.8.11"
     },
     "{{pre}}January{{post}}": [
         null,

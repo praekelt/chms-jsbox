@@ -1,15 +1,15 @@
 {
     "": {
-        "pot-creation-date": "2016-11-07 11:58+0200",
         "project-id-version": "",
+        "pot-creation-date": "2016-11-09 09:49+0200",
+        "po-revision-date": "2016-11-09 09:51+0200",
+        "last-translator": "",
         "language-team": "",
+        "language": "cgg_UG",
         "mime-version": "1.0",
         "content-type": "text/plain; charset=UTF-8",
         "content-transfer-encoding": "8bit",
-        "po-revision-date": "2016-11-08 07:54+0200",
-        "x-generator": "Poedit 1.8.11",
-        "last-translator": "",
-        "language": "cgg_UG"
+        "x-generator": "Poedit 1.8.11"
     },
     "{{pre}}January{{post}}": [
         null,
@@ -159,7 +159,7 @@
         null,
         "Ahabwenki otakyayeenda kutunga obutumwa?"
     ],
-    "We are sorry for your loss. Would you like to receive a small set of free messages from FamilyConnect that could help you in this difficult time?": [
+    "We are sorry for your loss. Would you like to receive free messages that could help you in this difficult time?": [
         null,
         "Twashaasha naiwe ahabwokufeerwa. Okaayenzire kutunga obutumwa bwabusha bwokukuyamba omuri obubweire bugumire?"
     ],
@@ -299,7 +299,7 @@
         null,
         "Munywani wawe omwesigwa"
     ],
-    "Mother miscarried": [
+    "Miscarriage": [
         null,
         "Enda erugiremu"
     ],

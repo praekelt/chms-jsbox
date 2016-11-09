@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-11-07 14:30+0200\n"
 "Project-Id-Version: \n"
+"POT-Creation-Date: 2016-11-09 09:48+0200\n"
+"PO-Revision-Date: 2016-11-09 09:48+0200\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: cgg_UG\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-11-08 07:58+0200\n"
 "X-Generator: Poedit 1.8.11\n"
-"Last-Translator: \n"
-"Language: cgg_UG\n"
 
 #: go-app-ussd_health_worker.js:237
 msgid "{{pre}}January{{post}}"
@@ -103,19 +103,19 @@ msgstr "NOT IN SPREADSHEET"
 msgid "{{pre}}Dec{{post}}"
 msgstr "NOT IN SPREADSHEET"
 
-#: go-app-ussd_health_worker.js:1051
+#: go-app-ussd_health_worker.js:1055
 msgid ""
 "You have an incomplete registration. Would you like to continue with this "
 "registration?"
 msgstr "Okayeenzire kugumizamu nokwehandikyisa oku?"
 
-#: go-app-ussd_health_worker.js:1053
+#: go-app-ussd_health_worker.js:1057
 msgid ""
 "Welcome to FamilyConnect. Please enter your unique personnel code. For "
 "example, 12345"
 msgstr "Nikiroki  kyowezi obu omukazi yatandika kujwa? Ekyokureberaho 12"
 
-#: go-app-ussd_health_worker.js:1055
+#: go-app-ussd_health_worker.js:1059
 msgid ""
 "Please enter the mobile number of the person who will receive the weekly "
 "messages. For example: 0803304899."
@@ -123,17 +123,17 @@ msgstr ""
 "Tasyamu enamba yesiimu eyomuntu orayaakyire obutumwa bwa buri sande. "
 "Ekyokureberaho : 0803304899."
 
-#: go-app-ussd_health_worker.js:1057
+#: go-app-ussd_health_worker.js:1061
 msgid "{{msisdn}} is already registered for messages."
 msgstr "{{msisdn}} yahandikirwe aha'bwobutumwa."
 
-#: go-app-ussd_health_worker.js:1059
+#: go-app-ussd_health_worker.js:1063
 msgid ""
 "Please enter both the first name and last name of the Head of Household. For "
 "example: Isaac Mbire"
 msgstr "Handika amazina goona agamukuru weka. Ekyokureberaho: Isaac Mbire"
 
-#: go-app-ussd_health_worker.js:1061
+#: go-app-ussd_health_worker.js:1065
 msgid ""
 "You only entered the first name. Please enter the last name of the head of "
 "the household? For example, Mbire"
@@ -141,28 +141,28 @@ msgstr ""
 "You only entered the first name. Please enter the last name of the head of "
 "the household? For example, Mbire"
 
-#: go-app-ussd_health_worker.js:1063
+#: go-app-ussd_health_worker.js:1067
 msgid "Please select the month the woman started her last period:"
 msgstr "Torana okwezi oku omukazi yahererukire kujwa:"
 
-#: go-app-ussd_health_worker.js:1065
+#: go-app-ussd_health_worker.js:1069
 msgid ""
 "What date of the month did the woman start her last period? For example, 12."
 msgstr "Nikiroki kyowezi obu omukazi yatandika kujwa? Ekyokureberaho 12."
 
-#: go-app-ussd_health_worker.js:1067
+#: go-app-ussd_health_worker.js:1071
 msgid "Please enter the first name of the woman. For example: Sharon"
 msgstr "Handika eizina ryomukazi eryediini. Ekyokureberaho: Sharon"
 
-#: go-app-ussd_health_worker.js:1069
+#: go-app-ussd_health_worker.js:1073
 msgid "Please enter the surname of the woman. For example: Nalule"
 msgstr "Handika eizina ryomukazi eryobuzarwa. Ekyokureberaho: Busingye"
 
-#: go-app-ussd_health_worker.js:1071
+#: go-app-ussd_health_worker.js:1075
 msgid "What language would they want to receive these messages in?"
 msgstr "Nirurimiki orurabanguhire kutunga obutumwa obu?"
 
-#: go-app-ussd_health_worker.js:1073
+#: go-app-ussd_health_worker.js:1077
 msgid ""
 "Thank you. The woman's FamilyConnect ID is {{health_id}}. They will now "
 "start receiving messages"
@@ -170,45 +170,45 @@ msgstr ""
 "Webare. Enamba yomukazi omu FamilyConnect {{health_id}}. Hati baraza "
 "kutandika kutunga obutumwa."
 
-#: go-app-ussd_health_worker.js:1078 go-app-ussd_health_worker.js:1084
-#: go-app-ussd_health_worker.js:1098
+#: go-app-ussd_health_worker.js:1082 go-app-ussd_health_worker.js:1088
+#: go-app-ussd_health_worker.js:1102
 msgid "Sorry, invalid option."
 msgstr "Bambe_watoorana_kubi."
 
-#: go-app-ussd_health_worker.js:1080 go-app-ussd_health_worker.js:1082
-#: go-app-ussd_health_worker.js:1092
+#: go-app-ussd_health_worker.js:1084 go-app-ussd_health_worker.js:1086
+#: go-app-ussd_health_worker.js:1096
 msgid "Sorry, invalid number."
 msgstr "Bambe_enamba_egweire."
 
-#: go-app-ussd_health_worker.js:1086 go-app-ussd_health_worker.js:1088
-#: go-app-ussd_health_worker.js:1094 go-app-ussd_health_worker.js:1096
+#: go-app-ussd_health_worker.js:1090 go-app-ussd_health_worker.js:1092
+#: go-app-ussd_health_worker.js:1098 go-app-ussd_health_worker.js:1100
 msgid "Sorry, invalid name."
 msgstr "Bambe_eiziina_rigweire."
 
-#: go-app-ussd_health_worker.js:1090
+#: go-app-ussd_health_worker.js:1094
 msgid "Sorry, invalid date."
 msgstr "Bambe_ebiro_bigweire."
 
-#: go-app-ussd_health_worker.js:1122
+#: go-app-ussd_health_worker.js:1126
 msgid "Yes"
 msgstr "Eego"
 
-#: go-app-ussd_health_worker.js:1123
+#: go-app-ussd_health_worker.js:1127
 msgid "No, start new registration"
 msgstr "Eingaaha, tandika kuhandika busya."
 
-#: go-app-ussd_health_worker.js:1247
+#: go-app-ussd_health_worker.js:1251
 msgid "Continue registration"
 msgstr "Ngumizamu orahandikisa."
 
-#: go-app-ussd_health_worker.js:1248
+#: go-app-ussd_health_worker.js:1252
 msgid "Register a different number"
 msgstr "Handikisa enamba eyindi"
 
-#: go-app-ussd_health_worker.js:1384
+#: go-app-ussd_health_worker.js:1390
 msgid "English"
 msgstr "English"
 
-#: go-app-ussd_health_worker.js:1385
+#: go-app-ussd_health_worker.js:1391
 msgid "Rukiga"
 msgstr "Rukiga"
