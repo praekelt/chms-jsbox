@@ -15,3 +15,5 @@ RUN mv ./node_modules /usr/local/lib/
 
 # Copy in the app Javascript
 COPY go-*.js /app/
+# Copy in translations
+COPY config/*.json /app/
