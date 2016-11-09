@@ -1,0 +1,402 @@
+{
+    "": {
+        "project-id-version": "",
+        "pot-creation-date": "2016-11-09 09:49+0200",
+        "po-revision-date": "2016-11-09 09:51+0200",
+        "last-translator": "",
+        "language-team": "",
+        "language": "cgg_UG",
+        "mime-version": "1.0",
+        "content-type": "text/plain; charset=UTF-8",
+        "content-transfer-encoding": "8bit",
+        "x-generator": "Poedit 1.8.11"
+    },
+    "{{pre}}January{{post}}": [
+        null,
+        "{{pre}}Okwokubanza{{post}}"
+    ],
+    "{{pre}}February{{post}}": [
+        null,
+        "{{pre}}Okwakabiri{{post}}"
+    ],
+    "{{pre}}March{{post}}": [
+        null,
+        "{{pre}}Okwakashatu{{post}}"
+    ],
+    "{{pre}}April{{post}}": [
+        null,
+        "{{pre}}Okwakana{{post}}"
+    ],
+    "{{pre}}May{{post}}": [
+        null,
+        "{{pre}}Okwakatano{{post}}"
+    ],
+    "{{pre}}June{{post}}": [
+        null,
+        "{{pre}}Okwamukaga{{post}}"
+    ],
+    "{{pre}}July{{post}}": [
+        null,
+        "{{pre}}Okwamushanju{{post}}"
+    ],
+    "{{pre}}August{{post}}": [
+        null,
+        "{{pre}}Okwamunana{{post}}"
+    ],
+    "{{pre}}September{{post}}": [
+        null,
+        "{{pre}}Okwamwenda{{post}}"
+    ],
+    "{{pre}}October{{post}}": [
+        null,
+        "{{pre}}Okwikumi{{post}}"
+    ],
+    "{{pre}}November{{post}}": [
+        null,
+        "{{pre}}Okwikuminakume{{post}}"
+    ],
+    "{{pre}}December{{post}}": [
+        null,
+        "{{pre}}Okwikumunebiri{{post}}"
+    ],
+    "{{pre}}Jan{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Feb{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Mar{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Apr{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Jun{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Jul{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Aug{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Sep{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Oct{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Nov{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "{{pre}}Dec{{post}}": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "You have an incomplete registration. Would you like to continue with this registration?": [
+        null,
+        "Okwehandikisa kwawe tikuhweire. Okayenzire kugumizamu nokwehandikisa oku?"
+    ],
+    "Welcome to FamilyConnect. Please choose your language": [
+        null,
+        "FamilyConnect nekwakira. Toorana orurimi"
+    ],
+    "Choose from:": [
+        null,
+        "Torana:"
+    ],
+    "Please enter the mobile number of the person who will receive the weekly messages. For example 0803304899": [
+        null,
+        "Taasamu enamba yesimu yomuntu oraagume kwakiira obutumwa bwa buri sande. Okyokureberaho 08003304899"
+    ],
+    "Choose:": [
+        null,
+        "Torana:"
+    ],
+    "You are already registered for baby messages.": [
+        null,
+        "Waherize kwehandikisa ahabwobutumwa bwo'mwaana."
+    ],
+    "Thank you. You will now receive messages about caring for the baby": [
+        null,
+        "Thank you. You will now receive messages about caring for the baby"
+    ],
+    "What language would you like to receive messages in?": [
+        null,
+        "Nirurimiki oruwokwenzire kutungamu obutumwa?"
+    ],
+    "Thank you. Your language preference has been updated and you will start to receive SMSs in this language.": [
+        null,
+        "Yebare, orurimi orworikwenda rwayerezibwa kandi nooza kutandika kutunga obutumwa omururimi rwaawe oru."
+    ],
+    "Please enter the new mobile number you would like to receive weekly messages on. For example 0803304899": [
+        null,
+        " Bambe taasamu enamba yesimu yomuntu oraguume kwakiira obutumwa bwa buri sande. Ekyokureberaho 0803304899"
+    ],
+    "Sorry, this number is already registered.": [
+        null,
+        "Enamba egi yakozesibwe"
+    ],
+    "Who will receive these messages?": [
+        null,
+        "Noha arayakire obutumwa obu"
+    ],
+    "Thank you. The number which receives messages has been updated.": [
+        null,
+        "Yebaare, enamba yokwakiira obutumwa yayerezibwa."
+    ],
+    "Why do you no longer want to receive messages?": [
+        null,
+        "Ahabwenki otakyayeenda kutunga obutumwa?"
+    ],
+    "We are sorry for your loss. Would you like to receive free messages that could help you in this difficult time?": [
+        null,
+        "Twashaasha naiwe ahabwokufeerwa. Okaayenzire kutunga obutumwa bwabusha bwokukuyamba omuri obubweire bugumire?"
+    ],
+    "Thank you. You will now receive messages to support you during this difficult time.": [
+        null,
+        "Yebare Noza kutunga obutumwa burakuyambe omuri obubweire bugumire."
+    ],
+    "Thank you. You will no longer receive messages": [
+        null,
+        "Yebare. Toragaruke kutunga obutumwa"
+    ],
+    "What month did you start your last period?": [
+        null,
+        "Nikweezi kyi okuwatandikyire Kuza omukwezi?"
+    ],
+    "What date of the month did you start your last period? For example, 12.": [
+        null,
+        "Ni biro kyi bwokwezi ebiwatandikireho emicwe obweire obuhweire? Ekyokureberaho Okwikumunebiri"
+    ],
+    "Do you know your local village health team (VHT)?": [
+        null,
+        "Nomanya omushaho waawe wekyaro otendekyirwe omubyamagara?"
+    ],
+    "Please enter their cellphone number. For example, 0803304899": [
+        null,
+        "Bambe taasamu enamba yaabo yomuhagatiro. Ekyokureberaho 0803304899"
+    ],
+    "We did not recognise the VHTs number.": [
+        null,
+        "Titwetegyerize enamba yomushaho waawe wahakyaro."
+    ],
+    "What is the name of your parish?": [
+        null,
+        "Omuruka gwawe niguuha?"
+    ],
+    "Select your parish": [
+        null,
+        "Torana omuruka"
+    ],
+    "Sorry, there are no results for your parish name.": [
+        null,
+        "Bambe, tihaine birikwooreka ahabyomuruka gwaawe."
+    ],
+    "Please re-enter your parish name carefully and make sure you use the correct spelling.": [
+        null,
+        "Bambe garuka otaasemu eizina ryomuruka kurungi kandi ogyezeho kurihandika gye"
+    ],
+    "Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS with it shortly.": [
+        null,
+        "Yebare. Enambaya FamilyConnect ni {{health_id}}. Nooza kutunga obutumwa juba juba."
+    ],
+    "Thank you for using the FamilyConnect service": [
+        null,
+        "Webaare kukwozesa obuhereeza oburikugeita/ oburikushuganisa eka"
+    ],
+    "Sorry, invalid option.": [
+        null,
+        "Bambi watorana kubi."
+    ],
+    "Sorry, invalid number.": [
+        null,
+        "Enamba egweire."
+    ],
+    "Sorry, invalid date.": [
+        null,
+        "Bambe Ebiro bigweire."
+    ],
+    "Sorry, invalid name.": [
+        null,
+        "Bambe Enamba egweire."
+    ],
+    "Yes": [
+        null,
+        "Eego"
+    ],
+    "No, start from the beginning": [
+        null,
+        "Eingaaha, tandika kuhandika busya"
+    ],
+    "English": [
+        null,
+        "Orujungu"
+    ],
+    "Rukiga": [
+        null,
+        "Orukiga"
+    ],
+    "Register this number to receive SMSs about you & your baby": [
+        null,
+        "Handikisa enamba yo kuherezaho obutumwa bwo mwana wawe"
+    ],
+    "Manage a different phone number": [
+        null,
+        "Kozesa enamba endijo"
+    ],
+    "Start baby SMSs": [
+        null,
+        "Tandika obutumwa bwomwaana"
+    ],
+    "Update language": [
+        null,
+        "Tereza ita ahamutindo orurimi"
+    ],
+    "Change the number which gets SMSs": [
+        null,
+        "Hindura enamba erikutunga obutumwa"
+    ],
+    "Stop SMSs": [
+        null,
+        "Rekyeeraho obutumwa"
+    ],
+    "Back to main menu": [
+        null,
+        "Garuka ahakubanza"
+    ],
+    "Exit": [
+        null,
+        "Rugaho"
+    ],
+    "Try a different number": [
+        null,
+        "Gyezaho enamba endijo"
+    ],
+    "Head of the Household": [
+        null,
+        "Nyineka"
+    ],
+    "Mother to be": [
+        null,
+        "Omukazi orikuza kuzara"
+    ],
+    "Family member": [
+        null,
+        "Omuntu ondijo owomuka omu"
+    ],
+    "Trusted friend": [
+        null,
+        "Munywani wawe omwesigwa"
+    ],
+    "Miscarriage": [
+        null,
+        "Enda erugiremu"
+    ],
+    "Baby stillborn": [
+        null,
+        "Omwaana azairwa atahikyire"
+    ],
+    "Baby passed away": [
+        null,
+        "Omwaana atweirwe/afiire"
+    ],
+    "Messages not useful": [
+        null,
+        "Obutumwa tibwiine mugaasho"
+    ],
+    "Other": [
+        null,
+        "Ebiindi"
+    ],
+    "No": [
+        null,
+        "Eingaha"
+    ],
+    "Back": [
+        null,
+        "garuka enyima"
+    ],
+    "More": [
+        null,
+        "Ebindi"
+    ],
+    "Try again": [
+        null,
+        "Gyezaho ogundi"
+    ],
+    "Enter your location instead": [
+        null,
+        "Hakyiri taasamu ahorikutuura"
+    ],
+    "Thank you. Your FamilyConnect ID will be sent to you in an SMS shortly.": [
+        null,
+        "Webare munonga, enamba yawe yekihama eya family connect ni [familyconnect ID] noza kutunga obutumwa aha siimu yaawe."
+    ],
+    "Welcome. When you signed up, were staff at the facility friendly & helpful?": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "Very Satisfied": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "Satisfied": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "Not Satisfied": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "Very unsatisfied": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "How do you feel about the time you had to wait at the facility?": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "How long did you wait to be helped at the clinic?": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "Less than an hour": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "Between 1 and 3 hours": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "More than 4 hours": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "All day": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "Was the facility clean?": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "Did you feel that your privacy was respected by the staff?": [
+        null,
+        "NOT IN SPREADSHEET"
+    ],
+    "Thank you for rating the FamilyConnect service.": [
+        null,
+        "NOT IN SPREADSHEET"
+    ]
+}

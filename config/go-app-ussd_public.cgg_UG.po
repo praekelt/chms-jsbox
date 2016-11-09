@@ -1,414 +1,457 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2016-11-09 07:05:+0000\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-11-09 09:49+0200\n"
+"PO-Revision-Date: 2016-11-09 09:51+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cgg_UG\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #: go-app-ussd_public.js:237
 msgid "{{pre}}January{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwokubanza{{post}}"
 
 #: go-app-ussd_public.js:238
 msgid "{{pre}}February{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwakabiri{{post}}"
 
 #: go-app-ussd_public.js:239
 msgid "{{pre}}March{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwakashatu{{post}}"
 
 #: go-app-ussd_public.js:240
 msgid "{{pre}}April{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwakana{{post}}"
 
 #: go-app-ussd_public.js:241 go-app-ussd_public.js:263
 msgid "{{pre}}May{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwakatano{{post}}"
 
 #: go-app-ussd_public.js:242
 msgid "{{pre}}June{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwamukaga{{post}}"
 
 #: go-app-ussd_public.js:243
 msgid "{{pre}}July{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwamushanju{{post}}"
 
 #: go-app-ussd_public.js:244
 msgid "{{pre}}August{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwamunana{{post}}"
 
 #: go-app-ussd_public.js:245
 msgid "{{pre}}September{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwamwenda{{post}}"
 
 #: go-app-ussd_public.js:246
 msgid "{{pre}}October{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwikumi{{post}}"
 
 #: go-app-ussd_public.js:247
 msgid "{{pre}}November{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwikuminakume{{post}}"
 
 #: go-app-ussd_public.js:248
 msgid "{{pre}}December{{post}}"
-msgstr ""
+msgstr "{{pre}}Okwikumunebiri{{post}}"
 
 #: go-app-ussd_public.js:259
 msgid "{{pre}}Jan{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:260
 msgid "{{pre}}Feb{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:261
 msgid "{{pre}}Mar{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:262
 msgid "{{pre}}Apr{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:264
 msgid "{{pre}}Jun{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:265
 msgid "{{pre}}Jul{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:266
 msgid "{{pre}}Aug{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:267
 msgid "{{pre}}Sep{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:268
 msgid "{{pre}}Oct{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:269
 msgid "{{pre}}Nov{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:270
 msgid "{{pre}}Dec{{post}}"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1056
 msgid ""
 "You have an incomplete registration. Would you like to continue with this "
 "registration?"
 msgstr ""
+"Okwehandikisa kwawe tikuhweire. Okayenzire kugumizamu nokwehandikisa oku?"
 
 #: go-app-ussd_public.js:1058
 msgid "Welcome to FamilyConnect. Please choose your language"
-msgstr ""
+msgstr "FamilyConnect nekwakira. Toorana orurimi"
 
 #: go-app-ussd_public.js:1060
 msgid "Choose from:"
-msgstr ""
+msgstr "Torana:"
 
 #: go-app-ussd_public.js:1062
 msgid ""
 "Please enter the mobile number of the person who will receive the weekly "
 "messages. For example 0803304899"
 msgstr ""
+"Taasamu enamba yesimu yomuntu oraagume kwakiira obutumwa bwa buri sande. "
+"Okyokureberaho 08003304899"
 
 #: go-app-ussd_public.js:1064
 msgid "Choose:"
-msgstr ""
+msgstr "Torana:"
 
 #: go-app-ussd_public.js:1067
 msgid "You are already registered for baby messages."
-msgstr ""
+msgstr "Waherize kwehandikisa ahabwobutumwa bwo'mwaana."
 
 #: go-app-ussd_public.js:1069
 msgid "Thank you. You will now receive messages about caring for the baby"
-msgstr ""
+msgstr "Thank you. You will now receive messages about caring for the baby"
 
 #: go-app-ussd_public.js:1072
 msgid "What language would you like to receive messages in?"
-msgstr ""
+msgstr "Nirurimiki oruwokwenzire kutungamu obutumwa?"
 
 #: go-app-ussd_public.js:1074
 msgid ""
 "Thank you. Your language preference has been updated and you will start to "
 "receive SMSs in this language."
 msgstr ""
+"Yebare, orurimi orworikwenda rwayerezibwa kandi nooza kutandika kutunga "
+"obutumwa omururimi rwaawe oru."
 
 #: go-app-ussd_public.js:1077
 msgid ""
-"Please enter the new mobile number you would like to receive weekly "
-"messages on. For example 0803304899"
+"Please enter the new mobile number you would like to receive weekly messages "
+"on. For example 0803304899"
 msgstr ""
+" Bambe taasamu enamba yesimu yomuntu oraguume kwakiira obutumwa bwa buri "
+"sande. Ekyokureberaho 0803304899"
 
 #: go-app-ussd_public.js:1079
 msgid "Sorry, this number is already registered."
-msgstr ""
+msgstr "Enamba egi yakozesibwe"
 
 #: go-app-ussd_public.js:1081
 msgid "Who will receive these messages?"
-msgstr ""
+msgstr "Noha arayakire obutumwa obu"
 
 #: go-app-ussd_public.js:1083
 msgid "Thank you. The number which receives messages has been updated."
-msgstr ""
+msgstr "Yebaare, enamba yokwakiira obutumwa yayerezibwa."
 
 #: go-app-ussd_public.js:1086
 msgid "Why do you no longer want to receive messages?"
-msgstr ""
+msgstr "Ahabwenki otakyayeenda kutunga obutumwa?"
 
 #: go-app-ussd_public.js:1088
 msgid ""
 "We are sorry for your loss. Would you like to receive free messages that "
 "could help you in this difficult time?"
 msgstr ""
+"Twashaasha naiwe ahabwokufeerwa. Okaayenzire kutunga obutumwa bwabusha "
+"bwokukuyamba omuri obubweire bugumire?"
 
 #: go-app-ussd_public.js:1090
 msgid ""
 "Thank you. You will now receive messages to support you during this "
 "difficult time."
-msgstr ""
+msgstr "Yebare Noza kutunga obutumwa burakuyambe omuri obubweire bugumire."
 
 #: go-app-ussd_public.js:1092
 msgid "Thank you. You will no longer receive messages"
-msgstr ""
+msgstr "Yebare. Toragaruke kutunga obutumwa"
 
 #: go-app-ussd_public.js:1095
 msgid "What month did you start your last period?"
-msgstr ""
+msgstr "Nikweezi kyi okuwatandikyire Kuza omukwezi?"
 
 #: go-app-ussd_public.js:1097
 msgid "What date of the month did you start your last period? For example, 12."
 msgstr ""
+"Ni biro kyi bwokwezi ebiwatandikireho emicwe obweire obuhweire? "
+"Ekyokureberaho Okwikumunebiri"
 
 #: go-app-ussd_public.js:1099
 msgid "Do you know your local village health team (VHT)?"
-msgstr ""
+msgstr "Nomanya omushaho waawe wekyaro otendekyirwe omubyamagara?"
 
 #: go-app-ussd_public.js:1101
 msgid "Please enter their cellphone number. For example, 0803304899"
-msgstr ""
+msgstr "Bambe taasamu enamba yaabo yomuhagatiro. Ekyokureberaho 0803304899"
 
 #: go-app-ussd_public.js:1103
 msgid "We did not recognise the VHTs number."
-msgstr ""
+msgstr "Titwetegyerize enamba yomushaho waawe wahakyaro."
 
 #: go-app-ussd_public.js:1105
 msgid "What is the name of your parish?"
-msgstr ""
+msgstr "Omuruka gwawe niguuha?"
 
 #: go-app-ussd_public.js:1107
 msgid "Select your parish"
-msgstr ""
+msgstr "Torana omuruka"
 
 #: go-app-ussd_public.js:1109
 msgid "Sorry, there are no results for your parish name."
-msgstr ""
+msgstr "Bambe, tihaine birikwooreka ahabyomuruka gwaawe."
 
 #: go-app-ussd_public.js:1111
 msgid ""
-"Please re-enter your parish name carefully and make sure you use the "
-"correct spelling."
+"Please re-enter your parish name carefully and make sure you use the correct "
+"spelling."
 msgstr ""
+"Bambe garuka otaasemu eizina ryomuruka kurungi kandi ogyezeho kurihandika gye"
 
 #: go-app-ussd_public.js:1113
 msgid ""
 "Thank you. Your FamilyConnect ID is {{health_id}}. You will receive an SMS "
 "with it shortly."
 msgstr ""
+"Yebare. Enambaya FamilyConnect ni {{health_id}}. Nooza kutunga obutumwa juba "
+"juba."
 
 #: go-app-ussd_public.js:1116
 msgid "Thank you for using the FamilyConnect service"
-msgstr ""
+msgstr "Webaare kukwozesa obuhereeza oburikugeita/ oburikushuganisa eka"
 
-#: go-app-ussd_public.js:1121 go-app-ussd_public.js:1123 go-app-ussd_public.js:1125 go-app-ussd_public.js:1129 go-app-ussd_public.js:1132 go-app-ussd_public.js:1135 go-app-ussd_public.js:1140 go-app-ussd_public.js:1142 go-app-ussd_public.js:1145 go-app-ussd_public.js:1147 go-app-ussd_public.js:1153 go-app-ussd_public.js:1157 go-app-ussd_public.js:1161 go-app-ussd_public.js:1163
+#: go-app-ussd_public.js:1121 go-app-ussd_public.js:1123
+#: go-app-ussd_public.js:1125 go-app-ussd_public.js:1129
+#: go-app-ussd_public.js:1132 go-app-ussd_public.js:1135
+#: go-app-ussd_public.js:1140 go-app-ussd_public.js:1142
+#: go-app-ussd_public.js:1145 go-app-ussd_public.js:1147
+#: go-app-ussd_public.js:1153 go-app-ussd_public.js:1157
+#: go-app-ussd_public.js:1161 go-app-ussd_public.js:1163
 msgid "Sorry, invalid option."
-msgstr ""
+msgstr "Bambi watorana kubi."
 
-#: go-app-ussd_public.js:1127 go-app-ussd_public.js:1138 go-app-ussd_public.js:1151 go-app-ussd_public.js:1155
+#: go-app-ussd_public.js:1127 go-app-ussd_public.js:1138
+#: go-app-ussd_public.js:1151 go-app-ussd_public.js:1155
 msgid "Sorry, invalid number."
-msgstr ""
+msgstr "Enamba egweire."
 
 #: go-app-ussd_public.js:1149
 msgid "Sorry, invalid date."
-msgstr ""
+msgstr "Bambe Ebiro bigweire."
 
 #: go-app-ussd_public.js:1159 go-app-ussd_public.js:1165
 msgid "Sorry, invalid name."
-msgstr ""
+msgstr "Bambe Enamba egweire."
 
-#: go-app-ussd_public.js:1201 go-app-ussd_public.js:1566 go-app-ussd_public.js:1684
+#: go-app-ussd_public.js:1201 go-app-ussd_public.js:1566
+#: go-app-ussd_public.js:1684
 msgid "Yes"
-msgstr ""
+msgstr "Eego"
 
 #: go-app-ussd_public.js:1202
 msgid "No, start from the beginning"
-msgstr ""
+msgstr "Eingaaha, tandika kuhandika busya"
 
 #: go-app-ussd_public.js:1264 go-app-ussd_public.js:1427
 msgid "English"
-msgstr ""
+msgstr "Orujungu"
 
 #: go-app-ussd_public.js:1265 go-app-ussd_public.js:1428
 msgid "Rukiga"
-msgstr ""
+msgstr "Orukiga"
 
 #: go-app-ussd_public.js:1277
 msgid "Register this number to receive SMSs about you & your baby"
-msgstr ""
+msgstr "Handikisa enamba yo kuherezaho obutumwa bwo mwana wawe"
 
 #: go-app-ussd_public.js:1278
 msgid "Manage a different phone number"
-msgstr ""
+msgstr "Kozesa enamba endijo"
 
 #: go-app-ussd_public.js:1355
 msgid "Start baby SMSs"
-msgstr ""
+msgstr "Tandika obutumwa bwomwaana"
 
 #: go-app-ussd_public.js:1356
 msgid "Update language"
-msgstr ""
+msgstr "Tereza ita ahamutindo orurimi"
 
 #: go-app-ussd_public.js:1357
 msgid "Change the number which gets SMSs"
-msgstr ""
+msgstr "Hindura enamba erikutunga obutumwa"
 
 #: go-app-ussd_public.js:1358
 msgid "Stop SMSs"
-msgstr ""
+msgstr "Rekyeeraho obutumwa"
 
 #: go-app-ussd_public.js:1387
 msgid "Back to main menu"
-msgstr ""
+msgstr "Garuka ahakubanza"
 
-#: go-app-ussd_public.js:1388 go-app-ussd_public.js:1493 go-app-ussd_public.js:1713 go-app-ussd_public.js:1747
+#: go-app-ussd_public.js:1388 go-app-ussd_public.js:1493
+#: go-app-ussd_public.js:1713 go-app-ussd_public.js:1747
 msgid "Exit"
-msgstr ""
+msgstr "Rugaho"
 
 #: go-app-ussd_public.js:1492
 msgid "Try a different number"
-msgstr ""
+msgstr "Gyezaho enamba endijo"
 
 #: go-app-ussd_public.js:1521
 msgid "Head of the Household"
-msgstr ""
+msgstr "Nyineka"
 
 #: go-app-ussd_public.js:1522
 msgid "Mother to be"
-msgstr ""
+msgstr "Omukazi orikuza kuzara"
 
 #: go-app-ussd_public.js:1523
 msgid "Family member"
-msgstr ""
+msgstr "Omuntu ondijo owomuka omu"
 
 #: go-app-ussd_public.js:1524
 msgid "Trusted friend"
-msgstr ""
+msgstr "Munywani wawe omwesigwa"
 
 #: go-app-ussd_public.js:1546
 msgid "Miscarriage"
-msgstr ""
+msgstr "Enda erugiremu"
 
 #: go-app-ussd_public.js:1547
 msgid "Baby stillborn"
-msgstr ""
+msgstr "Omwaana azairwa atahikyire"
 
 #: go-app-ussd_public.js:1548
 msgid "Baby passed away"
-msgstr ""
+msgstr "Omwaana atweirwe/afiire"
 
 #: go-app-ussd_public.js:1549
 msgid "Messages not useful"
-msgstr ""
+msgstr "Obutumwa tibwiine mugaasho"
 
 #: go-app-ussd_public.js:1550
 msgid "Other"
-msgstr ""
+msgstr "Ebiindi"
 
 #: go-app-ussd_public.js:1567 go-app-ussd_public.js:1685
 msgid "No"
-msgstr ""
+msgstr "Eingaha"
 
 #: go-app-ussd_public.js:1710
 msgid "Back"
-msgstr ""
+msgstr "garuka enyima"
 
 #: go-app-ussd_public.js:1711
 msgid "More"
-msgstr ""
+msgstr "Ebindi"
 
-#: go-app-ussd_public.js:1712 go-app-ussd_public.js:1746 go-app-ussd_public.js:1771
+#: go-app-ussd_public.js:1712 go-app-ussd_public.js:1746
+#: go-app-ussd_public.js:1771
 msgid "Try again"
-msgstr ""
+msgstr "Gyezaho ogundi"
 
 #: go-app-ussd_public.js:1772
 msgid "Enter your location instead"
-msgstr ""
+msgstr "Hakyiri taasamu ahorikutuura"
 
 #: go-app-ussd_public.js:1797
 msgid "Thank you. Your FamilyConnect ID will be sent to you in an SMS shortly."
 msgstr ""
+"Webare munonga, enamba yawe yekihama eya family connect ni [familyconnect "
+"ID] noza kutunga obutumwa aha siimu yaawe."
 
 #: go-app-ussd_public.js:1810
-msgid "Welcome. When you signed up, were staff at the facility friendly & helpful?"
-msgstr ""
+msgid ""
+"Welcome. When you signed up, were staff at the facility friendly & helpful?"
+msgstr "NOT IN SPREADSHEET"
 
-#: go-app-ussd_public.js:1815 go-app-ussd_public.js:1838 go-app-ussd_public.js:1884 go-app-ussd_public.js:1907
+#: go-app-ussd_public.js:1815 go-app-ussd_public.js:1838
+#: go-app-ussd_public.js:1884 go-app-ussd_public.js:1907
 msgid "Very Satisfied"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
-#: go-app-ussd_public.js:1816 go-app-ussd_public.js:1839 go-app-ussd_public.js:1885 go-app-ussd_public.js:1908
+#: go-app-ussd_public.js:1816 go-app-ussd_public.js:1839
+#: go-app-ussd_public.js:1885 go-app-ussd_public.js:1908
 msgid "Satisfied"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
-#: go-app-ussd_public.js:1817 go-app-ussd_public.js:1840 go-app-ussd_public.js:1886 go-app-ussd_public.js:1909
+#: go-app-ussd_public.js:1817 go-app-ussd_public.js:1840
+#: go-app-ussd_public.js:1886 go-app-ussd_public.js:1909
 msgid "Not Satisfied"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
-#: go-app-ussd_public.js:1818 go-app-ussd_public.js:1841 go-app-ussd_public.js:1887 go-app-ussd_public.js:1910
+#: go-app-ussd_public.js:1818 go-app-ussd_public.js:1841
+#: go-app-ussd_public.js:1887 go-app-ussd_public.js:1910
 msgid "Very unsatisfied"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1833
 msgid "How do you feel about the time you had to wait at the facility?"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1856
 msgid "How long did you wait to be helped at the clinic?"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1861
 msgid "Less than an hour"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1862
 msgid "Between 1 and 3 hours"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1863
 msgid "More than 4 hours"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1864
 msgid "All day"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1879
 msgid "Was the facility clean?"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1902
 msgid "Did you feel that your privacy was respected by the staff?"
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
 
 #: go-app-ussd_public.js:1935
 msgid "Thank you for rating the FamilyConnect service."
-msgstr ""
+msgstr "NOT IN SPREADSHEET"
+
+#~ msgid ""
+#~ "We are sorry for your loss. Would you like to receive a small set of free "
+#~ "messages from FamilyConnect that could help you in this difficult time?"
+#~ msgstr ""
+#~ "Twashaasha naiwe ahabwokufeerwa. Okaayenzire kutunga obutumwa bwabusha "
+#~ "bwokukuyamba omuri obubweire bugumire?"
+
+#~ msgid "Mother miscarried"
+#~ msgstr "Enda erugiremu"
