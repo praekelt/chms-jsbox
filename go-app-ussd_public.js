@@ -1230,6 +1230,7 @@ go.app = function() {
                     if (user.details.role) {
                         self.im.user.set_answer('role', user.details.role);
                         self.im.user.set_answer('state_language', user.details.preferred_language);
+                        self.im.user.set_lang(user.details.preferred_language);
                         if (user.details.role === 'mother') {
                             self.im.user.set_answer('mother_id', user.id);
                         } else {
@@ -1265,7 +1266,10 @@ go.app = function() {
                     new Choice('cgg_UG', $('Rukiga')),
                 ],
                 error: errors[name],
-                next: 'state_choose_number'
+                next: function(choice) {
+                    self.im.user.set_lang(choice.value);
+                    return 'state_choose_number';
+                }
             });
         });
 
@@ -1440,6 +1444,7 @@ go.app = function() {
                     self.im.user.answers.mother_id
                 )
                 .then(function() {
+                    self.im.user.set_lang(self.im.user.state_change_language);
                     return self.states.create('state_end_language');
                 });
         });
