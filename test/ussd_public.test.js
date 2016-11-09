@@ -197,7 +197,7 @@ describe("familyconnect public app", function() {
                     .setup.user.addr('0720000111')
                     .inputs(
                         {session_event: 'new'}  // dial in
-                        , "2"  // state_language - Runyakore
+                        , "2"  // state_language - Rukiga
                     )
                     .check.interaction({
                         state: 'state_choose_number',
@@ -210,6 +210,7 @@ describe("familyconnect public app", function() {
                     .check(function(api) {
                         go.utils.check_fixtures_used(api, [0,1]);
                     })
+                    .check.user.properties({lang: 'cgg_UG'})
                     .run();
             });
             it("to state_change_menu (recognised user)", function() {
